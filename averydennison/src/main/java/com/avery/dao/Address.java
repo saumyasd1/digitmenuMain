@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
  
-////test
+
 @Entity
 @Table(name = "address")
 public class Address {

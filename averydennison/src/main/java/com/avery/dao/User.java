@@ -22,7 +22,7 @@ public class User {
     String gender;
     String jobTitle;
     String password;
-    String test;
+   
     
 	int role;
     int status;

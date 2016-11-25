@@ -22,5 +22,9 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/Vishal/avery/jar/aspose/lib/aspose-email-16.11.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="D:/Vishal/avery/jar/aspose/lib/aspose-email-16.11.0-jdk16.jar"/>
+	<classpathentry kind="lib" path="D:/Vishal/avery/jar/aspose.pdf-11.7.0.jar"/>
+	<classpathentry kind="lib" path="D:/Vishal/avery/jar/aspose-words-16.10.0-jdk16.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

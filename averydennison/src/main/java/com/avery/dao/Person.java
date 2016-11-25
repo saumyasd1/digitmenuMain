@@ -21,7 +21,7 @@ public class Person {
     long id;
     String firstName;
     String lastName;
-    Set<Address> addresses;
+    //Set<Address> addresses;
  
     public Person() {
  
@@ -30,7 +30,7 @@ public class Person {
     public Person(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.addresses = new HashSet<Address>();
+      //  this.addresses = new HashSet<Address>();
     }
  
     @Id
@@ -62,7 +62,7 @@ public class Person {
         this.lastName = lastName;
     }
  
-    @ManyToMany(cascade = { CascadeType.ALL })
+    /*@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(name = "person_address", joinColumns = { @JoinColumn(name = "person_id") }, inverseJoinColumns = { @JoinColumn(name = "address_id") })
     public Set<Address> getAddresses() {
         return addresses;
@@ -70,6 +70,6 @@ public class Person {
  
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
-    }
+    }*/
  
 }

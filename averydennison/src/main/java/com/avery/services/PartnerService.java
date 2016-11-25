@@ -1,23 +1,22 @@
 package com.avery.services;
 
 //import com.avery.dao.Address_b;
-import com.avery.dao.Person;
+import com.avery.dao.Partner;
 import com.avery.dao.User;
 import com.avery.utils.HibernateUtil;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public class PersonService {
+public class PartnerService {
 	public String hibernateTest() {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 	    Session session = sf.openSession();
 	    
 	    session.beginTransaction();
 	
-	    Person steve = new Person("Steve", "Jobs");
-	    Person donald = new Person("Donald", "Trump");
-	    User donal = new User("Donald", "Trump");
+	    Partner steve = new Partner("Steve", "Jobs");
+	 
 	
 	   // Address_b valley = new Address_b("Steve P Jobs", "San Francisco", "11111");
 	   // Address_b newyork = new Address_b("Trump Tower", "New York", "22222");
@@ -28,11 +27,10 @@ public class PersonService {
 	   // donald.getAddresses().add(chicago);
 	
 	    session.persist(steve);
-	    session.persist(donal);
-	    session.persist(donald);
+	   
 	
 	    session.getTransaction().commit();
 	    session.close();
-	    return steve.getFirstName();
+	    return steve.getPartnerName();
 	}
 }

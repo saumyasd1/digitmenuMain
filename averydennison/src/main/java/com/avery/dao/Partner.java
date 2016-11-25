@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
 
 @Entity
 @Table(name = "partner")
@@ -14,24 +16,21 @@ public class Partner {
 
 	int id;
 	String partnerID;
-    String PartnerName;
-    String Address;
-    String ContactPerson;
+    String partnerName;
+    String address;
+    String contactPerson;
+    @Size(min = 2, max = 14)
     int phone;
-    int isActive;
+    int active;
     Date createdDate;
-    String createdby;
+    String createdBy;
     Date modifiedDate;
     String modifiedby;
     
     public Partner() {
    	 
     }
-    public Partner(String partnerID, String PartnerName) {
-        this.partnerID = partnerID;
-        this.PartnerName = PartnerName;
-        
-    }
+    
     
     @Id 
     @GeneratedValue 
@@ -42,76 +41,72 @@ public class Partner {
 	public void setId(int id) {
 		this.id = id;
 	}
-	 @Column
 	public String getPartnerID() {
 		return partnerID;
 	}
 	public void setPartnerID(String partnerID) {
 		this.partnerID = partnerID;
 	}
-	 @Column
 	public String getPartnerName() {
-		return PartnerName;
+		return partnerName;
 	}
 	public void setPartnerName(String partnerName) {
-		PartnerName = partnerName;
+		this.partnerName = partnerName;
 	}
-	 @Column
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
-	 @Column
 	public String getContactPerson() {
-		return ContactPerson;
+		return contactPerson;
 	}
 	public void setContactPerson(String contactPerson) {
-		ContactPerson = contactPerson;
+		this.contactPerson = contactPerson;
 	}
-	 @Column
 	public int getPhone() {
 		return phone;
 	}
 	public void setPhone(int phone) {
 		this.phone = phone;
 	}
-	 @Column
-	public int getIsActive() {
-		return isActive;
+	public int getActive() {
+		return active;
 	}
-	public void setIsActive(int isActive) {
-		this.isActive = isActive;
+	public void setActive(int active) {
+		this.active = active;
 	}
-	 @Column
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	 @Column
-	public String getCreatedby() {
-		return createdby;
+	public String getCreatedBy() {
+		return createdBy;
 	}
-	public void setCreatedby(String createdby) {
-		this.createdby = createdby;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
-	 @Column
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-	 @Column
 	public String getModifiedby() {
 		return modifiedby;
 	}
 	public void setModifiedby(String modifiedby) {
 		this.modifiedby = modifiedby;
 	}
+	public Partner(String partnerID, String partnerName) {
+        this.partnerID = partnerID;
+        this.partnerName = partnerName;
+        
+    }
+	
    
     
     

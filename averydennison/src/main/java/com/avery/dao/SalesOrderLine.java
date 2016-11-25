@@ -13,62 +13,63 @@ import javax.persistence.Table;
 @Table(name = "salesOrderLine")
 public class SalesOrderLine {
 	int id;
-String LineIndicator;
-String Division;
-String OrderSource;
-String SystemUniqueID;
-String SystemUniqueIDLineNo;
-String SOLDTORBONumber;
-String BillToNumber;
-String ShipToNumber;
-String ShippingMethod;
-String CustomerPONumber;
-String CustomerJob;
-String InternalItemNumber;
-String CustomerItemNumber;
-String ItemDescription;
-String OrderdedQty;
-Date DateOrdered;
-Date CustomerRequestDate;
-Date PromiseDate;
-String FreightTerms;
-String CSR;
-String PackingInstruction;
-String ShippingInstructions;
-String InvoicelineInstruction;
-String DivisionforInterfaceERPORG;
-String BillToContact;
-String BillToTEL;
-String BillToFAX;
-String BillToEMAIL;
-String ShipToContact;
-String ShipToTEL;
-String ShipToFAX;
-String ShipToEMAIL;
-String Artworkhold;
-String Artworkworkattachment;
-String VariableDataBreakdown;
-String ManufacturingNotes;
-String Ordertype;
-String OrderBy;
-String EndCustomer;
-String ShippingOnlyNotes;
-String BankCharge;
-String FreightCharge;
-String ShippingHold;
-String ProductionHold;
-String SplitShipSet;
-String Agreement;
-String ModelSerialNumber;
-String WaiveMOQ;
+String lineIndicator;
+String division;
+String orderSource;
+String systemUniqueID;
+String systemUniqueIDLineNo;
+String soldToRBONumber;
+String billToNumber;
+String shipToNumber;
+String shippingMethod;
+String customerPoNumber;
+String customerJob;
+String internalItemNumber;
+String customerItemNumber;
+String itemDescription;
+String orderdedQty;
+Date dateOrdered;
+Date customerRequestDate;
+Date promiseDate;
+String freightTerms;
+String csr;
+String packingInstruction;
+String shippingInstructions;
+String invoicelineInstruction;
+String divisionforInterfaceERPORG;
+String billToContact;
+String billToTel;
+String billToFax;
+String billToEmail;
+String shipToContact;
+String shipToTel;
+String shipToFAX;
+String shipToEmail;
+String artworkhold;
+String artworkAttachment;
+String variableDataBreakdown;
+String manufacturingNotes;
+String orderType;
+String orderBy;
+String endCustomer;
+String shippingOnlyNotes;
+String bankCharge;
+String freightCharge;
+String shippingHold;
+String productionHold;
+String splitShipSet;
+String agreement;
+String modelSerialNumber;
+String waiveMOQ;
 String APOType;
-String Price;
+String price;
 
 
 public SalesOrderLine(String division, String orderSource) {
-	Division = division;
-	OrderSource = orderSource;
+	division = division;
+	orderSource = orderSource;
 }
+
 @Id 
 @GeneratedValue 
 @Column(name = "id")
@@ -79,306 +80,356 @@ public int getId() {
 public void setId(int id) {
 	this.id = id;
 }
+@Column(name="lineIndicator" , length=100)
 public String getLineIndicator() {
-	return LineIndicator;
+	return lineIndicator;
 }
 public void setLineIndicator(String lineIndicator) {
-	LineIndicator = lineIndicator;
+	this.lineIndicator = lineIndicator;
 }
+@Column(name="division" , length=100)
 public String getDivision() {
-	return Division;
+	return division;
 }
 public void setDivision(String division) {
-	Division = division;
+	this.division = division;
 }
+@Column(name="orderSource" , length=100)
 public String getOrderSource() {
-	return OrderSource;
+	return orderSource;
 }
 public void setOrderSource(String orderSource) {
-	OrderSource = orderSource;
+	this.orderSource = orderSource;
 }
+@Column(name="systemUniqueID" , length=100)
 public String getSystemUniqueID() {
-	return SystemUniqueID;
+	return systemUniqueID;
 }
 public void setSystemUniqueID(String systemUniqueID) {
-	SystemUniqueID = systemUniqueID;
+	this.systemUniqueID = systemUniqueID;
 }
+@Column(name="systemUniqueIDLineNo" , length=100)
 public String getSystemUniqueIDLineNo() {
-	return SystemUniqueIDLineNo;
+	return systemUniqueIDLineNo;
 }
 public void setSystemUniqueIDLineNo(String systemUniqueIDLineNo) {
-	SystemUniqueIDLineNo = systemUniqueIDLineNo;
+	this.systemUniqueIDLineNo = systemUniqueIDLineNo;
 }
-public String getSOLDTORBONumber() {
-	return SOLDTORBONumber;
+@Column(name="soldToRBONumber" , length=100)
+public String getSoldToRBONumber() {
+	return soldToRBONumber;
 }
-public void setSOLDTORBONumber(String sOLDTORBONumber) {
-	SOLDTORBONumber = sOLDTORBONumber;
+public void setSoldToRBONumber(String soldToRBONumber) {
+	this.soldToRBONumber = soldToRBONumber;
 }
+@Column(name="billToNumber" , length=100)
 public String getBillToNumber() {
-	return BillToNumber;
+	return billToNumber;
 }
 public void setBillToNumber(String billToNumber) {
-	BillToNumber = billToNumber;
+	this.billToNumber = billToNumber;
 }
+@Column(name="shipToNumber" , length=100)
 public String getShipToNumber() {
-	return ShipToNumber;
+	return shipToNumber;
 }
 public void setShipToNumber(String shipToNumber) {
-	ShipToNumber = shipToNumber;
+	this.shipToNumber = shipToNumber;
 }
+@Column(name="shippingMethod" , length=100)
 public String getShippingMethod() {
-	return ShippingMethod;
+	return shippingMethod;
 }
 public void setShippingMethod(String shippingMethod) {
-	ShippingMethod = shippingMethod;
+	this.shippingMethod = shippingMethod;
 }
-public String getCustomerPONumber() {
-	return CustomerPONumber;
+@Column(name="customerPoNumber" , length=100)
+public String getCustomerPoNumber() {
+	return customerPoNumber;
 }
-public void setCustomerPONumber(String customerPONumber) {
-	CustomerPONumber = customerPONumber;
+public void setCustomerPoNumber(String customerPoNumber) {
+	this.customerPoNumber = customerPoNumber;
 }
+@Column(name="customerJob" , length=100)
 public String getCustomerJob() {
-	return CustomerJob;
+	return customerJob;
 }
 public void setCustomerJob(String customerJob) {
-	CustomerJob = customerJob;
+	this.customerJob = customerJob;
 }
+@Column(name="internalItemNumber" , length=100)
 public String getInternalItemNumber() {
-	return InternalItemNumber;
+	return internalItemNumber;
 }
 public void setInternalItemNumber(String internalItemNumber) {
-	InternalItemNumber = internalItemNumber;
+	this.internalItemNumber = internalItemNumber;
 }
+@Column(name="customerItemNumber" , length=100)
 public String getCustomerItemNumber() {
-	return CustomerItemNumber;
+	return customerItemNumber;
 }
 public void setCustomerItemNumber(String customerItemNumber) {
-	CustomerItemNumber = customerItemNumber;
+	this.customerItemNumber = customerItemNumber;
 }
+@Column(name="itemDescription" , length=100)
 public String getItemDescription() {
-	return ItemDescription;
+	return itemDescription;
 }
 public void setItemDescription(String itemDescription) {
-	ItemDescription = itemDescription;
+	this.itemDescription = itemDescription;
 }
+@Column(name="orderdedQty" , length=100)
 public String getOrderdedQty() {
-	return OrderdedQty;
+	return orderdedQty;
 }
 public void setOrderdedQty(String orderdedQty) {
-	OrderdedQty = orderdedQty;
+	this.orderdedQty = orderdedQty;
 }
+@Column(name="dateOrdered" )
 public Date getDateOrdered() {
-	return DateOrdered;
+	return dateOrdered;
 }
 public void setDateOrdered(Date dateOrdered) {
-	DateOrdered = dateOrdered;
+	this.dateOrdered = dateOrdered;
 }
+@Column(name="customerRequestDate" , length=100)
 public Date getCustomerRequestDate() {
-	return CustomerRequestDate;
+	return customerRequestDate;
 }
 public void setCustomerRequestDate(Date customerRequestDate) {
-	CustomerRequestDate = customerRequestDate;
+	this.customerRequestDate = customerRequestDate;
 }
+@Column(name="promiseDate" )
 public Date getPromiseDate() {
-	return PromiseDate;
+	return promiseDate;
 }
 public void setPromiseDate(Date promiseDate) {
-	PromiseDate = promiseDate;
+	this.promiseDate = promiseDate;
 }
+@Column(name="freightTerms" , length=100)
 public String getFreightTerms() {
-	return FreightTerms;
+	return freightTerms;
 }
 public void setFreightTerms(String freightTerms) {
-	FreightTerms = freightTerms;
+	this.freightTerms = freightTerms;
 }
-public String getCSR() {
-	return CSR;
+@Column(name="csr" , length=100)
+public String getCsr() {
+	return csr;
 }
-public void setCSR(String cSR) {
-	CSR = cSR;
+public void setCsr(String csr) {
+	this.csr = csr;
 }
+@Column(name="packingInstruction" , length=100)
 public String getPackingInstruction() {
-	return PackingInstruction;
+	return packingInstruction;
 }
 public void setPackingInstruction(String packingInstruction) {
-	PackingInstruction = packingInstruction;
+	this.packingInstruction = packingInstruction;
 }
+@Column(name="shippingInstructions" , length=100)
 public String getShippingInstructions() {
-	return ShippingInstructions;
+	return shippingInstructions;
 }
 public void setShippingInstructions(String shippingInstructions) {
-	ShippingInstructions = shippingInstructions;
+	this.shippingInstructions = shippingInstructions;
 }
+@Column(name="invoicelineInstruction" , length=100)
 public String getInvoicelineInstruction() {
-	return InvoicelineInstruction;
+	return invoicelineInstruction;
 }
 public void setInvoicelineInstruction(String invoicelineInstruction) {
-	InvoicelineInstruction = invoicelineInstruction;
+	this.invoicelineInstruction = invoicelineInstruction;
 }
+@Column(name="divisionforInterfaceERPORG" , length=100)
 public String getDivisionforInterfaceERPORG() {
-	return DivisionforInterfaceERPORG;
+	return divisionforInterfaceERPORG;
 }
 public void setDivisionforInterfaceERPORG(String divisionforInterfaceERPORG) {
-	DivisionforInterfaceERPORG = divisionforInterfaceERPORG;
+	this.divisionforInterfaceERPORG = divisionforInterfaceERPORG;
 }
+@Column(name="billToContact" , length=100)
 public String getBillToContact() {
-	return BillToContact;
+	return billToContact;
 }
 public void setBillToContact(String billToContact) {
-	BillToContact = billToContact;
+	this.billToContact = billToContact;
 }
-public String getBillToTEL() {
-	return BillToTEL;
+@Column(name="billToTel" , length=100)
+public String getBillToTel() {
+	return billToTel;
 }
-public void setBillToTEL(String billToTEL) {
-	BillToTEL = billToTEL;
+public void setBillToTel(String billToTel) {
+	this.billToTel = billToTel;
 }
-public String getBillToFAX() {
-	return BillToFAX;
+@Column(name="billToFax" , length=100)
+public String getBillToFax() {
+	return billToFax;
 }
-public void setBillToFAX(String billToFAX) {
-	BillToFAX = billToFAX;
+public void setBillToFax(String billToFax) {
+	this.billToFax = billToFax;
 }
-public String getBillToEMAIL() {
-	return BillToEMAIL;
+@Column(name="billToEmail" , length=100)
+public String getBillToEmail() {
+	return billToEmail;
 }
-public void setBillToEMAIL(String billToEMAIL) {
-	BillToEMAIL = billToEMAIL;
+public void setBillToEmail(String billToEmail) {
+	this.billToEmail = billToEmail;
 }
+@Column(name="shipToContact" , length=100)
 public String getShipToContact() {
-	return ShipToContact;
+	return shipToContact;
 }
 public void setShipToContact(String shipToContact) {
-	ShipToContact = shipToContact;
+	this.shipToContact = shipToContact;
 }
-public String getShipToTEL() {
-	return ShipToTEL;
+@Column(name="shipToTel" , length=100)
+public String getShipToTel() {
+	return shipToTel;
 }
-public void setShipToTEL(String shipToTEL) {
-	ShipToTEL = shipToTEL;
+public void setShipToTel(String shipToTel) {
+	this.shipToTel = shipToTel;
 }
+@Column(name="shipToFAX" , length=100)
 public String getShipToFAX() {
-	return ShipToFAX;
+	return shipToFAX;
 }
 public void setShipToFAX(String shipToFAX) {
-	ShipToFAX = shipToFAX;
+	this.shipToFAX = shipToFAX;
 }
-public String getShipToEMAIL() {
-	return ShipToEMAIL;
+@Column(name="shipToEmail" , length=100)
+public String getShipToEmail() {
+	return shipToEmail;
 }
-public void setShipToEMAIL(String shipToEMAIL) {
-	ShipToEMAIL = shipToEMAIL;
+public void setShipToEmail(String shipToEmail) {
+	this.shipToEmail = shipToEmail;
 }
+@Column(name="artworkhold" , length=100)
 public String getArtworkhold() {
-	return Artworkhold;
+	return artworkhold;
 }
 public void setArtworkhold(String artworkhold) {
-	Artworkhold = artworkhold;
+	this.artworkhold = artworkhold;
 }
-public String getArtworkworkattachment() {
-	return Artworkworkattachment;
+@Column(name="artworkAttachment" , length=100)
+public String getArtworkAttachment() {
+	return artworkAttachment;
 }
-public void setArtworkworkattachment(String artworkworkattachment) {
-	Artworkworkattachment = artworkworkattachment;
+public void setArtworkAttachment(String artworkAttachment) {
+	this.artworkAttachment = artworkAttachment;
 }
+@Column(name="variableDataBreakdown" , length=100)
 public String getVariableDataBreakdown() {
-	return VariableDataBreakdown;
+	return variableDataBreakdown;
 }
 public void setVariableDataBreakdown(String variableDataBreakdown) {
-	VariableDataBreakdown = variableDataBreakdown;
+	this.variableDataBreakdown = variableDataBreakdown;
 }
+@Column(name="manufacturingNotes" , length=100)
 public String getManufacturingNotes() {
-	return ManufacturingNotes;
+	return manufacturingNotes;
 }
 public void setManufacturingNotes(String manufacturingNotes) {
-	ManufacturingNotes = manufacturingNotes;
+	this.manufacturingNotes = manufacturingNotes;
 }
-public String getOrdertype() {
-	return Ordertype;
+@Column(name="orderType" , length=100)
+public String getOrderType() {
+	return orderType;
 }
-public void setOrdertype(String ordertype) {
-	Ordertype = ordertype;
+public void setOrderType(String orderType) {
+	this.orderType = orderType;
 }
+@Column(name="orderBy" , length=100)
 public String getOrderBy() {
-	return OrderBy;
+	return orderBy;
 }
 public void setOrderBy(String orderBy) {
-	OrderBy = orderBy;
+	this.orderBy = orderBy;
 }
+@Column(name="endCustomer" , length=100)
 public String getEndCustomer() {
-	return EndCustomer;
+	return endCustomer;
 }
 public void setEndCustomer(String endCustomer) {
-	EndCustomer = endCustomer;
+	this.endCustomer = endCustomer;
 }
+
+@Column(name="shippingOnlyNotes" , length=100)
 public String getShippingOnlyNotes() {
-	return ShippingOnlyNotes;
+	return shippingOnlyNotes;
 }
 public void setShippingOnlyNotes(String shippingOnlyNotes) {
-	ShippingOnlyNotes = shippingOnlyNotes;
+	this.shippingOnlyNotes = shippingOnlyNotes;
 }
+@Column(name="bankCharge" , length=100)
 public String getBankCharge() {
-	return BankCharge;
+	return bankCharge;
 }
 public void setBankCharge(String bankCharge) {
-	BankCharge = bankCharge;
+	this.bankCharge = bankCharge;
 }
+@Column(name="freightCharge" , length=100)
 public String getFreightCharge() {
-	return FreightCharge;
+	return freightCharge;
 }
 public void setFreightCharge(String freightCharge) {
-	FreightCharge = freightCharge;
+	this.freightCharge = freightCharge;
 }
+@Column(name="shippingHold" , length=100)
 public String getShippingHold() {
-	return ShippingHold;
+	return shippingHold;
 }
 public void setShippingHold(String shippingHold) {
-	ShippingHold = shippingHold;
+	this.shippingHold = shippingHold;
 }
+@Column(name="productionHold" , length=100)
 public String getProductionHold() {
-	return ProductionHold;
+	return productionHold;
 }
 public void setProductionHold(String productionHold) {
-	ProductionHold = productionHold;
+	this.productionHold = productionHold;
 }
+@Column(name="splitShipSet" , length=100)
 public String getSplitShipSet() {
-	return SplitShipSet;
+	return splitShipSet;
 }
 public void setSplitShipSet(String splitShipSet) {
-	SplitShipSet = splitShipSet;
+	this.splitShipSet = splitShipSet;
 }
+@Column(name="agreement" , length=100)
 public String getAgreement() {
-	return Agreement;
+	return agreement;
 }
 public void setAgreement(String agreement) {
-	Agreement = agreement;
+	this.agreement = agreement;
 }
+@Column(name="modelSerialNumber" , length=100)
 public String getModelSerialNumber() {
-	return ModelSerialNumber;
+	return modelSerialNumber;
 }
 public void setModelSerialNumber(String modelSerialNumber) {
-	ModelSerialNumber = modelSerialNumber;
+	this.modelSerialNumber = modelSerialNumber;
 }
+@Column(name="waiveMOQ" , length=100)
 public String getWaiveMOQ() {
-	return WaiveMOQ;
+	return waiveMOQ;
 }
 public void setWaiveMOQ(String waiveMOQ) {
-	WaiveMOQ = waiveMOQ;
+	this.waiveMOQ = waiveMOQ;
 }
+@Column(name="APOType" , length=100)
 public String getAPOType() {
 	return APOType;
 }
 public void setAPOType(String aPOType) {
 	APOType = aPOType;
 }
+@Column(name="price" , length=100)
 public String getPrice() {
-	return Price;
+	return price;
 }
 public void setPrice(String price) {
-	Price = price;
+	this.price = price;
 }
-
 
 }

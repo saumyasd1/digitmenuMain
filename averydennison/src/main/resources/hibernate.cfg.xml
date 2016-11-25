@@ -17,7 +17,7 @@
         <property name="hibernate.connection.password">adeptia</property>
  
         <!-- add classes to map from here -->
-        <mapping class="com.avery.dao.Person" />
+        <!--<mapping class="com.avery.dao.Person" />-->
         <mapping class="com.avery.dao.Address" />
         <mapping class="com.avery.dao.GlobalConfiguration" />
         <mapping class="com.avery.dao.OrderEmailAttachment" />

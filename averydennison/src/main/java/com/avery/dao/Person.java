@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "person")
 public class Person {
  
-    long id;
+ /*   long id;
     String firstName;
     String lastName;
     //Set<Address> addresses;

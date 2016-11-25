@@ -1,13 +1,13 @@
 package com.avery;
 
 
-import com.avery.services.PersonService;
+import com.avery.services.PartnerService;
 
 
 
 public class PersonManager {
 	public static void main(String[] args) {
-		PersonService person = new PersonService();
+		PartnerService person = new PartnerService();
 		System.out.println(person.hibernateTest());
 	}
 }

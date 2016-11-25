@@ -11,324 +11,884 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "partnerDataStructure")
 public class PartnerDataStructure {
+
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
 	int id;
-	int partnerdatastructureid;
-	int partnerid;
-	int rboid;
+	@Column(name = "partnerDataStructureId")
+	String partnerDataStructureId;
+	@Column(name = "partnerId", length = 50)
+	String partnerId;
+	@Column(name = "rboId", length = 50)
+	String rboId;
+	@Column(name = "rborName", length = 250)
 	String rborName;
-   	String site;
-    String orgcode;
-    String csrprimaryemail;
-    String csrsecondrygroupemail;
-    String productlinetype;
-    String defaultbilltocode;
-    String defaultshiptocode;
-    String invoicelineinstruction;
-    String packinginstruction;
-    String variabledatabreakdown;
-    String manufacturingnotes;
-    String shippingonlynotes;
-    String splitshipsetby;
-    String artworkhold;
-    String misccsrinstruction;
-    String iswaivemoa;
-    String iswaivemoq;
-    String issizecheck;
-    String isdiscountpricecheck;
-    String isfabriccheck;
-    String isshipmark;
-    String isllkkcheck;
-    String islocalbillingCheck;
-    String isfactorytransfercheck;
-    String isshipmentsample;
-    String orderfilenamepatern;
-    String orderfilenameextension;
-    String orderfileschemaid;
-    String orderfilemappingid;
-    String isorderhasinternalitems;
-    String isorderhaslocalitems;
-    String IsOracleItem;
-    String IsTrimItem;
-    String IsSparrowItem;
-    String IsADRequired;
-    String ADFileNamePattern_1;
-    String ADFileNameExtension_1;
-    String ADFileSchemaID_1;
-    String ADMappingID_1;
-    String ADFileNamePattern_2;
-    String ADFileNameExtension_2;
-    String ADFileSchemaID_2;
-    String ADMappingID_2;
-    String ADFileNamePattern_3;
-    String ADFileNameExtension_3;
-    String ADFileSchemaID_3;
-    String ADMappingID_3;
-    String ADFileNamePattern_4;
-    String ADFileNameExtension_4;
-    String ADFileSchemaID_4;
-    String ADMappingID_4;
-    String EmailSubjectRBOMatch;
-    String EmailSubjectRBOMatchLocation;
-    String IsEmailSubjectRBOMatchRequired;
-    String EmailSubjectProductLineMatch;
-    String EmailSubjectProductLineMatchLocation;
-    String IsEmailSubjectProductLineMatchRequired;
-    String FileRBOMatch;
-    String FileMatchLocation;
-    String IsFileMatchRequired;
-    String FileProductLineMatch;
-    String FileProductLineMatchLocation;
-    String IsFileProductLineMatchRequired;
-    String FileOrderMatch;
-    String FileOrderMatchLocation;
-    String IsFileOrderMatchRequired;
-    String ADFileRBOMatch;
-    String FileADMatchLocation;
-    String IsADFileMatchRequired;
-    String FileADProductLineMatch;
-    String ADFileProductLineMatchLocation;
-    String IsADFileProductLineMatchRequired;
-    String ADFileOrderMatch;
-    String ADFileOrderMatchLocation;
-    String IsADFileOrderMatchRequired;
-    String IsActive;
-    Date CreatedDate;
-    String CreatedByName;
-    Date LastModifiedDate;
-    String LastModifiedByName;
-    String Comment;
-    
-    
-    public PartnerDataStructure() {
-      	 
-    }
-    public PartnerDataStructure(String rborName, String site) {
-        this.rborName = rborName;
-        this.site = site;
-        
-    }
-    
-    @Id 
-    @GeneratedValue 
-    @Column(name = "id")
-    public int getId() {
+	@Column(name = "site", length = 25)
+	String site;
+	@Column(name = "orgCode", length = 25)
+	String orgCode;
+	@Column(name = "csrPrimaryEmail", length = 250)
+	String csrPrimaryEmail;
+	@Column(name = "csrSecondryGroupEmail", length = 250)
+	String csrSecondryGroupEmail;
+	@Column(name = "productLineType", length = 25)
+	String productLineType;
+	@Column(name = "defaultBillToCode")
+	int defaultBillToCode;
+	@Column(name = "defaultShipToCode")
+	int defaultShipToCode;
+	@Column(name = "invoiceLineInstruction", length = 500)
+	String invoiceLineInstruction;
+	@Column(name = "packingInstruction", length = 500)
+	String packingInstruction;
+	@Column(name = "variableDataBreakdown", length = 500)
+	String variableDataBreakdown;
+	@Column(name = "manufacturingNotes", length = 500)
+	String manufacturingNotes;
+	@Column(name = "shippingOnlyNotes", length = 500)
+	String shippingOnlyNotes;
+	@Column(name = "splitShipsetBy", length = 5)
+	String splitShipsetBy;
+	@Column(name = "artworkHold", length = 5)
+	String artworkHold;
+	@Column(name = "miscCsrInstruction", length=500)
+	String miscCsrInstruction;
+	@Column(name = "waiveMoa")
+	boolean waiveMoa;
+	@Column(name = "waiveMoq")
+	boolean waiveMoq;
+	@Column(name = "sizeCheck")
+	boolean sizeCheck;
+	@Column(name = "discountPriceCheck")
+	boolean discountPriceCheck;
+	@Column(name = "fabricCheck")
+	boolean fabricCheck;
+	@Column(name = "shipMark")
+	boolean shipMark;
+	@Column(name = "llkkCheck")
+	boolean llkkCheck;
+	@Column(name = "localBillingCheck")
+	boolean localBillingCheck;
+	@Column(name = "factoryTransferCheck")
+	boolean factoryTransferCheck;
+	@Column(name = "shipmentSample")
+	boolean shipmentSample;
+	@Column(name = "orderFilenamePattern", length = 25)
+	String orderFilenamePattern;
+	@Column(name = "orderFilenameExtension", length = 100)
+	String orderFilenameExtension;
+	@Column(name = "orderFileSchemaId", length = 50)
+	String orderFileSchemaId;
+	@Column(name = "orderFileMappingId", length = 50)
+	String orderFileMappingId;
+	@Column(name = "orderHasInternalItems")
+	boolean orderHasInternalItems;
+	@Column(name = "orderHasLocalItems")
+	boolean orderHasLocalItems;
+	@Column(name = "oracleItem")
+	boolean oracleItem;
+	@Column(name = "trimItem")
+	boolean trimItem;
+	@Column(name = "sparrowItem")
+	boolean sparrowItem;
+	@Column(name = "adRequired")
+	boolean adRequired;
+	@Column(name = "adFileNamePattern_1", length = 50)
+	String adFileNamePattern_1;
+	@Column(name = "adFileNameExtension_1", length = 50)
+	String adFileNameExtension_1;
+	@Column(name = "adFileSchemaID_1", length = 50)
+	String adFileSchemaID_1;
+	@Column(name = "adMappingID_1", length = 50)
+	String adMappingID_1;
+	@Column(name = "adFileNamePattern_2", length = 50)
+	String adFileNamePattern_2;
+	@Column(name = "adFileNameExtension_2", length = 50)
+	String adFileNameExtension_2;
+	@Column(name = "adFileSchemaID_2", length = 50)
+	String adFileSchemaID_2;
+	@Column(name = "adMappingID_2", length = 50)
+	String adMappingID_2;
+	@Column(name = "adFileNamePattern_3", length = 50)
+	String adFileNamePattern_3;
+	@Column(name = "adFileNameExtension_3", length = 50)
+	String adFileNameExtension_3;
+	@Column(name = "adFileSchemaID_3", length = 50)
+	String adFileSchemaID_3;
+	@Column(name = "adMappingID_3", length = 50)
+	String adMappingID_3;
+	@Column(name = "adFileNamePattern_4", length = 50)
+	String adFileNamePattern_4;
+	@Column(name = "adFileNameExtension_4", length = 50)
+	String adFileNameExtension_4;
+	@Column(name = "adFileSchemaID_4", length = 50)
+	String adFileSchemaID_4;
+	@Column(name = "adMappingID_4", length = 50)
+	String adMappingID_4;
+	@Column(name = "emailSubjectRBOMatch", length = 100)
+	String emailSubjectRBOMatch;
+	@Column(name = "emailSubjectRBOMatchLocation", length = 100)
+	String emailSubjectRBOMatchLocation;
+	@Column(name = "emailSubjectRBOMatchRequired")
+	boolean emailSubjectRBOMatchRequired;
+	@Column(name = "emailSubjectProductLineMatch", length = 100)
+	String emailSubjectProductLineMatch;
+	@Column(name = "emailSubjectProductLineMatchLocation", length = 100)
+	String emailSubjectProductLineMatchLocation;
+	@Column(name = "emailSubjectProductLineMatchRequired")
+	boolean emailSubjectProductLineMatchRequired;
+	@Column(name = "fileRBOMatch", length = 100)
+	String fileRBOMatch;
+	@Column(name = "fileMatchLocation", length = 100)
+	String fileMatchLocation;
+	@Column(name = "fileMatchRequired")
+	boolean fileMatchRequired;
+	@Column(name = "fileProductLineMatch", length = 100)
+	String fileProductLineMatch;
+	@Column(name = "fileProductLineMatchLocation", length = 100)
+	String fileProductLineMatchLocation;
+	@Column(name = "fileProductLineMatchRequired")
+	boolean fileProductLineMatchRequired;
+	@Column(name = "fileOrderMatch", length = 100)
+	String fileOrderMatch;
+	@Column(name = "fileOrderMatchLocation", length = 100)
+	String fileOrderMatchLocation;
+	@Column(name = "fileOrderMatchRequired")
+	boolean fileOrderMatchRequired;
+	@Column(name = "adFileRBOMatch", length = 100)
+	String adFileRBOMatch;
+	@Column(name = "fileAdMatchLocation", length = 100)
+	String fileAdMatchLocation;
+	@Column(name = "adFileMatchRequired")
+	boolean adFileMatchRequired;
+	@Column(name = "fileADProductLineMatch", length = 100)
+	String fileADProductLineMatch;
+	@Column(name = "adFileProductLineMatchLocation", length = 100)
+	String adFileProductLineMatchLocation;
+	@Column(name = "adFileProductLineMatchRequired")
+	boolean adFileProductLineMatchRequired;
+	@Column(name = "adFileOrderMatch", length = 100)
+	String adFileOrderMatch;
+	@Column(name = "adFileOrderMatchLocation", length = 100)
+	String adFileOrderMatchLocation;
+	@Column(name = "adFileOrderMatchRequired")
+	boolean adFileOrderMatchRequired;
+	@Column(name = "active")
+	boolean active;
+	@Column(name = "createdDate")
+	Date createdDate;
+	@Column(name = "createdByName", length = 50)
+	String createdByName;
+	@Column(name = "lastModifiedDate")
+	Date lastModifiedDate;
+	@Column(name = "lastModifiedByName", length = 250)
+	String lastModifiedByName;
+	@Column(name = "comment", length = 500)
+	String comment;
+
+	public PartnerDataStructure() {
+
+	}
+
+	public PartnerDataStructure(String rborName, String site) {
+		this.rborName = rborName;
+		this.site = site;
+
+	}
+
+	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
-    public int getPartnerdatastructureid() {
-		return partnerdatastructureid;
+
+	public String getPartnerDataStructureId() {
+		return partnerDataStructureId;
 	}
-	public void setPartnerdatastructureid(int partnerdatastructureid) {
-		this.partnerdatastructureid = partnerdatastructureid;
+
+	public void setPartnerDataStructureId(String partnerDataStructureId) {
+		this.partnerDataStructureId = partnerDataStructureId;
 	}
-	public int getPartnerid() {
-		return partnerid;
+
+	public String getPartnerId() {
+		return partnerId;
 	}
-	public void setPartnerid(int partnerid) {
-		this.partnerid = partnerid;
+
+	public void setPartnerId(String partnerId) {
+		this.partnerId = partnerId;
 	}
-	public int getRboid() {
-		return rboid;
+
+	public String getRboId() {
+		return rboId;
 	}
-	public void setRboid(int rboid) {
-		this.rboid = rboid;
+
+	public void setRboId(String rboId) {
+		this.rboId = rboId;
 	}
+
 	public String getRborName() {
 		return rborName;
 	}
+
 	public void setRborName(String rborName) {
 		this.rborName = rborName;
 	}
+
 	public String getSite() {
 		return site;
 	}
+
 	public void setSite(String site) {
 		this.site = site;
 	}
-	public String getOrgcode() {
-		return orgcode;
+
+	public String getOrgCode() {
+		return orgCode;
 	}
-	public void setOrgcode(String orgcode) {
-		this.orgcode = orgcode;
+
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
 	}
-	public String getCsrprimaryemail() {
-		return csrprimaryemail;
+
+	public String getCsrPrimaryEmail() {
+		return csrPrimaryEmail;
 	}
-	public void setCsrprimaryemail(String csrprimaryemail) {
-		this.csrprimaryemail = csrprimaryemail;
+
+	public void setCsrPrimaryEmail(String csrPrimaryEmail) {
+		this.csrPrimaryEmail = csrPrimaryEmail;
 	}
-	public String getCsrsecondrygroupemail() {
-		return csrsecondrygroupemail;
+
+	public String getCsrSecondryGroupEmail() {
+		return csrSecondryGroupEmail;
 	}
-	public void setCsrsecondrygroupemail(String csrsecondrygroupemail) {
-		this.csrsecondrygroupemail = csrsecondrygroupemail;
+
+	public void setCsrSecondryGroupEmail(String csrSecondryGroupEmail) {
+		this.csrSecondryGroupEmail = csrSecondryGroupEmail;
 	}
-	public String getProductlinetype() {
-		return productlinetype;
+
+	public String getProductLineType() {
+		return productLineType;
 	}
-	public void setProductlinetype(String productlinetype) {
-		this.productlinetype = productlinetype;
+
+	public void setProductLineType(String productLineType) {
+		this.productLineType = productLineType;
 	}
-	public String getDefaultbilltocode() {
-		return defaultbilltocode;
+
+	public int getDefaultBillToCode() {
+		return defaultBillToCode;
 	}
-	public void setDefaultbilltocode(String defaultbilltocode) {
-		this.defaultbilltocode = defaultbilltocode;
+
+	public void setDefaultBillToCode(int defaultBillToCode) {
+		this.defaultBillToCode = defaultBillToCode;
 	}
-	public String getDefaultshiptocode() {
-		return defaultshiptocode;
+
+	public int getDefaultShipToCode() {
+		return defaultShipToCode;
 	}
-	public void setDefaultshiptocode(String defaultshiptocode) {
-		this.defaultshiptocode = defaultshiptocode;
+
+	public void setDefaultShipToCode(int defaultShipToCode) {
+		this.defaultShipToCode = defaultShipToCode;
 	}
-	public String getInvoicelineinstruction() {
-		return invoicelineinstruction;
+
+	public String getInvoiceLineInstruction() {
+		return invoiceLineInstruction;
 	}
-	public void setInvoicelineinstruction(String invoicelineinstruction) {
-		this.invoicelineinstruction = invoicelineinstruction;
+
+	public void setInvoiceLineInstruction(String invoiceLineInstruction) {
+		this.invoiceLineInstruction = invoiceLineInstruction;
 	}
-	public String getPackinginstruction() {
-		return packinginstruction;
+
+	public String getPackingInstruction() {
+		return packingInstruction;
 	}
-	public void setPackinginstruction(String packinginstruction) {
-		this.packinginstruction = packinginstruction;
+
+	public void setPackingInstruction(String packingInstruction) {
+		this.packingInstruction = packingInstruction;
 	}
-	public String getVariabledatabreakdown() {
-		return variabledatabreakdown;
+
+	public String getVariableDataBreakdown() {
+		return variableDataBreakdown;
 	}
-	public void setVariabledatabreakdown(String variabledatabreakdown) {
-		this.variabledatabreakdown = variabledatabreakdown;
+
+	public void setVariableDataBreakdown(String variableDataBreakdown) {
+		this.variableDataBreakdown = variableDataBreakdown;
 	}
-	public String getManufacturingnotes() {
-		return manufacturingnotes;
+
+	public String getManufacturingNotes() {
+		return manufacturingNotes;
 	}
-	public void setManufacturingnotes(String manufacturingnotes) {
-		this.manufacturingnotes = manufacturingnotes;
+
+	public void setManufacturingNotes(String manufacturingNotes) {
+		this.manufacturingNotes = manufacturingNotes;
 	}
-	public String getShippingonlynotes() {
-		return shippingonlynotes;
+
+	public String getShippingOnlyNotes() {
+		return shippingOnlyNotes;
 	}
-	public void setShippingonlynotes(String shippingonlynotes) {
-		this.shippingonlynotes = shippingonlynotes;
+
+	public void setShippingOnlyNotes(String shippingOnlyNotes) {
+		this.shippingOnlyNotes = shippingOnlyNotes;
 	}
-	public String getSplitshipsetby() {
-		return splitshipsetby;
+
+	public String getSplitShipsetBy() {
+		return splitShipsetBy;
 	}
-	public void setSplitshipsetby(String splitshipsetby) {
-		this.splitshipsetby = splitshipsetby;
+
+	public void setSplitShipsetBy(String splitShipsetBy) {
+		this.splitShipsetBy = splitShipsetBy;
 	}
-	public String getArtworkhold() {
-		return artworkhold;
+
+	public String getArtworkHold() {
+		return artworkHold;
 	}
-	public void setArtworkhold(String artworkhold) {
-		this.artworkhold = artworkhold;
+
+	public void setArtworkHold(String artworkHold) {
+		this.artworkHold = artworkHold;
 	}
-	public String getMisccsrinstruction() {
-		return misccsrinstruction;
+
+	public String getMiscCsrInstruction() {
+		return miscCsrInstruction;
 	}
-	public void setMisccsrinstruction(String misccsrinstruction) {
-		this.misccsrinstruction = misccsrinstruction;
+
+	public void setMiscCsrInstruction(String miscCsrInstruction) {
+		this.miscCsrInstruction = miscCsrInstruction;
 	}
-	public String getIswaivemoa() {
-		return iswaivemoa;
+
+	public boolean isWaiveMoa() {
+		return waiveMoa;
 	}
-	public void setIswaivemoa(String iswaivemoa) {
-		this.iswaivemoa = iswaivemoa;
+
+	public void setWaiveMoa(boolean waiveMoa) {
+		this.waiveMoa = waiveMoa;
 	}
-	public String getIswaivemoq() {
-		return iswaivemoq;
+
+	public boolean isWaiveMoq() {
+		return waiveMoq;
 	}
-	public void setIswaivemoq(String iswaivemoq) {
-		this.iswaivemoq = iswaivemoq;
+
+	public void setWaiveMoq(boolean waiveMoq) {
+		this.waiveMoq = waiveMoq;
 	}
-	public String getIssizecheck() {
-		return issizecheck;
+
+	public boolean isSizeCheck() {
+		return sizeCheck;
 	}
-	public void setIssizecheck(String issizecheck) {
-		this.issizecheck = issizecheck;
+
+	public void setSizeCheck(boolean sizeCheck) {
+		this.sizeCheck = sizeCheck;
 	}
-	public String getIsdiscountpricecheck() {
-		return isdiscountpricecheck;
+
+	public boolean isDiscountPriceCheck() {
+		return discountPriceCheck;
 	}
-	public void setIsdiscountpricecheck(String isdiscountpricecheck) {
-		this.isdiscountpricecheck = isdiscountpricecheck;
+
+	public void setDiscountPriceCheck(boolean discountPriceCheck) {
+		this.discountPriceCheck = discountPriceCheck;
 	}
-	public String getIsfabriccheck() {
-		return isfabriccheck;
+
+	public boolean isFabricCheck() {
+		return fabricCheck;
 	}
-	public void setIsfabriccheck(String isfabriccheck) {
-		this.isfabriccheck = isfabriccheck;
+
+	public void setFabricCheck(boolean fabricCheck) {
+		this.fabricCheck = fabricCheck;
 	}
-	public String getIsshipmark() {
-		return isshipmark;
+
+	public boolean isShipMark() {
+		return shipMark;
 	}
-	public void setIsshipmark(String isshipmark) {
-		this.isshipmark = isshipmark;
+
+	public void setShipMark(boolean shipMark) {
+		this.shipMark = shipMark;
 	}
-	public String getIsllkkcheck() {
-		return isllkkcheck;
+
+	public boolean isLlkkCheck() {
+		return llkkCheck;
 	}
-	public void setIsllkkcheck(String isllkkcheck) {
-		this.isllkkcheck = isllkkcheck;
+
+	public void setLlkkCheck(boolean llkkCheck) {
+		this.llkkCheck = llkkCheck;
 	}
-	public String getIslocalbillingCheck() {
-		return islocalbillingCheck;
+
+	public boolean isLocalBillingCheck() {
+		return localBillingCheck;
 	}
-	public void setIslocalbillingCheck(String islocalbillingCheck) {
-		this.islocalbillingCheck = islocalbillingCheck;
+
+	public void setLocalBillingCheck(boolean localBillingCheck) {
+		this.localBillingCheck = localBillingCheck;
 	}
-	public String getIsfactorytransfercheck() {
-		return isfactorytransfercheck;
+
+	public boolean isFactoryTransferCheck() {
+		return factoryTransferCheck;
 	}
-	public void setIsfactorytransfercheck(String isfactorytransfercheck) {
-		this.isfactorytransfercheck = isfactorytransfercheck;
+
+	public void setFactoryTransferCheck(boolean factoryTransferCheck) {
+		this.factoryTransferCheck = factoryTransferCheck;
 	}
-	public String getIsshipmentsample() {
-		return isshipmentsample;
+
+	public boolean isShipmentSample() {
+		return shipmentSample;
 	}
-	public void setIsshipmentsample(String isshipmentsample) {
-		this.isshipmentsample = isshipmentsample;
+
+	public void setShipmentSample(boolean shipmentSample) {
+		this.shipmentSample = shipmentSample;
 	}
-	public String getOrderfilenamepatern() {
-		return orderfilenamepatern;
+
+	public String getOrderFilenamePattern() {
+		return orderFilenamePattern;
 	}
-	public void setOrderfilenamepatern(String orderfilenamepatern) {
-		this.orderfilenamepatern = orderfilenamepatern;
+
+	public void setOrderFilenamePattern(String orderFilenamePattern) {
+		this.orderFilenamePattern = orderFilenamePattern;
 	}
-	public String getOrderfilenameextension() {
-		return orderfilenameextension;
+
+	public String getOrderFilenameExtension() {
+		return orderFilenameExtension;
 	}
-	public void setOrderfilenameextension(String orderfilenameextension) {
-		this.orderfilenameextension = orderfilenameextension;
+
+	public void setOrderFilenameExtension(String orderFilenameExtension) {
+		this.orderFilenameExtension = orderFilenameExtension;
 	}
-	public String getOrderfileschemaid() {
-		return orderfileschemaid;
+
+	public String getOrderFileSchemaId() {
+		return orderFileSchemaId;
 	}
-	public void setOrderfileschemaid(String orderfileschemaid) {
-		this.orderfileschemaid = orderfileschemaid;
+
+	public void setOrderFileSchemaId(String orderFileSchemaId) {
+		this.orderFileSchemaId = orderFileSchemaId;
 	}
-	public String getOrderfilemappingid() {
-		return orderfilemappingid;
+
+	public String getOrderFileMappingId() {
+		return orderFileMappingId;
 	}
-	public void setOrderfilemappingid(String orderfilemappingid) {
-		this.orderfilemappingid = orderfilemappingid;
+
+	public void setOrderFileMappingId(String orderFileMappingId) {
+		this.orderFileMappingId = orderFileMappingId;
 	}
-	public String getIsorderhasinternalitems() {
-		return isorderhasinternalitems;
+
+	public boolean isOrderHasInternalItems() {
+		return orderHasInternalItems;
 	}
-	public void setIsorderhasinternalitems(String isorderhasinternalitems) {
-		this.isorderhasinternalitems = isorderhasinternalitems;
+
+	public void setOrderHasInternalItems(boolean orderHasInternalItems) {
+		this.orderHasInternalItems = orderHasInternalItems;
 	}
-	public String getIsorderhaslocalitems() {
-		return isorderhaslocalitems;
+
+	public boolean isOrderHasLocalItems() {
+		return orderHasLocalItems;
 	}
-	public void setIsorderhaslocalitems(String isorderhaslocalitems) {
-		this.isorderhaslocalitems = isorderhaslocalitems;
+
+	public void setOrderHasLocalItems(boolean orderHasLocalItems) {
+		this.orderHasLocalItems = orderHasLocalItems;
 	}
-    
-    
-    
+
+	public boolean isOracleItem() {
+		return oracleItem;
+	}
+
+	public void setOracleItem(boolean oracleItem) {
+		this.oracleItem = oracleItem;
+	}
+
+	public boolean isTrimItem() {
+		return trimItem;
+	}
+
+	public void setTrimItem(boolean trimItem) {
+		this.trimItem = trimItem;
+	}
+
+	public boolean isSparrowItem() {
+		return sparrowItem;
+	}
+
+	public void setSparrowItem(boolean sparrowItem) {
+		this.sparrowItem = sparrowItem;
+	}
+
+	public boolean isAdRequired() {
+		return adRequired;
+	}
+
+	public void setAdRequired(boolean adRequired) {
+		this.adRequired = adRequired;
+	}
+
+	public String getAdFileNamePattern_1() {
+		return adFileNamePattern_1;
+	}
+
+	public void setAdFileNamePattern_1(String adFileNamePattern_1) {
+		this.adFileNamePattern_1 = adFileNamePattern_1;
+	}
+
+	public String getAdFileNameExtension_1() {
+		return adFileNameExtension_1;
+	}
+
+	public void setAdFileNameExtension_1(String adFileNameExtension_1) {
+		this.adFileNameExtension_1 = adFileNameExtension_1;
+	}
+
+	public String getAdFileSchemaID_1() {
+		return adFileSchemaID_1;
+	}
+
+	public void setAdFileSchemaID_1(String adFileSchemaID_1) {
+		this.adFileSchemaID_1 = adFileSchemaID_1;
+	}
+
+	public String getAdMappingID_1() {
+		return adMappingID_1;
+	}
+
+	public void setAdMappingID_1(String adMappingID_1) {
+		this.adMappingID_1 = adMappingID_1;
+	}
+
+	public String getAdFileNamePattern_2() {
+		return adFileNamePattern_2;
+	}
+
+	public void setAdFileNamePattern_2(String adFileNamePattern_2) {
+		this.adFileNamePattern_2 = adFileNamePattern_2;
+	}
+
+	public String getAdFileNameExtension_2() {
+		return adFileNameExtension_2;
+	}
+
+	public void setAdFileNameExtension_2(String adFileNameExtension_2) {
+		this.adFileNameExtension_2 = adFileNameExtension_2;
+	}
+
+	public String getAdFileSchemaID_2() {
+		return adFileSchemaID_2;
+	}
+
+	public void setAdFileSchemaID_2(String adFileSchemaID_2) {
+		this.adFileSchemaID_2 = adFileSchemaID_2;
+	}
+
+	public String getAdMappingID_2() {
+		return adMappingID_2;
+	}
+
+	public void setAdMappingID_2(String adMappingID_2) {
+		this.adMappingID_2 = adMappingID_2;
+	}
+
+	public String getAdFileNamePattern_3() {
+		return adFileNamePattern_3;
+	}
+
+	public void setAdFileNamePattern_3(String adFileNamePattern_3) {
+		this.adFileNamePattern_3 = adFileNamePattern_3;
+	}
+
+	public String getAdFileNameExtension_3() {
+		return adFileNameExtension_3;
+	}
+
+	public void setAdFileNameExtension_3(String adFileNameExtension_3) {
+		this.adFileNameExtension_3 = adFileNameExtension_3;
+	}
+
+	public String getAdFileSchemaID_3() {
+		return adFileSchemaID_3;
+	}
+
+	public void setAdFileSchemaID_3(String adFileSchemaID_3) {
+		this.adFileSchemaID_3 = adFileSchemaID_3;
+	}
+
+	public String getAdMappingID_3() {
+		return adMappingID_3;
+	}
+
+	public void setAdMappingID_3(String adMappingID_3) {
+		this.adMappingID_3 = adMappingID_3;
+	}
+
+	public String getAdFileNamePattern_4() {
+		return adFileNamePattern_4;
+	}
+
+	public void setAdFileNamePattern_4(String adFileNamePattern_4) {
+		this.adFileNamePattern_4 = adFileNamePattern_4;
+	}
+
+	public String getAdFileNameExtension_4() {
+		return adFileNameExtension_4;
+	}
+
+	public void setAdFileNameExtension_4(String adFileNameExtension_4) {
+		this.adFileNameExtension_4 = adFileNameExtension_4;
+	}
+
+	public String getAdFileSchemaID_4() {
+		return adFileSchemaID_4;
+	}
+
+	public void setAdFileSchemaID_4(String adFileSchemaID_4) {
+		this.adFileSchemaID_4 = adFileSchemaID_4;
+	}
+
+	public String getAdMappingID_4() {
+		return adMappingID_4;
+	}
+
+	public void setAdMappingID_4(String adMappingID_4) {
+		this.adMappingID_4 = adMappingID_4;
+	}
+
+	public String getEmailSubjectRBOMatch() {
+		return emailSubjectRBOMatch;
+	}
+
+	public void setEmailSubjectRBOMatch(String emailSubjectRBOMatch) {
+		this.emailSubjectRBOMatch = emailSubjectRBOMatch;
+	}
+
+	public String getEmailSubjectRBOMatchLocation() {
+		return emailSubjectRBOMatchLocation;
+	}
+
+	public void setEmailSubjectRBOMatchLocation(String emailSubjectRBOMatchLocation) {
+		this.emailSubjectRBOMatchLocation = emailSubjectRBOMatchLocation;
+	}
+
+	public boolean isEmailSubjectRBOMatchRequired() {
+		return emailSubjectRBOMatchRequired;
+	}
+
+	public void setEmailSubjectRBOMatchRequired(boolean emailSubjectRBOMatchRequired) {
+		this.emailSubjectRBOMatchRequired = emailSubjectRBOMatchRequired;
+	}
+
+	public String getEmailSubjectProductLineMatch() {
+		return emailSubjectProductLineMatch;
+	}
+
+	public void setEmailSubjectProductLineMatch(String emailSubjectProductLineMatch) {
+		this.emailSubjectProductLineMatch = emailSubjectProductLineMatch;
+	}
+
+	public String getEmailSubjectProductLineMatchLocation() {
+		return emailSubjectProductLineMatchLocation;
+	}
+
+	public void setEmailSubjectProductLineMatchLocation(
+			String emailSubjectProductLineMatchLocation) {
+		this.emailSubjectProductLineMatchLocation = emailSubjectProductLineMatchLocation;
+	}
+
+	public boolean isEmailSubjectProductLineMatchRequired() {
+		return emailSubjectProductLineMatchRequired;
+	}
+
+	public void setEmailSubjectProductLineMatchRequired(
+			boolean emailSubjectProductLineMatchRequired) {
+		this.emailSubjectProductLineMatchRequired = emailSubjectProductLineMatchRequired;
+	}
+
+	public String getFileRBOMatch() {
+		return fileRBOMatch;
+	}
+
+	public void setFileRBOMatch(String fileRBOMatch) {
+		this.fileRBOMatch = fileRBOMatch;
+	}
+
+	public String getFileMatchLocation() {
+		return fileMatchLocation;
+	}
+
+	public void setFileMatchLocation(String fileMatchLocation) {
+		this.fileMatchLocation = fileMatchLocation;
+	}
+
+	public boolean isFileMatchRequired() {
+		return fileMatchRequired;
+	}
+
+	public void setFileMatchRequired(boolean fileMatchRequired) {
+		this.fileMatchRequired = fileMatchRequired;
+	}
+
+	public String getFileProductLineMatch() {
+		return fileProductLineMatch;
+	}
+
+	public void setFileProductLineMatch(String fileProductLineMatch) {
+		this.fileProductLineMatch = fileProductLineMatch;
+	}
+
+	public String getFileProductLineMatchLocation() {
+		return fileProductLineMatchLocation;
+	}
+
+	public void setFileProductLineMatchLocation(String fileProductLineMatchLocation) {
+		this.fileProductLineMatchLocation = fileProductLineMatchLocation;
+	}
+
+	public boolean isFileProductLineMatchRequired() {
+		return fileProductLineMatchRequired;
+	}
+
+	public void setFileProductLineMatchRequired(boolean fileProductLineMatchRequired) {
+		this.fileProductLineMatchRequired = fileProductLineMatchRequired;
+	}
+
+	public String getFileOrderMatch() {
+		return fileOrderMatch;
+	}
+
+	public void setFileOrderMatch(String fileOrderMatch) {
+		this.fileOrderMatch = fileOrderMatch;
+	}
+
+	public String getFileOrderMatchLocation() {
+		return fileOrderMatchLocation;
+	}
+
+	public void setFileOrderMatchLocation(String fileOrderMatchLocation) {
+		this.fileOrderMatchLocation = fileOrderMatchLocation;
+	}
+
+	public boolean isFileOrderMatchRequired() {
+		return fileOrderMatchRequired;
+	}
+
+	public void setFileOrderMatchRequired(boolean fileOrderMatchRequired) {
+		this.fileOrderMatchRequired = fileOrderMatchRequired;
+	}
+
+	public String getAdFileRBOMatch() {
+		return adFileRBOMatch;
+	}
+
+	public void setAdFileRBOMatch(String adFileRBOMatch) {
+		this.adFileRBOMatch = adFileRBOMatch;
+	}
+
+	public String getFileAdMatchLocation() {
+		return fileAdMatchLocation;
+	}
+
+	public void setFileAdMatchLocation(String fileAdMatchLocation) {
+		this.fileAdMatchLocation = fileAdMatchLocation;
+	}
+
+	public boolean isAdFileMatchRequired() {
+		return adFileMatchRequired;
+	}
+
+	public void setAdFileMatchRequired(boolean adFileMatchRequired) {
+		this.adFileMatchRequired = adFileMatchRequired;
+	}
+
+	public String getFileADProductLineMatch() {
+		return fileADProductLineMatch;
+	}
+
+	public void setFileADProductLineMatch(String fileADProductLineMatch) {
+		this.fileADProductLineMatch = fileADProductLineMatch;
+	}
+
+	public String getAdFileProductLineMatchLocation() {
+		return adFileProductLineMatchLocation;
+	}
+
+	public void setAdFileProductLineMatchLocation(
+			String adFileProductLineMatchLocation) {
+		this.adFileProductLineMatchLocation = adFileProductLineMatchLocation;
+	}
+
+	public boolean isAdFileProductLineMatchRequired() {
+		return adFileProductLineMatchRequired;
+	}
+
+	public void setAdFileProductLineMatchRequired(
+			boolean adFileProductLineMatchRequired) {
+		this.adFileProductLineMatchRequired = adFileProductLineMatchRequired;
+	}
+
+	public String getAdFileOrderMatch() {
+		return adFileOrderMatch;
+	}
+
+	public void setAdFileOrderMatch(String adFileOrderMatch) {
+		this.adFileOrderMatch = adFileOrderMatch;
+	}
+
+	public String getAdFileOrderMatchLocation() {
+		return adFileOrderMatchLocation;
+	}
+
+	public void setAdFileOrderMatchLocation(String adFileOrderMatchLocation) {
+		this.adFileOrderMatchLocation = adFileOrderMatchLocation;
+	}
+
+	public boolean isAdFileOrderMatchRequired() {
+		return adFileOrderMatchRequired;
+	}
+
+	public void setAdFileOrderMatchRequired(boolean adFileOrderMatchRequired) {
+		this.adFileOrderMatchRequired = adFileOrderMatchRequired;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getCreatedByName() {
+		return createdByName;
+	}
+
+	public void setCreatedByName(String createdByName) {
+		this.createdByName = createdByName;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getLastModifiedByName() {
+		return lastModifiedByName;
+	}
+
+	public void setLastModifiedByName(String lastModifiedByName) {
+		this.lastModifiedByName = lastModifiedByName;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	
+
 }

@@ -8,28 +8,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "partner")
 public class Partner {
 
 	int id;
 	String partnerID;
-    String PartnerName;
-    String Address;
-    String ContactPerson;
+    String partnerName;
+    String address;
+    String contactPerson;
     int phone;
-    int isActive;
+    int active;
     Date createdDate;
-    String createdby;
+    String createdBy;
     Date modifiedDate;
     String modifiedby;
     
     public Partner() {
    	 
     }
-    public Partner(String partnerID, String PartnerName) {
+    
+    public Partner(String partnerID, String partnerName) {
         this.partnerID = partnerID;
-        this.PartnerName = PartnerName;
+        this.partnerName = partnerName;
         
     }
     
@@ -42,76 +44,78 @@ public class Partner {
 	public void setId(int id) {
 		this.id = id;
 	}
-	 @Column
+	@Column(name = "partnerId", length = 50)
 	public String getPartnerID() {
 		return partnerID;
 	}
 	public void setPartnerID(String partnerID) {
 		this.partnerID = partnerID;
 	}
-	 @Column
+	@Column(name = "partnerName", length = 50)
 	public String getPartnerName() {
-		return PartnerName;
+		return partnerName;
 	}
 	public void setPartnerName(String partnerName) {
-		PartnerName = partnerName;
+		this.partnerName = partnerName;
 	}
-	 @Column
+	@Column(name = "address", length = 250)
 	public String getAddress() {
-		return Address;
+		return address;
 	}
 	public void setAddress(String address) {
-		Address = address;
+		this.address = address;
 	}
-	 @Column
+	@Column(name = "contactPerson", length = 100)
 	public String getContactPerson() {
-		return ContactPerson;
+		return contactPerson;
 	}
 	public void setContactPerson(String contactPerson) {
-		ContactPerson = contactPerson;
+		this.contactPerson = contactPerson;
 	}
-	 @Column
+	@Column(name = "phone", length = 50)
 	public int getPhone() {
 		return phone;
 	}
 	public void setPhone(int phone) {
 		this.phone = phone;
 	}
-	 @Column
-	public int getIsActive() {
-		return isActive;
+	@Column(name = "active", length = 50)
+	public int getActive() {
+		return active;
 	}
-	public void setIsActive(int isActive) {
-		this.isActive = isActive;
+	public void setActive(int active) {
+		this.active = active;
 	}
-	 @Column
+	@Column(name = "createdDate")
 	public Date getCreatedDate() {
 		return createdDate;
 	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	 @Column
-	public String getCreatedby() {
-		return createdby;
+	@Column(name = "createdBy", length = 100)
+	public String getCreatedBy() {
+		return createdBy;
 	}
-	public void setCreatedby(String createdby) {
-		this.createdby = createdby;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
-	 @Column
+	@Column(name = "modifiedDate")
 	public Date getModifiedDate() {
 		return modifiedDate;
 	}
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
-	 @Column
+	@Column(name = "modifiedby", length = 100)
 	public String getModifiedby() {
 		return modifiedby;
 	}
 	public void setModifiedby(String modifiedby) {
 		this.modifiedby = modifiedby;
 	}
+	
+	
    
     
     

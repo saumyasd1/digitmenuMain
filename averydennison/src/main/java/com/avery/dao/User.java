@@ -20,9 +20,9 @@ public class User {
     String lastName;
     String email;
     String gender;
-    String job_title;
+    String jobTitle;
     String password;
-    String test;
+   
     
 	int role;
     int status;
@@ -44,69 +44,63 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	 @Column
+	@Column(name="firstName" , length=100)
 	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	 @Column
+	@Column(name="lastName" , length=100)
 	public String getLastName() {
 		return lastName;
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	 @Column
+	@Column(name="email" , length=100)
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	 @Column
+	@Column(name="gender" , length=100)
 	public String getGender() {
 		return gender;
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	 @Column
-	public String getJob_title() {
-		return job_title;
+	@Column(name="jobTitle" , length=100)
+	public String getJobTitle() {
+		return jobTitle;
 	}
-	public void setJob_title(String job_title) {
-		this.job_title = job_title;
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
-	 @Column
+	@Column(name="password" , length=100)
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	 @Column
+	@Column(name="role")
 	public int getRole() {
 		return role;
 	}
 	public void setRole(int role) {
 		this.role = role;
 	}
-	 @Column
+	@Column(name="status")
 	public int getStatus() {
 		return status;
 	}
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	 @Column(name = "test1")
-	public String getTest() {
-		return test;
-	}
-	public void setTest(String test) {
-		this.test = test;
-	}
+	
 	
     
     

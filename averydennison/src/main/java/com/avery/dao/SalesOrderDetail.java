@@ -14,28 +14,28 @@ public class SalesOrderDetail {
 
 	
 	int ID;
-	int SalesOrderID;
-	int ProcessQueueID;
-	String Division;
-	String SOnumber;
-	String SODetails;
-	String Oracleitemnumber;
-	String Level;
-	String SKUno;
-	String typesetter;
-	String Variablefieldname;
-	String variabledatavalue;
-	int FiberPercent;
-	Date SentToOracleDate;
-	Date CreatedDate;
-	String CreatedBy;
-	Date LastModifiedDate;
-	String LastModifiedBy;
-	String DivisionforInterfaceERPORG;
+	int salesOrderID;
+	int processQueueID;
+	String division;
+	String soNumber;
+	String soDetails;
+	String oracleItemNumber;
+	String level;
+	String skUno;
+	String typeSetter;
+	String variableFieldName;
+	String variableDataValue;
+	int fiberPercent;
+	Date sentToOracleDate;
+	Date createdDate;
+	String createdBy;
+	Date lastModifiedDate;
+	String lastModifiedBy;
+	String divisionforInterfaceERPORG;
 
 	public SalesOrderDetail(String division, String sOnumber) {
-		Division = division;
-		SOnumber = sOnumber;
+		division = division;
+		soNumber = sOnumber;
 	}
 	
 	@Id 
@@ -47,114 +47,151 @@ public class SalesOrderDetail {
 	public void setID(int iD) {
 		ID = iD;
 	}
+	@Column(name="salesOrderID")
 	public int getSalesOrderID() {
-		return SalesOrderID;
+		return salesOrderID;
 	}
+
 	public void setSalesOrderID(int salesOrderID) {
-		SalesOrderID = salesOrderID;
+		this.salesOrderID = salesOrderID;
 	}
+	@Column(name="processQueueID" , length=100)
 	public int getProcessQueueID() {
-		return ProcessQueueID;
+		return processQueueID;
 	}
+
 	public void setProcessQueueID(int processQueueID) {
-		ProcessQueueID = processQueueID;
+		this.processQueueID = processQueueID;
 	}
+	@Column(name="division" , length=100)
 	public String getDivision() {
-		return Division;
+		return division;
 	}
+
 	public void setDivision(String division) {
-		Division = division;
+		this.division = division;
 	}
-	public String getSOnumber() {
-		return SOnumber;
+	@Column(name="soNumber" , length=100)
+	public String getSoNumber() {
+		return soNumber;
 	}
-	public void setSOnumber(String sOnumber) {
-		SOnumber = sOnumber;
+
+	public void setSoNumber(String soNumber) {
+		this.soNumber = soNumber;
 	}
-	public String getSODetails() {
-		return SODetails;
+	@Column(name="soDetails" , length=100)
+	public String getSoDetails() {
+		return soDetails;
 	}
-	public void setSODetails(String sODetails) {
-		SODetails = sODetails;
+
+	public void setSoDetails(String soDetails) {
+		this.soDetails = soDetails;
 	}
-	public String getOracleitemnumber() {
-		return Oracleitemnumber;
+	@Column(name="oracleItemNumber" , length=100)
+	public String getOracleItemNumber() {
+		return oracleItemNumber;
 	}
-	public void setOracleitemnumber(String oracleitemnumber) {
-		Oracleitemnumber = oracleitemnumber;
+
+	public void setOracleItemNumber(String oracleItemNumber) {
+		this.oracleItemNumber = oracleItemNumber;
 	}
+	@Column(name="level" , length=100)
 	public String getLevel() {
-		return Level;
+		return level;
 	}
+
 	public void setLevel(String level) {
-		Level = level;
+		this.level = level;
 	}
-	public String getSKUno() {
-		return SKUno;
+	@Column(name="skUno" , length=100)
+	public String getSkUno() {
+		return skUno;
 	}
-	public void setSKUno(String sKUno) {
-		SKUno = sKUno;
+
+	public void setSkUno(String skUno) {
+		this.skUno = skUno;
 	}
-	public String getTypesetter() {
-		return typesetter;
+	@Column(name="typeSetter" , length=100)
+	public String getTypeSetter() {
+		return typeSetter;
 	}
-	public void setTypesetter(String typesetter) {
-		this.typesetter = typesetter;
+
+	public void setTypeSetter(String typeSetter) {
+		this.typeSetter = typeSetter;
 	}
-	public String getVariablefieldname() {
-		return Variablefieldname;
+	@Column(name="variableFieldName" , length=100)
+	public String getVariableFieldName() {
+		return variableFieldName;
 	}
-	public void setVariablefieldname(String variablefieldname) {
-		Variablefieldname = variablefieldname;
+
+	public void setVariableFieldName(String variableFieldName) {
+		this.variableFieldName = variableFieldName;
 	}
-	public String getVariabledatavalue() {
-		return variabledatavalue;
+	@Column(name="variableDataValue" , length=100)
+	public String getVariableDataValue() {
+		return variableDataValue;
 	}
-	public void setVariabledatavalue(String variabledatavalue) {
-		this.variabledatavalue = variabledatavalue;
+
+	public void setVariableDataValue(String variableDataValue) {
+		this.variableDataValue = variableDataValue;
 	}
-	public Date getSentToOracleDate() {
-		return SentToOracleDate;
-	}
-	public void setSentToOracleDate(Date sentToOracleDate) {
-		SentToOracleDate = sentToOracleDate;
-	}
-	public Date getCreatedDate() {
-		return CreatedDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		CreatedDate = createdDate;
-	}
-	public String getCreatedBy() {
-		return CreatedBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		CreatedBy = createdBy;
-	}
+	@Column(name="fiberPercent" )
 	public int getFiberPercent() {
-		return FiberPercent;
+		return fiberPercent;
 	}
+
 	public void setFiberPercent(int fiberPercent) {
-		FiberPercent = fiberPercent;
+		this.fiberPercent = fiberPercent;
 	}
+	@Column(name="sentToOracleDate" )
+	public Date getSentToOracleDate() {
+		return sentToOracleDate;
+	}
+
+	public void setSentToOracleDate(Date sentToOracleDate) {
+		this.sentToOracleDate = sentToOracleDate;
+	}
+	@Column(name="createdDate" )
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	@Column(name="createdBy")
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	@Column(name="lastModifiedDate" )
 	public Date getLastModifiedDate() {
-		return LastModifiedDate;
+		return lastModifiedDate;
 	}
+
 	public void setLastModifiedDate(Date lastModifiedDate) {
-		LastModifiedDate = lastModifiedDate;
+		this.lastModifiedDate = lastModifiedDate;
 	}
+	@Column(name="lastModifiedBy" , length=100)
 	public String getLastModifiedBy() {
-		return LastModifiedBy;
+		return lastModifiedBy;
 	}
+
 	public void setLastModifiedBy(String lastModifiedBy) {
-		LastModifiedBy = lastModifiedBy;
+		this.lastModifiedBy = lastModifiedBy;
 	}
+	@Column(name="divisionforInterfaceERPORG" , length=100)
 	public String getDivisionforInterfaceERPORG() {
-		return DivisionforInterfaceERPORG;
+		return divisionforInterfaceERPORG;
 	}
+
 	public void setDivisionforInterfaceERPORG(String divisionforInterfaceERPORG) {
-		DivisionforInterfaceERPORG = divisionforInterfaceERPORG;
+		this.divisionforInterfaceERPORG = divisionforInterfaceERPORG;
 	}
+	
 	
 	
 	

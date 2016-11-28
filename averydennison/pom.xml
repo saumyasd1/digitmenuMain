@@ -27,6 +27,9 @@
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>5.1.6</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

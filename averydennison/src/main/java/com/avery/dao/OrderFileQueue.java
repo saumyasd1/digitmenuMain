@@ -29,8 +29,8 @@ public class OrderFileQueue {
 	 String subject;
 	@Column(name="emailBody",length=250)
 	 String emailBody;
-	@Column(name="orderEmailQueueId",length=50)
-	 String orderEmailQueueId;
+	@Column(name="orderEmailAttachmentId",length=50)
+	 String orderEmailAttachmentId;
 	@Column(name="orderSource",length=50)
 	 String orderSource;
 	@Column(name="submittedBy",length=50)
@@ -149,13 +149,16 @@ public class OrderFileQueue {
 	}
 
 
-	public String getOrderEmailQueueId() {
-		return orderEmailQueueId;
+	
+
+
+	public String getOrderEmailAttachmentId() {
+		return orderEmailAttachmentId;
 	}
 
 
-	public void setOrderEmailQueueId(String orderEmailQueueId) {
-		this.orderEmailQueueId = orderEmailQueueId;
+	public void setOrderEmailAttachmentId(String orderEmailAttachmentId) {
+		this.orderEmailAttachmentId = orderEmailAttachmentId;
 	}
 
 

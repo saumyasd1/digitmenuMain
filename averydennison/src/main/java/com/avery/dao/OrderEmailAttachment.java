@@ -38,10 +38,13 @@ public class OrderEmailAttachment {
 	 public OrderEmailAttachment() {
       	 
 	    }
-	    public OrderEmailAttachment(String lastModifiedByName, String createdByName) {
-	        this.lastModifiedByName = lastModifiedByName;
-	        this.createdByName = createdByName;
-	        
+	   
+	    
+	    public OrderEmailAttachment(String orderEmailQueueID, String fileName, String fileExtension, String filePath){
+	    	this.orderEmailQueueID = orderEmailQueueID;
+	    	this.fileName = fileName;
+	    	this.fileExtension = fileExtension;
+	    	this.filePath = filePath;
 	    }
 	 
 	    @Id 

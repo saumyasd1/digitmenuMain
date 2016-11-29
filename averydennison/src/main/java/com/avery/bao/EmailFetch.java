@@ -7,6 +7,7 @@ import com.aspose.email.ImapMessageInfo;
 import com.aspose.email.MailMessage;
 import com.aspose.email.SaveOptions;
 import com.avery.dao.UnreadEmailInformation;
+import com.avery.services.EmailQueueService;
 
 public class EmailFetch {
 	
@@ -47,8 +48,14 @@ public class EmailFetch {
 	    //Save the Email body in pdf format
 	    MailBodyToPDF mailBodyToPDF = new MailBodyToPDF();
 	    mailBodyToPDF.convertMailToPDF(dir);
+	    
+		EmailQueueService emailQueueService = new EmailQueueService();
+		int emailqueueid = emailQueueService.insertData(msgInfo.getSubject(),dir+"/MailBody.pdf");
+		System.out.println("Emailqueue Id is : "+emailqueueid);
+	    //Write the code here for inserting into the emailqueue table and get the email queue id
+	    
 	    AttachmentHandling attachmentHandling = new AttachmentHandling();
-	    attachmentHandling.extractAttachment(dir, 0);
+	    attachmentHandling.extractAttachment(dir, emailqueueid);//pass the emailqueueid in place of '0' 
 	    
 	    
 	}

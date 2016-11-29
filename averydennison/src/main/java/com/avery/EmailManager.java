@@ -35,7 +35,7 @@ public class EmailManager {
 			client.setPort(port);
 			client.setUsername(userName);
 			client.setPassword(password);
-			client.setSecurityOptions(SecurityOptions.Auto);
+			client.setSecurityOptions(SecurityOptions.Auto); 
 			EmailFolderInformation emailFolderInformation = new EmailFolderInformation();
 			emailFolderInformation.receiveFolderInformation(protocol, client);
 		}

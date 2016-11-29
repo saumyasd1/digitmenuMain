@@ -3,7 +3,6 @@ package com.avery.bao;
 import com.aspose.email.ImapClient;
 import com.aspose.email.ImapFolderInfo;
 import com.aspose.email.ImapMessageInfo;
-import com.avery.dao.UnreadEmailInformation;
 
 public class EmailFolderInformation {
 	

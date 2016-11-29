@@ -12,6 +12,7 @@ import com.aspose.email.Attachment;
 import com.aspose.email.AttachmentCollection;
 import com.aspose.email.EmlLoadOptions;
 import com.aspose.email.MailMessage;
+import com.avery.services.EmailAttachmentService;
 
 public class AttachmentHandling {
 	
@@ -20,9 +21,13 @@ public class AttachmentHandling {
 	public void extractAttachment(String dir, int emailqueueid) throws IOException{
 		MailMessage eml = MailMessage.load(dir + "/" + "CompleteEmail" + ".eml", new EmlLoadOptions());
 		AttachmentCollection attachments = eml.getAttachments();
+		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
+		SendingAcknowledgement acknowledgement = new SendingAcknowledgement();
 		String[] attachmentName = new String[attachments.size()];
 		String newAttachmentName = null;
 		String filePath = null;
+		String fileName;
+		String fileExtension = "";
 		
 		for (int index = 0; index < attachments.size(); index++) {
 			//Initialize Attachment object and Get the indexed Attachment reference
@@ -53,6 +58,7 @@ public class AttachmentHandling {
 			{						
 				unzip(dir + "/" + attachmentName[index]);
 				filePath = dir + "/" + attachmentName[index];
+				emailAttachmentService.insertIntoEmailAttachment(attachment, filePath, emailqueueid);
 				//insertIntoEmailAttachmentTable(attachment, filePath, emailqueueid);
 				String unzipDirectory = filePath.substring(0,filePath.lastIndexOf("."));
 				System.out.println("Destination Directory : "+unzipDirectory);
@@ -67,9 +73,15 @@ public class AttachmentHandling {
 				continue;
 			}
 			System.out.println(filePath);
+			fileName = attachment.getName();
+			if(fileName.contains(".")){
+				fileExtension = fileName.substring(fileName.lastIndexOf("."));
+			}
 			//insertIntoEmailAttachmentTable(attachment, filePath, emailqueueid);
+			emailAttachmentService.insertIntoEmailAttachment(attachment, filePath, emailqueueid);
 		}
 		System.out.println("All Attachments Stored");
+		//acknowledgement.sendAcknowledgement(senderId, emailqueueid);
 		//getAcknowledgementId(emailqueueid);
 	}
 	

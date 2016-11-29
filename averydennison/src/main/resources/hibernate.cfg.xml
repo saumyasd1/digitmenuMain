@@ -17,8 +17,8 @@
         <property name="hibernate.connection.password">adeptia</property>
  
         <!-- add classes to map from here -->
-        <!--<mapping class="com.avery.dao.Person" />-->
-        <mapping class="com.avery.dao.Address" />
+        <!--<mapping class="com.avery.dao.Person" />
+        <mapping class="com.avery.dao.Address" />-->
         <mapping class="com.avery.dao.GlobalConfiguration" />
         <mapping class="com.avery.dao.OrderEmailAttachment" />
         <mapping class="com.avery.dao.OrderEmailQueue" />
@@ -27,14 +27,11 @@
         <mapping class="com.avery.dao.OrderLineDetails" />
         <mapping class="com.avery.dao.Partner" />
         <mapping class="com.avery.dao.PartnerDataStructure" />
-        <!--<mapping class="com.avery.dao.PartnerRBOProductLine" />-->
+        <mapping class="com.avery.dao.PartnerRBOProductLine" />
         <mapping class="com.avery.dao.SalesOrderDetail" />
         <mapping class="com.avery.dao.SalesOrderLine" />
         <mapping class="com.avery.dao.StatusCode" />
         <mapping class="com.avery.dao.User" />
-         <mapping class="com.avery.dao.SiteDetails" />
-         <mapping class="com.avery.dao.RBODetails" />
-         
         
         
     </session-factory>

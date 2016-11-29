@@ -154,7 +154,7 @@ public class OrderEmailAttachment {
 	public void setAdditionalDataFileKey(String additionalDataFileKey) {
 		this.additionalDataFileKey = additionalDataFileKey;
 	}
-	@Column(name="filePath" , length=250)
+	@Column(name="filePath",columnDefinition = "varchar(250)")
 	public String getFilePath() {
 		return filePath;
 	}

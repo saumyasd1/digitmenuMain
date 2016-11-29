@@ -18,10 +18,10 @@ public class PartnerDataStructure {
 	int id;
 	@Column(name = "partnerDataStructureId")
 	String partnerDataStructureId;
-	@Column(name = "partnerId", length = 50)
-	String partnerId;
-	@Column(name = "rboId", length = 50)
-	String rboId;
+	@Column(name = "partnerId")
+	int partnerId;
+	@Column(name = "rboId")
+	int rboId;
 	@Column(name = "rborName", length = 250)
 	String rborName;
 	@Column(name = "site", length = 25)
@@ -186,6 +186,9 @@ public class PartnerDataStructure {
 	String lastModifiedByName;
 	@Column(name = "comment", length = 500)
 	String comment;
+	@Column(name="controlData")
+	boolean controlData;
+	
 
 	public PartnerDataStructure() {
 
@@ -213,19 +216,19 @@ public class PartnerDataStructure {
 		this.partnerDataStructureId = partnerDataStructureId;
 	}
 
-	public String getPartnerId() {
+	public int getPartnerId() {
 		return partnerId;
 	}
 
-	public void setPartnerId(String partnerId) {
+	public void setPartnerId(int partnerId) {
 		this.partnerId = partnerId;
 	}
 
-	public String getRboId() {
+	public int getRboId() {
 		return rboId;
 	}
 
-	public void setRboId(String rboId) {
+	public void setRboId(int rboId) {
 		this.rboId = rboId;
 	}
 
@@ -889,6 +892,13 @@ public class PartnerDataStructure {
 		this.comment = comment;
 	}
 	
+	public boolean isControlData() {
+		return controlData;
+	}
+
+	public void setControlData(boolean controlData) {
+		this.controlData = controlData;
+	}
 	
 
 }

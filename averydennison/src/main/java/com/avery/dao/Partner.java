@@ -8,115 +8,220 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "partner")
 public class Partner {
-
-	int id;
-	String partnerID;
-    String partnerName;
-    String address;
-    String contactPerson;
-    int phone;
-    int active;
-    Date createdDate;
-    String createdBy;
-    Date modifiedDate;
-    String modifiedby;
-    
-    public Partner() {
-   	 
-    }
-    
-    public Partner(String partnerID, String partnerName) {
-        this.partnerID = partnerID;
-        this.partnerName = partnerName;
-        
-    }
-    
-    @Id 
-    @GeneratedValue 
-    @Column(name = "id")
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	@Column(name = "partnerId", length = 50)
-	public String getPartnerID() {
-		return partnerID;
-	}
-	public void setPartnerID(String partnerID) {
-		this.partnerID = partnerID;
-	}
-	@Column(name = "partnerName", length = 50)
-	public String getPartnerName() {
-		return partnerName;
-	}
-	public void setPartnerName(String partnerName) {
-		this.partnerName = partnerName;
-	}
-	@Column(name = "address", length = 250)
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	int ID;
+	@Column(name = "name", length = 250)
+	String name;
+	@Column(name = "emailDomain", length = 100)
+	String emailDomain;
+	@Column(name = "emailId", length = 100)
+	String emailId;
+	@Column(name = "address1", length = 250)
+	String address1;
+	@Column(name = "address2", length = 250)
+	String address2;
+	@Column(name = "address3", length = 250)
+	String address3;
+	@Column(name = "city", length = 250)
+	String city;
+	@Column(name = "state", length = 250)
+	String state;
+	@Column(name = "country", length = 250)
+	String country;
+	@Column(name = "phone", length = 250)
+	String phone;
+	@Column(name = "alt_Phone", length = 250)
+	String alt_Phone;
+	@Column(name = "fax", length = 250)
+	String fax;
 	@Column(name = "contactPerson", length = 100)
+	String contactPerson;
+	@Column(name = "active")
+	boolean active;
+	@Column(name = "createdDate")
+	Date createdDate;
+	@Column(name = "createdByName", length = 50)
+	String createdByName;
+	@Column(name = "lastModifiedDate")
+	Date lastModifiedDate;
+	@Column(name = "createdByName", length = 50)
+	String lastModifiedby;
+	@Column(name = "createdByName", length = 250)
+	String comment;
+
+	public Partner() {
+
+	}
+
+	public Partner(int iD, String name) {
+		super();
+		ID = iD;
+		this.name = name;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmailDomain() {
+		return emailDomain;
+	}
+
+	public void setEmailDomain(String emailDomain) {
+		this.emailDomain = emailDomain;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public String getAddress1() {
+		return address1;
+	}
+
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getAddress3() {
+		return address3;
+	}
+
+	public void setAddress3(String address3) {
+		this.address3 = address3;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAlt_Phone() {
+		return alt_Phone;
+	}
+
+	public void setAlt_Phone(String alt_Phone) {
+		this.alt_Phone = alt_Phone;
+	}
+
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+
 	public String getContactPerson() {
 		return contactPerson;
 	}
+
 	public void setContactPerson(String contactPerson) {
 		this.contactPerson = contactPerson;
 	}
-	@Column(name = "phone", length = 50)
-	public int getPhone() {
-		return phone;
-	}
-	public void setPhone(int phone) {
-		this.phone = phone;
-	}
-	@Column(name = "active", length = 50)
-	public int getActive() {
+
+	public boolean isActive() {
 		return active;
 	}
-	public void setActive(int active) {
+
+	public void setActive(boolean active) {
 		this.active = active;
 	}
-	@Column(name = "createdDate")
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	@Column(name = "createdBy", length = 100)
-	public String getCreatedBy() {
-		return createdBy;
+
+	public String getCreatedByName() {
+		return createdByName;
 	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
+
+	public void setCreatedByName(String createdByName) {
+		this.createdByName = createdByName;
 	}
-	@Column(name = "modifiedDate")
-	public Date getModifiedDate() {
-		return modifiedDate;
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
 	}
-	public void setModifiedDate(Date modifiedDate) {
-		this.modifiedDate = modifiedDate;
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
-	@Column(name = "modifiedby", length = 100)
-	public String getModifiedby() {
-		return modifiedby;
+
+	public String getLastModifiedby() {
+		return lastModifiedby;
 	}
-	public void setModifiedby(String modifiedby) {
-		this.modifiedby = modifiedby;
+
+	public void setLastModifiedby(String lastModifiedby) {
+		this.lastModifiedby = lastModifiedby;
 	}
-	
-	
-   
-    
-    
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
 }

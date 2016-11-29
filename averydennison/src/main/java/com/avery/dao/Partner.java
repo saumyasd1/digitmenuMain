@@ -49,8 +49,8 @@ public class Partner {
 	String createdByName;
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
-	@Column(name = "createdByName", length = 50)
-	String lastModifiedby;
+	@Column(name = "lastModifiedbyName", length = 50)
+	String lastModifiedbyName;
 	@Column(name = "createdByName", length = 250)
 	String comment;
 

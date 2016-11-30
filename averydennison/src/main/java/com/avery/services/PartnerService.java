@@ -15,7 +15,7 @@ public class PartnerService {
 	    
 	    session.beginTransaction();
 	
-	    Partner steve = new Partner("Steve", "Jobs");
+	    Partner steve = new Partner(1, "Jobs");
 	 
 	
 	   // Address_b valley = new Address_b("Steve P Jobs", "San Francisco", "11111");
@@ -31,6 +31,6 @@ public class PartnerService {
 	
 	    session.getTransaction().commit();
 	    session.close();
-	    return steve.getPartnerName();
+	    return steve.getName();
 	}
 }

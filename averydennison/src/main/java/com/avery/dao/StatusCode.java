@@ -15,15 +15,7 @@ public class StatusCode {
 	 String type;
 	 String code;
 	 String value;
-	 String description;
-	 Date createdDate;
-	 String createdBy;
-	 Date lastModifiedDate;
-	 String lastModifiedBy;
-	 
-	 
-	 
-	 
+	  
 	public StatusCode(String type, String code) {
 		
 		this.type = type;
@@ -32,7 +24,7 @@ public class StatusCode {
 	
 	@Id 
     @GeneratedValue 
-    @Column(name = "id")
+    @Column(name = "id",nullable=false)
 	public int getId() {
 		return id;
 	}
@@ -60,41 +52,5 @@ public class StatusCode {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	@Column(name="description")
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	@Column(name="createdDate")
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-	@Column(name="createdBy" , length=100)
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-	@Column(name="lastModifiedDate" )
-	public Date getLastModifiedDate() {
-		return lastModifiedDate;
-	}
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
-	@Column(name="lastModifiedBy" , length=100)
-	public String getLastModifiedBy() {
-		return lastModifiedBy;
-	}
-	public void setLastModifiedBy(String lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
-	 
 	 
 }

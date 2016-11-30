@@ -12,7 +12,7 @@ public class RBODetails {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(name = "id",nullable=false)
 	int ID;
 	@Column(name = "RBOName", length = 250)
 	String RBOName;

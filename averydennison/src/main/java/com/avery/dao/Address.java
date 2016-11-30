@@ -37,7 +37,7 @@ public Address(int id, String orgCode) {
 
 @Id 
 @GeneratedValue 
-@Column(name = "id")
+@Column(name = "id",nullable=false)
 public int getId() {
 	return id;
 }

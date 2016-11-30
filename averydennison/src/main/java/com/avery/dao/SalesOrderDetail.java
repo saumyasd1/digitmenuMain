@@ -15,7 +15,7 @@ public class SalesOrderDetail {
 	
 	int ID;
 	int salesOrderID;
-	int processQueueID;
+	int orderQueueID;
 	String division;
 	String soNumber;
 	String soDetails;
@@ -40,14 +40,14 @@ public class SalesOrderDetail {
 	
 	@Id 
     @GeneratedValue 
-    @Column(name = "id")
+    @Column(name = "id",nullable=false)
 	public int getID() {
 		return ID;
 	}
 	public void setID(int iD) {
 		ID = iD;
 	}
-	@Column(name="salesOrderID")
+	@Column(name="salesOrderID",nullable=false)
 	public int getSalesOrderID() {
 		return salesOrderID;
 	}
@@ -55,13 +55,13 @@ public class SalesOrderDetail {
 	public void setSalesOrderID(int salesOrderID) {
 		this.salesOrderID = salesOrderID;
 	}
-	@Column(name="processQueueID" , length=100)
-	public int getProcessQueueID() {
-		return processQueueID;
+	@Column(name="orderQueueID", nullable=false)
+	public int getOrderQueueID() {
+		return orderQueueID;
 	}
 
-	public void setProcessQueueID(int processQueueID) {
-		this.processQueueID = processQueueID;
+	public void setOrderQueueID(int orderQueueID) {
+		this.orderQueueID = orderQueueID;
 	}
 	@Column(name="division" , length=100)
 	public String getDivision() {
@@ -159,7 +159,7 @@ public class SalesOrderDetail {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	@Column(name="createdBy")
+	@Column(name="createdBy",length=50)
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -175,7 +175,7 @@ public class SalesOrderDetail {
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-	@Column(name="lastModifiedBy" , length=100)
+	@Column(name="lastModifiedBy" , length=50)
 	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
@@ -183,7 +183,7 @@ public class SalesOrderDetail {
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
-	@Column(name="divisionforInterfaceERPORG" , length=100)
+	@Column(name="divisionforInterfaceERPORG" , length=10)
 	public String getDivisionforInterfaceERPORG() {
 		return divisionforInterfaceERPORG;
 	}

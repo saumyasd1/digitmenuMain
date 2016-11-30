@@ -24,7 +24,7 @@ public class User {
     String password;
    
     
-	int role;
+	String role;
     int status;
     
     public User() {
@@ -37,7 +37,7 @@ public class User {
     }
     @Id 
     @GeneratedValue 
-    @Column(name = "id")
+    @Column(name = "id",nullable=false)
 	public int getId() {
 		return id;
 	}
@@ -86,11 +86,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Column(name="role")
-	public int getRole() {
+	@Column(name="role",length=50)
+	public String getRole() {
 		return role;
 	}
-	public void setRole(int role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 	@Column(name="status")

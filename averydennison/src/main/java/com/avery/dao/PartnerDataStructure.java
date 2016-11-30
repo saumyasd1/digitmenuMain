@@ -14,13 +14,11 @@ public class PartnerDataStructure {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(name = "id",nullable=false)
 	int id;
-	@Column(name = "partnerDataStructureId")
-	String partnerDataStructureId;
-	@Column(name = "partnerId")
+	@Column(name = "partnerId",nullable=false)
 	int partnerId;
-	@Column(name = "rboId")
+	@Column(name = "rboId",nullable=false)
 	int rboId;
 	@Column(name = "rborName", length = 250)
 	String rborName;
@@ -206,14 +204,6 @@ public class PartnerDataStructure {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getPartnerDataStructureId() {
-		return partnerDataStructureId;
-	}
-
-	public void setPartnerDataStructureId(String partnerDataStructureId) {
-		this.partnerDataStructureId = partnerDataStructureId;
 	}
 
 	public int getPartnerId() {

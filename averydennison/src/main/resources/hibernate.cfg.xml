@@ -12,14 +12,12 @@
  
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-         <property name="hibernate.connection.url">jdbc:mysql://192.168.1.113:3306/averydennison_main</property>
+         <property name="hibernate.connection.url">jdbc:mysql://192.168.1.113:3306/averydennison_rakesh</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">adeptia</property>
  
         <!-- add classes to map from here -->
-        <!--<mapping class="com.avery.dao.Person" />
-        <mapping class="com.avery.dao.Address" />-->
-        <mapping class="com.avery.dao.GlobalConfiguration" />
+        <mapping class="com.avery.dao.Address" />
         <mapping class="com.avery.dao.OrderEmailAttachment" />
         <mapping class="com.avery.dao.OrderEmailQueue" />
         <mapping class="com.avery.dao.OrderFileQueue" />
@@ -27,9 +25,10 @@
         <mapping class="com.avery.dao.OrderLineDetails" />
         <mapping class="com.avery.dao.Partner" />
         <mapping class="com.avery.dao.PartnerDataStructure" />
-        <mapping class="com.avery.dao.PartnerRBOProductLine" />
+        <mapping class="com.avery.dao.RBODetails" />
         <mapping class="com.avery.dao.SalesOrderDetail" />
         <mapping class="com.avery.dao.SalesOrderLine" />
+        <mapping class="com.avery.dao.SiteDetails" />
         <mapping class="com.avery.dao.StatusCode" />
         <mapping class="com.avery.dao.User" />
         

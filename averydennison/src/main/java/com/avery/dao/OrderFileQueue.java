@@ -13,31 +13,31 @@ import javax.persistence.Table;
 public class OrderFileQueue {
 	@Id 
     @GeneratedValue 
-    @Column(name = "id")
+    @Column(name = "id",nullable=false)
 	 int id;
-	@Column(name="pId",length=50)
+	@Column(name="pId",length=100)
 	 String pId;
-	@Column(name="partnerId",length=50)
-	 String partnerId;
-	@Column(name="rboName",length=50)
+	@Column(name="partnerId",nullable=false)
+	 int partnerId;
+	@Column(name="rboName",length=250)
 	 String rboName;
-	@Column(name="productLineId")
+	@Column(name="productLineId",nullable=false)
 	 int productLineId;
-	@Column(name="senderEmailId",length=50)
+	@Column(name="senderEmailId",length=100)
 	 String senderEmailId;
 	@Column(name="subject",length=50)
 	 String subject;
 	@Column(name="emailBody",length=250)
 	 String emailBody;
-	@Column(name="orderEmailAttachmentId",length=50)
-	 String orderEmailAttachmentId;
+	@Column(name="orderEmailAttachmentId",nullable=false)
+	 int orderEmailAttachmentId;
 	@Column(name="orderSource",length=50)
 	 String orderSource;
 	@Column(name="submittedBy",length=50)
 	 String submittedBy;
-	@Column(name="submittedDate",length=50)
-	 String submittedDate;
-	@Column(name="status",length=50)
+	@Column(name="submittedDate")
+	 Date submittedDate;
+	@Column(name="status",length=100)
 	 String status;
 	@Column(name="error",length=50)
 	 String error;
@@ -53,15 +53,17 @@ public class OrderFileQueue {
 	 Date receivedDate;
 	@Column(name="comment",length=100)
 	 String comment;
-	@Column(name="rboId",length=50)
+	@Column(name="rboId",length=50,nullable=false)
 	 String rboId;
 	@Column(name="poNumber",length=100)
 	 String poNumber;
-	@Column(name="prevOrderQueueId",length=50)
-	 String prevOrderQueueId;
+	@Column(name="prevOrderQueueId")
+	 int prevOrderQueueId;
 	@Column(name="acknowledgementDate")
 	 Date acknowledgementDate;
 	 
+	
+	
 	 
 	public OrderFileQueue(String pid, String rboName) {
 		this.pId = pid;
@@ -89,12 +91,12 @@ public class OrderFileQueue {
 	}
 
 
-	public String getPartnerId() {
+	public int getPartnerId() {
 		return partnerId;
 	}
 
 
-	public void setPartnerId(String partnerId) {
+	public void setPartnerId(int partnerId) {
 		this.partnerId = partnerId;
 	}
 
@@ -149,15 +151,12 @@ public class OrderFileQueue {
 	}
 
 
-	
-
-
-	public String getOrderEmailAttachmentId() {
+	public int getOrderEmailAttachmentId() {
 		return orderEmailAttachmentId;
 	}
 
 
-	public void setOrderEmailAttachmentId(String orderEmailAttachmentId) {
+	public void setOrderEmailAttachmentId(int orderEmailAttachmentId) {
 		this.orderEmailAttachmentId = orderEmailAttachmentId;
 	}
 
@@ -182,12 +181,12 @@ public class OrderFileQueue {
 	}
 
 
-	public String getSubmittedDate() {
+	public Date getSubmittedDate() {
 		return submittedDate;
 	}
 
 
-	public void setSubmittedDate(String submittedDate) {
+	public void setSubmittedDate(Date submittedDate) {
 		this.submittedDate = submittedDate;
 	}
 
@@ -292,12 +291,12 @@ public class OrderFileQueue {
 	}
 
 
-	public String getPrevOrderQueueId() {
+	public int getPrevOrderQueueId() {
 		return prevOrderQueueId;
 	}
 
 
-	public void setPrevOrderQueueId(String prevOrderQueueId) {
+	public void setPrevOrderQueueId(int prevOrderQueueId) {
 		this.prevOrderQueueId = prevOrderQueueId;
 	}
 
@@ -310,8 +309,7 @@ public class OrderFileQueue {
 	public void setAcknowledgementDate(Date acknowledgementDate) {
 		this.acknowledgementDate = acknowledgementDate;
 	}
-	
-	
+
 	
 	 
 }

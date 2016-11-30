@@ -13,14 +13,14 @@ import javax.persistence.Table;
 public class OrderEmailAttachment {
 	
 	int id;
-	String orderEmailQueueID;
+	int orderEmailQueueID;
 	String mailBodyData;
 	String fileName;
 	String fileExtension;
 	 String fileType;
 	 String fileContentType;
 	 String fileData;
-	 String additionalData;
+	 boolean additionalData;
 	 String fileSchemaID;
 	 String partnerDataStructureID;
 	 String orderFileStructureID;
@@ -40,7 +40,7 @@ public class OrderEmailAttachment {
 	    }
 	   
 	    
-	    public OrderEmailAttachment(String orderEmailQueueID, String fileName, String fileExtension, String filePath){
+	    public OrderEmailAttachment(int orderEmailQueueID, String fileName, String fileExtension, String filePath){
 	    	this.orderEmailQueueID = orderEmailQueueID;
 	    	this.fileName = fileName;
 	    	this.fileExtension = fileExtension;
@@ -49,18 +49,18 @@ public class OrderEmailAttachment {
 	 
 	    @Id 
 	    @GeneratedValue 
-	    @Column(name = "id")
+	    @Column(name = "id",nullable=false)
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	@Column(name="orderEmailQueueID" , length=100)
-	public String getOrderEmailQueueID() {
+	@Column(name="orderEmailQueueID",nullable=false )
+	public int getOrderEmailQueueID() {
 		return orderEmailQueueID;
 	}
-	public void setOrderEmailQueueID(String orderEmailQueueID) {
+	public void setOrderEmailQueueID(int orderEmailQueueID) {
 		this.orderEmailQueueID = orderEmailQueueID;
 	}
 	@Column(name="mailBodyData" , length=500)
@@ -105,11 +105,11 @@ public class OrderEmailAttachment {
 	public void setFileData(String fileData) {
 		this.fileData = fileData;
 	}
-	@Column(name="additionalData" , length=100)
-	public String getAdditionalData() {
+	@Column(name="additionalData")
+	public boolean getAdditionalData() {
 		return additionalData;
 	}
-	public void setAdditionalData(String additionalData) {
+	public void setAdditionalData(boolean additionalData) {
 		this.additionalData = additionalData;
 	}
 	@Column(name="fileSchemaID" , length=100)
@@ -175,7 +175,7 @@ public class OrderEmailAttachment {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	@Column(name="createdByName" , length=100)
+	@Column(name="createdByName" , length=50)
 	public String getCreatedByName() {
 		return createdByName;
 	}
@@ -189,7 +189,7 @@ public class OrderEmailAttachment {
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-	@Column(name="lastModifiedByName" , length=100)
+	@Column(name="lastModifiedByName" , length=50)
 	public String getLastModifiedByName() {
 		return lastModifiedByName;
 	}

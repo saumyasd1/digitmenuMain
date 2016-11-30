@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "salesOrderLine")
 public class SalesOrderLine {
-	int id;
+int id;
 String lineIndicator;
 String division;
 String orderSource;
@@ -72,7 +72,7 @@ public SalesOrderLine(String division, String orderSource) {
 
 @Id 
 @GeneratedValue 
-@Column(name = "id")
+@Column(name = "id",nullable=false)
 public int getId() {
 	return id;
 }
@@ -192,7 +192,7 @@ public Date getDateOrdered() {
 public void setDateOrdered(Date dateOrdered) {
 	this.dateOrdered = dateOrdered;
 }
-@Column(name="customerRequestDate" , length=100)
+@Column(name="customerRequestDate")
 public Date getCustomerRequestDate() {
 	return customerRequestDate;
 }

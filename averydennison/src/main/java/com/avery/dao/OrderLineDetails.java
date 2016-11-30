@@ -13,11 +13,11 @@ import javax.persistence.Table;
 public class OrderLineDetails {
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(name = "id",nullable=false)
 	int id;
-	@Column(name = "orderLineId")
+	@Column(name = "orderLineId",nullable=false)
 	int orderLineId;
-	@Column(name = "orderQueueId")
+	@Column(name = "orderQueueId",nullable=false)
 	int orderQueueId;
 	@Column(name = "oracleItemNumber", length = 50)
 	String oracleItemNumber;
@@ -27,8 +27,10 @@ public class OrderLineDetails {
 	String SKUno;
 	@Column(name = "typeSetter", length = 50)
 	String typeSetter;
-	@Column(name = "fiberPercent", length = 50)
-	String fiberPercent;
+	@Column(name = "fiberPercent")
+	int fiberPercent;
+	@Column(name = "sumOfFiberPercentage")
+	int sumOfFiberPercentage;
 	@Column(name = "sentToOracleDate")
 	Date sentToOracleDate;
 	@Column(name = "createdDate")
@@ -39,13 +41,13 @@ public class OrderLineDetails {
 	Date lastModifiedDate;
 	@Column(name = "lastModifiedBy", length = 50)
 	String lastModifiedBy;
-	@Column(name = "divisionforInterfaceERPORG", length = 5)
+	@Column(name = "divisionforInterfaceERPORG", length = 10)
 	String divisionforInterfaceERPORG;
 	@Column(name = "mandatory", length = 100)
 	String mandatory;
 	@Column(name = "createdByName", length = 50)
 	String createdByName;
-	@Column(name = "comment", length = 100)
+	@Column(name = "comment", length = 250)
 	String comment;
 
 	public OrderLineDetails(int orderLineID, int orderQueueID) {
@@ -110,12 +112,20 @@ public class OrderLineDetails {
 		this.typeSetter = typeSetter;
 	}
 
-	public String getFiberPercent() {
+	public int getFiberPercent() {
 		return fiberPercent;
 	}
 
-	public void setFiberPercent(String fiberPercent) {
+	public void setFiberPercent(int fiberPercent) {
 		this.fiberPercent = fiberPercent;
+	}
+
+	public int getSumOfFiberPercentage() {
+		return sumOfFiberPercentage;
+	}
+
+	public void setSumOfFiberPercentage(int sumOfFiberPercentage) {
+		this.sumOfFiberPercentage = sumOfFiberPercentage;
 	}
 
 	public Date getSentToOracleDate() {

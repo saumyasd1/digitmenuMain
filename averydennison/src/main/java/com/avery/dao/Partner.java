@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class Partner {
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(name = "id",nullable=false)
 	int ID;
 	@Column(name = "name", length = 250)
 	String name;
@@ -214,12 +214,14 @@ public class Partner {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	public String getLastModifiedby() {
-		return lastModifiedby;
+	
+
+	public String getLastModifiedbyName() {
+		return lastModifiedbyName;
 	}
 
-	public void setLastModifiedby(String lastModifiedby) {
-		this.lastModifiedby = lastModifiedby;
+	public void setLastModifiedbyName(String lastModifiedbyName) {
+		this.lastModifiedbyName = lastModifiedbyName;
 	}
 
 	public String getComment() {

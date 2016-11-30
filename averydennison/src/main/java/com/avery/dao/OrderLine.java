@@ -13,16 +13,16 @@ import javax.persistence.Table;
 public class OrderLine {
 	@Id
 	@GeneratedValue
-	@Column(name = "id")
+	@Column(name = "id",nullable=false)
 	int id;
-	@Column(name = "orderFileAttchmentID")
+	@Column(name = "orderFileAttchmentID",nullable=false)
 	int orderFileAttchmentID;
-	@Column(name = "orderQueueID")
+	@Column(name = "orderQueueID",nullable=false)
 	int orderQueueID;
-	@Column(name = "partnerID", length = 50)
-	String partnerID;
-	@Column(name = "rboID", length = 50)
-	String rboID;
+	@Column(name = "partnerID",nullable=false)
+	int partnerID;
+	@Column(name = "rboID",nullable=false)
+	int rboID;
 	@Column(name = "productLineType", length = 50)
 	String productLineType;
 	@Column(name = "customerPONumber", length = 50)
@@ -97,8 +97,8 @@ public class OrderLine {
 	String oracleBilltoSiteNumber;
 	@Column(name = "oracleShiptoSiteNumber", length = 50)
 	String oracleShiptoSiteNumber;
-	@Column(name = "retailerPOCustomerJob", length = 100)
-	String retailerPOCustomerJob;
+	@Column(name = "retailerPO_CustomerJob", length = 100)
+	String retailerPO_CustomerJob;
 	@Column(name = "averyItemNumber", length = 50)
 	String averyItemNumber;
 	@Column(name = "oracleItemNumber", length = 50)
@@ -183,26 +183,34 @@ public class OrderLine {
 	String modelSerialNumber;
 	@Column(name = "waiveMOQ", length = 5)
 	String waiveMOQ;
+	@Column(name = "targetSystem", length = 50)
+	String targetSystem;
 	@Column(name = "APOType", length = 5)
 	String APOType;
 	@Column(name = "sentToOracleDate")
 	Date sentToOracleDate;
 	@Column(name = "status", length = 100)
 	String status;
-	@Column(name = "duplicatePOFlag", length = 250)
-	String duplicatePOFlag;
-	@Column(name = "customerPOFlag", length = 250)
-	String customerPOFlag;
-	@Column(name = "bulkSampleValidationFlag", length = 250)
-	String bulkSampleValidationFlag;
-	@Column(name = "MOQValidationFlag", length = 250)
-	String MOQValidationFlag;
-	@Column(name = "ATOValidationFlag", length = 250)
-	String ATOValidationFlag;
-	@Column(name = "mandatoryVariableDataFieldFlag", length = 250)
-	String mandatoryVariableDataFieldFlag;
-	@Column(name = "HTLSizePageValidationFlag", length = 250)
-	String HTLSizePageValidationFlag;
+	@Column(name="reviseOrderFlag")
+	boolean reviseOrderFlag;
+	@Column(name="cooTranslationFlag")
+	boolean cooTranslationFlag;
+	@Column(name="febricPercentageFlag")
+	boolean febricPercentageFlag;
+	@Column(name = "duplicatePOFlag")
+	boolean duplicatePOFlag;
+	@Column(name = "customerPOFlag")
+	boolean customerPOFlag;
+	@Column(name = "bulkSampleValidationFlag")
+	boolean bulkSampleValidationFlag;
+	@Column(name = "MOQValidationFlag")
+	boolean MOQValidationFlag;
+	@Column(name = "ATOValidationFlag")
+	boolean ATOValidationFlag;
+	@Column(name = "mandatoryVariableDataFieldFlag")
+	boolean mandatoryVariableDataFieldFlag;
+	@Column(name = "HTLSizePageValidationFlag")
+	boolean HTLSizePageValidationFlag;
 	@Column(name = "createdDate")
 	Date createdDate;
 	@Column(name = "createdBy", length = 50)
@@ -215,7 +223,7 @@ public class OrderLine {
 	String region;
 	@Column(name = "PONumber", length = 100)
 	String PONumber;
-	@Column(name = "comment", length = 100)
+	@Column(name = "comment", length = 250)
 	String comment;
 	@Column(name = "roundQty", length = 100)
 	String roundQty;
@@ -251,7 +259,7 @@ public class OrderLine {
 	@Column(name = "lastModifiedByName", length = 50)
 	String lastModifiedByName;
 
-	public OrderLine(String partnerID, String rboID) {
+	public OrderLine(int partnerID, int rboID) {
 
 		this.partnerID = partnerID;
 		this.rboID = rboID;
@@ -281,19 +289,19 @@ public class OrderLine {
 		this.orderQueueID = orderQueueID;
 	}
 
-	public String getPartnerID() {
+	public int getPartnerID() {
 		return partnerID;
 	}
 
-	public void setPartnerID(String partnerID) {
+	public void setPartnerID(int partnerID) {
 		this.partnerID = partnerID;
 	}
 
-	public String getRboID() {
+	public int getRboID() {
 		return rboID;
 	}
 
-	public void setRboID(String rboID) {
+	public void setRboID(int rboID) {
 		this.rboID = rboID;
 	}
 
@@ -594,11 +602,11 @@ public class OrderLine {
 	}
 
 	public String getRetailerPOCustomerJob() {
-		return retailerPOCustomerJob;
+		return retailerPO_CustomerJob;
 	}
 
 	public void setRetailerPOCustomerJob(String retailerPOCustomerJob) {
-		this.retailerPOCustomerJob = retailerPOCustomerJob;
+		this.retailerPO_CustomerJob = retailerPOCustomerJob;
 	}
 
 	public String getAveryItemNumber() {
@@ -961,60 +969,60 @@ public class OrderLine {
 		this.status = status;
 	}
 
-	public String getDuplicatePOFlag() {
+	public boolean getDuplicatePOFlag() {
 		return duplicatePOFlag;
 	}
 
-	public void setDuplicatePOFlag(String duplicatePOFlag) {
+	public void setDuplicatePOFlag(boolean duplicatePOFlag) {
 		this.duplicatePOFlag = duplicatePOFlag;
 	}
 
-	public String getCustomerPOFlag() {
+	public boolean getCustomerPOFlag() {
 		return customerPOFlag;
 	}
 
-	public void setCustomerPOFlag(String customerPOFlag) {
+	public void setCustomerPOFlag(boolean customerPOFlag) {
 		this.customerPOFlag = customerPOFlag;
 	}
 
-	public String getBulkSampleValidationFlag() {
+	public boolean getBulkSampleValidationFlag() {
 		return bulkSampleValidationFlag;
 	}
 
-	public void setBulkSampleValidationFlag(String bulkSampleValidationFlag) {
+	public void setBulkSampleValidationFlag(boolean bulkSampleValidationFlag) {
 		this.bulkSampleValidationFlag = bulkSampleValidationFlag;
 	}
 
-	public String getMOQValidationFlag() {
+	public boolean getMOQValidationFlag() {
 		return MOQValidationFlag;
 	}
 
-	public void setMOQValidationFlag(String mOQValidationFlag) {
+	public void setMOQValidationFlag(boolean mOQValidationFlag) {
 		MOQValidationFlag = mOQValidationFlag;
 	}
 
-	public String getATOValidationFlag() {
+	public boolean getATOValidationFlag() {
 		return ATOValidationFlag;
 	}
 
-	public void setATOValidationFlag(String aTOValidationFlag) {
+	public void setATOValidationFlag(boolean aTOValidationFlag) {
 		ATOValidationFlag = aTOValidationFlag;
 	}
 
-	public String getMandatoryVariableDataFieldFlag() {
+	public boolean getMandatoryVariableDataFieldFlag() {
 		return mandatoryVariableDataFieldFlag;
 	}
 
 	public void setMandatoryVariableDataFieldFlag(
-			String mandatoryVariableDataFieldFlag) {
+			boolean mandatoryVariableDataFieldFlag) {
 		this.mandatoryVariableDataFieldFlag = mandatoryVariableDataFieldFlag;
 	}
 
-	public String getHTLSizePageValidationFlag() {
+	public boolean getHTLSizePageValidationFlag() {
 		return HTLSizePageValidationFlag;
 	}
 
-	public void setHTLSizePageValidationFlag(String hTLSizePageValidationFlag) {
+	public void setHTLSizePageValidationFlag(boolean hTLSizePageValidationFlag) {
 		HTLSizePageValidationFlag = hTLSizePageValidationFlag;
 	}
 
@@ -1200,6 +1208,46 @@ public class OrderLine {
 
 	public void setLastModifiedByName(String lastModifiedByName) {
 		this.lastModifiedByName = lastModifiedByName;
+	}
+
+	public String getRetailerPO_CustomerJob() {
+		return retailerPO_CustomerJob;
+	}
+
+	public void setRetailerPO_CustomerJob(String retailerPO_CustomerJob) {
+		this.retailerPO_CustomerJob = retailerPO_CustomerJob;
+	}
+
+	public String getTargetSystem() {
+		return targetSystem;
+	}
+
+	public void setTargetSystem(String targetSystem) {
+		this.targetSystem = targetSystem;
+	}
+
+	public boolean isReviseOrderFlag() {
+		return reviseOrderFlag;
+	}
+
+	public void setReviseOrderFlag(boolean reviseOrderFlag) {
+		this.reviseOrderFlag = reviseOrderFlag;
+	}
+
+	public boolean isCooTranslationFlag() {
+		return cooTranslationFlag;
+	}
+
+	public void setCooTranslationFlag(boolean cooTranslationFlag) {
+		this.cooTranslationFlag = cooTranslationFlag;
+	}
+
+	public boolean isFebricPercentageFlag() {
+		return febricPercentageFlag;
+	}
+
+	public void setFebricPercentageFlag(boolean febricPercentageFlag) {
+		this.febricPercentageFlag = febricPercentageFlag;
 	}
 	
 	

@@ -17,7 +17,7 @@ public class OrderEmailQueue {
 	 String senderEmailID;
 	 String subject;
 	 String mailBody;
-	 String orderMail;
+	 boolean orderMail;
 	 String assignee;
 	 String status;
 	 Date receivedDate;
@@ -40,7 +40,7 @@ public class OrderEmailQueue {
 	
 	@Id 
     @GeneratedValue 
-    @Column(name = "id")
+    @Column(name = "id",nullable=false)
 	public int getId() {
 		return id;
 	}
@@ -75,11 +75,11 @@ public class OrderEmailQueue {
 	public void setMailBody(String mailBody) {
 		this.mailBody = mailBody;
 	}
-	@Column(name="orderMail" , length=25)
-	public String getOrderMail() {
+	@Column(name="orderMail" )
+	public boolean getOrderMail() {
 		return orderMail;
 	}
-	public void setOrderMail(String orderMail) {
+	public void setOrderMail(boolean orderMail) {
 		this.orderMail = orderMail;
 	}
 	@Column(name="assignee" , length=100)
@@ -89,7 +89,7 @@ public class OrderEmailQueue {
 	public void setAssignee(String assignee) {
 		this.assignee = assignee;
 	}
-	@Column(name="status" , length=25)
+	@Column(name="status" , length=100)
 	public String getStatus() {
 		return status;
 	}
@@ -145,7 +145,7 @@ public class OrderEmailQueue {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	@Column(name="createdByName" , length=100)
+	@Column(name="createdByName" , length=50)
 	public String getCreatedByName() {
 		return createdByName;
 	}
@@ -159,7 +159,7 @@ public class OrderEmailQueue {
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-	@Column(name="lastModifiedByName" , length=100)
+	@Column(name="lastModifiedByName" , length=50)
 	public String getLastModifiedByName() {
 		return lastModifiedByName;
 	}

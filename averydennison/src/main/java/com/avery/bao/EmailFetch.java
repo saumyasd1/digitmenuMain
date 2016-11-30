@@ -6,12 +6,13 @@ import com.aspose.email.ImapClient;
 import com.aspose.email.ImapMessageInfo;
 import com.aspose.email.MailMessage;
 import com.aspose.email.SaveOptions;
+import com.avery.EmailManager;
 import com.avery.dao.UnreadEmailInformation;
 import com.avery.services.EmailQueueService;
 
 public class EmailFetch {
 	
-	private static final String directoryLocation = "C:\\AveryDennisonFiles"; //Directory for storing emails and attachments
+	String directoryLocation = EmailManager.directoryLocation; //Directory for storing emails and attachments
 	String uniqueID;
 	String messageId;
 	
@@ -50,7 +51,7 @@ public class EmailFetch {
 	    mailBodyToPDF.convertMailToPDF(dir);
 	    
 		EmailQueueService emailQueueService = new EmailQueueService();
-		int emailqueueid = emailQueueService.insertData(msgInfo.getSubject(),dir+"/MailBody.pdf");
+		int emailqueueid = emailQueueService.insertData(msgInfo.getSubject(),msgInfo.getSender().toString() ,dir+"/MailBody.pdf");
 		System.out.println("Emailqueue Id is : "+emailqueueid);
 	    //Write the code here for inserting into the emailqueue table and get the email queue id
 	    

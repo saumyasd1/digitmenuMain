@@ -12,6 +12,7 @@ import com.aspose.email.Attachment;
 import com.aspose.email.AttachmentCollection;
 import com.aspose.email.EmlLoadOptions;
 import com.aspose.email.MailMessage;
+import com.avery.services.AcknowledgementService;
 import com.avery.services.EmailAttachmentService;
 
 public class AttachmentHandling {
@@ -67,6 +68,7 @@ public class AttachmentHandling {
 		        String path = "";
 		        for(int i=0;i<listofFiles.length;i++){
 		        	path = listofFiles[i].getAbsolutePath().replace("\\", "/");
+		        	emailAttachmentService.insertUnzippedFile(listofFiles[i].getName(), path, emailqueueid);
 		        	//insertUnzippedFiles(listofFiles[i].getName(), path, emailqueueid);
 		        	System.out.println(listofFiles[i].getAbsolutePath()+" "+listofFiles[i].getName());
 		        }
@@ -81,8 +83,8 @@ public class AttachmentHandling {
 			emailAttachmentService.insertIntoEmailAttachment(attachment, filePath, emailqueueid);
 		}
 		System.out.println("All Attachments Stored");
-		//acknowledgement.sendAcknowledgement(senderId, emailqueueid);
-		//getAcknowledgementId(emailqueueid);
+		SendingAcknowledgement sendingAcknowledgement = new SendingAcknowledgement();
+		sendingAcknowledgement.sendAcknowledgement(emailqueueid);
 	}
 	
 	

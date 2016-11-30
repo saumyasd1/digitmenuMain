@@ -33,8 +33,13 @@ public class OrderEmailQueue {
 	 String comment;
 	 
 	 
-	public OrderEmailQueue(String subject, String mailBody) {
+	public OrderEmailQueue(){
+		
+	}
+	 
+	public OrderEmailQueue(String subject, String sender, String mailBody) {
 		this.subject = subject;
+		this.senderEmailID = sender;
 		this.mailBody = mailBody;
 	}
 	

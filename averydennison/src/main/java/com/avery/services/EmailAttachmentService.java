@@ -26,5 +26,24 @@ public class EmailAttachmentService {
 		System.out.println("Data inserted in the email attachment table");
 		
 	}
+	
+	
+	public void insertUnzippedFile(String fileName, String filePath, int emailqueueid){
+		if(fileName.contains("\'")){
+			fileName.replace("\'", "\\'");
+		}
+		String fileExtension = "";
+		if(fileName.contains(".")){
+			fileExtension = fileName.substring(fileName.lastIndexOf("."));
+		}
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		session.beginTransaction();
+		OrderEmailAttachment orderEmailAttachment = new OrderEmailAttachment(emailqueueid+"", fileName, fileExtension, filePath);
+		session.persist(orderEmailAttachment);
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("Unzip file inserted in the email attachment table");
+	}
 
 }

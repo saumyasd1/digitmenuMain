@@ -4,8 +4,15 @@ import com.aspose.email.ImapClient;
 import com.aspose.email.Pop3Client;
 import com.aspose.email.SecurityOptions;
 import com.avery.bao.EmailFolderInformation;
+import com.avery.services.AcknowledgementService;
 
 public class EmailManager {
+	
+	public EmailManager(){
+		
+	}
+	
+	public static final String directoryLocation = "C:\\AveryDennisonFiles";
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub

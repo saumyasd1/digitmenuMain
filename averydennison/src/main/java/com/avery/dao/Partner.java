@@ -1,23 +1,30 @@
 package com.avery.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "partner")
 public class Partner {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id",nullable=false)
 	int ID;
 	@Column(name = "name", length = 250)
@@ -40,26 +47,37 @@ public class Partner {
 	String country;
 	@Column(name = "phone", length = 250)
 	String phone;
-	@Column(name = "alt_Phone", length = 250)
-	String alt_Phone;
+	@Column(name = "alternatePhone", length = 250)
+	String alternatePhone;
 	@Column(name = "fax", length = 250)
 	String fax;
-	@Column(name = "contactPerson", length = 100)
+	@Column(name = "contactPerson", length = 250)
 	String contactPerson;
 	@Column(name = "active")
 	boolean active;
 	@Column(name = "createdDate")
 	Date createdDate;
-	@Column(name = "createdByName", length = 50)
-	String createdByName;
+	@Column(name = "createdBy", length = 50)
+	String createdBy;
+	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
-	@Column(name = "lastModifiedbyName", length = 50)
-	String lastModifiedbyName;
+	@Column(name = "lastModifiedby", length = 50)
+	String lastModifiedby;
 	@Column(name = "comment", length = 250)
 	String comment;
-
-
+	@Column(name = "siteId")
+	int siteId;
+	@Column(name="zip",length=50)
+	String zip;
+	@Column(name = "orgCode", length = 50)
+	String orgCode;
+	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	List<Partner_RBOProductLine> varProductLine = new ArrayList<Partner_RBOProductLine>();
+	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
+	
+	
 	public Partner() {
 
 	}
@@ -158,12 +176,12 @@ public class Partner {
 		this.phone = phone;
 	}
 
-	public String getAlt_Phone() {
-		return alt_Phone;
+	public String getAlternatePhone() {
+		return alternatePhone;
 	}
 
-	public void setAlt_Phone(String alt_Phone) {
-		this.alt_Phone = alt_Phone;
+	public void setAlternatePhone(String alternatePhone) {
+		this.alternatePhone = alternatePhone;
 	}
 
 	public String getFax() {
@@ -198,12 +216,12 @@ public class Partner {
 		this.createdDate = createdDate;
 	}
 
-	public String getCreatedByName() {
-		return createdByName;
+	public String getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setCreatedByName(String createdByName) {
-		this.createdByName = createdByName;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 
 	public Date getLastModifiedDate() {
@@ -214,14 +232,12 @@ public class Partner {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	
-
-	public String getLastModifiedbyName() {
-		return lastModifiedbyName;
+	public String getLastModifiedby() {
+		return lastModifiedby;
 	}
 
-	public void setLastModifiedbyName(String lastModifiedbyName) {
-		this.lastModifiedbyName = lastModifiedbyName;
+	public void setLastModifiedby(String lastModifiedby) {
+		this.lastModifiedby = lastModifiedby;
 	}
 
 	public String getComment() {
@@ -231,5 +247,48 @@ public class Partner {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+
+	public int getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(int siteId) {
+		this.siteId = siteId;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getOrgCode() {
+		return orgCode;
+	}
+
+	public void setOrgCode(String orgCode) {
+		this.orgCode = orgCode;
+	}
+
+	public List<Partner_RBOProductLine> getVarProductLine() {
+		return varProductLine;
+	}
+
+	public void setVarProductLine(List<Partner_RBOProductLine> varProductLine) {
+		this.varProductLine = varProductLine;
+	}
+
+	public List<SalesOrderLine> getVarSalesOrderLine() {
+		return varSalesOrderLine;
+	}
+
+	public void setVarSalesOrderLine(List<SalesOrderLine> varSalesOrderLine) {
+		this.varSalesOrderLine = varSalesOrderLine;
+	}
+
+	
+	
 
 }

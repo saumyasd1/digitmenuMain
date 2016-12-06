@@ -1,6 +1,7 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +20,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 @Entity
-@Table(name="orderFileAttachment")
+@Table(name="orderfileattachment")
 public class OrderFileAttachment {
 	@Id 
     @GeneratedValue(strategy=GenerationType.AUTO) 
@@ -44,7 +48,6 @@ public class OrderFileAttachment {
 	Date createdDate;
 	@Column(name = "createdBy", length = 50)
 	String createdBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	@Column(name = "lastModifiedBy", length = 50)
@@ -61,10 +64,10 @@ public class OrderFileAttachment {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "productLineId")
 	Partner_RBOProductLine varProductLine;
-	/*@ManyToMany(mappedBy = "varOrderFileAttachment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	List<OrderFileQueue> varOrderFileQueue = new ArrayList<OrderFileQueue>();*/
-	@OneToOne(mappedBy = "varOrderFileAttachment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	OrderFileQueue varOrderFileQueue;
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "varOrderFileAttachment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	List<OrderFileQueue> varOrderFileQueue = new ArrayList<OrderFileQueue>();
+	
 	public OrderFileAttachment() {}
 	
 	public int getId() {
@@ -127,12 +130,15 @@ public class OrderFileAttachment {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
+
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+
 	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
@@ -169,20 +175,20 @@ public class OrderFileAttachment {
 	public void setVarProductLine(Partner_RBOProductLine varProductLine) {
 		this.varProductLine = varProductLine;
 	}
-	/*public List<OrderFileQueue> getVarOrderFileQueue() {
+	public List<OrderFileQueue> getVarOrderFileQueue() {
 		return varOrderFileQueue;
 	}
 	public void setVarOrderFileQueue(List<OrderFileQueue> varOrderFileQueue) {
 		this.varOrderFileQueue = varOrderFileQueue;
-	}*/
+	}
 
-	public OrderFileQueue getVarOrderFileQueue() {
+	/*public OrderFileQueue getVarOrderFileQueue() {
 		return varOrderFileQueue;
 	}
 
 	public void setVarOrderFileQueue(OrderFileQueue varOrderFileQueue) {
 		this.varOrderFileQueue = varOrderFileQueue;
-	}
+	}*/
 	
 	
 	

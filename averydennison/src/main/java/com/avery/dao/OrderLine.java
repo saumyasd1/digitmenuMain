@@ -1,6 +1,7 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
-@Table(name = "orderLine")
+@Table(name = "orderline")
 public class OrderLine {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -256,8 +262,10 @@ public class OrderLine {
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="orderQueueId")
 	OrderFileQueue varOrderFileQueue;
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<OrderLineDetails> varOrderlineDetails=new ArrayList<OrderLineDetails>();
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<SalesOrderLine> varSalesOrderLine=new ArrayList<SalesOrderLine>();
 	
@@ -1216,6 +1224,7 @@ public class OrderLine {
 		this.createdBy = createdBy;
 	}
 
+	
 
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;

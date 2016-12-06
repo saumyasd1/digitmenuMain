@@ -26,7 +26,7 @@ public class OrderEmailQueueModel {
 		orderFileAtt.setFileData("kjhlkm4154");
 		
 
-		
+		orderFileAtt.setVarOrderEmailQueue(orderEmailQue);
 		orderEmailQue.getVarOrderFileAttachment().add(orderFileAtt);
 		
 		session.persist(orderEmailQue);

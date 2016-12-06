@@ -1,6 +1,7 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,8 +20,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
-@Table(name = "orderFileQueue")
+@Table(name = "orderfilequeue")
 public class OrderFileQueue {
 	@Id 
     @GeneratedValue 
@@ -40,9 +44,8 @@ public class OrderFileQueue {
 	 Date createdDate;
 	@Column(name="createdBy",length=50)
 	 String createdBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="lastModifiedDate")
-	 Date lastModifiedDate;
+	Date lastModifiedDate;
 	@Column(name="lastModifiedBy",length=50)
 	 String lastModifiedBy;
 	@Column(name="comment",length=250)
@@ -54,17 +57,20 @@ public class OrderFileQueue {
 	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="productLineId")
 	Partner_RBOProductLine varProductLine;
-	/*@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name="orderFileAttachmentId")*/
-	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="orderFileAttachmentId")
-    OrderFileAttachment varOrderFileAttachment;
+	OrderFileAttachment varOrderFileAttachment;
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<OrderLine> varOrderLine=new ArrayList<OrderLine>();
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<SalesOrderLine> varSalesOrderLine=new ArrayList<SalesOrderLine>();
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<AuditTrail> varAuditTrail=new ArrayList<AuditTrail>();
 	
@@ -182,26 +188,16 @@ public class OrderFileQueue {
 		this.varProductLine = varProductLine;
 	}
 
-	/*public List<OrderFileAttachment> getVarOrderFileAttachment() {
-		return varOrderFileAttachment;
-	}
-
-	public void setVarOrderFileAttachment(
-			List<OrderFileAttachment> varOrderFileAttachment) {
-		this.varOrderFileAttachment = varOrderFileAttachment;
-	}*/
-	
-
-	public List<OrderLine> getVarOrderLine() {
-		return varOrderLine;
-	}
-
 	public OrderFileAttachment getVarOrderFileAttachment() {
 		return varOrderFileAttachment;
 	}
 
 	public void setVarOrderFileAttachment(OrderFileAttachment varOrderFileAttachment) {
 		this.varOrderFileAttachment = varOrderFileAttachment;
+	}
+
+	public List<OrderLine> getVarOrderLine() {
+		return varOrderLine;
 	}
 
 	public void setVarOrderLine(List<OrderLine> varOrderLine) {

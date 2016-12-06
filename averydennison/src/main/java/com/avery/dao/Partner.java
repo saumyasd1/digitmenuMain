@@ -2,6 +2,7 @@ package com.avery.dao;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "partner")
@@ -59,7 +63,6 @@ public class Partner {
 	Date createdDate;
 	@Column(name = "createdBy", length = 50)
 	String createdBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	@Column(name = "lastModifiedby", length = 50)
@@ -72,9 +75,11 @@ public class Partner {
 	String zip;
 	@Column(name = "orgCode", length = 50)
 	String orgCode;
-	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<Partner_RBOProductLine> varProductLine = new ArrayList<Partner_RBOProductLine>();
-	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
 	
 	

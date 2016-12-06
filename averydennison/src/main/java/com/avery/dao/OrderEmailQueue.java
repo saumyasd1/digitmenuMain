@@ -1,6 +1,7 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "orderEmailQueue")
+@Table(name = "orderemailqueue")
 public class OrderEmailQueue {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -53,7 +54,6 @@ public class OrderEmailQueue {
 	Date createdDate;
 	@Column(name = "createdBy", length = 50)
 	String createdBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	@Column(name = "lastModifiedBy", length = 50)
@@ -203,6 +203,7 @@ public class OrderEmailQueue {
 		this.createdBy = createdBy;
 	}
 
+	
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}

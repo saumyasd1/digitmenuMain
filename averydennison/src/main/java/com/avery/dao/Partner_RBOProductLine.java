@@ -1,6 +1,7 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "partner_RBOProductLine")
+@Table(name = "partner_rboproductline")
 public class Partner_RBOProductLine {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -152,7 +153,6 @@ public class Partner_RBOProductLine {
 	String invoicelineInstruction;// 500
 	@Column(name = "lastModifiedBy", length = 50)
 	String lastModifiedBy;// 50
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	@Column(name = "LLKK")

@@ -1,6 +1,7 @@
 package com.avery.dao;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,11 +28,10 @@ public class Site {
 	Date createdDate;
 	@Column(name = "lastModifiedBy",length=50)
 	String lastModifiedBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
-	@Column(name = "lastModifiedBy",length=50)
-	String Name;
+	@Column(name = "name",length=50)
+	String name;
 	
 	
 	
@@ -67,17 +67,20 @@ public class Site {
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
-	public Date getLastModifiedDate() {
+
+	protected Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
-	public void setLastModifiedDate(Date lastModifiedDate) {
+
+	protected void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		name = name;
 	}
 	
 	

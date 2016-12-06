@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "rbo")
 public class RBO {
@@ -34,12 +37,13 @@ public class RBO {
 	Date createdDate;
 	@Column(name = "lastModifiedBy", length = 50)
 	String lastModifiedBy;
-//	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varRbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<Partner_RBOProductLine> varProductLine = new ArrayList<Partner_RBOProductLine>();
-	@OneToMany(mappedBy = "varRbo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "varRbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
 	
 	
@@ -86,12 +90,15 @@ public class RBO {
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
+
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
+
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+
 	public List<Partner_RBOProductLine> getVarProductLine() {
 		return varProductLine;
 	}

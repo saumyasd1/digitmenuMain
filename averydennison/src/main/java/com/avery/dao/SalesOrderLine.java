@@ -2,6 +2,7 @@ package com.avery.dao;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,8 +19,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
-@Table(name = "salesOrderLine")
+@Table(name = "salesorderline")
 public class SalesOrderLine {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -157,7 +161,6 @@ public class SalesOrderLine {
 	boolean htlSizePageValidationFlag;// 250
 	@Column(name = "lastModifiedBy", length = 50)
 	String lastModifiedBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	boolean mandatoryVariableDataFieldFlag;
@@ -185,6 +188,7 @@ public class SalesOrderLine {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "rboId")
 	RBO varRbo;
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varSalesOrderLine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();
 
@@ -867,13 +871,14 @@ public class SalesOrderLine {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
+	
 
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
 
-	public void setLastModifiedDate(Date lastModifiedDate) {
+	public  void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 

@@ -1,5 +1,6 @@
 package com.avery.dao;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -58,7 +59,6 @@ public class Address {
 	Date createdDate;
 	@Column(name = "lastModifiedBy", length = 50)
 	String lastModifiedBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	@Column(name = "siteId")

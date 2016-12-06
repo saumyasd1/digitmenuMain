@@ -1,6 +1,7 @@
 package com.avery.dao;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "statusCode")
+@Table(name = "statuscode")
 public class StatusCode {
 	@Id 
     @GeneratedValue (strategy=GenerationType.AUTO)
@@ -30,7 +31,6 @@ public class StatusCode {
 	Date createdDate;
 	@Column(name = "lastModifiedBy",length=50)
 	String lastModifiedBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	@Column(name = "comment",length=250)
@@ -116,7 +116,6 @@ public class StatusCode {
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
-
 
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;

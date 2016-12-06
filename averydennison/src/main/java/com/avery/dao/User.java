@@ -1,5 +1,6 @@
 package com.avery.dao;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -44,7 +45,6 @@ public class User {
 	int status;
 	@Column(name = "lastModifiedBy", length = 255)
 	String lastModifiedBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	@Column(name = "middleName", length = 64)
@@ -171,6 +171,7 @@ public class User {
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
+
 
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;

@@ -2,16 +2,26 @@ package com.avery.dao;
 
 import java.sql.Clob;
 import java.sql.Date;
+import java.util.Calendar;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+@Entity
+@Table(name="audittrail")
 public class AuditTrail {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id")
 	int id;
 	@Column(name = "activityId",length=100)
 	String activityId;
@@ -29,10 +39,9 @@ public class AuditTrail {
 	Date createdDate;
 	@Column(name = "lastModifiedBy",length=50)
 	String lastModifiedBy;
-	//@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
-	@Column(name = "status",length=100)
+	@Column(name = "severityCode",length=100)
 	String severityCode;
 	@Column(name = "status",length=50)
 	String status;
@@ -103,12 +112,15 @@ public class AuditTrail {
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
+	
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
+
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+
 	public String getSeverityCode() {
 		return severityCode;
 	}

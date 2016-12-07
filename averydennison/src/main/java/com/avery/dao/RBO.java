@@ -26,7 +26,7 @@ public class RBO {
 	@Id
 	@GeneratedValue
 	@Column(name = "id",nullable=false)
-	int ID;
+	int id;
 	@Column(name = "RBOName", length = 250)
 	String RBOName;
 	@Column(name = "comment", length = 250)
@@ -49,17 +49,20 @@ public class RBO {
 	
 	public RBO() {}
 	
-	public RBO(int iD, String rBOName) {
+	public RBO(int id, String rBOName) {
 		super();
-		ID = iD;
+		id = id;
 		RBOName = rBOName;
 	}
-	public int getID() {
-		return ID;
+	
+	public int getId() {
+		return id;
 	}
-	public void setID(int iD) {
-		ID = iD;
+
+	public void setId(int id) {
+		this.id = id;
 	}
+
 	public String getRBOName() {
 		return RBOName;
 	}

@@ -105,7 +105,7 @@ public class OrderLine {
 	String retailerPO_CustomerJob;
 	@Column(name = "averyItemNumber", length = 50)
 	String averyItemNumber;
-	@Column(name = "oracleItemNumber", length = 50)
+	@Column(name = "customerItemNumber", length = 50)
 	String customerItemNumber;
 	@Column(name = "itemDescription", length = 50)
 	String itemDescription;

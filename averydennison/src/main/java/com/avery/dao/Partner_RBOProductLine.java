@@ -123,8 +123,8 @@ public class Partner_RBOProductLine {
 	String emailSubjectProductlineMatchLocation;
 	@Column(name = "emailSubjectProductlineMatchRequired")
 	boolean emailSubjectProductlineMatchRequired;
-	@Column(name = "emailSubjectRBOMatch")
-	boolean emailSubjectRBOMatch;
+	@Column(name = "emailSubjectRBOMatch",length=100)
+	String emailSubjectRBOMatch;
 	@Column(name = "emailSubjectRBOMatchLocation", length = 100)
 	String emailSubjectRBOMatchLocation;// 100
 	@Column(name = "emailSubjectRBOMatchRequired")
@@ -708,14 +708,7 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isEmailSubjectRBOMatch() {
-		return emailSubjectRBOMatch;
-	}
-
-
-	public void setEmailSubjectRBOMatch(boolean emailSubjectRBOMatch) {
-		this.emailSubjectRBOMatch = emailSubjectRBOMatch;
-	}
+	
 
 
 	public String getEmailSubjectRBOMatchLocation() {
@@ -735,6 +728,18 @@ public class Partner_RBOProductLine {
 
 	public void setEmailSubjectRBOMatchRequired(boolean emailSubjectRBOMatchRequired) {
 		this.emailSubjectRBOMatchRequired = emailSubjectRBOMatchRequired;
+	}
+	
+	
+
+
+	public String getEmailSubjectRBOMatch() {
+		return emailSubjectRBOMatch;
+	}
+
+
+	public void setEmailSubjectRBOMatch(String emailSubjectRBOMatch) {
+		this.emailSubjectRBOMatch = emailSubjectRBOMatch;
 	}
 
 

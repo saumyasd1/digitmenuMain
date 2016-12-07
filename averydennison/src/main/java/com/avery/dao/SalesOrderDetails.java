@@ -22,7 +22,7 @@ public class SalesOrderDetails {
 	@Id 
     @GeneratedValue(strategy=GenerationType.AUTO) 
     @Column(name = "id",nullable=false)
-	int ID;
+	int id;
 	@Column(name="division" , length=100)
 	String division;
 	@Column(name="soNumber" , length=100)
@@ -74,13 +74,15 @@ public class SalesOrderDetails {
 	}
 
 
-	public int getID() {
-		return ID;
+	
+
+	public int getId() {
+		return id;
 	}
 
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 

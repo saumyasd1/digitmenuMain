@@ -30,9 +30,9 @@ public class Partner {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id",nullable=false)
-	int ID;
-	@Column(name = "name", length = 250)
-	String name;
+	int id;
+	@Column(name = "partnerName", length = 250)
+	String partnerName;
 	@Column(name = "emailDomain", length = 100)
 	String emailDomain;
 	@Column(name = "emailId", length = 100)
@@ -87,26 +87,26 @@ public class Partner {
 
 	}
 
-	public Partner(int iD, String name) {
+	public Partner(int id, String name) {
 		super();
-		ID = iD;
-		this.name = name;
+		id = id;
+		this.partnerName = name;
 	}
 
-	public int getID() {
-		return ID;
+	public int getId() {
+		return id;
 	}
 
-	public void setID(int iD) {
-		ID = iD;
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getPartnerName() {
+		return partnerName;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setPartnerName(String partnerName) {
+		this.partnerName = partnerName;
 	}
 
 	public String getEmailDomain() {

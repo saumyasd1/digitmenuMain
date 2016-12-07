@@ -259,6 +259,8 @@ public class OrderLine {
 	String createdByName;
 	@Column(name = "lastModifiedByName", length = 50)
 	String lastModifiedByName;
+	@Column(name = "productLineType", length = 50)
+	String productLineType;
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="orderQueueId")
 	OrderFileQueue varOrderFileQueue;
@@ -1433,6 +1435,18 @@ public class OrderLine {
 
 	public void setLastModifiedByName(String lastModifiedByName) {
 		this.lastModifiedByName = lastModifiedByName;
+	}
+	
+	
+
+
+	public String getProductLineType() {
+		return productLineType;
+	}
+
+
+	public void setProductLineType(String productLineType) {
+		this.productLineType = productLineType;
 	}
 
 

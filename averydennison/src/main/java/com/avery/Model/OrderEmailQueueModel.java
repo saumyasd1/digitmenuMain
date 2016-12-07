@@ -17,7 +17,7 @@ public class OrderEmailQueueModel {
 		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 		Session session=sessionFactory.openSession();
 		session.beginTransaction();
-		OrderEmailQueue orderEmailQue=new OrderEmailQueue("Subject", "Sender", "MailBody");
+		OrderEmailQueue orderEmailQue=new OrderEmailQueue("Subject1", "Sender1", "MailBody1");
 		
 		
 		

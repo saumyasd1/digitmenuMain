@@ -200,7 +200,7 @@ public class Partner_RBOProductLine {
 	RBO varRbo;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "partnerId")
-	RBO varPartner;
+	Partner varPartner;
 	@OneToOne(mappedBy = "varProductLine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	OrderFileQueue varOrderFileQueue;
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -1085,12 +1085,14 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public RBO getVarPartner() {
+	
+
+	public Partner getVarPartner() {
 		return varPartner;
 	}
 
 
-	public void setVarPartner(RBO varPartner) {
+	public void setVarPartner(Partner varPartner) {
 		this.varPartner = varPartner;
 	}
 

@@ -20,6 +20,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "partner_rboproductline")
 public class Partner_RBOProductLine {
@@ -203,7 +206,9 @@ public class Partner_RBOProductLine {
 	RBO varPartner;
 	@OneToOne(mappedBy = "varProductLine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	OrderFileQueue varOrderFileQueue;
-	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="varProductLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	List<OrderFileAttachment> varOrderFileAttachments=new ArrayList<OrderFileAttachment>();
 	
 	public Partner_RBOProductLine() {}
 
@@ -1100,6 +1105,17 @@ public class Partner_RBOProductLine {
 
 	public void setVarOrderFileQueue(OrderFileQueue varOrderFileQueue) {
 		this.varOrderFileQueue = varOrderFileQueue;
+	}
+
+
+	public List<OrderFileAttachment> getVarOrderFileAttachments() {
+		return varOrderFileAttachments;
+	}
+
+
+	public void setVarOrderFileAttachments(
+			List<OrderFileAttachment> varOrderFileAttachments) {
+		this.varOrderFileAttachments = varOrderFileAttachments;
 	}
 	
 	

@@ -88,7 +88,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
     		      .add(Projections.property("senderEmailId"), "senderEmailId"))
     		    .setResultTransformer(Transformers.aliasToBean(OrderEmailQueue.class));
 
-     		cr.add(Restrictions.eq("status", "1"));
+     		//cr.add(Restrictions.eq("status", "1"));
      		cr.add(Restrictions.eq("id", id));
      		//cr.setMaxResults(1);
      		List<OrderEmailQueue> list = cr.list();

@@ -174,6 +174,10 @@ public class SalesOrderLine {
 	String oracleShipToSiteNumber;// 100
 	@Column(name = "sentToOracleDate")
 	Date sentToOracleDate;
+	@Column(name = "system_Status",length=100)
+	String system_Status;
+	@Column(name = "status",length=100)
+	String status;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "orderLineId")
 	OrderLine varOrderLine;
@@ -879,10 +883,6 @@ public class SalesOrderLine {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-
-	
-
-
 	public String getMandatoryVariableDataFieldFlag() {
 		return mandatoryVariableDataFieldFlag;
 	}
@@ -953,6 +953,24 @@ public class SalesOrderLine {
 		this.sentToOracleDate = sentToOracleDate;
 	}
 
+	public String getSystem_Status() {
+		return system_Status;
+	}
+
+
+	public void setSystem_Status(String system_Status) {
+		this.system_Status = system_Status;
+	}
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public OrderLine getVarOrderLine() {
 		return varOrderLine;

@@ -63,9 +63,9 @@ public class OrderFileQueue {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<SalesOrderLine> varSalesOrderLine=new ArrayList<SalesOrderLine>();
-	@LazyCollection(LazyCollectionOption.FALSE)
+	/*@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();
+	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();*/
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<AuditTrail> varAuditTrail=new ArrayList<AuditTrail>();
@@ -208,14 +208,14 @@ public class OrderFileQueue {
 		this.varSalesOrderLine = varSalesOrderLine;
 	}
 
-	public List<SalesOrderDetails> getVarSalesOrderDetails() {
+/*	public List<SalesOrderDetails> getVarSalesOrderDetails() {
 		return varSalesOrderDetails;
 	}
 
 	public void setVarSalesOrderDetails(List<SalesOrderDetails> varSalesOrderDetails) {
 		this.varSalesOrderDetails = varSalesOrderDetails;
 	}
-
+*/
 	public List<AuditTrail> getVarAuditTrail() {
 		return varAuditTrail;
 	}

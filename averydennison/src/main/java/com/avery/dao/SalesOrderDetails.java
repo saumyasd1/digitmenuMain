@@ -55,9 +55,9 @@ public class SalesOrderDetails {
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="salesOrderId")
 	SalesOrderLine varSalesOrderLine;
-	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	/*@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="orderQueueId")
-	OrderFileQueue varOrderFileQueue;
+	OrderFileQueue varOrderFileQueue;*/
 	
 	
 	
@@ -83,14 +83,14 @@ public class SalesOrderDetails {
 	}
 
 
-	public OrderFileQueue getVarOrderFileQueue() {
+	/*public OrderFileQueue getVarOrderFileQueue() {
 		return varOrderFileQueue;
 	}
 
 
 	public void setVarOrderFileQueue(OrderFileQueue varOrderFileQueue) {
 		this.varOrderFileQueue = varOrderFileQueue;
-	}
+	}*/
 
 
 	public String getDivision() {

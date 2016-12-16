@@ -174,9 +174,9 @@ public class SalesOrderLine {
 	String oracleShipToSiteNumber;// 100
 	@Column(name = "sentToOracleDate")
 	Date sentToOracleDate;
-	@Column(name = "system_Status",length=100)
+	@Column(name = "system_Status",length=2000)
 	String system_Status;
-	@Column(name = "status",length=100)
+	@Column(name = "status",length=2000)
 	String status;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "orderLineId")
@@ -192,7 +192,7 @@ public class SalesOrderLine {
 	RBO varRbo;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varSalesOrderLine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();
+	List<SalesOrderDetails> listSalesOrderDetails=new ArrayList<SalesOrderDetails>();
 
 	
 	public SalesOrderLine() {}
@@ -1012,14 +1012,17 @@ public class SalesOrderLine {
 	}
 
 
-	public List<SalesOrderDetails> getVarSalesOrderDetails() {
-		return varSalesOrderDetails;
+	List<SalesOrderDetails> getListSalesOrderDetails() {
+		return listSalesOrderDetails;
 	}
 
 
-	public void setVarSalesOrderDetails(List<SalesOrderDetails> varSalesOrderDetails) {
-		this.varSalesOrderDetails = varSalesOrderDetails;
+	void setListSalesOrderDetails(List<SalesOrderDetails> listSalesOrderDetails) {
+		this.listSalesOrderDetails = listSalesOrderDetails;
 	}
+
+
+	
 
 
 

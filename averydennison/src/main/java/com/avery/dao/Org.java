@@ -1,7 +1,6 @@
 package com.avery.dao;
 
 import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +10,9 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "site")
-public class Site {
+@Table(name="org")
+public class Org {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id")
@@ -31,58 +31,80 @@ public class Site {
 	Date lastModifiedDate;
 	
 	
-	
-	
-	public Site() {}
-	
-	public int getId() {
+	public Org() {}
+
+
+	int getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+
+	void setId(int id) {
 		this.id = id;
 	}
-	public String getComment() {
+
+
+	String getName() {
+		return name;
+	}
+
+
+	void setName(String name) {
+		this.name = name;
+	}
+
+
+	String getComment() {
 		return comment;
 	}
-	public void setComment(String comment) {
+
+
+	void setComment(String comment) {
 		this.comment = comment;
 	}
-	public String getCreatedBy() {
+
+
+	String getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(String createdBy) {
+
+
+	void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	public Date getCreatedDate() {
+
+
+	Date getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(Date createdDate) {
+
+
+	void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public String getLastModifiedBy() {
+
+
+	String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
-	public void setLastModifiedBy(String lastModifiedBy) {
+
+
+	void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	protected Date getLastModifiedDate() {
+
+	Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
-	protected void setLastModifiedDate(Date lastModifiedDate) {
+
+	void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		name = name;
-	}
 	
 	
 	
 	
-
+	
 }

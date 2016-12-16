@@ -53,137 +53,196 @@ public class OrderFileAttachment {
 	String error;
 	@Column(name="orderFileId")
 	int orderFileId;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	
+	@Column(name="productLineMatch",length=100)
+	String productLineMatch;
+	@Column(name="rboMatch",length=100)
+	String rboMatch;
+	@Column(name="fileContentMatch",length=100)
+	String fileContentMatch;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderEmailQueueId")
 	OrderEmailQueue varOrderEmailQueue;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "productLineId")
 	Partner_RBOProductLine varProductLine;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varOrderFileAttachment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<OrderFileQueue> varOrderFileQueue = new ArrayList<OrderFileQueue>();
+	List<OrderFileQueue> listOrderFileQueue = new ArrayList<OrderFileQueue>();
 	
 	public OrderFileAttachment() {}
-	
-	public int getId() {
+
+	int getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	void setId(int id) {
 		this.id = id;
 	}
-	public String getFileName() {
+
+	String getFileName() {
 		return fileName;
 	}
-	public void setFileName(String fileName) {
+
+	void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public String getFileExtension() {
+
+	String getFileExtension() {
 		return fileExtension;
 	}
-	public void setFileExtension(String fileExtension) {
+
+	void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
 	}
-	public String getFileContentType() {
+
+	String getFileContentType() {
 		return fileContentType;
 	}
-	public void setFileContentType(String fileContentType) {
+
+	void setFileContentType(String fileContentType) {
 		this.fileContentType = fileContentType;
 	}
-	public String getFileData() {
+
+	String getFileData() {
 		return fileData;
 	}
-	public void setFileData(String fileData) {
+
+	void setFileData(String fileData) {
 		this.fileData = fileData;
 	}
-	public String getAdditionalDataFileKey() {
+
+	String getAdditionalDataFileKey() {
 		return additionalDataFileKey;
 	}
-	public void setAdditionalDataFileKey(String additionalDataFileKey) {
+
+	void setAdditionalDataFileKey(String additionalDataFileKey) {
 		this.additionalDataFileKey = additionalDataFileKey;
 	}
-	public String getFilePath() {
+
+	String getFilePath() {
 		return filePath;
 	}
-	public void setFilePath(String filePath) {
+
+	void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-	public String getStatus() {
+
+	String getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+
+	void setStatus(String status) {
 		this.status = status;
 	}
-	public Date getCreatedDate() {
+
+	Date getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(Date createdDate) {
+
+	void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public String getCreatedBy() {
+
+	String getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(String createdBy) {
+
+	void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Date getLastModifiedDate() {
+	Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
-	public void setLastModifiedDate(Date lastModifiedDate) {
+	void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	public String getLastModifiedBy() {
+	String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
-	public void setLastModifiedBy(String lastModifiedBy) {
+
+	void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
-	public String getComment() {
+
+	String getComment() {
 		return comment;
 	}
-	public void setComment(String comment) {
+
+	void setComment(String comment) {
 		this.comment = comment;
 	}
-	public String getError() {
+
+	String getError() {
 		return error;
 	}
-	public void setError(String error) {
+
+	void setError(String error) {
 		this.error = error;
 	}
-	public int getOrderFileId() {
+
+	int getOrderFileId() {
 		return orderFileId;
 	}
-	public void setOrderFileId(int orderFileId) {
+
+	void setOrderFileId(int orderFileId) {
 		this.orderFileId = orderFileId;
 	}
-	public OrderEmailQueue getVarOrderEmailQueue() {
+
+	String getProductLineMatch() {
+		return productLineMatch;
+	}
+
+	void setProductLineMatch(String productLineMatch) {
+		this.productLineMatch = productLineMatch;
+	}
+
+	String getRboMatch() {
+		return rboMatch;
+	}
+
+	void setRboMatch(String rboMatch) {
+		this.rboMatch = rboMatch;
+	}
+
+	String getFileContentMatch() {
+		return fileContentMatch;
+	}
+
+	void setFileContentMatch(String fileContentMatch) {
+		this.fileContentMatch = fileContentMatch;
+	}
+
+	OrderEmailQueue getVarOrderEmailQueue() {
 		return varOrderEmailQueue;
 	}
-	public void setVarOrderEmailQueue(OrderEmailQueue varOrderEmailQueue) {
+
+	void setVarOrderEmailQueue(OrderEmailQueue varOrderEmailQueue) {
 		this.varOrderEmailQueue = varOrderEmailQueue;
 	}
-	public Partner_RBOProductLine getVarProductLine() {
+
+	Partner_RBOProductLine getVarProductLine() {
 		return varProductLine;
 	}
-	public void setVarProductLine(Partner_RBOProductLine varProductLine) {
+
+	void setVarProductLine(Partner_RBOProductLine varProductLine) {
 		this.varProductLine = varProductLine;
 	}
-	public List<OrderFileQueue> getVarOrderFileQueue() {
-		return varOrderFileQueue;
-	}
-	public void setVarOrderFileQueue(List<OrderFileQueue> varOrderFileQueue) {
-		this.varOrderFileQueue = varOrderFileQueue;
+
+	List<OrderFileQueue> getListOrderFileQueue() {
+		return listOrderFileQueue;
 	}
 
-	/*public OrderFileQueue getVarOrderFileQueue() {
-		return varOrderFileQueue;
+	void setListOrderFileQueue(List<OrderFileQueue> listOrderFileQueue) {
+		this.listOrderFileQueue = listOrderFileQueue;
 	}
-
-	public void setVarOrderFileQueue(OrderFileQueue varOrderFileQueue) {
-		this.varOrderFileQueue = varOrderFileQueue;
-	}*/
+	
+	
+	
 	
 	
 	

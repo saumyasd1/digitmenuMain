@@ -73,7 +73,7 @@ public class Partner {
 	List<Partner_RBOProductLine> varProductLine = new ArrayList<Partner_RBOProductLine>();
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
+	List<SalesOrderLine> listSalesOrderLine = new ArrayList<SalesOrderLine>();
 	
 	
 	public Partner() {
@@ -278,13 +278,15 @@ public class Partner {
 		this.varProductLine = varProductLine;
 	}
 
-	public List<SalesOrderLine> getVarSalesOrderLine() {
-		return varSalesOrderLine;
+	List<SalesOrderLine> getListSalesOrderLine() {
+		return listSalesOrderLine;
 	}
 
-	public void setVarSalesOrderLine(List<SalesOrderLine> varSalesOrderLine) {
-		this.varSalesOrderLine = varSalesOrderLine;
+	void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
+		this.listSalesOrderLine = listSalesOrderLine;
 	}
+
+	
 
 	
 	

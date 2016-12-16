@@ -16,8 +16,6 @@ public class Address {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
 	int id;
-	@Column(name = "orgCode", length = 50)
-	String orgCode;
 	@Column(name = "description", length = 500)
 	String description;
 	@Column(name = "address1", length = 500)
@@ -62,15 +60,21 @@ public class Address {
 	int siteId;
 	@Column(name="zip",length=250)
 	String zip;
+	@Column(name = "orgCodeId")
+	int orgCodeId;
+	@Column(name = "system")
+	int system;
+	@Column(name = "freightTerm", length = 250)
+	String freightTerm;
+	@Column(name = "shippingMethod", length = 255)
+	String shippingMethod;
+	@Column(name = "shippingInstruction", length = 255)
+	String shippingInstruction;
 	
 	
 	public Address() {}
 
-	public Address(int id, String orgCode) {
-		super();
-		this.id = id;
-		this.orgCode = orgCode;
-	}
+	
 
 	public int getId() {
 		return id;
@@ -78,14 +82,6 @@ public class Address {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getOrgCode() {
-		return orgCode;
-	}
-
-	public void setOrgCode(String orgCode) {
-		this.orgCode = orgCode;
 	}
 
 	public String getDescription() {
@@ -264,6 +260,67 @@ public class Address {
 		this.zip = zip;
 	}
 
+
+
+	int getOrgCodeId() {
+		return orgCodeId;
+	}
+
+
+
+	void setOrgCodeId(int orgCodeId) {
+		this.orgCodeId = orgCodeId;
+	}
+
+
+
+	int getSystem() {
+		return system;
+	}
+
+
+
+	void setSystem(int system) {
+		this.system = system;
+	}
+
+
+
+	String getFreightTerm() {
+		return freightTerm;
+	}
+
+
+
+	void setFreightTerm(String freightTerm) {
+		this.freightTerm = freightTerm;
+	}
+
+
+
+	String getShippingMethod() {
+		return shippingMethod;
+	}
+
+
+
+	void setShippingMethod(String shippingMethod) {
+		this.shippingMethod = shippingMethod;
+	}
+
+
+
+	String getShippingInstruction() {
+		return shippingInstruction;
+	}
+
+
+
+	void setShippingInstruction(String shippingInstruction) {
+		this.shippingInstruction = shippingInstruction;
+	}
+
+	
 	
 
 }

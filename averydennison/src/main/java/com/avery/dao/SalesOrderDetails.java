@@ -55,9 +55,7 @@ public class SalesOrderDetails {
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="salesOrderId")
 	SalesOrderLine varSalesOrderLine;
-	/*@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name="orderQueueId")
-	OrderFileQueue varOrderFileQueue;*/
+
 	
 	
 	
@@ -81,16 +79,6 @@ public class SalesOrderDetails {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-	/*public OrderFileQueue getVarOrderFileQueue() {
-		return varOrderFileQueue;
-	}
-
-
-	public void setVarOrderFileQueue(OrderFileQueue varOrderFileQueue) {
-		this.varOrderFileQueue = varOrderFileQueue;
-	}*/
 
 
 	public String getDivision() {

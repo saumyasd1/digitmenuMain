@@ -24,8 +24,8 @@ public class RBO {
 	@GeneratedValue
 	@Column(name = "id",nullable=false)
 	int id;
-	@Column(name = "RBOName", length = 250)
-	String RBOName;
+	@Column(name = "rboName", length = 250)
+	String rboName;
 	@Column(name = "comment", length = 250)
 	String comment;
 	@Column(name = "createdBy", length = 50)
@@ -38,18 +38,18 @@ public class RBO {
 	Date lastModifiedDate;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varRbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<Partner_RBOProductLine> varProductLine = new ArrayList<Partner_RBOProductLine>();
+	List<Partner_RBOProductLine> listProductLine = new ArrayList<Partner_RBOProductLine>();
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varRbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
+	List<SalesOrderLine> listSalesOrderLine = new ArrayList<SalesOrderLine>();
 	
 	
 	public RBO() {}
 	
-	public RBO(int id, String rBOName) {
+	public RBO(int id, String rboName) {
 		super();
 		id = id;
-		RBOName = rBOName;
+		rboName = rboName;
 	}
 	
 	public int getId() {
@@ -60,12 +60,15 @@ public class RBO {
 		this.id = id;
 	}
 
-	public String getRBOName() {
-		return RBOName;
+	
+	String getRboName() {
+		return rboName;
 	}
-	public void setRBOName(String rBOName) {
-		RBOName = rBOName;
+
+	void setRboName(String rboName) {
+		this.rboName = rboName;
 	}
+
 	public String getComment() {
 		return comment;
 	}
@@ -99,20 +102,21 @@ public class RBO {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	public List<Partner_RBOProductLine> getVarProductLine() {
-		return varProductLine;
+	List<Partner_RBOProductLine> getListProductLine() {
+		return listProductLine;
 	}
-	public void setVarProductLine(List<Partner_RBOProductLine> varProductLine) {
-		this.varProductLine = varProductLine;
+
+	void setListProductLine(List<Partner_RBOProductLine> listProductLine) {
+		this.listProductLine = listProductLine;
 	}
-	public List<SalesOrderLine> getVarSalesOrderLine() {
-		return varSalesOrderLine;
+
+	List<SalesOrderLine> getListSalesOrderLine() {
+		return listSalesOrderLine;
 	}
-	public void setVarSalesOrderLine(List<SalesOrderLine> varSalesOrderLine) {
-		this.varSalesOrderLine = varSalesOrderLine;
+
+	void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
+		this.listSalesOrderLine = listSalesOrderLine;
 	}
-	
-	
-	
+
 
 }

@@ -50,6 +50,11 @@ public class OrderFileQueue {
 	 String poNumber;
 	@Column(name="prevOrderQueueId")
 	 int prevOrderQueueId;
+	@Column(name="error",length=1000)
+	String error;
+	@Column(name="feedbackAcknowledgementDate")
+	Date feedbackAcknowledgementDate;
+	
 	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="productLineId")
 	Partner_RBOProductLine varProductLine;
@@ -59,170 +64,178 @@ public class OrderFileQueue {
 	OrderFileAttachment varOrderFileAttachment;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<OrderLine> varOrderLine=new ArrayList<OrderLine>();
+	List<OrderLine> listOrderLine=new ArrayList<OrderLine>();
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<SalesOrderLine> varSalesOrderLine=new ArrayList<SalesOrderLine>();
-	/*@LazyCollection(LazyCollectionOption.FALSE)
+	List<SalesOrderLine> listSalesOrderLine=new ArrayList<SalesOrderLine>();
+/*	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();*/
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<AuditTrail> varAuditTrail=new ArrayList<AuditTrail>();
+	List<AuditTrail> listAuditTrail=new ArrayList<AuditTrail>();*/
+	
 	
 	public OrderFileQueue() {}
 
-	public int getId() {
+	int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	void setId(int id) {
 		this.id = id;
 	}
 
-	public String getpId() {
+	String getpId() {
 		return pId;
 	}
 
-	public void setpId(String pId) {
+	void setpId(String pId) {
 		this.pId = pId;
 	}
 
-	public String getSubject() {
+	String getSubject() {
 		return subject;
 	}
 
-	public void setSubject(String subject) {
+	void setSubject(String subject) {
 		this.subject = subject;
 	}
 
-	public String getSubmittedBy() {
+	String getSubmittedBy() {
 		return submittedBy;
 	}
 
-	public void setSubmittedBy(String submittedBy) {
+	void setSubmittedBy(String submittedBy) {
 		this.submittedBy = submittedBy;
 	}
 
-	public Date getSubmittedDate() {
+	Date getSubmittedDate() {
 		return submittedDate;
 	}
 
-	public void setSubmittedDate(Date submittedDate) {
+	void setSubmittedDate(Date submittedDate) {
 		this.submittedDate = submittedDate;
 	}
 
-	public String getStatus() {
+	String getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	void setStatus(String status) {
 		this.status = status;
 	}
 
-	public Date getCreatedDate() {
+	Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public String getCreatedBy() {
+	String getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	public Date getLastModifiedDate() {
+	Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
-	public void setLastModifiedDate(Date lastModifiedDate) {
+	void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	public String getLastModifiedBy() {
+	String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
-	public void setLastModifiedBy(String lastModifiedBy) {
+	void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	public String getComment() {
+	String getComment() {
 		return comment;
 	}
 
-	public void setComment(String comment) {
+	void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	public String getPoNumber() {
+	String getPoNumber() {
 		return poNumber;
 	}
 
-	public void setPoNumber(String poNumber) {
+	void setPoNumber(String poNumber) {
 		this.poNumber = poNumber;
 	}
 
-	public int getPrevOrderQueueId() {
+	int getPrevOrderQueueId() {
 		return prevOrderQueueId;
 	}
 
-	public void setPrevOrderQueueId(int prevOrderQueueId) {
+	void setPrevOrderQueueId(int prevOrderQueueId) {
 		this.prevOrderQueueId = prevOrderQueueId;
 	}
 
-	public Partner_RBOProductLine getVarProductLine() {
+	String getError() {
+		return error;
+	}
+
+	void setError(String error) {
+		this.error = error;
+	}
+
+	Date getFeedbackAcknowledgementDate() {
+		return feedbackAcknowledgementDate;
+	}
+
+	void setFeedbackAcknowledgementDate(Date feedbackAcknowledgementDate) {
+		this.feedbackAcknowledgementDate = feedbackAcknowledgementDate;
+	}
+
+	Partner_RBOProductLine getVarProductLine() {
 		return varProductLine;
 	}
 
-	public void setVarProductLine(Partner_RBOProductLine varProductLine) {
+	void setVarProductLine(Partner_RBOProductLine varProductLine) {
 		this.varProductLine = varProductLine;
 	}
 
-	public OrderFileAttachment getVarOrderFileAttachment() {
+	OrderFileAttachment getVarOrderFileAttachment() {
 		return varOrderFileAttachment;
 	}
 
-	public void setVarOrderFileAttachment(OrderFileAttachment varOrderFileAttachment) {
+	void setVarOrderFileAttachment(OrderFileAttachment varOrderFileAttachment) {
 		this.varOrderFileAttachment = varOrderFileAttachment;
 	}
 
-	public List<OrderLine> getVarOrderLine() {
-		return varOrderLine;
+	List<OrderLine> getListOrderLine() {
+		return listOrderLine;
 	}
 
-	public void setVarOrderLine(List<OrderLine> varOrderLine) {
-		this.varOrderLine = varOrderLine;
+	void setListOrderLine(List<OrderLine> listOrderLine) {
+		this.listOrderLine = listOrderLine;
 	}
 
-	public List<SalesOrderLine> getVarSalesOrderLine() {
-		return varSalesOrderLine;
+	List<SalesOrderLine> getListSalesOrderLine() {
+		return listSalesOrderLine;
 	}
 
-	public void setVarSalesOrderLine(List<SalesOrderLine> varSalesOrderLine) {
-		this.varSalesOrderLine = varSalesOrderLine;
+	void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
+		this.listSalesOrderLine = listSalesOrderLine;
 	}
 
-/*	public List<SalesOrderDetails> getVarSalesOrderDetails() {
-		return varSalesOrderDetails;
+	/*List<AuditTrail> getListAuditTrail() {
+		return listAuditTrail;
 	}
 
-	public void setVarSalesOrderDetails(List<SalesOrderDetails> varSalesOrderDetails) {
-		this.varSalesOrderDetails = varSalesOrderDetails;
+	void setListAuditTrail(List<AuditTrail> listAuditTrail) {
+		this.listAuditTrail = listAuditTrail;
 	}
 */
-	public List<AuditTrail> getVarAuditTrail() {
-		return varAuditTrail;
-	}
-
-	public void setVarAuditTrail(List<AuditTrail> varAuditTrail) {
-		this.varAuditTrail = varAuditTrail;
-	}
+	
 
 	
 	

@@ -66,176 +66,176 @@ public class OrderSystemInfo {
 	public OrderSystemInfo() {}
 
 
-	int getId() {
+	public int getId() {
 		return id;
 	}
 
 
-	void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	
-	String getArtworkHold() {
+
+	public String getArtworkHold() {
 		return artworkHold;
 	}
 
 
-	void setArtworkHold(String artworkHold) {
+	public void setArtworkHold(String artworkHold) {
 		this.artworkHold = artworkHold;
 	}
 
 
-	String getCsrName() {
+	public String getCsrName() {
 		return csrName;
 	}
 
 
-	void setCsrName(String csrName) {
+	public void setCsrName(String csrName) {
 		this.csrName = csrName;
 	}
 
 
-	String getManufacturingNotes() {
+	public String getManufacturingNotes() {
 		return manufacturingNotes;
 	}
 
 
-	void setManufacturingNotes(String manufacturingNotes) {
+	public void setManufacturingNotes(String manufacturingNotes) {
 		this.manufacturingNotes = manufacturingNotes;
 	}
 
 
-	String getPackingInstruction() {
+	public String getPackingInstruction() {
 		return packingInstruction;
 	}
 
 
-	void setPackingInstruction(String packingInstruction) {
+	public void setPackingInstruction(String packingInstruction) {
 		this.packingInstruction = packingInstruction;
 	}
 
 
-	String getShippingMark() {
+	public String getShippingMark() {
 		return shippingMark;
 	}
 
 
-	void setShippingMark(String shippingMark) {
+	public void setShippingMark(String shippingMark) {
 		this.shippingMark = shippingMark;
 	}
-	
 
 
-	boolean isDiscountOffer() {
+	public boolean isDiscountOffer() {
 		return discountOffer;
 	}
 
 
-	void setDiscountOffer(boolean discountOffer) {
+	public void setDiscountOffer(boolean discountOffer) {
 		this.discountOffer = discountOffer;
 	}
 
 
-	String getInvoiceNote() {
+	public String getInvoiceNote() {
 		return invoiceNote;
 	}
 
 
-	void setInvoiceNote(String invoiceNote) {
+	public void setInvoiceNote(String invoiceNote) {
 		this.invoiceNote = invoiceNote;
 	}
 
 
-	String getSplitShipSetBy() {
+	public String getSplitShipSetBy() {
 		return splitShipSetBy;
 	}
 
 
-	void setSplitShipSetBy(String splitShipSetBy) {
+	public void setSplitShipSetBy(String splitShipSetBy) {
 		this.splitShipSetBy = splitShipSetBy;
 	}
 
 
-	String getVariableDataBreakdown() {
+	public String getVariableDataBreakdown() {
 		return variableDataBreakdown;
 	}
 
 
-	void setVariableDataBreakdown(String variableDataBreakdown) {
+	public void setVariableDataBreakdown(String variableDataBreakdown) {
 		this.variableDataBreakdown = variableDataBreakdown;
 	}
 
 
-	String getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
 
-	void setCreatedBy(String createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
 
-	Date getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
 
-	void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
 
-	String getLastModifiedBy() {
+	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
 
-	void setLastModifiedBy(String lastModifiedBy) {
+	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
 
-	Date getLastModifiedDate() {
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
 
-	void setLastModifiedDate(Date lastModifiedDate) {
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
 
-	Partner_RBOProductLine getVarProductLine() {
+	public Partner_RBOProductLine getVarProductLine() {
 		return varProductLine;
 	}
 
 
-	void setVarProductLine(Partner_RBOProductLine varProductLine) {
+	public void setVarProductLine(Partner_RBOProductLine varProductLine) {
 		this.varProductLine = varProductLine;
 	}
 
 
-	System getVarSystem() {
+	public System getVarSystem() {
 		return varSystem;
 	}
 
 
-	void setVarSystem(System varSystem) {
+	public void setVarSystem(System varSystem) {
 		this.varSystem = varSystem;
 	}
 
 
-	List<OrgInfo> getListOrgInfo() {
+	public List<OrgInfo> getListOrgInfo() {
 		return listOrgInfo;
 	}
 
 
-	void setListOrgInfo(List<OrgInfo> listOrgInfo) {
+	public void setListOrgInfo(List<OrgInfo> listOrgInfo) {
 		this.listOrgInfo = listOrgInfo;
 	}
-	
+
+
 	
 	
 }

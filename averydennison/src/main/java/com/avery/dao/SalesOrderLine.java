@@ -1012,14 +1012,18 @@ public class SalesOrderLine {
 	}
 
 
-	List<SalesOrderDetails> getListSalesOrderDetails() {
+	public List<SalesOrderDetails> getListSalesOrderDetails() {
 		return listSalesOrderDetails;
 	}
 
 
-	void setListSalesOrderDetails(List<SalesOrderDetails> listSalesOrderDetails) {
+	public void setListSalesOrderDetails(
+			List<SalesOrderDetails> listSalesOrderDetails) {
 		this.listSalesOrderDetails = listSalesOrderDetails;
 	}
+
+
+	
 
 
 	

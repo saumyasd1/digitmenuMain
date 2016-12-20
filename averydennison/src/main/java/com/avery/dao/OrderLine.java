@@ -273,1206 +273,1208 @@ public class OrderLine {
 	}
 
 
-	int getId() {
+	public int getId() {
 		return id;
 	}
 
 
-	void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
 
-	String getCustomerPONumber() {
+	public String getCustomerPONumber() {
 		return customerPONumber;
 	}
 
 
-	void setCustomerPONumber(String customerPONumber) {
+	public void setCustomerPONumber(String customerPONumber) {
 		this.customerPONumber = customerPONumber;
 	}
 
 
-	Date getOrderedDate() {
+	public Date getOrderedDate() {
 		return orderedDate;
 	}
 
 
-	void setOrderedDate(Date orderedDate) {
+	public void setOrderedDate(Date orderedDate) {
 		this.orderedDate = orderedDate;
 	}
 
 
-	String getPartnerCustomerName() {
+	public String getPartnerCustomerName() {
 		return partnerCustomerName;
 	}
 
 
-	void setPartnerCustomerName(String partnerCustomerName) {
+	public void setPartnerCustomerName(String partnerCustomerName) {
 		this.partnerCustomerName = partnerCustomerName;
 	}
 
 
-	boolean isBulk() {
+	public boolean isBulk() {
 		return bulk;
 	}
 
 
-	void setBulk(boolean bulk) {
+	public void setBulk(boolean bulk) {
 		this.bulk = bulk;
 	}
 
 
-	String getPartnerVendorName() {
+	public String getPartnerVendorName() {
 		return partnerVendorName;
 	}
 
 
-	void setPartnerVendorName(String partnerVendorName) {
+	public void setPartnerVendorName(String partnerVendorName) {
 		this.partnerVendorName = partnerVendorName;
 	}
 
 
-	String getShipToCustomer() {
+	public String getShipToCustomer() {
 		return shipToCustomer;
 	}
 
 
-	void setShipToCustomer(String shipToCustomer) {
+	public void setShipToCustomer(String shipToCustomer) {
 		this.shipToCustomer = shipToCustomer;
 	}
 
 
-	String getShipToContact() {
+	public String getShipToContact() {
 		return shipToContact;
 	}
 
 
-	void setShipToContact(String shipToContact) {
+	public void setShipToContact(String shipToContact) {
 		this.shipToContact = shipToContact;
 	}
 
 
-	String getShipToAddress1() {
+	public String getShipToAddress1() {
 		return shipToAddress1;
 	}
 
 
-	void setShipToAddress1(String shipToAddress1) {
+	public void setShipToAddress1(String shipToAddress1) {
 		this.shipToAddress1 = shipToAddress1;
 	}
 
 
-	String getShipToAddress2() {
+	public String getShipToAddress2() {
 		return shipToAddress2;
 	}
 
 
-	void setShipToAddress2(String shipToAddress2) {
+	public void setShipToAddress2(String shipToAddress2) {
 		this.shipToAddress2 = shipToAddress2;
 	}
 
 
-	String getShipToAddress3() {
+	public String getShipToAddress3() {
 		return shipToAddress3;
 	}
 
 
-	void setShipToAddress3(String shipToAddress3) {
+	public void setShipToAddress3(String shipToAddress3) {
 		this.shipToAddress3 = shipToAddress3;
 	}
 
 
-	String getShipToCity() {
+	public String getShipToCity() {
 		return shipToCity;
 	}
 
 
-	void setShipToCity(String shipToCity) {
+	public void setShipToCity(String shipToCity) {
 		this.shipToCity = shipToCity;
 	}
 
 
-	String getShipToState() {
+	public String getShipToState() {
 		return shipToState;
 	}
 
 
-	void setShipToState(String shipToState) {
+	public void setShipToState(String shipToState) {
 		this.shipToState = shipToState;
 	}
 
 
-	String getShipToZip() {
+	public String getShipToZip() {
 		return shipToZip;
 	}
 
 
-	void setShipToZip(String shipToZip) {
+	public void setShipToZip(String shipToZip) {
 		this.shipToZip = shipToZip;
 	}
 
 
-	String getShipToCountry() {
+	public String getShipToCountry() {
 		return shipToCountry;
 	}
 
 
-	void setShipToCountry(String shipToCountry) {
+	public void setShipToCountry(String shipToCountry) {
 		this.shipToCountry = shipToCountry;
 	}
 
 
-	String getShipToTelephone() {
+	public String getShipToTelephone() {
 		return shipToTelephone;
 	}
 
 
-	void setShipToTelephone(String shipToTelephone) {
+	public void setShipToTelephone(String shipToTelephone) {
 		this.shipToTelephone = shipToTelephone;
 	}
 
 
-	String getShipToFax() {
+	public String getShipToFax() {
 		return shipToFax;
 	}
 
 
-	void setShipToFax(String shipToFax) {
+	public void setShipToFax(String shipToFax) {
 		this.shipToFax = shipToFax;
 	}
 
 
-	String getShipToEmail() {
+	public String getShipToEmail() {
 		return shipToEmail;
 	}
 
 
-	void setShipToEmail(String shipToEmail) {
+	public void setShipToEmail(String shipToEmail) {
 		this.shipToEmail = shipToEmail;
 	}
 
 
-	String getBillToCustomer() {
+	public String getBillToCustomer() {
 		return billToCustomer;
 	}
 
 
-	void setBillToCustomer(String billToCustomer) {
+	public void setBillToCustomer(String billToCustomer) {
 		this.billToCustomer = billToCustomer;
 	}
 
 
-	String getBillToContact() {
+	public String getBillToContact() {
 		return billToContact;
 	}
 
 
-	void setBillToContact(String billToContact) {
+	public void setBillToContact(String billToContact) {
 		this.billToContact = billToContact;
 	}
 
 
-	String getBillToAddress1() {
+	public String getBillToAddress1() {
 		return billToAddress1;
 	}
 
 
-	void setBillToAddress1(String billToAddress1) {
+	public void setBillToAddress1(String billToAddress1) {
 		this.billToAddress1 = billToAddress1;
 	}
 
 
-	String getBillToAddress2() {
+	public String getBillToAddress2() {
 		return billToAddress2;
 	}
 
 
-	void setBillToAddress2(String billToAddress2) {
+	public void setBillToAddress2(String billToAddress2) {
 		this.billToAddress2 = billToAddress2;
 	}
 
 
-	String getBillToAddress3() {
+	public String getBillToAddress3() {
 		return billToAddress3;
 	}
 
 
-	void setBillToAddress3(String billToAddress3) {
+	public void setBillToAddress3(String billToAddress3) {
 		this.billToAddress3 = billToAddress3;
 	}
 
 
-	String getBillToCity() {
+	public String getBillToCity() {
 		return billToCity;
 	}
 
 
-	void setBillToCity(String billToCity) {
+	public void setBillToCity(String billToCity) {
 		this.billToCity = billToCity;
 	}
 
 
-	String getBillToState() {
+	public String getBillToState() {
 		return billToState;
 	}
 
 
-	void setBillToState(String billToState) {
+	public void setBillToState(String billToState) {
 		this.billToState = billToState;
 	}
 
 
-	String getBillToZip() {
+	public String getBillToZip() {
 		return billToZip;
 	}
 
 
-	void setBillToZip(String billToZip) {
+	public void setBillToZip(String billToZip) {
 		this.billToZip = billToZip;
 	}
 
 
-	String getBillToCountry() {
+	public String getBillToCountry() {
 		return billToCountry;
 	}
 
 
-	void setBillToCountry(String billToCountry) {
+	public void setBillToCountry(String billToCountry) {
 		this.billToCountry = billToCountry;
 	}
 
 
-	String getBillToTelephone() {
+	public String getBillToTelephone() {
 		return billToTelephone;
 	}
 
 
-	void setBillToTelephone(String billToTelephone) {
+	public void setBillToTelephone(String billToTelephone) {
 		this.billToTelephone = billToTelephone;
 	}
 
 
-	String getBillToFax() {
+	public String getBillToFax() {
 		return billToFax;
 	}
 
 
-	void setBillToFax(String billToFax) {
+	public void setBillToFax(String billToFax) {
 		this.billToFax = billToFax;
 	}
 
 
-	String getBillToEmail() {
+	public String getBillToEmail() {
 		return billToEmail;
 	}
 
 
-	void setBillToEmail(String billToEmail) {
+	public void setBillToEmail(String billToEmail) {
 		this.billToEmail = billToEmail;
 	}
 
 
-	Date getRequestedDevliveryDate() {
+	public Date getRequestedDevliveryDate() {
 		return requestedDevliveryDate;
 	}
 
 
-	void setRequestedDevliveryDate(Date requestedDevliveryDate) {
+	public void setRequestedDevliveryDate(Date requestedDevliveryDate) {
 		this.requestedDevliveryDate = requestedDevliveryDate;
 	}
 
 
-	String getShippingMethod() {
+	public String getShippingMethod() {
 		return shippingMethod;
 	}
 
 
-	void setShippingMethod(String shippingMethod) {
+	public void setShippingMethod(String shippingMethod) {
 		this.shippingMethod = shippingMethod;
 	}
 
 
-	String getSpecialInstruction() {
+	public String getSpecialInstruction() {
 		return specialInstruction;
 	}
 
 
-	void setSpecialInstruction(String specialInstruction) {
+	public void setSpecialInstruction(String specialInstruction) {
 		this.specialInstruction = specialInstruction;
 	}
 
 
-	Date getOrderReceivedDate() {
+	public Date getOrderReceivedDate() {
 		return orderReceivedDate;
 	}
 
 
-	void setOrderReceivedDate(Date orderReceivedDate) {
+	public void setOrderReceivedDate(Date orderReceivedDate) {
 		this.orderReceivedDate = orderReceivedDate;
 	}
 
 
-	String getSoldToRBONumber() {
+	public String getSoldToRBONumber() {
 		return soldToRBONumber;
 	}
 
 
-	void setSoldToRBONumber(String soldToRBONumber) {
+	public void setSoldToRBONumber(String soldToRBONumber) {
 		this.soldToRBONumber = soldToRBONumber;
 	}
 
 
-	String getOracleBillToSiteNumber() {
+	public String getOracleBillToSiteNumber() {
 		return oracleBillToSiteNumber;
 	}
 
 
-	void setOracleBillToSiteNumber(String oracleBillToSiteNumber) {
+	public void setOracleBillToSiteNumber(String oracleBillToSiteNumber) {
 		this.oracleBillToSiteNumber = oracleBillToSiteNumber;
 	}
 
 
-	String getOracleShipToSiteNumber() {
+	public String getOracleShipToSiteNumber() {
 		return oracleShipToSiteNumber;
 	}
 
 
-	void setOracleShipToSiteNumber(String oracleShipToSiteNumber) {
+	public void setOracleShipToSiteNumber(String oracleShipToSiteNumber) {
 		this.oracleShipToSiteNumber = oracleShipToSiteNumber;
 	}
 
 
-	String getRetailerPO_CustomerJob() {
+	public String getRetailerPO_CustomerJob() {
 		return retailerPO_CustomerJob;
 	}
 
 
-	void setRetailerPO_CustomerJob(String retailerPO_CustomerJob) {
+	public void setRetailerPO_CustomerJob(String retailerPO_CustomerJob) {
 		this.retailerPO_CustomerJob = retailerPO_CustomerJob;
 	}
 
 
-	String getAveryItemNumber() {
+	public String getAveryItemNumber() {
 		return averyItemNumber;
 	}
 
 
-	void setAveryItemNumber(String averyItemNumber) {
+	public void setAveryItemNumber(String averyItemNumber) {
 		this.averyItemNumber = averyItemNumber;
 	}
 
 
-	String getCustomerItemNumber() {
+	public String getCustomerItemNumber() {
 		return customerItemNumber;
 	}
 
 
-	void setCustomerItemNumber(String customerItemNumber) {
+	public void setCustomerItemNumber(String customerItemNumber) {
 		this.customerItemNumber = customerItemNumber;
 	}
 
 
-	String getItemDescription() {
+	public String getItemDescription() {
 		return itemDescription;
 	}
 
 
-	void setItemDescription(String itemDescription) {
+	public void setItemDescription(String itemDescription) {
 		this.itemDescription = itemDescription;
 	}
 
 
-	String getCustomerColorCode() {
+	public String getCustomerColorCode() {
 		return customerColorCode;
 	}
 
 
-	void setCustomerColorCode(String customerColorCode) {
+	public void setCustomerColorCode(String customerColorCode) {
 		this.customerColorCode = customerColorCode;
 	}
 
 
-	String getCustomerColorDescription() {
+	public String getCustomerColorDescription() {
 		return customerColorDescription;
 	}
 
 
-	void setCustomerColorDescription(String customerColorDescription) {
+	public void setCustomerColorDescription(String customerColorDescription) {
 		this.customerColorDescription = customerColorDescription;
 	}
 
 
-	String getCustomerSize() {
+	public String getCustomerSize() {
 		return customerSize;
 	}
 
 
-	void setCustomerSize(String customerSize) {
+	public void setCustomerSize(String customerSize) {
 		this.customerSize = customerSize;
 	}
 
 
-	String getCustomerUnitPrice() {
+	public String getCustomerUnitPrice() {
 		return customerUnitPrice;
 	}
 
 
-	void setCustomerUnitPrice(String customerUnitPrice) {
+	public void setCustomerUnitPrice(String customerUnitPrice) {
 		this.customerUnitPrice = customerUnitPrice;
 	}
 
 
-	String getCustomerCost() {
+	public String getCustomerCost() {
 		return customerCost;
 	}
 
 
-	void setCustomerCost(String customerCost) {
+	public void setCustomerCost(String customerCost) {
 		this.customerCost = customerCost;
 	}
 
 
-	String getContractNumber() {
+	public String getContractNumber() {
 		return contractNumber;
 	}
 
 
-	void setContractNumber(String contractNumber) {
+	public void setContractNumber(String contractNumber) {
 		this.contractNumber = contractNumber;
 	}
 
 
-	String getStyleNo() {
+	public String getStyleNo() {
 		return styleNo;
 	}
 
 
-	void setStyleNo(String styleNo) {
+	public void setStyleNo(String styleNo) {
 		this.styleNo = styleNo;
 	}
 
 
-	String getCustomerItemNumber1() {
+	public String getCustomerItemNumber1() {
 		return customerItemNumber1;
 	}
 
 
-	void setCustomerItemNumber1(String customerItemNumber1) {
+	public void setCustomerItemNumber1(String customerItemNumber1) {
 		this.customerItemNumber1 = customerItemNumber1;
 	}
 
 
-	String getCustomerItemNumber2() {
+	public String getCustomerItemNumber2() {
 		return customerItemNumber2;
 	}
 
 
-	void setCustomerItemNumber2(String customerItemNumber2) {
+	public void setCustomerItemNumber2(String customerItemNumber2) {
 		this.customerItemNumber2 = customerItemNumber2;
 	}
 
 
-	String getCustomerSeason() {
+	public String getCustomerSeason() {
 		return customerSeason;
 	}
 
 
-	void setCustomerSeason(String customerSeason) {
+	public void setCustomerSeason(String customerSeason) {
 		this.customerSeason = customerSeason;
 	}
 
 
-	String getCustomerUOM() {
+	public String getCustomerUOM() {
 		return customerUOM;
 	}
 
 
-	void setCustomerUOM(String customerUOM) {
+	public void setCustomerUOM(String customerUOM) {
 		this.customerUOM = customerUOM;
 	}
 
 
-	String getCustomerOrderedQty() {
+	public String getCustomerOrderedQty() {
 		return customerOrderedQty;
 	}
 
 
-	void setCustomerOrderedQty(String customerOrderedQty) {
+	public void setCustomerOrderedQty(String customerOrderedQty) {
 		this.customerOrderedQty = customerOrderedQty;
 	}
 
 
-	String getCalculatedOrderdedQty() {
+	public String getCalculatedOrderdedQty() {
 		return calculatedOrderdedQty;
 	}
 
 
-	void setCalculatedOrderdedQty(String calculatedOrderdedQty) {
+	public void setCalculatedOrderdedQty(String calculatedOrderdedQty) {
 		this.calculatedOrderdedQty = calculatedOrderdedQty;
 	}
 
 
-	Date getOrderDate() {
+	public Date getOrderDate() {
 		return orderDate;
 	}
 
 
-	void setOrderDate(Date orderDate) {
+	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
 
-	Date getCustomerRequestDate() {
+	public Date getCustomerRequestDate() {
 		return customerRequestDate;
 	}
 
 
-	void setCustomerRequestDate(Date customerRequestDate) {
+	public void setCustomerRequestDate(Date customerRequestDate) {
 		this.customerRequestDate = customerRequestDate;
 	}
 
 
-	Date getPromiseDate() {
+	public Date getPromiseDate() {
 		return promiseDate;
 	}
 
 
-	void setPromiseDate(Date promiseDate) {
+	public void setPromiseDate(Date promiseDate) {
 		this.promiseDate = promiseDate;
 	}
 
 
-	String getFreightTerms() {
+	public String getFreightTerms() {
 		return freightTerms;
 	}
 
 
-	void setFreightTerms(String freightTerms) {
+	public void setFreightTerms(String freightTerms) {
 		this.freightTerms = freightTerms;
 	}
 
 
-	String getCsr() {
+	public String getCsr() {
 		return csr;
 	}
 
 
-	void setCsr(String csr) {
+	public void setCsr(String csr) {
 		this.csr = csr;
 	}
 
 
-	String getPackingInstruction() {
+	public String getPackingInstruction() {
 		return packingInstruction;
 	}
 
 
-	void setPackingInstruction(String packingInstruction) {
+	public void setPackingInstruction(String packingInstruction) {
 		this.packingInstruction = packingInstruction;
 	}
 
 
-	String getShippingInstructions() {
+	public String getShippingInstructions() {
 		return shippingInstructions;
 	}
 
 
-	void setShippingInstructions(String shippingInstructions) {
+	public void setShippingInstructions(String shippingInstructions) {
 		this.shippingInstructions = shippingInstructions;
 	}
 
 
-	String getInvoicelineInstruction() {
+	public String getInvoicelineInstruction() {
 		return invoicelineInstruction;
 	}
 
 
-	void setInvoicelineInstruction(String invoicelineInstruction) {
+	public void setInvoicelineInstruction(String invoicelineInstruction) {
 		this.invoicelineInstruction = invoicelineInstruction;
 	}
 
 
-	String getDivisionForInterfaceERPORG() {
+	public String getDivisionForInterfaceERPORG() {
 		return divisionForInterfaceERPORG;
 	}
 
 
-	void setDivisionForInterfaceERPORG(String divisionForInterfaceERPORG) {
+	public void setDivisionForInterfaceERPORG(String divisionForInterfaceERPORG) {
 		this.divisionForInterfaceERPORG = divisionForInterfaceERPORG;
 	}
 
 
-	String getArtWorkhold() {
+	public String getArtWorkhold() {
 		return artWorkhold;
 	}
 
 
-	void setArtWorkhold(String artWorkhold) {
+	public void setArtWorkhold(String artWorkhold) {
 		this.artWorkhold = artWorkhold;
 	}
 
 
-	String getArtworkAttachment() {
+	public String getArtworkAttachment() {
 		return artworkAttachment;
 	}
 
 
-	void setArtworkAttachment(String artworkAttachment) {
+	public void setArtworkAttachment(String artworkAttachment) {
 		this.artworkAttachment = artworkAttachment;
 	}
 
 
-	String getVariableDataBreakdown() {
+	public String getVariableDataBreakdown() {
 		return variableDataBreakdown;
 	}
 
 
-	void setVariableDataBreakdown(String variableDataBreakdown) {
+	public void setVariableDataBreakdown(String variableDataBreakdown) {
 		this.variableDataBreakdown = variableDataBreakdown;
 	}
 
 
-	String getManufacturingNotes() {
+	public String getManufacturingNotes() {
 		return manufacturingNotes;
 	}
 
 
-	void setManufacturingNotes(String manufacturingNotes) {
+	public void setManufacturingNotes(String manufacturingNotes) {
 		this.manufacturingNotes = manufacturingNotes;
 	}
 
 
-	String getOrderType() {
+	public String getOrderType() {
 		return orderType;
 	}
 
 
-	void setOrderType(String orderType) {
+	public void setOrderType(String orderType) {
 		this.orderType = orderType;
 	}
 
 
-	String getOrderBy() {
+	public String getOrderBy() {
 		return orderBy;
 	}
 
 
-	void setOrderBy(String orderBy) {
+	public void setOrderBy(String orderBy) {
 		this.orderBy = orderBy;
 	}
 
 
-	String getEndCustomer() {
+	public String getEndCustomer() {
 		return endCustomer;
 	}
 
 
-	void setEndCustomer(String endCustomer) {
+	public void setEndCustomer(String endCustomer) {
 		this.endCustomer = endCustomer;
 	}
 
 
-	String getShippingOnlyNotes() {
+	public String getShippingOnlyNotes() {
 		return shippingOnlyNotes;
 	}
 
 
-	void setShippingOnlyNotes(String shippingOnlyNotes) {
+	public void setShippingOnlyNotes(String shippingOnlyNotes) {
 		this.shippingOnlyNotes = shippingOnlyNotes;
 	}
 
 
-	String getBankCharge() {
+	public String getBankCharge() {
 		return bankCharge;
 	}
 
 
-	void setBankCharge(String bankCharge) {
+	public void setBankCharge(String bankCharge) {
 		this.bankCharge = bankCharge;
 	}
 
 
-	String getFreightCharge() {
+	public String getFreightCharge() {
 		return freightCharge;
 	}
 
 
-	void setFreightCharge(String freightCharge) {
+	public void setFreightCharge(String freightCharge) {
 		this.freightCharge = freightCharge;
 	}
 
 
-	String getShippingHold() {
+	public String getShippingHold() {
 		return shippingHold;
 	}
 
 
-	void setShippingHold(String shippingHold) {
+	public void setShippingHold(String shippingHold) {
 		this.shippingHold = shippingHold;
 	}
 
 
-	String getProductionHold() {
+	public String getProductionHold() {
 		return productionHold;
 	}
 
 
-	void setProductionHold(String productionHold) {
+	public void setProductionHold(String productionHold) {
 		this.productionHold = productionHold;
 	}
 
 
-	String getSplitShipset() {
+	public String getSplitShipset() {
 		return splitShipset;
 	}
 
 
-	void setSplitShipset(String splitShipset) {
+	public void setSplitShipset(String splitShipset) {
 		this.splitShipset = splitShipset;
 	}
 
 
-	String getAgreement() {
+	public String getAgreement() {
 		return agreement;
 	}
 
 
-	void setAgreement(String agreement) {
+	public void setAgreement(String agreement) {
 		this.agreement = agreement;
 	}
 
 
-	String getModelSerialNumber() {
+	public String getModelSerialNumber() {
 		return modelSerialNumber;
 	}
 
 
-	void setModelSerialNumber(String modelSerialNumber) {
+	public void setModelSerialNumber(String modelSerialNumber) {
 		this.modelSerialNumber = modelSerialNumber;
 	}
 
 
-	String getWaiveMOQ() {
+	public String getWaiveMOQ() {
 		return waiveMOQ;
 	}
 
 
-	void setWaiveMOQ(String waiveMOQ) {
+	public void setWaiveMOQ(String waiveMOQ) {
 		this.waiveMOQ = waiveMOQ;
 	}
 
 
-	String getTargetSystem() {
+	public String getTargetSystem() {
 		return targetSystem;
 	}
 
 
-	void setTargetSystem(String targetSystem) {
+	public void setTargetSystem(String targetSystem) {
 		this.targetSystem = targetSystem;
 	}
 
 
-	String getAPOType() {
+	public String getAPOType() {
 		return APOType;
 	}
 
 
-	void setAPOType(String aPOType) {
+	public void setAPOType(String aPOType) {
 		APOType = aPOType;
 	}
 
 
-	Date getSentToOracleDate() {
+	public Date getSentToOracleDate() {
 		return sentToOracleDate;
 	}
 
 
-	void setSentToOracleDate(Date sentToOracleDate) {
+	public void setSentToOracleDate(Date sentToOracleDate) {
 		this.sentToOracleDate = sentToOracleDate;
 	}
 
 
-	String getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
 
-	void setStatus(String status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
 
-	String getReviseOrderFlag() {
+	public String getReviseOrderFlag() {
 		return reviseOrderFlag;
 	}
 
 
-	void setReviseOrderFlag(String reviseOrderFlag) {
+	public void setReviseOrderFlag(String reviseOrderFlag) {
 		this.reviseOrderFlag = reviseOrderFlag;
 	}
 
 
-	String getCooTranslationFlag() {
+	public String getCooTranslationFlag() {
 		return cooTranslationFlag;
 	}
 
 
-	void setCooTranslationFlag(String cooTranslationFlag) {
+	public void setCooTranslationFlag(String cooTranslationFlag) {
 		this.cooTranslationFlag = cooTranslationFlag;
 	}
 
 
-	String getFebricPercentageFlag() {
+	public String getFebricPercentageFlag() {
 		return febricPercentageFlag;
 	}
 
 
-	void setFebricPercentageFlag(String febricPercentageFlag) {
+	public void setFebricPercentageFlag(String febricPercentageFlag) {
 		this.febricPercentageFlag = febricPercentageFlag;
 	}
 
 
-	String getDuplicatePOFlag() {
+	public String getDuplicatePOFlag() {
 		return duplicatePOFlag;
 	}
 
 
-	void setDuplicatePOFlag(String duplicatePOFlag) {
+	public void setDuplicatePOFlag(String duplicatePOFlag) {
 		this.duplicatePOFlag = duplicatePOFlag;
 	}
 
 
-	String getCustomerPOFlag() {
+	public String getCustomerPOFlag() {
 		return customerPOFlag;
 	}
 
 
-	void setCustomerPOFlag(String customerPOFlag) {
+	public void setCustomerPOFlag(String customerPOFlag) {
 		this.customerPOFlag = customerPOFlag;
 	}
 
 
-	String getBulkSampleValidationFlag() {
+	public String getBulkSampleValidationFlag() {
 		return bulkSampleValidationFlag;
 	}
 
 
-	void setBulkSampleValidationFlag(String bulkSampleValidationFlag) {
+	public void setBulkSampleValidationFlag(String bulkSampleValidationFlag) {
 		this.bulkSampleValidationFlag = bulkSampleValidationFlag;
 	}
 
 
-	String getMOQValidationFlag() {
+	public String getMOQValidationFlag() {
 		return MOQValidationFlag;
 	}
 
 
-	void setMOQValidationFlag(String mOQValidationFlag) {
+	public void setMOQValidationFlag(String mOQValidationFlag) {
 		MOQValidationFlag = mOQValidationFlag;
 	}
 
 
-	String getATOValidationFlag() {
+	public String getATOValidationFlag() {
 		return ATOValidationFlag;
 	}
 
 
-	void setATOValidationFlag(String aTOValidationFlag) {
+	public void setATOValidationFlag(String aTOValidationFlag) {
 		ATOValidationFlag = aTOValidationFlag;
 	}
 
 
-	String getMandatoryVariableDataFieldFlag() {
+	public String getMandatoryVariableDataFieldFlag() {
 		return mandatoryVariableDataFieldFlag;
 	}
 
 
-	void setMandatoryVariableDataFieldFlag(String mandatoryVariableDataFieldFlag) {
+	public void setMandatoryVariableDataFieldFlag(
+			String mandatoryVariableDataFieldFlag) {
 		this.mandatoryVariableDataFieldFlag = mandatoryVariableDataFieldFlag;
 	}
 
 
-	String getHTLSizePageValidationFlag() {
+	public String getHTLSizePageValidationFlag() {
 		return HTLSizePageValidationFlag;
 	}
 
 
-	void setHTLSizePageValidationFlag(String hTLSizePageValidationFlag) {
+	public void setHTLSizePageValidationFlag(String hTLSizePageValidationFlag) {
 		HTLSizePageValidationFlag = hTLSizePageValidationFlag;
 	}
 
 
-	Date getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
 
-	void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
 
-	String getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
 
-	void setCreatedBy(String createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
 
-	Date getLastModifiedDate() {
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
 
-	void setLastModifiedDate(Date lastModifiedDate) {
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
 
-	String getLastModifiedBy() {
+	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
 
-	void setLastModifiedBy(String lastModifiedBy) {
+	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
 
-	String getRegion() {
+	public String getRegion() {
 		return region;
 	}
 
 
-	void setRegion(String region) {
+	public void setRegion(String region) {
 		this.region = region;
 	}
 
 
-	String getPONumber() {
+	public String getPONumber() {
 		return PONumber;
 	}
 
 
-	void setPONumber(String pONumber) {
+	public void setPONumber(String pONumber) {
 		PONumber = pONumber;
 	}
 
 
-	String getComment() {
+	public String getComment() {
 		return comment;
 	}
 
 
-	void setComment(String comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
 
-	String getRoundQty() {
+	public String getRoundQty() {
 		return roundQty;
 	}
 
 
-	void setRoundQty(String roundQty) {
+	public void setRoundQty(String roundQty) {
 		this.roundQty = roundQty;
 	}
 
 
-	String getMOQDiffQty() {
+	public String getMOQDiffQty() {
 		return MOQDiffQty;
 	}
 
 
-	void setMOQDiffQty(String mOQDiffQty) {
+	public void setMOQDiffQty(String mOQDiffQty) {
 		MOQDiffQty = mOQDiffQty;
 	}
 
 
-	String getUpdateMOQ() {
+	public String getUpdateMOQ() {
 		return updateMOQ;
 	}
 
 
-	void setUpdateMOQ(String updateMOQ) {
+	public void setUpdateMOQ(String updateMOQ) {
 		this.updateMOQ = updateMOQ;
 	}
 
 
-	String getCustomerNumber() {
+	public String getCustomerNumber() {
 		return customerNumber;
 	}
 
 
-	void setCustomerNumber(String customerNumber) {
+	public void setCustomerNumber(String customerNumber) {
 		this.customerNumber = customerNumber;
 	}
 
 
-	String getRushOrderCheck() {
+	public String getRushOrderCheck() {
 		return rushOrderCheck;
 	}
 
 
-	void setRushOrderCheck(String rushOrderCheck) {
+	public void setRushOrderCheck(String rushOrderCheck) {
 		this.rushOrderCheck = rushOrderCheck;
 	}
 
 
-	String getFOO() {
+	public String getFOO() {
 		return FOO;
 	}
 
 
-	void setFOO(String fOO) {
+	public void setFOO(String fOO) {
 		FOO = fOO;
 	}
 
 
-	String getSample() {
+	public String getSample() {
 		return sample;
 	}
 
 
-	void setSample(String sample) {
+	public void setSample(String sample) {
 		this.sample = sample;
 	}
 
 
-	String getQtyUnit() {
+	public String getQtyUnit() {
 		return qtyUnit;
 	}
 
 
-	void setQtyUnit(String qtyUnit) {
+	public void setQtyUnit(String qtyUnit) {
 		this.qtyUnit = qtyUnit;
 	}
 
 
-	String getRemark() {
+	public String getRemark() {
 		return remark;
 	}
 
 
-	void setRemark(String remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 
 
-	String getPageSize() {
+	public String getPageSize() {
 		return pageSize;
 	}
 
 
-	void setPageSize(String pageSize) {
+	public void setPageSize(String pageSize) {
 		this.pageSize = pageSize;
 	}
 
 
-	String getFabricCode() {
+	public String getFabricCode() {
 		return fabricCode;
 	}
 
 
-	void setFabricCode(String fabricCode) {
+	public void setFabricCode(String fabricCode) {
 		this.fabricCode = fabricCode;
 	}
 
 
-	String getCarrier() {
+	public String getCarrier() {
 		return carrier;
 	}
 
 
-	void setCarrier(String carrier) {
+	public void setCarrier(String carrier) {
 		this.carrier = carrier;
 	}
 
 
-	String getAccount() {
+	public String getAccount() {
 		return account;
 	}
 
 
-	void setAccount(String account) {
+	public void setAccount(String account) {
 		this.account = account;
 	}
 
 
-	String getShipVia() {
+	public String getShipVia() {
 		return shipVia;
 	}
 
 
-	void setShipVia(String shipVia) {
+	public void setShipVia(String shipVia) {
 		this.shipVia = shipVia;
 	}
 
 
-	String getCreatedByName() {
+	public String getCreatedByName() {
 		return createdByName;
 	}
 
 
-	void setCreatedByName(String createdByName) {
+	public void setCreatedByName(String createdByName) {
 		this.createdByName = createdByName;
 	}
 
 
-	String getLastModifiedByName() {
+	public String getLastModifiedByName() {
 		return lastModifiedByName;
 	}
 
 
-	void setLastModifiedByName(String lastModifiedByName) {
+	public void setLastModifiedByName(String lastModifiedByName) {
 		this.lastModifiedByName = lastModifiedByName;
 	}
 
 
-	String getProductLineType() {
+	public String getProductLineType() {
 		return productLineType;
 	}
 
 
-	void setProductLineType(String productLineType) {
+	public void setProductLineType(String productLineType) {
 		this.productLineType = productLineType;
 	}
 
 
-	OrderFileQueue getVarOrderFileQueue() {
+	public OrderFileQueue getVarOrderFileQueue() {
 		return varOrderFileQueue;
 	}
 
 
-	void setVarOrderFileQueue(OrderFileQueue varOrderFileQueue) {
+	public void setVarOrderFileQueue(OrderFileQueue varOrderFileQueue) {
 		this.varOrderFileQueue = varOrderFileQueue;
 	}
 
 
-	List<OrderLineDetails> getListOrderlineDetails() {
+	public List<OrderLineDetails> getListOrderlineDetails() {
 		return listOrderlineDetails;
 	}
 
 
-	void setListOrderlineDetails(List<OrderLineDetails> listOrderlineDetails) {
+	public void setListOrderlineDetails(List<OrderLineDetails> listOrderlineDetails) {
 		this.listOrderlineDetails = listOrderlineDetails;
 	}
 
 
-	List<SalesOrderLine> getListSalesOrderLine() {
+	public List<SalesOrderLine> getListSalesOrderLine() {
 		return listSalesOrderLine;
 	}
 
 
-	void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
+	public void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
 		this.listSalesOrderLine = listSalesOrderLine;
 	}
 
 
+	
 	
 	
 }

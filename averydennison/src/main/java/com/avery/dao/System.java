@@ -33,7 +33,7 @@ public class System {
 	String lastModifiedBy;
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
-	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="varSystem",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	OrderSystemInfo varOrderSystemInfo;
 	
 	
@@ -110,14 +110,17 @@ public class System {
 	}
 
 
-	OrderSystemInfo getVarOrderSystemInfo() {
+	public OrderSystemInfo getVarOrderSystemInfo() {
 		return varOrderSystemInfo;
 	}
 
 
-	void setVarOrderSystemInfo(OrderSystemInfo varOrderSystemInfo) {
+	public void setVarOrderSystemInfo(OrderSystemInfo varOrderSystemInfo) {
 		this.varOrderSystemInfo = varOrderSystemInfo;
 	}
+
+
+	
 	
 	
 }

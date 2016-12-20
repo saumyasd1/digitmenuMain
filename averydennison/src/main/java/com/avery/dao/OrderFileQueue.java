@@ -75,163 +75,203 @@ public class OrderFileQueue {
 	
 	public OrderFileQueue() {}
 
-	int getId() {
+
+	public int getId() {
 		return id;
 	}
 
-	void setId(int id) {
+
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	String getpId() {
+
+	public String getpId() {
 		return pId;
 	}
 
-	void setpId(String pId) {
+
+	public void setpId(String pId) {
 		this.pId = pId;
 	}
 
-	String getSubject() {
+
+	public String getSubject() {
 		return subject;
 	}
 
-	void setSubject(String subject) {
+
+	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 
-	String getSubmittedBy() {
+
+	public String getSubmittedBy() {
 		return submittedBy;
 	}
 
-	void setSubmittedBy(String submittedBy) {
+
+	public void setSubmittedBy(String submittedBy) {
 		this.submittedBy = submittedBy;
 	}
 
-	Date getSubmittedDate() {
+
+	public Date getSubmittedDate() {
 		return submittedDate;
 	}
 
-	void setSubmittedDate(Date submittedDate) {
+
+	public void setSubmittedDate(Date submittedDate) {
 		this.submittedDate = submittedDate;
 	}
 
-	String getStatus() {
+
+	public String getStatus() {
 		return status;
 	}
 
-	void setStatus(String status) {
+
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	Date getCreatedDate() {
+
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	void setCreatedDate(Date createdDate) {
+
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	String getCreatedBy() {
+
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
-	void setCreatedBy(String createdBy) {
+
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	Date getLastModifiedDate() {
+
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
-	void setLastModifiedDate(Date lastModifiedDate) {
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	String getLastModifiedBy() {
+
+	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
-	void setLastModifiedBy(String lastModifiedBy) {
+
+	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	String getComment() {
+
+	public String getComment() {
 		return comment;
 	}
 
-	void setComment(String comment) {
+
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	String getPoNumber() {
+
+	public String getPoNumber() {
 		return poNumber;
 	}
 
-	void setPoNumber(String poNumber) {
+
+	public void setPoNumber(String poNumber) {
 		this.poNumber = poNumber;
 	}
 
-	int getPrevOrderQueueId() {
+
+	public int getPrevOrderQueueId() {
 		return prevOrderQueueId;
 	}
 
-	void setPrevOrderQueueId(int prevOrderQueueId) {
+
+	public void setPrevOrderQueueId(int prevOrderQueueId) {
 		this.prevOrderQueueId = prevOrderQueueId;
 	}
 
-	String getError() {
+
+	public String getError() {
 		return error;
 	}
 
-	void setError(String error) {
+
+	public void setError(String error) {
 		this.error = error;
 	}
 
-	Date getFeedbackAcknowledgementDate() {
+
+	public Date getFeedbackAcknowledgementDate() {
 		return feedbackAcknowledgementDate;
 	}
 
-	void setFeedbackAcknowledgementDate(Date feedbackAcknowledgementDate) {
+
+	public void setFeedbackAcknowledgementDate(Date feedbackAcknowledgementDate) {
 		this.feedbackAcknowledgementDate = feedbackAcknowledgementDate;
 	}
 
-	Partner_RBOProductLine getVarProductLine() {
+
+	public Partner_RBOProductLine getVarProductLine() {
 		return varProductLine;
 	}
 
-	void setVarProductLine(Partner_RBOProductLine varProductLine) {
+
+	public void setVarProductLine(Partner_RBOProductLine varProductLine) {
 		this.varProductLine = varProductLine;
 	}
 
-	OrderFileAttachment getVarOrderFileAttachment() {
+
+	public OrderFileAttachment getVarOrderFileAttachment() {
 		return varOrderFileAttachment;
 	}
 
-	void setVarOrderFileAttachment(OrderFileAttachment varOrderFileAttachment) {
+
+	public void setVarOrderFileAttachment(OrderFileAttachment varOrderFileAttachment) {
 		this.varOrderFileAttachment = varOrderFileAttachment;
 	}
 
-	List<OrderLine> getListOrderLine() {
+
+	public List<OrderLine> getListOrderLine() {
 		return listOrderLine;
 	}
 
-	void setListOrderLine(List<OrderLine> listOrderLine) {
+
+	public void setListOrderLine(List<OrderLine> listOrderLine) {
 		this.listOrderLine = listOrderLine;
 	}
 
-	List<SalesOrderLine> getListSalesOrderLine() {
+
+	public List<SalesOrderLine> getListSalesOrderLine() {
 		return listSalesOrderLine;
 	}
 
-	void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
+
+	public void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
 		this.listSalesOrderLine = listSalesOrderLine;
 	}
 
-	/*List<AuditTrail> getListAuditTrail() {
+	
+
+	/*public List<AuditTrail> getListAuditTrail() {
 		return listAuditTrail;
 	}
 
-	void setListAuditTrail(List<AuditTrail> listAuditTrail) {
+	public void setListAuditTrail(List<AuditTrail> listAuditTrail) {
 		this.listAuditTrail = listAuditTrail;
 	}
 */

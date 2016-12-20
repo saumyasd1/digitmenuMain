@@ -1,5 +1,6 @@
 package com.avery.dao;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,9 +13,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "rbo")
@@ -51,7 +56,7 @@ public class RBO {
 		id = id;
 		rboName = rboName;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -60,36 +65,42 @@ public class RBO {
 		this.id = id;
 	}
 
-	
-	String getRboName() {
+	public String getRboName() {
 		return rboName;
 	}
 
-	void setRboName(String rboName) {
+	public void setRboName(String rboName) {
 		this.rboName = rboName;
 	}
 
 	public String getComment() {
 		return comment;
 	}
+
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+
 	public String getCreatedBy() {
 		return createdBy;
 	}
+
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
+
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
@@ -102,21 +113,23 @@ public class RBO {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	List<Partner_RBOProductLine> getListProductLine() {
+	public List<Partner_RBOProductLine> getListProductLine() {
 		return listProductLine;
 	}
 
-	void setListProductLine(List<Partner_RBOProductLine> listProductLine) {
+	public void setListProductLine(List<Partner_RBOProductLine> listProductLine) {
 		this.listProductLine = listProductLine;
 	}
 
-	List<SalesOrderLine> getListSalesOrderLine() {
+	public List<SalesOrderLine> getListSalesOrderLine() {
 		return listSalesOrderLine;
 	}
 
-	void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
+	public void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
 		this.listSalesOrderLine = listSalesOrderLine;
 	}
+	
+	
 
 
 }

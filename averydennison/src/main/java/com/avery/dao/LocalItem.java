@@ -48,98 +48,189 @@ public class LocalItem {
 	
 	
 	public LocalItem() {}
-	
-	
-	int getId() {
+
+
+
+	public int getId() {
 		return id;
 	}
-	void setId(int id) {
+
+
+
+	public void setId(int id) {
 		this.id = id;
 	}
-	String getSystem() {
+
+
+
+	public String getSystem() {
 		return system;
 	}
-	void setSystem(String system) {
+
+
+
+	public void setSystem(String system) {
 		this.system = system;
 	}
-	String getSite() {
+
+
+
+	public String getSite() {
 		return site;
 	}
-	void setSite(String site) {
+
+
+
+	public void setSite(String site) {
 		this.site = site;
 	}
-	String getPartnerName() {
+
+
+
+	public String getPartnerName() {
 		return partnerName;
 	}
-	void setPartnerName(String partnerName) {
+
+
+
+	public void setPartnerName(String partnerName) {
 		this.partnerName = partnerName;
 	}
-	String getRboName() {
+
+
+
+	public String getRboName() {
 		return rboName;
 	}
-	void setRboName(String rboName) {
+
+
+
+	public void setRboName(String rboName) {
 		this.rboName = rboName;
 	}
-	String getCustomerItemNO() {
+
+
+
+	public String getCustomerItemNO() {
 		return customerItemNO;
 	}
-	void setCustomerItemNO(String customerItemNO) {
+
+
+
+	public void setCustomerItemNO(String customerItemNO) {
 		this.customerItemNO = customerItemNO;
 	}
-	String getIdentifier() {
+
+
+
+	public String getIdentifier() {
 		return identifier;
 	}
-	void setIdentifier(String identifier) {
+
+
+
+	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
-	String getIdentifierVariable() {
+
+
+
+	public String getIdentifierVariable() {
 		return identifierVariable;
 	}
-	void setIdentifierVariable(String identifierVariable) {
+
+
+
+	public void setIdentifierVariable(String identifierVariable) {
 		this.identifierVariable = identifierVariable;
 	}
-	String getInternalItemNo() {
+
+
+
+	public String getInternalItemNo() {
 		return internalItemNo;
 	}
-	void setInternalItemNo(String internalItemNo) {
+
+
+
+	public void setInternalItemNo(String internalItemNo) {
 		this.internalItemNo = internalItemNo;
 	}
-	boolean isCancelItem() {
+
+
+
+	public boolean isCancelItem() {
 		return cancelItem;
 	}
-	void setCancelItem(boolean cancelItem) {
+
+
+
+	public void setCancelItem(boolean cancelItem) {
 		this.cancelItem = cancelItem;
 	}
-	long getGlid() {
+
+
+
+	public long getGlid() {
 		return glid;
 	}
-	void setGlid(long glid) {
+
+
+
+	public void setGlid(long glid) {
 		this.glid = glid;
 	}
-	String getCreatedBy() {
+
+
+
+	public String getCreatedBy() {
 		return createdBy;
 	}
-	void setCreatedBy(String createdBy) {
+
+
+
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	Date getCreatedDate() {
+
+
+
+	public Date getCreatedDate() {
 		return createdDate;
 	}
-	void setCreatedDate(Date createdDate) {
+
+
+
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	String getLastModifiedBy() {
+
+
+
+	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
-	void setLastModifiedBy(String lastModifiedBy) {
+
+
+
+	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
-	Date getLastModifiedDate() {
+
+
+
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
-	void setLastModifiedDate(Date lastModifiedDate) {
+
+
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
+	
+	
+
 	
 	
 }

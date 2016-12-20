@@ -82,206 +82,208 @@ public class OrderEmailQueue {
 		this.mailBody = mailBody;
 	}
 
-	int getId() {
+	public int getId() {
 		return id;
 	}
 
-	void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	String getProcessId() {
+	public String getProcessId() {
 		return processId;
 	}
 
-	void setProcessId(String processId) {
+	public void setProcessId(String processId) {
 		this.processId = processId;
 	}
 
-	String getSenderEmailId() {
+	public String getSenderEmailId() {
 		return senderEmailId;
 	}
 
-	void setSenderEmailId(String senderEmailId) {
+	public void setSenderEmailId(String senderEmailId) {
 		this.senderEmailId = senderEmailId;
 	}
 
-	String getSubject() {
+	public String getSubject() {
 		return subject;
 	}
 
-	void setSubject(String subject) {
+	public void setSubject(String subject) {
 		this.subject = subject;
 	}
 
-	String getMailBody() {
+	public String getMailBody() {
 		return mailBody;
 	}
 
-	void setMailBody(String mailBody) {
+	public void setMailBody(String mailBody) {
 		this.mailBody = mailBody;
 	}
 
-	boolean isOrderMail() {
+	public boolean isOrderMail() {
 		return orderMail;
 	}
 
-	void setOrderMail(boolean orderMail) {
+	public void setOrderMail(boolean orderMail) {
 		this.orderMail = orderMail;
 	}
 
-	String getAssignee() {
+	public String getAssignee() {
 		return assignee;
 	}
 
-	void setAssignee(String assignee) {
+	public void setAssignee(String assignee) {
 		this.assignee = assignee;
 	}
 
-	String getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	void setStatus(String status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	Date getReceivedDate() {
+	public Date getReceivedDate() {
 		return receivedDate;
 	}
 
-	void setReceivedDate(Date receivedDate) {
+	public void setReceivedDate(Date receivedDate) {
 		this.receivedDate = receivedDate;
 	}
 
-	Date getReadDate() {
+	public Date getReadDate() {
 		return readDate;
 	}
 
-	void setReadDate(Date readDate) {
+	public void setReadDate(Date readDate) {
 		this.readDate = readDate;
 	}
 
-	Date getAcknowledgementDate() {
+	public Date getAcknowledgementDate() {
 		return acknowledgementDate;
 	}
 
-	void setAcknowledgementDate(Date acknowledgementDate) {
+	public void setAcknowledgementDate(Date acknowledgementDate) {
 		this.acknowledgementDate = acknowledgementDate;
 	}
 
-	String getToMailId() {
+	public String getToMailId() {
 		return toMailId;
 	}
 
-	void setToMailId(String toMailId) {
+	public void setToMailId(String toMailId) {
 		this.toMailId = toMailId;
 	}
 
-	String getCcMailId() {
+	public String getCcMailId() {
 		return ccMailId;
 	}
 
-	void setCcMailId(String ccMailId) {
+	public void setCcMailId(String ccMailId) {
 		this.ccMailId = ccMailId;
 	}
 
-	String getAssignCSR() {
+	public String getAssignCSR() {
 		return assignCSR;
 	}
 
-	void setAssignCSR(String assignCSR) {
+	public void setAssignCSR(String assignCSR) {
 		this.assignCSR = assignCSR;
 	}
 
-	Date getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	String getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
-	void setCreatedBy(String createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	Date getLastModifiedDate() {
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
-	void setLastModifiedDate(Date lastModifiedDate) {
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	String getLastModifiedBy() {
+	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
-	void setLastModifiedBy(String lastModifiedBy) {
+	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	String getComment() {
+	public String getComment() {
 		return comment;
 	}
 
-	void setComment(String comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	String getOrderSource() {
+	public String getOrderSource() {
 		return orderSource;
 	}
 
-	void setOrderSource(String orderSource) {
+	public void setOrderSource(String orderSource) {
 		this.orderSource = orderSource;
 	}
 
-	String getEmailSubjectProductLineMatch() {
+	public String getEmailSubjectProductLineMatch() {
 		return emailSubjectProductLineMatch;
 	}
 
-	void setEmailSubjectProductLineMatch(String emailSubjectProductLineMatch) {
+	public void setEmailSubjectProductLineMatch(String emailSubjectProductLineMatch) {
 		this.emailSubjectProductLineMatch = emailSubjectProductLineMatch;
 	}
 
-	String getEmailSubjectRBOMatch() {
+	public String getEmailSubjectRBOMatch() {
 		return emailSubjectRBOMatch;
 	}
 
-	void setEmailSubjectRBOMatch(String emailSubjectRBOMatch) {
+	public void setEmailSubjectRBOMatch(String emailSubjectRBOMatch) {
 		this.emailSubjectRBOMatch = emailSubjectRBOMatch;
 	}
 
-	String getEmailBodyProductLineMatch() {
+	public String getEmailBodyProductLineMatch() {
 		return emailBodyProductLineMatch;
 	}
 
-	void setEmailBodyProductLineMatch(String emailBodyProductLineMatch) {
+	public void setEmailBodyProductLineMatch(String emailBodyProductLineMatch) {
 		this.emailBodyProductLineMatch = emailBodyProductLineMatch;
 	}
 
-	String getEmailBodyRBOMatch() {
+	public String getEmailBodyRBOMatch() {
 		return emailBodyRBOMatch;
 	}
 
-	void setEmailBodyRBOMatch(String emailBodyRBOMatch) {
+	public void setEmailBodyRBOMatch(String emailBodyRBOMatch) {
 		this.emailBodyRBOMatch = emailBodyRBOMatch;
 	}
 
-	List<OrderFileAttachment> getListOrderFileAttachment() {
+	public List<OrderFileAttachment> getListOrderFileAttachment() {
 		return listOrderFileAttachment;
 	}
 
-	void setListOrderFileAttachment(
+	public void setListOrderFileAttachment(
 			List<OrderFileAttachment> listOrderFileAttachment) {
 		this.listOrderFileAttachment = listOrderFileAttachment;
 	}
+
+
 
 	
 	

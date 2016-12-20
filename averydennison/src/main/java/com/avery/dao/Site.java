@@ -34,52 +34,105 @@ public class Site {
 	
 	
 	public Site() {}
-	
+
+
+
+
 	public int getId() {
 		return id;
 	}
+
+
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getComment() {
-		return comment;
-	}
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-	public String getLastModifiedBy() {
-		return lastModifiedBy;
-	}
-	public void setLastModifiedBy(String lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
 
-	protected Date getLastModifiedDate() {
-		return lastModifiedDate;
-	}
 
-	protected void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
+
 
 	public String getName() {
 		return name;
 	}
+
+
+
+
 	public void setName(String name) {
-		name = name;
+		this.name = name;
 	}
+
+
+
+
+	public String getComment() {
+		return comment;
+	}
+
+
+
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+
+
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+
+
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+
+
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+
+
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+
+
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+
+
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+
+
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+
+
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+	
 	
 	
 	

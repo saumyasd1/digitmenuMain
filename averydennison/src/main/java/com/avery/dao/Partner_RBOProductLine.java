@@ -258,6 +258,7 @@ public class Partner_RBOProductLine {
 		this.active = active;
 	}
 
+
 	public String getAttachmentFileMatchLocation() {
 		return attachmentFileMatchLocation;
 	}
@@ -666,104 +667,6 @@ public class Partner_RBOProductLine {
 	}
 
 
-	/*
-	
-	public String getArtworkHold() {
-	return artworkHold;
-	}
-
-
-	public void setArtworkHold(String artworkHold) {
-	this.artworkHold = artworkHold;
-	}
-	
-	public String getDefaultBillToCode() {
-		return defaultBillToCode;
-	}
-
-
-	public void setDefaultBillToCode(String defaultBillToCode) {
-		this.defaultBillToCode = defaultBillToCode;
-	}
-
-
-	public String getDefaultShipToCode() {
-		return defaultShipToCode;
-	}
-
-
-	public void setDefaultShipToCode(String defaultShipToCode) {
-		this.defaultShipToCode = defaultShipToCode;
-	}
-
-
-	public boolean isDiscountOffer() {
-		return discountOffer;
-	}
-
-
-	public void setDiscountOffer(boolean discountOffer) {
-		this.discountOffer = discountOffer;
-	}
-	
-	public String getManufacturingNotes() {
-		return manufacturingNotes;
-	}
-
-
-	public void setManufacturingNotes(String manufacturingNotes) {
-		this.manufacturingNotes = manufacturingNotes;
-	}
-	public String getPackingInstruction() {
-		return packingInstruction;
-	}
-
-
-	public void setPackingInstruction(String packingInstruction) {
-		this.packingInstruction = packingInstruction;
-	}
-
-	public boolean isShippingMark() {
-		return shippingMark;
-	}
-
-
-	public void setShippingMark(boolean shippingMark) {
-		this.shippingMark = shippingMark;
-	}
-
-
-	public String getShippingOnlyNotes() {
-		return shippingOnlyNotes;
-	}
-
-
-	public void setShippingOnlyNotes(String shippingOnlyNotes) {
-		this.shippingOnlyNotes = shippingOnlyNotes;
-	}
-
-
-	public String getSplitShipSetBy() {
-		return splitShipSetBy;
-	}
-
-
-	public void setSplitShipSetBy(String splitShipSetBy) {
-		this.splitShipSetBy = splitShipSetBy;
-	}
-
-
-	public String getVariableDataBreakdown() {
-		return variableDataBreakdown;
-	}
-
-
-	public void setVariableDataBreakdown(String variableDataBreakdown) {
-		this.variableDataBreakdown = variableDataBreakdown;
-	}
-*/
-
-
 	public String getEmailSubjectProductLineMatch() {
 		return emailSubjectProductLineMatch;
 	}
@@ -795,6 +698,17 @@ public class Partner_RBOProductLine {
 		this.emailSubjectProductlineMatchRequired = emailSubjectProductlineMatchRequired;
 	}
 
+
+	public String getEmailSubjectRBOMatch() {
+		return emailSubjectRBOMatch;
+	}
+
+
+	public void setEmailSubjectRBOMatch(String emailSubjectRBOMatch) {
+		this.emailSubjectRBOMatch = emailSubjectRBOMatch;
+	}
+
+
 	public String getEmailSubjectRBOMatchLocation() {
 		return emailSubjectRBOMatchLocation;
 	}
@@ -813,99 +727,86 @@ public class Partner_RBOProductLine {
 	public void setEmailSubjectRBOMatchRequired(boolean emailSubjectRBOMatchRequired) {
 		this.emailSubjectRBOMatchRequired = emailSubjectRBOMatchRequired;
 	}
-	
-	
 
 
-	public String getEmailSubjectRBOMatch() {
-		return emailSubjectRBOMatch;
-	}
-
-
-	public void setEmailSubjectRBOMatch(String emailSubjectRBOMatch) {
-		this.emailSubjectRBOMatch = emailSubjectRBOMatch;
-	}
-
-	
-
-	String getEmailBodyProductLineMatch() {
+	public String getEmailBodyProductLineMatch() {
 		return emailBodyProductLineMatch;
 	}
 
 
-	void setEmailBodyProductLineMatch(String emailBodyProductLineMatch) {
+	public void setEmailBodyProductLineMatch(String emailBodyProductLineMatch) {
 		this.emailBodyProductLineMatch = emailBodyProductLineMatch;
 	}
 
 
-	String getEmailBodyProductlineMatchLocation() {
+	public String getEmailBodyProductlineMatchLocation() {
 		return emailBodyProductlineMatchLocation;
 	}
 
 
-	void setEmailBodyProductlineMatchLocation(
+	public void setEmailBodyProductlineMatchLocation(
 			String emailBodyProductlineMatchLocation) {
 		this.emailBodyProductlineMatchLocation = emailBodyProductlineMatchLocation;
 	}
 
 
-	boolean isEmailBodyProductlineMatchRequired() {
+	public boolean isEmailBodyProductlineMatchRequired() {
 		return emailBodyProductlineMatchRequired;
 	}
 
 
-	void setEmailBodyProductlineMatchRequired(
+	public void setEmailBodyProductlineMatchRequired(
 			boolean emailBodyProductlineMatchRequired) {
 		this.emailBodyProductlineMatchRequired = emailBodyProductlineMatchRequired;
 	}
 
 
-	String getEmailBodyRBOMatch() {
+	public String getEmailBodyRBOMatch() {
 		return emailBodyRBOMatch;
 	}
 
 
-	void setEmailBodyRBOMatch(String emailBodyRBOMatch) {
+	public void setEmailBodyRBOMatch(String emailBodyRBOMatch) {
 		this.emailBodyRBOMatch = emailBodyRBOMatch;
 	}
 
 
-	String getEmailBodyRBOMatchLocation() {
+	public String getEmailBodyRBOMatchLocation() {
 		return emailBodyRBOMatchLocation;
 	}
 
 
-	void setEmailBodyRBOMatchLocation(String emailBodyRBOMatchLocation) {
+	public void setEmailBodyRBOMatchLocation(String emailBodyRBOMatchLocation) {
 		this.emailBodyRBOMatchLocation = emailBodyRBOMatchLocation;
 	}
 
 
-	boolean isEmailBodyRBOMatchRequired() {
+	public boolean isEmailBodyRBOMatchRequired() {
 		return emailBodyRBOMatchRequired;
 	}
 
 
-	void setEmailBodyRBOMatchRequired(boolean emailBodyRBOMatchRequired) {
+	public void setEmailBodyRBOMatchRequired(boolean emailBodyRBOMatchRequired) {
 		this.emailBodyRBOMatchRequired = emailBodyRBOMatchRequired;
 	}
 
-	
-	String getFileRBOMatchLocation() {
+
+	public String getFileRBOMatchLocation() {
 		return fileRBOMatchLocation;
 	}
 
 
-	void setFileRBOMatchLocation(String fileRBOMatchLocation) {
+	public void setFileRBOMatchLocation(String fileRBOMatchLocation) {
 		this.fileRBOMatchLocation = fileRBOMatchLocation;
 	}
 
 
-	boolean isFileRBOMatchRequired() {
+	public boolean isFileRBOMatchRequired() {
 		return fileRBOMatchRequired;
 	}
 
 
-	void setFileRBOMatchRequired(boolean fileRBOMatchRequired) {
+	public void setFileRBOMatchRequired(boolean fileRBOMatchRequired) {
 		this.fileRBOMatchRequired = fileRBOMatchRequired;
 	}
 
@@ -1060,9 +961,6 @@ public class Partner_RBOProductLine {
 	}
 
 
-	
-
-
 	public String getMiscCSRInstruction() {
 		return miscCSRInstruction;
 	}
@@ -1132,6 +1030,7 @@ public class Partner_RBOProductLine {
 		this.others = others;
 	}
 
+
 	public String getPreProcessPID() {
 		return preProcessPID;
 	}
@@ -1160,7 +1059,7 @@ public class Partner_RBOProductLine {
 	public void setShipmentSample(boolean shipmentSample) {
 		this.shipmentSample = shipmentSample;
 	}
-	
+
 
 	public boolean isWaiveMOA() {
 		return waiveMOA;
@@ -1180,45 +1079,45 @@ public class Partner_RBOProductLine {
 	public void setWaiveMOQ(boolean waiveMOQ) {
 		this.waiveMOQ = waiveMOQ;
 	}
-	
 
-	boolean isLocalItem() {
+
+	public boolean isLocalItem() {
 		return localItem;
 	}
 
 
-	void setLocalItem(boolean localItem) {
+	public void setLocalItem(boolean localItem) {
 		this.localItem = localItem;
 	}
 
 
-	boolean isAveryItem() {
+	public boolean isAveryItem() {
 		return averyItem;
 	}
 
 
-	void setAveryItem(boolean averyItem) {
+	public void setAveryItem(boolean averyItem) {
 		this.averyItem = averyItem;
 	}
-	
-	
-	String getCustomerItemIdentifierDescription() {
+
+
+	public String getCustomerItemIdentifierDescription() {
 		return customerItemIdentifierDescription;
 	}
 
 
-	void setCustomerItemIdentifierDescription(
+	public void setCustomerItemIdentifierDescription(
 			String customerItemIdentifierDescription) {
 		this.customerItemIdentifierDescription = customerItemIdentifierDescription;
 	}
 
 
-	String getDefaultSystem() {
+	public String getDefaultSystem() {
 		return defaultSystem;
 	}
 
 
-	void setDefaultSystem(String defaultSystem) {
+	public void setDefaultSystem(String defaultSystem) {
 		this.defaultSystem = defaultSystem;
 	}
 
@@ -1233,8 +1132,6 @@ public class Partner_RBOProductLine {
 	}
 
 
-	
-
 	public Partner getVarPartner() {
 		return varPartner;
 	}
@@ -1245,35 +1142,136 @@ public class Partner_RBOProductLine {
 	}
 
 
-	OrderFileQueue getListOrderFileQueue() {
+	public OrderFileQueue getListOrderFileQueue() {
 		return listOrderFileQueue;
 	}
 
 
-	void setListOrderFileQueue(OrderFileQueue listOrderFileQueue) {
+	public void setListOrderFileQueue(OrderFileQueue listOrderFileQueue) {
 		this.listOrderFileQueue = listOrderFileQueue;
 	}
 
 
-	List<OrderFileAttachment> getListOrderFileAttachments() {
+	public List<OrderFileAttachment> getListOrderFileAttachments() {
 		return listOrderFileAttachments;
 	}
 
 
-	void setListOrderFileAttachments(
+	public void setListOrderFileAttachments(
 			List<OrderFileAttachment> listOrderFileAttachments) {
 		this.listOrderFileAttachments = listOrderFileAttachments;
 	}
 
 
-	List<OrderSystemInfo> getListOrderSystemInfo() {
+	public List<OrderSystemInfo> getListOrderSystemInfo() {
 		return listOrderSystemInfo;
 	}
 
 
-	void setListOrderSystemInfo(List<OrderSystemInfo> listOrderSystemInfo) {
+	public void setListOrderSystemInfo(List<OrderSystemInfo> listOrderSystemInfo) {
 		this.listOrderSystemInfo = listOrderSystemInfo;
 	}
 
+	
+
+	/*
+	
+	public String getArtworkHold() {
+	return artworkHold;
+	}
+
+
+	public void setArtworkHold(String artworkHold) {
+	this.artworkHold = artworkHold;
+	}
+	
+	public String getDefaultBillToCode() {
+		return defaultBillToCode;
+	}
+
+
+	public void setDefaultBillToCode(String defaultBillToCode) {
+		this.defaultBillToCode = defaultBillToCode;
+	}
+
+
+	public String getDefaultShipToCode() {
+		return defaultShipToCode;
+	}
+
+
+	public void setDefaultShipToCode(String defaultShipToCode) {
+		this.defaultShipToCode = defaultShipToCode;
+	}
+
+
+	public boolean isDiscountOffer() {
+		return discountOffer;
+	}
+
+
+	public void setDiscountOffer(boolean discountOffer) {
+		this.discountOffer = discountOffer;
+	}
+	
+	public String getManufacturingNotes() {
+		return manufacturingNotes;
+	}
+
+
+	public void setManufacturingNotes(String manufacturingNotes) {
+		this.manufacturingNotes = manufacturingNotes;
+	}
+	public String getPackingInstruction() {
+		return packingInstruction;
+	}
+
+
+	public void setPackingInstruction(String packingInstruction) {
+		this.packingInstruction = packingInstruction;
+	}
+
+	public boolean isShippingMark() {
+		return shippingMark;
+	}
+
+
+	public void setShippingMark(boolean shippingMark) {
+		this.shippingMark = shippingMark;
+	}
+
+
+	public String getShippingOnlyNotes() {
+		return shippingOnlyNotes;
+	}
+
+
+	public void setShippingOnlyNotes(String shippingOnlyNotes) {
+		this.shippingOnlyNotes = shippingOnlyNotes;
+	}
+
+
+	public String getSplitShipSetBy() {
+		return splitShipSetBy;
+	}
+
+
+	public void setSplitShipSetBy(String splitShipSetBy) {
+		this.splitShipSetBy = splitShipSetBy;
+	}
+
+
+	public String getVariableDataBreakdown() {
+		return variableDataBreakdown;
+	}
+
+
+	public void setVariableDataBreakdown(String variableDataBreakdown) {
+		this.variableDataBreakdown = variableDataBreakdown;
+	}
+*/
+
+
+	
 
 }

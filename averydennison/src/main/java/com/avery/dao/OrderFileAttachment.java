@@ -73,177 +73,174 @@ public class OrderFileAttachment {
 	
 	public OrderFileAttachment() {}
 
-	int getId() {
+	public int getId() {
 		return id;
 	}
 
-	void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	String getFileName() {
+	public String getFileName() {
 		return fileName;
 	}
 
-	void setFileName(String fileName) {
+	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
-	String getFileExtension() {
+	public String getFileExtension() {
 		return fileExtension;
 	}
 
-	void setFileExtension(String fileExtension) {
+	public void setFileExtension(String fileExtension) {
 		this.fileExtension = fileExtension;
 	}
 
-	String getFileContentType() {
+	public String getFileContentType() {
 		return fileContentType;
 	}
 
-	void setFileContentType(String fileContentType) {
+	public void setFileContentType(String fileContentType) {
 		this.fileContentType = fileContentType;
 	}
 
-	String getFileData() {
+	public String getFileData() {
 		return fileData;
 	}
 
-	void setFileData(String fileData) {
+	public void setFileData(String fileData) {
 		this.fileData = fileData;
 	}
 
-	String getAdditionalDataFileKey() {
+	public String getAdditionalDataFileKey() {
 		return additionalDataFileKey;
 	}
 
-	void setAdditionalDataFileKey(String additionalDataFileKey) {
+	public void setAdditionalDataFileKey(String additionalDataFileKey) {
 		this.additionalDataFileKey = additionalDataFileKey;
 	}
 
-	String getFilePath() {
+	public String getFilePath() {
 		return filePath;
 	}
 
-	void setFilePath(String filePath) {
+	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
 
-	String getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	void setStatus(String status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	Date getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	String getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
-	void setCreatedBy(String createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
-	Date getLastModifiedDate() {
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
-	void setLastModifiedDate(Date lastModifiedDate) {
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	String getLastModifiedBy() {
+	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
-	void setLastModifiedBy(String lastModifiedBy) {
+	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
-	String getComment() {
+	public String getComment() {
 		return comment;
 	}
 
-	void setComment(String comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
-	String getError() {
+	public String getError() {
 		return error;
 	}
 
-	void setError(String error) {
+	public void setError(String error) {
 		this.error = error;
 	}
 
-	int getOrderFileId() {
+	public int getOrderFileId() {
 		return orderFileId;
 	}
 
-	void setOrderFileId(int orderFileId) {
+	public void setOrderFileId(int orderFileId) {
 		this.orderFileId = orderFileId;
 	}
 
-	String getProductLineMatch() {
+	public String getProductLineMatch() {
 		return productLineMatch;
 	}
 
-	void setProductLineMatch(String productLineMatch) {
+	public void setProductLineMatch(String productLineMatch) {
 		this.productLineMatch = productLineMatch;
 	}
 
-	String getRboMatch() {
+	public String getRboMatch() {
 		return rboMatch;
 	}
 
-	void setRboMatch(String rboMatch) {
+	public void setRboMatch(String rboMatch) {
 		this.rboMatch = rboMatch;
 	}
 
-	String getFileContentMatch() {
+	public String getFileContentMatch() {
 		return fileContentMatch;
 	}
 
-	void setFileContentMatch(String fileContentMatch) {
+	public void setFileContentMatch(String fileContentMatch) {
 		this.fileContentMatch = fileContentMatch;
 	}
 
-	OrderEmailQueue getVarOrderEmailQueue() {
+	public OrderEmailQueue getVarOrderEmailQueue() {
 		return varOrderEmailQueue;
 	}
 
-	void setVarOrderEmailQueue(OrderEmailQueue varOrderEmailQueue) {
+	public void setVarOrderEmailQueue(OrderEmailQueue varOrderEmailQueue) {
 		this.varOrderEmailQueue = varOrderEmailQueue;
 	}
 
-	Partner_RBOProductLine getVarProductLine() {
+	public Partner_RBOProductLine getVarProductLine() {
 		return varProductLine;
 	}
 
-	void setVarProductLine(Partner_RBOProductLine varProductLine) {
+	public void setVarProductLine(Partner_RBOProductLine varProductLine) {
 		this.varProductLine = varProductLine;
 	}
 
-	List<OrderFileQueue> getListOrderFileQueue() {
+	public List<OrderFileQueue> getListOrderFileQueue() {
 		return listOrderFileQueue;
 	}
 
-	void setListOrderFileQueue(List<OrderFileQueue> listOrderFileQueue) {
+	public void setListOrderFileQueue(List<OrderFileQueue> listOrderFileQueue) {
 		this.listOrderFileQueue = listOrderFileQueue;
 	}
-	
-	
-	
-	
+
 	
 	
 }

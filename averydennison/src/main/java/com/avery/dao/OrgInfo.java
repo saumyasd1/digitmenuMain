@@ -53,94 +53,174 @@ public class OrgInfo {
 	
 	
 	public OrgInfo() {}
-	
-	
-	int getId() {
+
+
+
+	public int getId() {
 		return id;
 	}
-	void setId(int id) {
+
+
+
+	public void setId(int id) {
 		this.id = id;
 	}
-	int getOrgCodeId() {
+
+
+
+	public int getOrgCodeId() {
 		return orgCodeId;
 	}
-	void setOrgCodeId(int orgCodeId) {
+
+
+
+	public void setOrgCodeId(int orgCodeId) {
 		this.orgCodeId = orgCodeId;
 	}
-	boolean isDefault() {
+
+
+
+	public boolean isDefault() {
 		return isDefault;
 	}
-	void setDefault(boolean isDefault) {
+
+
+
+	public void setDefault(boolean isDefault) {
 		this.isDefault = isDefault;
 	}
-	String getBillToCode() {
+
+
+
+	public String getBillToCode() {
 		return billToCode;
 	}
-	void setBillToCode(String billToCode) {
+
+
+
+	public void setBillToCode(String billToCode) {
 		this.billToCode = billToCode;
 	}
-	String getShipToCode() {
+
+
+
+	public String getShipToCode() {
 		return shipToCode;
 	}
-	void setShipToCode(String shipToCode) {
+
+
+
+	public void setShipToCode(String shipToCode) {
 		this.shipToCode = shipToCode;
 	}
-	String getFreightTerm() {
+
+
+
+	public String getFreightTerm() {
 		return freightTerm;
 	}
-	void setFreightTerm(String freightTerm) {
+
+
+
+	public void setFreightTerm(String freightTerm) {
 		this.freightTerm = freightTerm;
 	}
-	String getShippingMethod() {
+
+
+
+	public String getShippingMethod() {
 		return shippingMethod;
 	}
-	void setShippingMethod(String shippingMethod) {
+
+
+
+	public void setShippingMethod(String shippingMethod) {
 		this.shippingMethod = shippingMethod;
 	}
-	String getShippingInstruction() {
+
+
+
+	public String getShippingInstruction() {
 		return shippingInstruction;
 	}
-	void setShippingInstruction(String shippingInstruction) {
+
+
+
+	public void setShippingInstruction(String shippingInstruction) {
 		this.shippingInstruction = shippingInstruction;
 	}
-	
-	String getShippingOnlyNotes() {
+
+
+
+	public String getShippingOnlyNotes() {
 		return shippingOnlyNotes;
 	}
-	void setShippingOnlyNotes(String shippingOnlyNotes) {
+
+
+
+	public void setShippingOnlyNotes(String shippingOnlyNotes) {
 		this.shippingOnlyNotes = shippingOnlyNotes;
 	}
-	String getCreatedBy() {
+
+
+
+	public String getCreatedBy() {
 		return createdBy;
 	}
-	void setCreatedBy(String createdBy) {
+
+
+
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	Date getCreatedDate() {
+
+
+
+	public Date getCreatedDate() {
 		return createdDate;
 	}
-	void setCreatedDate(Date createdDate) {
+
+
+
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	String getLastModifiedBy() {
+
+
+
+	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
-	void setLastModifiedBy(String lastModifiedBy) {
+
+
+
+	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
-	Date getLastModifiedDate() {
+
+
+
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
-	void setLastModifiedDate(Date lastModifiedDate) {
+
+
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-	OrderSystemInfo getVarOrderSystemInfo() {
+
+
+
+	public OrderSystemInfo getVarOrderSystemInfo() {
 		return varOrderSystemInfo;
 	}
-	void setVarOrderSystemInfo(OrderSystemInfo varOrderSystemInfo) {
+
+
+
+	public void setVarOrderSystemInfo(OrderSystemInfo varOrderSystemInfo) {
 		this.varOrderSystemInfo = varOrderSystemInfo;
 	}
-	
 	
 	
 	

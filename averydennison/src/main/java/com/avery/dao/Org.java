@@ -34,77 +34,76 @@ public class Org {
 	public Org() {}
 
 
-	int getId() {
+	public int getId() {
 		return id;
 	}
 
 
-	void setId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
 
-	String getName() {
+	public String getName() {
 		return name;
 	}
 
 
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
 
-	String getComment() {
+	public String getComment() {
 		return comment;
 	}
 
 
-	void setComment(String comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
 
-	String getCreatedBy() {
+	public String getCreatedBy() {
 		return createdBy;
 	}
 
 
-	void setCreatedBy(String createdBy) {
+	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
 
 
-	Date getCreatedDate() {
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
 
-	void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
 
-	String getLastModifiedBy() {
+	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
 
-	void setLastModifiedBy(String lastModifiedBy) {
+	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 
 
-	Date getLastModifiedDate() {
+	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
 
-	void setLastModifiedDate(Date lastModifiedDate) {
+	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-	
-	
-	
+
+
 	
 	
 }

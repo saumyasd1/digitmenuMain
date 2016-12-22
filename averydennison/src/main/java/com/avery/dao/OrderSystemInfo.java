@@ -58,7 +58,7 @@ public class OrderSystemInfo {
 	Partner_RBOProductLine varProductLine;
 	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="systemId")
-	System varSystem;
+	SystemInfo varSystemInfo;
 	@OneToMany(mappedBy="varOrderSystemInfo",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<OrgInfo> listOrgInfo=new ArrayList<OrgInfo>();
 	
@@ -215,14 +215,13 @@ public class OrderSystemInfo {
 		this.varProductLine = varProductLine;
 	}
 
-
-	public System getVarSystem() {
-		return varSystem;
+	public SystemInfo getVarSystemInfo() {
+		return varSystemInfo;
 	}
 
 
-	public void setVarSystem(System varSystem) {
-		this.varSystem = varSystem;
+	public void setVarSystemInfo(SystemInfo varSystemInfo) {
+		this.varSystemInfo = varSystemInfo;
 	}
 
 

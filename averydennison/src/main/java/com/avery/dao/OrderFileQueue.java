@@ -46,7 +46,7 @@ public class OrderFileQueue {
 	 String lastModifiedBy;
 	@Column(name="comment",length=250)
 	 String comment;
-	@Column(name="poNumber",length=50)
+	@Column(name="poNumber",length=1000)
 	 String poNumber;
 	@Column(name="prevOrderQueueId")
 	 int prevOrderQueueId;

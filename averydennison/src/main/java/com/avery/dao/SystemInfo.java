@@ -41,6 +41,16 @@ public class SystemInfo {
 
 
 	public SystemInfo() {}
+	
+	
+
+
+	public SystemInfo(String name) {
+		super();
+		this.name = name;
+	}
+
+
 
 
 	public int getId() {

@@ -52,9 +52,15 @@ public class SendingAcknowledgement {
 	    	String propurl = "smtp.properties";
 	  		Properties properties = new Properties();
 	  		// read the SMTP properties
-	  		properties.load(this.getClass().getClassLoader()
-	  						.getResourceAsStream(propurl));
+//	  		properties.load(this.getClass().getClassLoader()
+//	  						.getResourceAsStream(propurl));
 	  		
+	  		properties.put("mail.smtp.host", "smtp.gmail.com");
+	  		properties.put("mail.smtp.socketFactory.port", "465");
+	  		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+	  		properties.put("mail.smtp.auth", "true");
+	  		properties.put("mail.smtp.port", "465");
+			
 	  		/* // Get the default Session object.
 		      Session session = Session.getDefaultInstance(properties);*/
 	  		
@@ -90,10 +96,7 @@ public class SendingAcknowledgement {
 	      }catch (MessagingException mex) {
 	          mex.printStackTrace();
 	          throw new MessagingException("Error while sending mail from:\""+username+"\" to:\""+to+"\".",mex);
-	      } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	      }
 	      
 	      
     }

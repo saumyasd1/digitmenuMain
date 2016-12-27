@@ -6,6 +6,6 @@ import com.avery.services.OrderEmailService;
 	public static void main(String[] args) {
 		
 		OrderEmailService orderEmailService = new OrderEmailService();
-		orderEmailService.OrderEmailSourceservice(1);
+//		orderEmailService.OrderEmailSourceservice(1);
 	}
 }

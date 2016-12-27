@@ -13,7 +13,7 @@ public class AcknowledgementService {
 	public String getAcknowledgementEmailID(int emailqueueid){
 		
 		String senderID = "";
-		String hql = "select senderEmailID from OrderEmailQueue where id= :id";
+		String hql = "select senderEmailId from OrderEmailQueue where id= :id";
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
@@ -21,7 +21,7 @@ public class AcknowledgementService {
 		query.setParameter("id", emailqueueid);
 		List result = query.list();
 		senderID = (String) result.get(0);
-		System.out.println("The result is : "+senderID);
+		//System.out.println("The result is : "+senderID);
 		session.close();
 		return senderID;
 	}

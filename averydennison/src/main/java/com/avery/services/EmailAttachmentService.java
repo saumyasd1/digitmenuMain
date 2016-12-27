@@ -1,17 +1,33 @@
 package com.avery.services;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.aspose.email.Attachment;
 import com.avery.dao.OrderEmailAttachment;
+import com.avery.dao.OrderEmailQueue;
+import com.avery.dao.OrderFileAttachment;
 import com.avery.utils.HibernateUtil;
 
 public class EmailAttachmentService {
 	
-	public void insertIntoEmailAttachment(Attachment attachment, String filePath, int emailqueueid){
+	public void insertIntoEmailAttachment(MimeBodyPart part, String filePath, int emailqueueid){
 		
-		String fileName = attachment.getName();
+		/*String contentType = part.getContentType().getMediaType().toString();
+		String fileName = part.getName();*/
+		String contentType = "";
+		String fileName = "";
+		try {
+			contentType = part.getContentType();
+			fileName = part.getFileName(); 
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		String fileExtension = "";
 		if(fileName.contains(".")){
 			fileExtension = fileName.substring(fileName.lastIndexOf("."));
@@ -19,8 +35,11 @@ public class EmailAttachmentService {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
-		OrderEmailAttachment orderEmailAttachment = new OrderEmailAttachment(emailqueueid+"", fileName, fileExtension, filePath);
-		session.persist(orderEmailAttachment);
+		OrderEmailQueue orderEmailQueue=(OrderEmailQueue)session.get(OrderEmailQueue.class, emailqueueid);
+		//System.out.println("Content Type : "+contentType);
+		OrderFileAttachment orderFileAttachment = new OrderFileAttachment(emailqueueid, fileName, fileExtension, filePath, contentType);
+		orderFileAttachment.setVarOrderEmailQueue(orderEmailQueue);
+		session.persist(orderFileAttachment);
 		session.getTransaction().commit();
 		session.close();
 		System.out.println("Data inserted in the email attachment table");
@@ -29,6 +48,7 @@ public class EmailAttachmentService {
 	
 	
 	public void insertUnzippedFile(String fileName, String filePath, int emailqueueid){
+		String contentType = "";
 		if(fileName.contains("\'")){
 			fileName.replace("\'", "\\'");
 		}
@@ -39,11 +59,13 @@ public class EmailAttachmentService {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
-		OrderEmailAttachment orderEmailAttachment = new OrderEmailAttachment(emailqueueid+"", fileName, fileExtension, filePath);
-		session.persist(orderEmailAttachment);
+		OrderEmailQueue orderEmailQueue=(OrderEmailQueue)session.get(OrderEmailQueue.class, emailqueueid);
+		OrderFileAttachment orderFileAttachment = new OrderFileAttachment(emailqueueid, fileName, fileExtension, filePath, contentType);
+		orderFileAttachment.setVarOrderEmailQueue(orderEmailQueue);
+		session.persist(orderFileAttachment);
 		session.getTransaction().commit();
 		session.close();
-		System.out.println("Unzip file inserted in the email attachment table");
+		System.out.println("Unzipped file inserted in the email attachment table");
 	}
 
 }

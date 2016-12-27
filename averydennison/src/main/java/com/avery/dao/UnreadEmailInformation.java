@@ -1,6 +1,6 @@
 package com.avery.dao;
 
-import com.aspose.email.ImapMessageInfo;
+//import com.aspose.email.ImapMessageInfo;
 
 public class UnreadEmailInformation {
 	
@@ -8,10 +8,10 @@ public class UnreadEmailInformation {
 		
 	}
 
-	public UnreadEmailInformation(ImapMessageInfo msgInfo) {
+	/*public UnreadEmailInformation(ImapMessageInfo msgInfo) {
 		// TODO Auto-generated constructor stub
 		this.messageID = msgInfo.getMessageId();
-	}
+	}*/
 	
 	private String messageID;
 

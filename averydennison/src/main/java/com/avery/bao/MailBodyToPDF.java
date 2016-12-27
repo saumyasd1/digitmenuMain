@@ -5,17 +5,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import com.aspose.email.MailMessage;
-import com.aspose.email.SaveOptions;
-import com.aspose.pdf.LoadFormat;
-import com.aspose.words.Document;
-import com.aspose.words.LoadOptions;
-import com.aspose.words.SaveFormat;
+//import com.aspose.email.MailMessage;
+//import com.aspose.email.SaveOptions;
+//import com.aspose.pdf.LoadFormat;
+//import com.aspose.words.Document;
+//import com.aspose.words.LoadOptions;
+//import com.aspose.words.SaveFormat;
 
 public class MailBodyToPDF {
 	
-	public void convertMailToPDF(String dir) throws Exception{
-		
+	/*public void convertMailToPDF(String dir) {
+		try
+		{
 		FileInputStream fin = new FileInputStream(dir + "/" + "CompleteEmail" + ".eml");
 		MailMessage eml = MailMessage.load(fin);
 
@@ -31,11 +32,14 @@ public class MailBodyToPDF {
 
 		// Save to disc
 		doc.save(dir + "/" + "MailBody" + ".pdf", SaveFormat.PDF);
-
+		System.out.println("Mailbody converted to pdf successfully");
 		// or Save to stream
 		// ByteArrayOutputStream foStream = new ByteArrayOutputStream();
 		// doc.save(foStream, SaveFormat.Pdf);
-		
-	}
+		}
+		catch(Exception e){
+			System.out.println("Error in converting mailbody to pdf");
+		}
+	}*/
 
 }

@@ -1,7 +1,7 @@
 package com.avery.dao;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "rbo")
@@ -28,9 +26,9 @@ public class RBO {
 	@Id
 	@GeneratedValue
 	@Column(name = "id",nullable=false)
-	int id;
-	@Column(name = "rboName", length = 250)
-	String rboName;
+	int ID;
+	@Column(name = "RBOName", length = 250)
+	String RBOName;
 	@Column(name = "comment", length = 250)
 	String comment;
 	@Column(name = "createdBy", length = 50)
@@ -43,64 +41,52 @@ public class RBO {
 	Date lastModifiedDate;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varRbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<Partner_RBOProductLine> listProductLine = new ArrayList<Partner_RBOProductLine>();
+	List<Partner_RBOProductLine> varProductLine = new ArrayList<Partner_RBOProductLine>();
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varRbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<SalesOrderLine> listSalesOrderLine = new ArrayList<SalesOrderLine>();
+	List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
 	
 	
 	public RBO() {}
 	
-	public RBO(int id, String rboName) {
+	public RBO(int iD, String rBOName) {
 		super();
-		id = id;
-		rboName = rboName;
+		ID = iD;
+		RBOName = rBOName;
 	}
-
-	public int getId() {
-		return id;
+	public int getID() {
+		return ID;
 	}
-
-	public void setId(int id) {
-		this.id = id;
+	public void setID(int iD) {
+		ID = iD;
 	}
-
-	public String getRboName() {
-		return rboName;
+	public String getRBOName() {
+		return RBOName;
 	}
-
-	public void setRboName(String rboName) {
-		this.rboName = rboName;
+	public void setRBOName(String rBOName) {
+		RBOName = rBOName;
 	}
-
 	public String getComment() {
 		return comment;
 	}
-
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-
 	public String getCreatedBy() {
 		return createdBy;
 	}
-
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
 	public String getLastModifiedBy() {
 		return lastModifiedBy;
 	}
-
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
@@ -113,23 +99,20 @@ public class RBO {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-	public List<Partner_RBOProductLine> getListProductLine() {
-		return listProductLine;
+	public List<Partner_RBOProductLine> getVarProductLine() {
+		return varProductLine;
 	}
-
-	public void setListProductLine(List<Partner_RBOProductLine> listProductLine) {
-		this.listProductLine = listProductLine;
+	public void setVarProductLine(List<Partner_RBOProductLine> varProductLine) {
+		this.varProductLine = varProductLine;
 	}
-
-	public List<SalesOrderLine> getListSalesOrderLine() {
-		return listSalesOrderLine;
+	public List<SalesOrderLine> getVarSalesOrderLine() {
+		return varSalesOrderLine;
 	}
-
-	public void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
-		this.listSalesOrderLine = listSalesOrderLine;
+	public void setVarSalesOrderLine(List<SalesOrderLine> varSalesOrderLine) {
+		this.varSalesOrderLine = varSalesOrderLine;
 	}
 	
 	
-
+	
 
 }

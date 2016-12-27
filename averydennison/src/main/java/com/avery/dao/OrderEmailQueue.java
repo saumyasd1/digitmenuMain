@@ -1,6 +1,7 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "orderemailqueue")
@@ -59,29 +62,30 @@ public class OrderEmailQueue {
 	String comment;
 	@Column(name = "orderSource", length = 50)
 	String orderSource;
-	
-	@Column(name = "emailSubjectProductLineMatch", length = 100)
-	String emailSubjectProductLineMatch;
-	@Column(name = "emailSubjectRBOMatch", length = 100)
-	String emailSubjectRBOMatch;
-	@Column(name = "emailBodyProductLineMatch", length = 100)
-	String emailBodyProductLineMatch;
-	@Column(name = "emailBodyRBOMatch", length = 100)
-	String emailBodyRBOMatch;
-	
-	@OneToMany(mappedBy = "varOrderEmailQueue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<OrderFileAttachment> listOrderFileAttachment = new ArrayList<OrderFileAttachment>();
+	@OneToMany(mappedBy = "varOrderEmailQueue", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	List<OrderFileAttachment> varOrderFileAttachment = new ArrayList<OrderFileAttachment>();
 
+	
+	
 	public OrderEmailQueue() {
-
 	}
 
-	public OrderEmailQueue(String subject, String sender, String mailBody) {
+	public OrderEmailQueue(String subject, String sender, String mailBody, Date receivedDate, Date readDate, String cc, String to) {
 		this.subject = subject;
 		this.senderEmailId = sender;
-		this.mailBody = mailBody;
+//		this.mailBody = mailBody;
+		this.receivedDate = receivedDate;
+		this.readDate = readDate;
+		this.ccMailId = cc;
+		this.toMailId = to;
+		this.createdBy = "Adeptia";
+		this.createdDate = new Date();
+		this.lastModifiedBy = "Adeptia";
+		this.lastModifiedDate = new Date();
+		this.orderSource = "Email";
+		this.status = "Mail Received";
 	}
-
+	
 	public int getId() {
 		return id;
 	}
@@ -210,6 +214,7 @@ public class OrderEmailQueue {
 		this.createdBy = createdBy;
 	}
 
+	
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
@@ -242,49 +247,14 @@ public class OrderEmailQueue {
 		this.orderSource = orderSource;
 	}
 
-	public String getEmailSubjectProductLineMatch() {
-		return emailSubjectProductLineMatch;
+	public List<OrderFileAttachment> getVarOrderFileAttachment() {
+		return varOrderFileAttachment;
 	}
 
-	public void setEmailSubjectProductLineMatch(String emailSubjectProductLineMatch) {
-		this.emailSubjectProductLineMatch = emailSubjectProductLineMatch;
+	public void setVarOrderFileAttachment(
+			List<OrderFileAttachment> varOrderFileAttachment) {
+		this.varOrderFileAttachment = varOrderFileAttachment;
 	}
 
-	public String getEmailSubjectRBOMatch() {
-		return emailSubjectRBOMatch;
-	}
-
-	public void setEmailSubjectRBOMatch(String emailSubjectRBOMatch) {
-		this.emailSubjectRBOMatch = emailSubjectRBOMatch;
-	}
-
-	public String getEmailBodyProductLineMatch() {
-		return emailBodyProductLineMatch;
-	}
-
-	public void setEmailBodyProductLineMatch(String emailBodyProductLineMatch) {
-		this.emailBodyProductLineMatch = emailBodyProductLineMatch;
-	}
-
-	public String getEmailBodyRBOMatch() {
-		return emailBodyRBOMatch;
-	}
-
-	public void setEmailBodyRBOMatch(String emailBodyRBOMatch) {
-		this.emailBodyRBOMatch = emailBodyRBOMatch;
-	}
-
-	public List<OrderFileAttachment> getListOrderFileAttachment() {
-		return listOrderFileAttachment;
-	}
-
-	public void setListOrderFileAttachment(
-			List<OrderFileAttachment> listOrderFileAttachment) {
-		this.listOrderFileAttachment = listOrderFileAttachment;
-	}
-
-
-
-	
 	
 }

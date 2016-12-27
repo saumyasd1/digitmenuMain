@@ -2,7 +2,9 @@ package com.avery.dao;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,8 +13,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -23,9 +30,9 @@ public class Partner {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "id",nullable=false)
-	int id;
-	@Column(name = "partnerName", length = 250)
-	String partnerName;
+	int ID;
+	@Column(name = "name", length = 250)
+	String name;
 	@Column(name = "emailDomain", length = 100)
 	String emailDomain;
 	@Column(name = "emailId", length = 100)
@@ -73,33 +80,33 @@ public class Partner {
 	List<Partner_RBOProductLine> varProductLine = new ArrayList<Partner_RBOProductLine>();
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<SalesOrderLine> listSalesOrderLine = new ArrayList<SalesOrderLine>();
+	List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
 	
 	
 	public Partner() {
 
 	}
 
-	public Partner(int id, String name) {
+	public Partner(int iD, String name) {
 		super();
-		id = id;
-		this.partnerName = name;
+		ID = iD;
+		this.name = name;
 	}
 
-	public int getId() {
-		return id;
+	public int getID() {
+		return ID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	public String getPartnerName() {
-		return partnerName;
+	public void setID(int iD) {
+		ID = iD;
 	}
 
-	public void setPartnerName(String partnerName) {
-		this.partnerName = partnerName;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getEmailDomain() {
@@ -278,15 +285,13 @@ public class Partner {
 		this.varProductLine = varProductLine;
 	}
 
-	public List<SalesOrderLine> getListSalesOrderLine() {
-		return listSalesOrderLine;
+	public List<SalesOrderLine> getVarSalesOrderLine() {
+		return varSalesOrderLine;
 	}
 
-	public void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
-		this.listSalesOrderLine = listSalesOrderLine;
+	public void setVarSalesOrderLine(List<SalesOrderLine> varSalesOrderLine) {
+		this.varSalesOrderLine = varSalesOrderLine;
 	}
-
-	
 
 	
 	

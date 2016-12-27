@@ -8,10 +8,17 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import com.aspose.email.Attachment;
-import com.aspose.email.AttachmentCollection;
-import com.aspose.email.EmlLoadOptions;
-import com.aspose.email.MailMessage;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Part;
+import javax.mail.internet.MimeBodyPart;
+
+
+//import com.aspose.email.Attachment;
+//import com.aspose.email.AttachmentCollection;
+//import com.aspose.email.EmlLoadOptions;
+//import com.aspose.email.MailMessage;
 import com.avery.services.AcknowledgementService;
 import com.avery.services.EmailAttachmentService;
 
@@ -19,9 +26,11 @@ public class AttachmentHandling {
 	
 	private static final int BUFFER_SIZE = 4096;
 	
-	public void extractAttachment(String dir, int emailqueueid) throws IOException{
+	/*public void extractAttachment(String dir, int emailqueueid) throws IOException{
 		MailMessage eml = MailMessage.load(dir + "/" + "CompleteEmail" + ".eml", new EmlLoadOptions());
 		AttachmentCollection attachments = eml.getAttachments();
+		
+		
 		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
 		SendingAcknowledgement acknowledgement = new SendingAcknowledgement();
 		String[] attachmentName = new String[attachments.size()];
@@ -37,7 +46,7 @@ public class AttachmentHandling {
 			//String attachmentName = attachment.getName();
 			
 			attachmentName[index] = attachment.getName();
-			System.out.println(attachmentName[index]);
+			//System.out.println(attachmentName[index]);
 			//Save Attachment to disk
 			for (int i = 0; i < index; i++) {
 			if(attachmentName[index].equalsIgnoreCase(attachmentName[i]))
@@ -62,7 +71,7 @@ public class AttachmentHandling {
 				emailAttachmentService.insertIntoEmailAttachment(attachment, filePath, emailqueueid);
 				//insertIntoEmailAttachmentTable(attachment, filePath, emailqueueid);
 				String unzipDirectory = filePath.substring(0,filePath.lastIndexOf("."));
-				System.out.println("Destination Directory : "+unzipDirectory);
+				//System.out.println("Destination Directory : "+unzipDirectory);
 				File folder = new File(unzipDirectory);
 		        File[] listofFiles = folder.listFiles();
 		        String path = "";
@@ -70,11 +79,11 @@ public class AttachmentHandling {
 		        	path = listofFiles[i].getAbsolutePath().replace("\\", "/");
 		        	emailAttachmentService.insertUnzippedFile(listofFiles[i].getName(), path, emailqueueid);
 		        	//insertUnzippedFiles(listofFiles[i].getName(), path, emailqueueid);
-		        	System.out.println(listofFiles[i].getAbsolutePath()+" "+listofFiles[i].getName());
+		        	//System.out.println(listofFiles[i].getAbsolutePath()+" "+listofFiles[i].getName());
 		        }
 				continue;
 			}
-			System.out.println(filePath);
+			//System.out.println(filePath);
 			fileName = attachment.getName();
 			if(fileName.contains(".")){
 				fileExtension = fileName.substring(fileName.lastIndexOf("."));
@@ -82,11 +91,112 @@ public class AttachmentHandling {
 			//insertIntoEmailAttachmentTable(attachment, filePath, emailqueueid);
 			emailAttachmentService.insertIntoEmailAttachment(attachment, filePath, emailqueueid);
 		}
-		System.out.println("All Attachments Stored");
+		System.out.println("All Attachments Stored successfully");
+		SendingAcknowledgement sendingAcknowledgement = new SendingAcknowledgement();
+		sendingAcknowledgement.sendAcknowledgement(emailqueueid);
+	}*/
+	
+	
+	
+	public void extractAttachment(String dir, int emailqueueid, Message message) throws IOException, MessagingException{
+		
+		
+		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
+		SendingAcknowledgement acknowledgement = new SendingAcknowledgement();
+//		String[] attachmentName = new String[attachments.size()];
+		String newAttachmentName = null;
+		String filePath = null;
+		String fileName;
+		String fileExtension = "";
+		
+		
+		String contentType = null;
+		try {
+			contentType = message.getContentType();
+			if (contentType.contains("multipart")) {
+				Multipart multiPart = (Multipart) message.getContent();
+				int numberOfParts = multiPart.getCount();
+				for (int partCount = 0; partCount < numberOfParts; partCount++) {
+					MimeBodyPart part = (MimeBodyPart) multiPart
+							.getBodyPart(partCount);
+					if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
+						// this part is attachment
+						String attachmentFileName = part.getFileName();
+						part.saveFile(dir + File.separatorChar
+								+ attachmentFileName);
+
+						emailAttachmentService.insertIntoEmailAttachment(part,
+								filePath, emailqueueid);
+					}
+				}
+			}
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new MessagingException(
+					"Error while reading attachement from email:" + message
+							+ " for emailqueueid:" + emailqueueid + "."
+							+ e.getMessage(), e);
+		}
+		
+		
+		
+		/*for (int index = 0; index < attachments.size(); index++) {
+			//Initialize Attachment object and Get the indexed Attachment reference
+			Attachment attachment = (Attachment) attachments.get_Item(index);
+			//Display Attachment Name				
+			//String attachmentName = attachment.getName();
+			
+			attachmentName[index] = attachment.getName();
+			//System.out.println(attachmentName[index]);
+			//Save Attachment to disk
+			for (int i = 0; i < index; i++) {
+			if(attachmentName[index].equalsIgnoreCase(attachmentName[i]))
+			{
+				newAttachmentName = attachmentName[index].substring(0,attachmentName[index].lastIndexOf(".")) + "-Copy" + ++i + attachmentName[index].substring(attachmentName[index].lastIndexOf(".")) ;
+				attachment.save(dir + "/" + newAttachmentName);
+				if(newAttachmentName.endsWith(".zip"))
+				{						
+					unzip(dir + "/" + newAttachmentName);
+					filePath = dir + "/" + newAttachmentName;
+				}
+				filePath = dir + "/" + newAttachmentName;
+			}
+			
+			}				
+			attachment.save(dir + "/" + attachmentName[index]);							
+			filePath = dir + "/" + attachmentName[index];
+			if(attachment.getName().endsWith(".zip"))
+			{						
+				unzip(dir + "/" + attachmentName[index]);
+				filePath = dir + "/" + attachmentName[index];
+				emailAttachmentService.insertIntoEmailAttachment(attachment, filePath, emailqueueid);
+				//insertIntoEmailAttachmentTable(attachment, filePath, emailqueueid);
+				String unzipDirectory = filePath.substring(0,filePath.lastIndexOf("."));
+				//System.out.println("Destination Directory : "+unzipDirectory);
+				File folder = new File(unzipDirectory);
+		        File[] listofFiles = folder.listFiles();
+		        String path = "";
+		        for(int i=0;i<listofFiles.length;i++){
+		        	path = listofFiles[i].getAbsolutePath().replace("\\", "/");
+		        	emailAttachmentService.insertUnzippedFile(listofFiles[i].getName(), path, emailqueueid);
+		        	//insertUnzippedFiles(listofFiles[i].getName(), path, emailqueueid);
+		        	//System.out.println(listofFiles[i].getAbsolutePath()+" "+listofFiles[i].getName());
+		        }
+				continue;
+			}
+			//System.out.println(filePath);
+			fileName = attachment.getName();
+			if(fileName.contains(".")){
+				fileExtension = fileName.substring(fileName.lastIndexOf("."));
+			}
+			//insertIntoEmailAttachmentTable(attachment, filePath, emailqueueid);
+			emailAttachmentService.insertIntoEmailAttachment(attachment, filePath, emailqueueid);
+		}*/
+		System.out.println("All Attachments Stored successfully");
 		SendingAcknowledgement sendingAcknowledgement = new SendingAcknowledgement();
 		sendingAcknowledgement.sendAcknowledgement(emailqueueid);
 	}
-	
 	
     public void unzip(String zipFilePath) throws IOException {
     	

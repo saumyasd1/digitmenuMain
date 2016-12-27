@@ -65,8 +65,13 @@ public void receiveFolderInformation(EmailManager emailManager) throws Exception
 		String propurl = "smtp.properties";
 		Properties props = new Properties();
 		// read the SMTP properties
-		props.load(this.getClass().getClassLoader()
-						.getResourceAsStream(propurl));
+//		props.load(this.getClass().getClassLoader()
+//						.getResourceAsStream(propurl));
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.socketFactory.port", "465");
+		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.port", "465");
 
 		// Connect using IMAPS
 		Session session = Session.getDefaultInstance(props, null);

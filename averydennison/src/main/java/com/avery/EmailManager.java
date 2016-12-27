@@ -1,51 +1,33 @@
 package com.avery;
 
-import com.aspose.email.ImapClient;
-import com.aspose.email.Pop3Client;
-import com.aspose.email.SecurityOptions;
 import com.avery.bao.EmailFolderInformation;
-import com.avery.services.AcknowledgementService;
 
 public class EmailManager {
 	
-	public EmailManager(){
-		
-	}
 	
-	public static final String directoryLocation = "C:\\AveryDennisonFiles";
+	public static String smtpHost;
+	public static int smtpPort;
+	public static String username;
+	public static String password; 
+	public static String directoryLocation;
 
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		String protocol = "imap";
-        String host = "imap.gmail.com";
-        int port = 993;  
-        String userName = "vishal566802@gmail.com";//this is a demo email id for testing.............change accordingly
-        String password = "yaadnahihai";
-        
+	public void connectTOEmail(String Protocol, String Host, int Port, String UserName, String Password, String dir, String SmtpHost, int SmtpPort) throws Exception{
+		String protocol = Protocol;
+        String host = Host;
+        int port = Port;  
+        this.username = UserName;
+        this.password = Password;
+        this.smtpHost = SmtpHost;
+        this.smtpPort = SmtpPort;
+        this.directoryLocation = dir;
         EmailManager emailmanager = new EmailManager();
-        emailmanager.connectToEmailServer(protocol, host, userName, password, port);
-
+        emailmanager.connectToEmailServer(protocol, host, port);
 	}
 	
-	public void connectToEmailServer(String protocol, String host, String userName, String password, int port) throws Exception{
-		if(protocol.equalsIgnoreCase("pop3")){
-			Pop3Client client = new Pop3Client();
-			client.setHost("pop.domain.com");
-			client.setPort(port); //This can be different from server to server
-			client.setUsername(userName);
-			client.setPassword(password);
-			client.setSecurityOptions(SecurityOptions.Auto);
-		}
-		else{
-			ImapClient client = new ImapClient();
-			client.setHost("imap.gmail.com");
-			client.setPort(port);
-			client.setUsername(userName);
-			client.setPassword(password);
-			client.setSecurityOptions(SecurityOptions.Auto); 
-			EmailFolderInformation emailFolderInformation = new EmailFolderInformation();
-			emailFolderInformation.receiveFolderInformation(protocol, client);
-		}
+	
+	public void connectToEmailServer(String protocol, String host, int port) throws Exception{
+		EmailFolderInformation emailFolderInformation = new EmailFolderInformation();
+		emailFolderInformation.receiveFolderInformation(this);
 		
 	}
 

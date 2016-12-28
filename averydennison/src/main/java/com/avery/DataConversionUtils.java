@@ -124,7 +124,7 @@ public class DataConversionUtils {
 				}
 			}
 
-			File file = new File(location + "\\" + fileName + ".html");
+			File file = new File(location + File.separatorChar + fileName + ".html");
 			fileWriter = new FileWriter(file);
 			fileWriter.write(msgContent);
 		} catch (IOException e) {
@@ -169,7 +169,7 @@ public class DataConversionUtils {
 		HTMLLoadOptions options = new HTMLLoadOptions(LoadFormat.HTML);
 		Workbook book;
 		try {
-			book = new Workbook(htmlFileLocation + "\\" + htmlFileName+".html", options); 
+			book = new Workbook(htmlFileLocation + File.separatorChar + htmlFileName+".html", options); 
 			// To check if the excel file should be .xls or .xlsx
 
 			int saveFormat = 0;

@@ -216,16 +216,15 @@ public class EmailFetch {
 	public String createDirectory(String uniqueID, String directoryLocation) {
 		// TODO Auto-generated method stub
 	
-		File file = new File(directoryLocation + File.separator + uniqueID);
-		//File file = new File("C:\\Directory");
+		File file = new File(directoryLocation + File.separatorChar + uniqueID);
 	        if (!file.exists()) {
-	            if (file.mkdir()) {
+	            if (file.mkdirs()) { 
 	                System.out.println("Directory is created!");
 	            } else {
 	                System.out.println("Failed to create directory!");
 	            }
 	        }
-			return file.getAbsolutePath().replace("\\","/");
+			return file.getAbsolutePath();
 	}
 
 }

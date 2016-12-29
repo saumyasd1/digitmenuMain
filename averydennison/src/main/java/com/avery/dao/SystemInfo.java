@@ -1,6 +1,8 @@
 package com.avery.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,8 +11,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 
@@ -35,7 +41,9 @@ public class SystemInfo {
 	Date lastModifiedDate;
 	@OneToOne(mappedBy="varSystemInfo",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	OrderSystemInfo varOrderSystemInfo;
-	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "varSystem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	List<AOC_OrderConfiguration> listAOC_OrderConfiguration = new ArrayList<AOC_OrderConfiguration>();
 	
 	
 
@@ -133,6 +141,16 @@ public class SystemInfo {
 	}
 
 
+	public List<AOC_OrderConfiguration> getListAOC_OrderConfiguration() {
+		return listAOC_OrderConfiguration;
+	}
+
+	public void setListAOC_OrderConfiguration(
+			List<AOC_OrderConfiguration> listAOC_OrderConfiguration) {
+		this.listAOC_OrderConfiguration = listAOC_OrderConfiguration;
+	}
+
+	
 	
 	
 }

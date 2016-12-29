@@ -1,7 +1,6 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "partner_rboproductline")
@@ -29,8 +29,6 @@ public class Partner_RBOProductLine {
 	int id;
 	@Column(name = "active")
 	boolean active;
-	@Column(name = "artworkHold", length = 5)
-	String artworkHold;// 5
 	@Column(name = "attachmentFileMatchLocation", length = 100)
 	String attachmentFileMatchLocation;// 100
 	@Column(name = "attachmentFileMatchRequired")
@@ -107,28 +105,41 @@ public class Partner_RBOProductLine {
 	String createdBy;// 50
 	@Column(name = "createdDate")
 	Date createdDate;
+	@Column(name="email",length=1000)
+	String email;
+	
 	@Column(name = "CSRPrimaryId", length = 250)
 	String CSRPrimaryId;// 250
 	@Column(name = "CSRSecondaryId", length = 250)
 	String CSRSecondaryId;// 250
-	@Column(name = "defaultBillToCode", length = 255)
-	String defaultBillToCode;// 255
-	@Column(name = "defaultShipToCode", length = 255)
-	String defaultShipToCode;// 255
-	@Column(name = "discountOffer")
-	boolean discountOffer;
 	@Column(name = "emailSubjectProductLineMatch", length = 100)
 	String emailSubjectProductLineMatch;// 100
 	@Column(name = "emailSubjectProductlineMatchLocation", length = 100)
 	String emailSubjectProductlineMatchLocation;
 	@Column(name = "emailSubjectProductlineMatchRequired")
 	boolean emailSubjectProductlineMatchRequired;
-	@Column(name = "emailSubjectRBOMatch",length = 100)
+	@Column(name = "emailSubjectRBOMatch",length=100)
 	String emailSubjectRBOMatch;
 	@Column(name = "emailSubjectRBOMatchLocation", length = 100)
 	String emailSubjectRBOMatchLocation;// 100
 	@Column(name = "emailSubjectRBOMatchRequired")
 	boolean emailSubjectRBOMatchRequired;
+	@Column(name = "emailBodyProductLineMatch",length=100)
+	String  emailBodyProductLineMatch;	
+	@Column(name = "emailBodyProductlineMatchLocation",length=100)
+	String emailBodyProductlineMatchLocation;	
+	@Column(name = "emailBodyProductlineMatchRequired")
+	boolean emailBodyProductlineMatchRequired;	
+	@Column(name = "emailBodyRBOMatch",length=100)
+	String  emailBodyRBOMatch;
+	@Column(name = "emailBodyRBOMatchLocation",length=100)
+	String emailBodyRBOMatchLocation;	
+	@Column(name = "emailBodyRBOMatchRequired")
+	boolean emailBodyRBOMatchRequired;	
+	@Column(name = "fileRBOMatchLocation",length=100)
+	String fileRBOMatchLocation;
+	@Column(name = "fileRBOMatchRequired")
+	boolean fileRBOMatchRequired;
 	@Column(name = "factoryTransfer")
 	boolean factoryTransfer;
 	@Column(name = "fileMatchLocation", length = 100)
@@ -159,8 +170,6 @@ public class Partner_RBOProductLine {
 	boolean LLKK;
 	@Column(name = "localBilling")
 	boolean localBilling;
-	@Column(name = "manufacturingNotes", length = 500)
-	String manufacturingNotes;// 500
 	@Column(name = "miscCSRInstruction", length = 500)
 	String miscCSRInstruction;// 500
 	@Column(name = "orderFileNameExtension", length = 100)
@@ -175,34 +184,63 @@ public class Partner_RBOProductLine {
 	String orderSchemaType;// 50
 	@Column(name = "others")
 	boolean others;// Others (pls specify)
-	@Column(name = "packingInstruction", length = 500)
-	String packingInstruction;// 500
 	@Column(name = "preProcessPID", length = 50)
 	String preProcessPID;// 50
 	@Column(name = "productLineType", length = 25)
 	String productLineType;// 25
 	@Column(name = "shipmentSample")
 	boolean shipmentSample;
-	@Column(name = "shippingMark")
+    @Column(name = "waiveMOA")
+	boolean waiveMOA;
+	@Column(name = "waiveMOQ")
+	boolean waiveMOQ;
+	@Column(name = "localItem")
+	boolean localItem;
+	@Column(name = "averyItem")
+	boolean averyItem;	
+	@Column(name = "customerItemIdentifierDescription",length=500)
+	String customerItemIdentifierDescription;
+	@Column(name = "defaultSystem",length=5)
+	String defaultSystem;
+	@Column(name = "orderInMailBody")
+	boolean orderInMailBody;
+	@Column(name = "dataStructureName",length=100)
+	String dataStructureName ;
+	/*
+    @Column(name = "packingInstruction", length = 500)
+	String packingInstruction;// 500
+	@Column(name = "manufacturingNotes", length = 500)
+	String manufacturingNotes;// 500
+    @Column(name = "shippingMark")
 	boolean shippingMark;
 	@Column(name = "shippingOnlyNotes", length = 500)
 	String shippingOnlyNotes;// 500
 	@Column(name = "splitShipSetBy", length = 5)
 	String splitShipSetBy;// 5
 	@Column(name = "variableDataBreakdown", length = 500)
-	String variableDataBreakdown;// 500
-	@Column(name = "waiveMOA")
-	boolean waiveMOA;
-	@Column(name = "waiveMOQ")
-	boolean waiveMOQ;
+	String variableDataBreakdown;// 500@Column(name = "artworkHold", length = 5)
+	String artworkHold;// 5
+	@Column(name = "defaultBillToCode", length = 255)
+	String defaultBillToCode;// 255
+	@Column(name = "defaultShipToCode", length = 255)
+	String defaultShipToCode;// 255	
+	@Column(name = "discountOffer")
+	boolean discountOffer;
+	*/
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "rboId")
 	RBO varRbo;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "partnerId")
-	RBO varPartner;
+	Partner varPartner;
 	@OneToOne(mappedBy = "varProductLine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	OrderFileQueue varOrderFileQueue;
+	OrderFileQueue listOrderFileQueue;
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="varProductLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	List<OrderFileAttachment> listOrderFileAttachments=new ArrayList<OrderFileAttachment>();
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="varProductLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	List<OrderSystemInfo> listOrderSystemInfo=new ArrayList<OrderSystemInfo>();
 	
 	
 	public Partner_RBOProductLine() {}
@@ -225,16 +263,6 @@ public class Partner_RBOProductLine {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-
-
-	public String getArtworkHold() {
-		return artworkHold;
-	}
-
-
-	public void setArtworkHold(String artworkHold) {
-		this.artworkHold = artworkHold;
 	}
 
 
@@ -626,6 +654,16 @@ public class Partner_RBOProductLine {
 	}
 
 
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
 	public String getCSRPrimaryId() {
 		return CSRPrimaryId;
 	}
@@ -643,36 +681,6 @@ public class Partner_RBOProductLine {
 
 	public void setCSRSecondaryId(String cSRSecondaryId) {
 		CSRSecondaryId = cSRSecondaryId;
-	}
-
-
-	public String getDefaultBillToCode() {
-		return defaultBillToCode;
-	}
-
-
-	public void setDefaultBillToCode(String defaultBillToCode) {
-		this.defaultBillToCode = defaultBillToCode;
-	}
-
-
-	public String getDefaultShipToCode() {
-		return defaultShipToCode;
-	}
-
-
-	public void setDefaultShipToCode(String defaultShipToCode) {
-		this.defaultShipToCode = defaultShipToCode;
-	}
-
-
-	public boolean isDiscountOffer() {
-		return discountOffer;
-	}
-
-
-	public void setDiscountOffer(boolean discountOffer) {
-		this.discountOffer = discountOffer;
 	}
 
 
@@ -708,8 +716,6 @@ public class Partner_RBOProductLine {
 	}
 
 
-	
-
 	public String getEmailSubjectRBOMatch() {
 		return emailSubjectRBOMatch;
 	}
@@ -737,6 +743,88 @@ public class Partner_RBOProductLine {
 
 	public void setEmailSubjectRBOMatchRequired(boolean emailSubjectRBOMatchRequired) {
 		this.emailSubjectRBOMatchRequired = emailSubjectRBOMatchRequired;
+	}
+
+
+	public String getEmailBodyProductLineMatch() {
+		return emailBodyProductLineMatch;
+	}
+
+
+	public void setEmailBodyProductLineMatch(String emailBodyProductLineMatch) {
+		this.emailBodyProductLineMatch = emailBodyProductLineMatch;
+	}
+
+
+	public String getEmailBodyProductlineMatchLocation() {
+		return emailBodyProductlineMatchLocation;
+	}
+
+
+	public void setEmailBodyProductlineMatchLocation(
+			String emailBodyProductlineMatchLocation) {
+		this.emailBodyProductlineMatchLocation = emailBodyProductlineMatchLocation;
+	}
+
+
+	public boolean isEmailBodyProductlineMatchRequired() {
+		return emailBodyProductlineMatchRequired;
+	}
+
+
+	public void setEmailBodyProductlineMatchRequired(
+			boolean emailBodyProductlineMatchRequired) {
+		this.emailBodyProductlineMatchRequired = emailBodyProductlineMatchRequired;
+	}
+
+
+	public String getEmailBodyRBOMatch() {
+		return emailBodyRBOMatch;
+	}
+
+
+	public void setEmailBodyRBOMatch(String emailBodyRBOMatch) {
+		this.emailBodyRBOMatch = emailBodyRBOMatch;
+	}
+
+
+	public String getEmailBodyRBOMatchLocation() {
+		return emailBodyRBOMatchLocation;
+	}
+
+
+	public void setEmailBodyRBOMatchLocation(String emailBodyRBOMatchLocation) {
+		this.emailBodyRBOMatchLocation = emailBodyRBOMatchLocation;
+	}
+
+
+	public boolean isEmailBodyRBOMatchRequired() {
+		return emailBodyRBOMatchRequired;
+	}
+
+
+	public void setEmailBodyRBOMatchRequired(boolean emailBodyRBOMatchRequired) {
+		this.emailBodyRBOMatchRequired = emailBodyRBOMatchRequired;
+	}
+
+
+	public String getFileRBOMatchLocation() {
+		return fileRBOMatchLocation;
+	}
+
+
+	public void setFileRBOMatchLocation(String fileRBOMatchLocation) {
+		this.fileRBOMatchLocation = fileRBOMatchLocation;
+	}
+
+
+	public boolean isFileRBOMatchRequired() {
+		return fileRBOMatchRequired;
+	}
+
+
+	public void setFileRBOMatchRequired(boolean fileRBOMatchRequired) {
+		this.fileRBOMatchRequired = fileRBOMatchRequired;
 	}
 
 
@@ -890,16 +978,6 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public String getManufacturingNotes() {
-		return manufacturingNotes;
-	}
-
-
-	public void setManufacturingNotes(String manufacturingNotes) {
-		this.manufacturingNotes = manufacturingNotes;
-	}
-
-
 	public String getMiscCSRInstruction() {
 		return miscCSRInstruction;
 	}
@@ -970,16 +1048,6 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public String getPackingInstruction() {
-		return packingInstruction;
-	}
-
-
-	public void setPackingInstruction(String packingInstruction) {
-		this.packingInstruction = packingInstruction;
-	}
-
-
 	public String getPreProcessPID() {
 		return preProcessPID;
 	}
@@ -1009,6 +1077,198 @@ public class Partner_RBOProductLine {
 		this.shipmentSample = shipmentSample;
 	}
 
+
+	public boolean isWaiveMOA() {
+		return waiveMOA;
+	}
+
+
+	public void setWaiveMOA(boolean waiveMOA) {
+		this.waiveMOA = waiveMOA;
+	}
+
+
+	public boolean isWaiveMOQ() {
+		return waiveMOQ;
+	}
+
+
+	public void setWaiveMOQ(boolean waiveMOQ) {
+		this.waiveMOQ = waiveMOQ;
+	}
+
+
+	public boolean isLocalItem() {
+		return localItem;
+	}
+
+
+	public void setLocalItem(boolean localItem) {
+		this.localItem = localItem;
+	}
+
+
+	public boolean isAveryItem() {
+		return averyItem;
+	}
+
+
+	public void setAveryItem(boolean averyItem) {
+		this.averyItem = averyItem;
+	}
+
+
+	public String getCustomerItemIdentifierDescription() {
+		return customerItemIdentifierDescription;
+	}
+
+
+	public void setCustomerItemIdentifierDescription(
+			String customerItemIdentifierDescription) {
+		this.customerItemIdentifierDescription = customerItemIdentifierDescription;
+	}
+
+
+	public String getDefaultSystem() {
+		return defaultSystem;
+	}
+
+
+	public void setDefaultSystem(String defaultSystem) {
+		this.defaultSystem = defaultSystem;
+	}
+
+
+	public RBO getVarRbo() {
+		return varRbo;
+	}
+
+
+	public void setVarRbo(RBO varRbo) {
+		this.varRbo = varRbo;
+	}
+
+
+	public Partner getVarPartner() {
+		return varPartner;
+	}
+
+
+	public void setVarPartner(Partner varPartner) {
+		this.varPartner = varPartner;
+	}
+
+
+	public OrderFileQueue getListOrderFileQueue() {
+		return listOrderFileQueue;
+	}
+
+
+	public void setListOrderFileQueue(OrderFileQueue listOrderFileQueue) {
+		this.listOrderFileQueue = listOrderFileQueue;
+	}
+
+
+	public List<OrderFileAttachment> getListOrderFileAttachments() {
+		return listOrderFileAttachments;
+	}
+
+
+	public void setListOrderFileAttachments(
+			List<OrderFileAttachment> listOrderFileAttachments) {
+		this.listOrderFileAttachments = listOrderFileAttachments;
+	}
+
+
+	public List<OrderSystemInfo> getListOrderSystemInfo() {
+		return listOrderSystemInfo;
+	}
+
+
+	public void setListOrderSystemInfo(List<OrderSystemInfo> listOrderSystemInfo) {
+		this.listOrderSystemInfo = listOrderSystemInfo;
+	}
+
+
+	public boolean isOrderInMailBody() {
+		return orderInMailBody;
+	}
+
+
+	public void setOrderInMailBody(boolean orderInMailBody) {
+		this.orderInMailBody = orderInMailBody;
+	}
+
+
+	public String getDataStructureName() {
+		return dataStructureName;
+	}
+
+
+	public void setDataStructureName(String dataStructureName) {
+		this.dataStructureName = dataStructureName;
+	}
+	
+	
+
+	
+
+	/*
+	
+	public String getArtworkHold() {
+	return artworkHold;
+	}
+
+
+	public void setArtworkHold(String artworkHold) {
+	this.artworkHold = artworkHold;
+	}
+	
+	public String getDefaultBillToCode() {
+		return defaultBillToCode;
+	}
+
+
+	public void setDefaultBillToCode(String defaultBillToCode) {
+		this.defaultBillToCode = defaultBillToCode;
+	}
+
+
+	public String getDefaultShipToCode() {
+		return defaultShipToCode;
+	}
+
+
+	public void setDefaultShipToCode(String defaultShipToCode) {
+		this.defaultShipToCode = defaultShipToCode;
+	}
+
+
+	public boolean isDiscountOffer() {
+		return discountOffer;
+	}
+
+
+	public void setDiscountOffer(boolean discountOffer) {
+		this.discountOffer = discountOffer;
+	}
+	
+	public String getManufacturingNotes() {
+		return manufacturingNotes;
+	}
+
+
+	public void setManufacturingNotes(String manufacturingNotes) {
+		this.manufacturingNotes = manufacturingNotes;
+	}
+	public String getPackingInstruction() {
+		return packingInstruction;
+	}
+
+
+	public void setPackingInstruction(String packingInstruction) {
+		this.packingInstruction = packingInstruction;
+	}
 
 	public boolean isShippingMark() {
 		return shippingMark;
@@ -1048,59 +1308,9 @@ public class Partner_RBOProductLine {
 	public void setVariableDataBreakdown(String variableDataBreakdown) {
 		this.variableDataBreakdown = variableDataBreakdown;
 	}
+*/
 
 
-	public boolean isWaiveMOA() {
-		return waiveMOA;
-	}
-
-
-	public void setWaiveMOA(boolean waiveMOA) {
-		this.waiveMOA = waiveMOA;
-	}
-
-
-	public boolean isWaiveMOQ() {
-		return waiveMOQ;
-	}
-
-
-	public void setWaiveMOQ(boolean waiveMOQ) {
-		this.waiveMOQ = waiveMOQ;
-	}
-
-
-	public RBO getVarRbo() {
-		return varRbo;
-	}
-
-
-	public void setVarRbo(RBO varRbo) {
-		this.varRbo = varRbo;
-	}
-
-
-	public RBO getVarPartner() {
-		return varPartner;
-	}
-
-
-	public void setVarPartner(RBO varPartner) {
-		this.varPartner = varPartner;
-	}
-
-
-	public OrderFileQueue getVarOrderFileQueue() {
-		return varOrderFileQueue;
-	}
-
-
-	public void setVarOrderFileQueue(OrderFileQueue varOrderFileQueue) {
-		this.varOrderFileQueue = varOrderFileQueue;
-	}
-	
-	
-	
 	
 
 }

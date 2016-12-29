@@ -1,7 +1,6 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -191,28 +188,28 @@ public class OrderLine {
 	String APOType;
 	@Column(name = "sentToOracleDate")
 	Date sentToOracleDate;
-	@Column(name = "status", length = 100)
+	@Column(name = "status", length = 100,nullable=false)
 	String status;
-	@Column(name="reviseOrderFlag")
-	boolean reviseOrderFlag;
-	@Column(name="cooTranslationFlag")
-	boolean cooTranslationFlag;
-	@Column(name="febricPercentageFlag")
-	boolean febricPercentageFlag;
-	@Column(name = "duplicatePOFlag")
-	boolean duplicatePOFlag;
-	@Column(name = "customerPOFlag")
-	boolean customerPOFlag;
-	@Column(name = "bulkSampleValidationFlag")
-	boolean bulkSampleValidationFlag;
-	@Column(name = "MOQValidationFlag")
-	boolean MOQValidationFlag;
-	@Column(name = "ATOValidationFlag")
-	boolean ATOValidationFlag;
-	@Column(name = "mandatoryVariableDataFieldFlag")
-	boolean mandatoryVariableDataFieldFlag;
-	@Column(name = "HTLSizePageValidationFlag")
-	boolean HTLSizePageValidationFlag;
+	@Column(name="reviseOrderFlag",length=50)
+	String reviseOrderFlag;
+	@Column(name="cooTranslationFlag",length=50)
+	String cooTranslationFlag;
+	@Column(name="febricPercentageFlag",length=50)
+	String febricPercentageFlag;
+	@Column(name = "duplicatePOFlag",length=50)
+	String duplicatePOFlag;
+	@Column(name = "customerPOFlag",length=50)
+	String customerPOFlag;
+	@Column(name = "bulkSampleValidationFlag",length=50)
+	String bulkSampleValidationFlag;
+	@Column(name = "MOQValidationFlag",length=50)
+	String MOQValidationFlag;
+	@Column(name = "ATOValidationFlag",length=50)
+	String ATOValidationFlag;
+	@Column(name = "mandatoryVariableDataFieldFlag",length=50)
+	String mandatoryVariableDataFieldFlag;
+	@Column(name = "HTLSizePageValidationFlag",length=50)
+	String HTLSizePageValidationFlag;
 	@Column(name = "createdDate")
 	Date createdDate;
 	@Column(name = "createdBy", length = 50)
@@ -261,15 +258,17 @@ public class OrderLine {
 	String lastModifiedByName;
 	@Column(name = "productLineType", length = 50)
 	String productLineType;
+	@Column(name="addditionalFileId",length=100)
+	String addditionalFileId;
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	@JoinColumn(name="orderQueueId")
+	@JoinColumn(name="orderQueueId",nullable=false)
 	OrderFileQueue varOrderFileQueue;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<OrderLineDetails> varOrderlineDetails=new ArrayList<OrderLineDetails>();
+	List<OrderLineDetails> listOrderlineDetails=new ArrayList<OrderLineDetails>();
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<SalesOrderLine> varSalesOrderLine=new ArrayList<SalesOrderLine>();
+	List<SalesOrderLine> listSalesOrderLine=new ArrayList<SalesOrderLine>();
 	
 	
 	public OrderLine() {
@@ -1106,103 +1105,103 @@ public class OrderLine {
 	}
 
 
-	public boolean isReviseOrderFlag() {
+	public String getReviseOrderFlag() {
 		return reviseOrderFlag;
 	}
 
 
-	public void setReviseOrderFlag(boolean reviseOrderFlag) {
+	public void setReviseOrderFlag(String reviseOrderFlag) {
 		this.reviseOrderFlag = reviseOrderFlag;
 	}
 
 
-	public boolean isCooTranslationFlag() {
+	public String getCooTranslationFlag() {
 		return cooTranslationFlag;
 	}
 
 
-	public void setCooTranslationFlag(boolean cooTranslationFlag) {
+	public void setCooTranslationFlag(String cooTranslationFlag) {
 		this.cooTranslationFlag = cooTranslationFlag;
 	}
 
 
-	public boolean isFebricPercentageFlag() {
+	public String getFebricPercentageFlag() {
 		return febricPercentageFlag;
 	}
 
 
-	public void setFebricPercentageFlag(boolean febricPercentageFlag) {
+	public void setFebricPercentageFlag(String febricPercentageFlag) {
 		this.febricPercentageFlag = febricPercentageFlag;
 	}
 
 
-	public boolean isDuplicatePOFlag() {
+	public String getDuplicatePOFlag() {
 		return duplicatePOFlag;
 	}
 
 
-	public void setDuplicatePOFlag(boolean duplicatePOFlag) {
+	public void setDuplicatePOFlag(String duplicatePOFlag) {
 		this.duplicatePOFlag = duplicatePOFlag;
 	}
 
 
-	public boolean isCustomerPOFlag() {
+	public String getCustomerPOFlag() {
 		return customerPOFlag;
 	}
 
 
-	public void setCustomerPOFlag(boolean customerPOFlag) {
+	public void setCustomerPOFlag(String customerPOFlag) {
 		this.customerPOFlag = customerPOFlag;
 	}
 
 
-	public boolean isBulkSampleValidationFlag() {
+	public String getBulkSampleValidationFlag() {
 		return bulkSampleValidationFlag;
 	}
 
 
-	public void setBulkSampleValidationFlag(boolean bulkSampleValidationFlag) {
+	public void setBulkSampleValidationFlag(String bulkSampleValidationFlag) {
 		this.bulkSampleValidationFlag = bulkSampleValidationFlag;
 	}
 
 
-	public boolean isMOQValidationFlag() {
+	public String getMOQValidationFlag() {
 		return MOQValidationFlag;
 	}
 
 
-	public void setMOQValidationFlag(boolean mOQValidationFlag) {
+	public void setMOQValidationFlag(String mOQValidationFlag) {
 		MOQValidationFlag = mOQValidationFlag;
 	}
 
 
-	public boolean isATOValidationFlag() {
+	public String getATOValidationFlag() {
 		return ATOValidationFlag;
 	}
 
 
-	public void setATOValidationFlag(boolean aTOValidationFlag) {
+	public void setATOValidationFlag(String aTOValidationFlag) {
 		ATOValidationFlag = aTOValidationFlag;
 	}
 
 
-	public boolean isMandatoryVariableDataFieldFlag() {
+	public String getMandatoryVariableDataFieldFlag() {
 		return mandatoryVariableDataFieldFlag;
 	}
 
 
 	public void setMandatoryVariableDataFieldFlag(
-			boolean mandatoryVariableDataFieldFlag) {
+			String mandatoryVariableDataFieldFlag) {
 		this.mandatoryVariableDataFieldFlag = mandatoryVariableDataFieldFlag;
 	}
 
 
-	public boolean isHTLSizePageValidationFlag() {
+	public String getHTLSizePageValidationFlag() {
 		return HTLSizePageValidationFlag;
 	}
 
 
-	public void setHTLSizePageValidationFlag(boolean hTLSizePageValidationFlag) {
+	public void setHTLSizePageValidationFlag(String hTLSizePageValidationFlag) {
 		HTLSizePageValidationFlag = hTLSizePageValidationFlag;
 	}
 
@@ -1226,7 +1225,6 @@ public class OrderLine {
 		this.createdBy = createdBy;
 	}
 
-	
 
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
@@ -1437,8 +1435,6 @@ public class OrderLine {
 		this.lastModifiedByName = lastModifiedByName;
 	}
 
-	
-	
 
 	public String getProductLineType() {
 		return productLineType;
@@ -1447,6 +1443,15 @@ public class OrderLine {
 
 	public void setProductLineType(String productLineType) {
 		this.productLineType = productLineType;
+	}
+
+	public String getAddditionalFileId() {
+		return addditionalFileId;
+	}
+
+
+	public void setAddditionalFileId(String addditionalFileId) {
+		this.addditionalFileId = addditionalFileId;
 	}
 
 
@@ -1460,25 +1465,27 @@ public class OrderLine {
 	}
 
 
-	public List<OrderLineDetails> getVarOrderlineDetails() {
-		return varOrderlineDetails;
+	public List<OrderLineDetails> getListOrderlineDetails() {
+		return listOrderlineDetails;
 	}
 
 
-	public void setVarOrderlineDetails(List<OrderLineDetails> varOrderlineDetails) {
-		this.varOrderlineDetails = varOrderlineDetails;
+	public void setListOrderlineDetails(List<OrderLineDetails> listOrderlineDetails) {
+		this.listOrderlineDetails = listOrderlineDetails;
 	}
 
 
-	public List<SalesOrderLine> getVarSalesOrderLine() {
-		return varSalesOrderLine;
+	public List<SalesOrderLine> getListSalesOrderLine() {
+		return listSalesOrderLine;
 	}
 
 
-	public void setVarSalesOrderLine(List<SalesOrderLine> varSalesOrderLine) {
-		this.varSalesOrderLine = varSalesOrderLine;
+	public void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
+		this.listSalesOrderLine = listSalesOrderLine;
 	}
 
+
+	
 	
 	
 }

@@ -2,7 +2,6 @@ package com.avery.dao;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -107,6 +104,8 @@ public class SalesOrderLine {
 	String shippingHold;
 	@Column(name = "productionHold", length = 100)
 	String productionHold;
+	@Column(name="targetSystem",length=100)
+	String targetSystem;
 	@Column(name = "splitShipSet", length = 100)
 	String splitShipSet;
 	@Column(name = "agreement", length = 100)
@@ -117,10 +116,10 @@ public class SalesOrderLine {
 	String waiveMOQ;
 	@Column(name = "apoType", length = 100)
 	String apoType;
-	@Column(name = "atoValidationFlag")
-	boolean atoValidationFlag;
-	@Column(name = "bulkSampleValidationFlag")
-	boolean bulkSampleValidationFlag;// 250
+	@Column(name = "atoValidationFlag",length=50)
+	String atoValidationFlag;
+	@Column(name = "bulkSampleValidationFlag",length=50)
+	String bulkSampleValidationFlag;// 250
 	@Column(name = "comment", length = 250)
 	String comment;// 250
 	@Column(name = "contractNumber", length = 50)
@@ -144,7 +143,7 @@ public class SalesOrderLine {
 	@Column(name = "customerOrderedQty", length = 50)
 	String customerOrderedQty;
 	@Column(name = "customerPoFlag", length = 50)
-	boolean customerPoFlag;
+	String customerPoFlag;
 	@Column(name = "customerSeason", length = 50)
 	String customerSeason;
 	@Column(name = "customerSize", length = 50)
@@ -153,19 +152,20 @@ public class SalesOrderLine {
 	String customerUnitPrice;
 	@Column(name = "customerUom", length = 50)
 	String customerUom;
-	@Column(name = "duplicatePoFlag")
-	boolean duplicatePOFlag;// 250
+	@Column(name = "duplicatePoFlag",length=50)
+	String duplicatePOFlag;// 250
 	@Column(name = "grpedOlid", length = 1000)
 	String grpedOLID;// 1000
-	@Column(name = "htlSizePageValidationFlag")
-	boolean htlSizePageValidationFlag;// 250
+	@Column(name = "htlSizePageValidationFlag",length=50)
+	String htlSizePageValidationFlag;// 250
 	@Column(name = "lastModifiedBy", length = 50)
 	String lastModifiedBy;
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
-	boolean mandatoryVariableDataFieldFlag;
+	@Column(name = "mandatoryVariableDataFieldFlag", length = 50)
+	String mandatoryVariableDataFieldFlag;
 	@Column(name = "moqValidationFlag", length = 50)
-	boolean moqValidationFlag;
+	String moqValidationFlag;
 	@Column(name = "oracleBillToSiteNumber", length = 100)
 	String oracleBillToSiteNumber;// 100
 	@Column(name = "oracleExportId")
@@ -176,6 +176,12 @@ public class SalesOrderLine {
 	String oracleShipToSiteNumber;// 100
 	@Column(name = "sentToOracleDate")
 	Date sentToOracleDate;
+	@Column(name = "system_Status",length=2000)
+	String system_Status;
+	@Column(name = "status",length=2000)
+	String status;
+	@Column(name="productionLine",length=50)
+	String productionLine;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "orderLineId")
 	OrderLine varOrderLine;
@@ -190,7 +196,7 @@ public class SalesOrderLine {
 	RBO varRbo;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varSalesOrderLine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();
+	List<SalesOrderDetails> listSalesOrderDetails=new ArrayList<SalesOrderDetails>();
 
 	
 	public SalesOrderLine() {}
@@ -601,6 +607,17 @@ public class SalesOrderLine {
 		this.productionHold = productionHold;
 	}
 
+	
+
+	public String getTargetSystem() {
+		return targetSystem;
+	}
+
+
+	public void setTargetSystem(String targetSystem) {
+		this.targetSystem = targetSystem;
+	}
+
 
 	public String getSplitShipSet() {
 		return splitShipSet;
@@ -652,22 +669,22 @@ public class SalesOrderLine {
 	}
 
 
-	public boolean isAtoValidationFlag() {
+	public String getAtoValidationFlag() {
 		return atoValidationFlag;
 	}
 
 
-	public void setAtoValidationFlag(boolean atoValidationFlag) {
+	public void setAtoValidationFlag(String atoValidationFlag) {
 		this.atoValidationFlag = atoValidationFlag;
 	}
 
 
-	public boolean isBulkSampleValidationFlag() {
+	public String getBulkSampleValidationFlag() {
 		return bulkSampleValidationFlag;
 	}
 
 
-	public void setBulkSampleValidationFlag(boolean bulkSampleValidationFlag) {
+	public void setBulkSampleValidationFlag(String bulkSampleValidationFlag) {
 		this.bulkSampleValidationFlag = bulkSampleValidationFlag;
 	}
 
@@ -782,12 +799,12 @@ public class SalesOrderLine {
 	}
 
 
-	public boolean isCustomerPoFlag() {
+	public String getCustomerPoFlag() {
 		return customerPoFlag;
 	}
 
 
-	public void setCustomerPoFlag(boolean customerPoFlag) {
+	public void setCustomerPoFlag(String customerPoFlag) {
 		this.customerPoFlag = customerPoFlag;
 	}
 
@@ -832,12 +849,12 @@ public class SalesOrderLine {
 	}
 
 
-	public boolean isDuplicatePOFlag() {
+	public String getDuplicatePOFlag() {
 		return duplicatePOFlag;
 	}
 
 
-	public void setDuplicatePOFlag(boolean duplicatePOFlag) {
+	public void setDuplicatePOFlag(String duplicatePOFlag) {
 		this.duplicatePOFlag = duplicatePOFlag;
 	}
 
@@ -851,13 +868,12 @@ public class SalesOrderLine {
 		this.grpedOLID = grpedOLID;
 	}
 
-
-	public boolean isHtlSizePageValidationFlag() {
+	public String getHtlSizePageValidationFlag() {
 		return htlSizePageValidationFlag;
 	}
 
 
-	public void setHtlSizePageValidationFlag(boolean htlSizePageValidationFlag) {
+	public void setHtlSizePageValidationFlag(String htlSizePageValidationFlag) {
 		this.htlSizePageValidationFlag = htlSizePageValidationFlag;
 	}
 
@@ -882,24 +898,23 @@ public class SalesOrderLine {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 
-
-	public boolean isMandatoryVariableDataFieldFlag() {
+	public String getMandatoryVariableDataFieldFlag() {
 		return mandatoryVariableDataFieldFlag;
 	}
 
 
 	public void setMandatoryVariableDataFieldFlag(
-			boolean mandatoryVariableDataFieldFlag) {
+			String mandatoryVariableDataFieldFlag) {
 		this.mandatoryVariableDataFieldFlag = mandatoryVariableDataFieldFlag;
 	}
 
 
-	public boolean isMoqValidationFlag() {
+	public String getMoqValidationFlag() {
 		return moqValidationFlag;
 	}
 
 
-	public void setMoqValidationFlag(boolean moqValidationFlag) {
+	public void setMoqValidationFlag(String moqValidationFlag) {
 		this.moqValidationFlag = moqValidationFlag;
 	}
 
@@ -953,6 +968,36 @@ public class SalesOrderLine {
 		this.sentToOracleDate = sentToOracleDate;
 	}
 
+	public String getSystem_Status() {
+		return system_Status;
+	}
+
+
+	public void setSystem_Status(String system_Status) {
+		this.system_Status = system_Status;
+	}
+
+
+	public String getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
+
+	public String getProductionLine() {
+		return productionLine;
+	}
+
+
+	public void setProductionLine(String productionLine) {
+		this.productionLine = productionLine;
+	}
+
 
 	public OrderLine getVarOrderLine() {
 		return varOrderLine;
@@ -994,14 +1039,21 @@ public class SalesOrderLine {
 	}
 
 
-	public List<SalesOrderDetails> getVarSalesOrderDetails() {
-		return varSalesOrderDetails;
+	public List<SalesOrderDetails> getListSalesOrderDetails() {
+		return listSalesOrderDetails;
 	}
 
 
-	public void setVarSalesOrderDetails(List<SalesOrderDetails> varSalesOrderDetails) {
-		this.varSalesOrderDetails = varSalesOrderDetails;
+	public void setListSalesOrderDetails(
+			List<SalesOrderDetails> listSalesOrderDetails) {
+		this.listSalesOrderDetails = listSalesOrderDetails;
 	}
+
+
+	
+
+
+	
 
 
 

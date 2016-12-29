@@ -15,6 +15,8 @@ import javax.mail.Part;
 import javax.mail.internet.MimeBodyPart;
 
 
+import javax.mail.internet.MimeUtility;
+
 //import com.aspose.email.Attachment;
 //import com.aspose.email.AttachmentCollection;
 //import com.aspose.email.EmlLoadOptions;
@@ -121,7 +123,7 @@ public class AttachmentHandling {
 							.getBodyPart(partCount);
 					if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
 						// this part is attachment
-						String attachmentFileName = part.getFileName();
+						String attachmentFileName =  MimeUtility.decodeText( part.getFileName());
 						part.saveFile(dir + File.separatorChar
 								+ attachmentFileName);
 

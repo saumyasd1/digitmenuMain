@@ -40,45 +40,4 @@
 		<mapping class="com.avery.dao.AOC_OrderConfiguration" />
 
 	</session-factory>
-</hibernate-configuration><?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
-
-<hibernate-configuration>
-	<session-factory>
-		<property name="hibernate.show_sql">true</property>
-		<property name="hibernate.format_sql">true</property>
-		<property name="use_sql_comments">false</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
-
-		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://192.168.1.113:3306/backup_avery</property>
-		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">adeptia</property>
-
-		<!-- add classes to map from here -->
-		<mapping class="com.avery.dao.Address" />
-		<mapping class="com.avery.dao.OrderFileAttachment" />
-		<mapping class="com.avery.dao.OrderEmailQueue" />
-		<mapping class="com.avery.dao.OrderFileQueue" />
-		<mapping class="com.avery.dao.OrderLine" />
-		<mapping class="com.avery.dao.OrderLineDetails" />
-		<mapping class="com.avery.dao.Partner" />
-		<mapping class="com.avery.dao.Partner_RBOProductLine" />
-		<mapping class="com.avery.dao.RBO" />
-		<mapping class="com.avery.dao.SalesOrderDetails" />
-		<mapping class="com.avery.dao.SalesOrderLine" />
-		<mapping class="com.avery.dao.Site" />
-		<!-- <mapping class="com.avery.dao.StatusCode" /> -->
-		<mapping class="com.avery.dao.User" />
-		<!-- <mapping class="com.avery.dao.AuditTrail" /> -->
-		<mapping class="com.avery.dao.LocalItem" />
-		<mapping class="com.avery.dao.OrderSystemInfo" />
-		<mapping class="com.avery.dao.Org" />
-		<mapping class="com.avery.dao.OrgInfo" />
-		<mapping class="com.avery.dao.System" />
-
-	</session-factory>
 </hibernate-configuration>

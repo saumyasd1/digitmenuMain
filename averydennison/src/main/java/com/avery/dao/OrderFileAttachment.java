@@ -72,6 +72,19 @@ public class OrderFileAttachment {
 	List<OrderFileQueue> listOrderFileQueue = new ArrayList<OrderFileQueue>();
 	
 	public OrderFileAttachment() {}
+	
+	public OrderFileAttachment(int orderEmailQueueID, String fileName, String fileExtension, String filePath, String contentType){
+		//this.orderFileId = orderEmailQueueID;
+    	this.fileName = fileName;
+    	this.fileExtension = fileExtension;
+    	this.filePath = filePath;
+    	this.fileContentType = contentType;
+    	this.createdBy = "Adeptia";
+    	this.createdDate = new Date();
+    	this.lastModifiedBy = "Adeptia";
+    	this.lastModifiedDate = new Date();
+    	this.status = "Unidentified";
+    }
 
 	public int getId() {
 		return id;

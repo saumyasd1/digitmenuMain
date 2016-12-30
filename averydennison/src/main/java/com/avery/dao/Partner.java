@@ -285,13 +285,13 @@ public class Partner {
 		this.varProductLine = varProductLine;
 	}
 
-	public List<SalesOrderLine> getVarSalesOrderLine() {
+	/*public List<SalesOrderLine> getVarSalesOrderLine() {
 		return varSalesOrderLine;
 	}
 
 	public void setVarSalesOrderLine(List<SalesOrderLine> varSalesOrderLine) {
 		this.varSalesOrderLine = varSalesOrderLine;
-	}
+	}*/
 
 	
 	

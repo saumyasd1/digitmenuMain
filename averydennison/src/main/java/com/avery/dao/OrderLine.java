@@ -259,7 +259,7 @@ public class OrderLine {
 	@Column(name = "productLineType", length = 50)
 	String productLineType;
 	@Column(name="addditionalFileId",length=100)
-	String addditionalFileId;
+	String additionalFileId;
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="orderQueueId",nullable=false)
 	OrderFileQueue varOrderFileQueue;
@@ -1445,13 +1445,13 @@ public class OrderLine {
 		this.productLineType = productLineType;
 	}
 
-	public String getAddditionalFileId() {
-		return addditionalFileId;
+	public String getAdditionalFileId() {
+		return additionalFileId;
 	}
 
 
-	public void setAddditionalFileId(String addditionalFileId) {
-		this.addditionalFileId = addditionalFileId;
+	public void setAdditionalFileId(String additionalFileId) {
+		this.additionalFileId = additionalFileId;
 	}
 
 

@@ -78,9 +78,9 @@ public class Partner {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<Partner_RBOProductLine> varProductLine = new ArrayList<Partner_RBOProductLine>();
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	//@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
 	
 	
 	public Partner() {

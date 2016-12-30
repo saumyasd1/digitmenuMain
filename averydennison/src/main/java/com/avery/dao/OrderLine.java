@@ -266,9 +266,9 @@ public class OrderLine {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<OrderLineDetails> listOrderlineDetails=new ArrayList<OrderLineDetails>();
-	@LazyCollection(LazyCollectionOption.FALSE)
+/*	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<SalesOrderLine> listSalesOrderLine=new ArrayList<SalesOrderLine>();
+	List<SalesOrderLine> listSalesOrderLine=new ArrayList<SalesOrderLine>();*/
 	
 	
 	public OrderLine() {
@@ -1475,14 +1475,14 @@ public class OrderLine {
 	}
 
 
-	public List<SalesOrderLine> getListSalesOrderLine() {
+	/*public List<SalesOrderLine> getListSalesOrderLine() {
 		return listSalesOrderLine;
 	}
 
 
 	public void setListSalesOrderLine(List<SalesOrderLine> listSalesOrderLine) {
 		this.listSalesOrderLine = listSalesOrderLine;
-	}
+	}*/
 
 
 	

@@ -129,7 +129,7 @@ public class EmailFetch {
 			
 			DataConversionUtils dataConversionUtils = new DataConversionUtils();
 //			writing html file
-			dataConversionUtils.generateHTMLFile(dir, "CompleteEmail", objectContent); 
+			dataConversionUtils.generateHTMLFile(dir, "CompleteEmail", message); 
 			
 //			writing excel file
 			dataConversionUtils.generateExcelFile(dir, "CompleteEmail", dir, "CompleteEmail", "xls");

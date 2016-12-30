@@ -1,20 +1,30 @@
 package com.avery;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.regex.Pattern;
 
 import javax.mail.BodyPart;
+import javax.mail.Header;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
+import javax.mail.Part;
+
+import org.apache.commons.io.IOUtils;
 
 import com.aspose.cells.HTMLLoadOptions;
 import com.aspose.cells.LoadFormat;
@@ -25,6 +35,7 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.html.simpleparser.HTMLWorker;
 import com.lowagie.text.pdf.PdfWriter;
+import com.sun.mail.util.BASE64DecoderStream;
 
 public class DataConversionUtils {
 
@@ -105,12 +116,13 @@ public class DataConversionUtils {
 	 * @param fileName
 	 */
 	public void generateHTMLFile(String location, String fileName,
-			Object objectContent) {
+			Message message) {
 
 		// write the html file at specified location
 		FileWriter fileWriter = null;
 		String msgContent = "";
 		try {
+			Object objectContent = message.getContent();
 			if (objectContent instanceof Multipart) {
 				Multipart mp = (Multipart) objectContent;
 				for (int ii = 0; ii < mp.getCount(); ii++) {
@@ -124,13 +136,19 @@ public class DataConversionUtils {
 				}
 			}
 
-			File file = new File(location + File.separatorChar + fileName + ".html");
-			fileWriter = new FileWriter(file);
-			fileWriter.write(msgContent);
+			FileOutputStream fos = new FileOutputStream(location
+					+ File.separatorChar + fileName + ".html");
+			Writer out = new OutputStreamWriter(fos, "UTF-8");
+			out.write(msgContent);
+			out.close();
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
@@ -190,4 +208,72 @@ public class DataConversionUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	 private String getBodyMessage(Message msg, String bodyContentType,String systemencoding) throws Exception
+	  {
+	    Multipart mp = null;
+	    String encoding = null;
+	    Object content = msg.getContent();
+	    String type1 = msg.getContentType();
+	    if ((content instanceof Multipart)) {
+	      mp = (Multipart)msg.getContent(); } else {
+	      if ((content instanceof BASE64DecoderStream)) {
+	        BASE64DecoderStream base64DecoderStream = (BASE64DecoderStream)msg
+	          .getContent();
+	        StringWriter writer = new StringWriter();
+	        IOUtils.copy(base64DecoderStream, writer);
+	        String base64decodedString = writer.toString();
+	        return IOUtils.toString(new ByteArrayInputStream(base64decodedString.getBytes()));
+	      }
+	      return IOUtils.toString(new ByteArrayInputStream(((String)content).getBytes()));
+	    }
+
+	    String contentType = mp.getContentType();
+	    Part part = null;
+
+	    part = mp.getBodyPart(0);
+	    Enumeration e = part.getAllHeaders();
+	    while ((e != null) && (e.hasMoreElements())) {
+	      Header header = (Header)e.nextElement();
+	      if ((header.getName() == null) || 
+	        (header.getValue() == null))
+	        continue;
+	      if ((!header.getName().toLowerCase()
+	        .startsWith("content-type")) || 
+	        (!header.getValue().toLowerCase().startsWith(
+	        "multipart/alternative")))
+	        continue;
+	      Multipart mpp = (Multipart)part.getContent();
+	      Part part0 = null;
+	      if ((bodyContentType == null) || 
+	        (bodyContentType.equalsIgnoreCase("")))
+	        bodyContentType = "text/plain";
+	      if (bodyContentType.equalsIgnoreCase("text/plain"))
+	        part0 = mpp.getBodyPart(0);
+	      else if (bodyContentType.equalsIgnoreCase("text/html"))
+	        part0 = mpp.getBodyPart(1);
+	      else
+	        part0 = mpp.getBodyPart(0);
+	      String type = part0.getContentType();
+	      String charset = type.substring(type.lastIndexOf("=")+1, type.length());
+	      if(charset.equalsIgnoreCase(systemencoding))
+	    	  encoding = systemencoding;
+	      else
+	    	  encoding = charset;
+	      if ((type != null) && (
+	        (type.trim().toLowerCase().startsWith("text/html")) || 
+	        (type.trim().toLowerCase().startsWith("text/plain")))) {
+	    	return IOUtils.toString(part0.getInputStream(), encoding);
+//	        return part0.getInputStream();
+	      }
+
+	    }
+
+	    part = mp.getBodyPart(0);
+	    if (contentType == null) {
+	      throw new Exception("Content Type : Invalid Content Type\n");
+	    }
+	    return IOUtils.toString(part.getInputStream(), systemencoding);
+//	    return part.getInputStream();
+	  }
 }

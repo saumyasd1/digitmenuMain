@@ -136,6 +136,9 @@ public class DataConversionUtils {
 				}
 			}
 
+			if (msgContent.trim().equals("")) {
+				msgContent = getBodyMessage(message, "text/HTML", "UTF-8");
+			}
 			FileOutputStream fos = new FileOutputStream(location
 					+ File.separatorChar + fileName + ".html");
 			Writer out = new OutputStreamWriter(fos, "UTF-8");
@@ -187,7 +190,8 @@ public class DataConversionUtils {
 		HTMLLoadOptions options = new HTMLLoadOptions(LoadFormat.HTML);
 		Workbook book;
 		try {
-			book = new Workbook(htmlFileLocation + File.separatorChar + htmlFileName+".html", options); 
+			book = new Workbook(htmlFileLocation + File.separatorChar
+					+ htmlFileName + ".html", options);
 			// To check if the excel file should be .xls or .xlsx
 
 			int saveFormat = 0;
@@ -201,79 +205,90 @@ public class DataConversionUtils {
 				}
 			}
 			// save the excel file
-			book.save(excelFileLocation + File.separatorChar+excelFileName+"." + fileExtensionName,
-					saveFormat);
+			book.save(excelFileLocation + File.separatorChar + excelFileName
+					+ "." + fileExtensionName, saveFormat);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	 private String getBodyMessage(Message msg, String bodyContentType,String systemencoding) throws Exception
-	  {
-	    Multipart mp = null;
-	    String encoding = null;
-	    Object content = msg.getContent();
-	    String type1 = msg.getContentType();
-	    if ((content instanceof Multipart)) {
-	      mp = (Multipart)msg.getContent(); } else {
-	      if ((content instanceof BASE64DecoderStream)) {
-	        BASE64DecoderStream base64DecoderStream = (BASE64DecoderStream)msg
-	          .getContent();
-	        StringWriter writer = new StringWriter();
-	        IOUtils.copy(base64DecoderStream, writer);
-	        String base64decodedString = writer.toString();
-	        return IOUtils.toString(new ByteArrayInputStream(base64decodedString.getBytes()));
-	      }
-	      return IOUtils.toString(new ByteArrayInputStream(((String)content).getBytes()));
-	    }
 
-	    String contentType = mp.getContentType();
-	    Part part = null;
+	/**
+	 * Method to get body message as html
+	 * 
+	 * @param msg
+	 * @param bodyContentType
+	 * @param systemencoding
+	 * @return
+	 * @throws Exception
+	 */
+	private String getBodyMessage(Message msg, String bodyContentType,
+			String systemencoding) throws Exception {
+		Multipart mp = null;
+		String encoding = null;
+		Object content = msg.getContent();
+		String type1 = msg.getContentType();
+		if ((content instanceof Multipart)) {
+			mp = (Multipart) msg.getContent();
+		} else {
+			if ((content instanceof BASE64DecoderStream)) {
+				BASE64DecoderStream base64DecoderStream = (BASE64DecoderStream) msg
+						.getContent();
+				StringWriter writer = new StringWriter();
+				IOUtils.copy(base64DecoderStream, writer);
+				String base64decodedString = writer.toString();
+				return IOUtils.toString(new ByteArrayInputStream(
+						base64decodedString.getBytes()));
+			}
+			return IOUtils.toString(new ByteArrayInputStream(((String) content)
+					.getBytes()));
+		}
 
-	    part = mp.getBodyPart(0);
-	    Enumeration e = part.getAllHeaders();
-	    while ((e != null) && (e.hasMoreElements())) {
-	      Header header = (Header)e.nextElement();
-	      if ((header.getName() == null) || 
-	        (header.getValue() == null))
-	        continue;
-	      if ((!header.getName().toLowerCase()
-	        .startsWith("content-type")) || 
-	        (!header.getValue().toLowerCase().startsWith(
-	        "multipart/alternative")))
-	        continue;
-	      Multipart mpp = (Multipart)part.getContent();
-	      Part part0 = null;
-	      if ((bodyContentType == null) || 
-	        (bodyContentType.equalsIgnoreCase("")))
-	        bodyContentType = "text/plain";
-	      if (bodyContentType.equalsIgnoreCase("text/plain"))
-	        part0 = mpp.getBodyPart(0);
-	      else if (bodyContentType.equalsIgnoreCase("text/html"))
-	        part0 = mpp.getBodyPart(1);
-	      else
-	        part0 = mpp.getBodyPart(0);
-	      String type = part0.getContentType();
-	      String charset = type.substring(type.lastIndexOf("=")+1, type.length());
-	      if(charset.equalsIgnoreCase(systemencoding))
-	    	  encoding = systemencoding;
-	      else
-	    	  encoding = charset;
-	      if ((type != null) && (
-	        (type.trim().toLowerCase().startsWith("text/html")) || 
-	        (type.trim().toLowerCase().startsWith("text/plain")))) {
-	    	return IOUtils.toString(part0.getInputStream(), encoding);
-//	        return part0.getInputStream();
-	      }
+		String contentType = mp.getContentType();
+		Part part = null;
 
-	    }
+		part = mp.getBodyPart(0);
+		Enumeration e = part.getAllHeaders();
+		while ((e != null) && (e.hasMoreElements())) {
+			Header header = (Header) e.nextElement();
+			if ((header.getName() == null) || (header.getValue() == null))
+				continue;
+			if ((!header.getName().toLowerCase().startsWith("content-type"))
+					|| (!header.getValue().toLowerCase()
+							.startsWith("multipart/alternative")))
+				continue;
+			Multipart mpp = (Multipart) part.getContent();
+			Part part0 = null;
+			if ((bodyContentType == null)
+					|| (bodyContentType.equalsIgnoreCase("")))
+				bodyContentType = "text/plain";
+			if (bodyContentType.equalsIgnoreCase("text/plain"))
+				part0 = mpp.getBodyPart(0);
+			else if (bodyContentType.equalsIgnoreCase("text/html"))
+				part0 = mpp.getBodyPart(1);
+			else
+				part0 = mpp.getBodyPart(0);
+			String type = part0.getContentType();
+			String charset = type.substring(type.lastIndexOf("=") + 1,
+					type.length());
+			if (charset.equalsIgnoreCase(systemencoding))
+				encoding = systemencoding;
+			else
+				encoding = charset;
+			if ((type != null)
+					&& ((type.trim().toLowerCase().startsWith("text/html")) || (type
+							.trim().toLowerCase().startsWith("text/plain")))) {
+				return IOUtils.toString(part0.getInputStream(), encoding);
+				// return part0.getInputStream();
+			}
 
-	    part = mp.getBodyPart(0);
-	    if (contentType == null) {
-	      throw new Exception("Content Type : Invalid Content Type\n");
-	    }
-	    return IOUtils.toString(part.getInputStream(), systemencoding);
-//	    return part.getInputStream();
-	  }
+		}
+
+		part = mp.getBodyPart(0);
+		if (contentType == null) {
+			throw new Exception("Content Type : Invalid Content Type\n");
+		}
+		return IOUtils.toString(part.getInputStream(), systemencoding);
+		// return part.getInputStream();
+	}
 }

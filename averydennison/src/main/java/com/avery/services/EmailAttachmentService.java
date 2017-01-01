@@ -6,7 +6,7 @@ import javax.mail.internet.MimeBodyPart;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import com.avery.dao.OrderEmailAttachment;
+//import com.avery.dao.OrderEmailAttachment;
 import com.avery.dao.OrderEmailQueue;
 import com.avery.dao.OrderFileAttachment;
 import com.avery.utils.HibernateUtil;

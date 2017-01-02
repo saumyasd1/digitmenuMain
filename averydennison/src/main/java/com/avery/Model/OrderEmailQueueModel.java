@@ -109,7 +109,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	         Iterator<Partner> iterator = list.iterator(); 
 	         while (iterator.hasNext()){
 	        	 Partner partner =  iterator.next(); 
-			     partnerId = partner.getId();
+			     partnerId = partner.getID();
 			  }
 	        
 	         if(partnerId == 0){
@@ -127,7 +127,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	     	         Iterator<Partner> piterator = plist.iterator(); 
 	     	         while (piterator.hasNext()){
 	     	        	 Partner partnerid =  piterator.next(); 
-	     			     partnerId = partnerid.getId(); 
+	     			     partnerId = partnerid.getID(); 
 	     			  }
 	         }
 	        // System.out.println("partner idwewew " + partnerId);

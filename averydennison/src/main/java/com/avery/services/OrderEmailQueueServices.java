@@ -114,8 +114,9 @@ public class OrderEmailQueueServices {
 					String file_ext = email_att.getFileExtension();
 					String file_path = email_att.getFilePath();
 					//System.out.println("file_name id11 " + file_name);
-						if(file_name.contains("MailBody.pdf")){
+						if(file_name.contains("CompleteEmail.pdf")){
 							/////read mailbody
+							
 							productline_id = this.readEmailBody(id, file_path, file_name, partnerId);
 						}else{
 							/////read attachments
@@ -235,6 +236,11 @@ public class OrderEmailQueueServices {
 			}
 			
 			orderEmailQueue.updateOrderEmail(id,"identified multiple matches",rbo_string,pline_string,"","");
+			Set<Integer> uniqe_p_ids = new LinkedHashSet<Integer>(schema_id);
+			for (Integer p_id : uniqe_p_ids) {
+				orderEmailQueue.updateAllAttachment(id, productline_id, "identified multiple matches");
+				
+			}
 			return productline_id;
 		}
 			
@@ -322,6 +328,12 @@ public class OrderEmailQueueServices {
 			}
 			
 			orderEmailQueue.updateOrderEmail(id,"identified multiple matches in body",rbo_string,pline_string,"","");
+			Set<Integer> uniqe_p_ids = new LinkedHashSet<Integer>(schema_id);
+			for (Integer p_id : uniqe_p_ids) {
+				orderEmailQueue.updateAllAttachment(id, productline_id, "identified multiple matches in body");
+				
+			}
+			
 			return productline_id;
 		}
 		//orderEmailQueue.updateAllAttachment(id, 0, "", "body");
@@ -489,6 +501,11 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 					}
 					
 					orderEmailQueue.updateOrderEmail(id,"identified multiple matchesfrom attachment",rbo_string,pline_string,"","");
+					Set<Integer> uniqe_p_ids = new LinkedHashSet<Integer>(schema_id);
+					for (Integer p_id : uniqe_p_ids) {
+						orderEmailQueue.updateAllAttachment(id, productline_id, "identified multiple matchesfrom attachment");
+						
+					}
 					return productline_id;
 				}
 				
@@ -693,8 +710,7 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 			e.printStackTrace();
 			String error=e.toString();
 			orderEmailQueue.updateError("service hibernate error",error);
-			//System.out.println("searchpdf class error11");
-			// log.error(e);
+			
 		}
 		return result;
 	}

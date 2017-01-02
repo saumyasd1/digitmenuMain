@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -14,11 +15,12 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 //import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
+//import com.aspose.email.system.exceptions.IOException;
 
 
 
 public class SearchCell {
-	static Logger log = Logger.getLogger(OrderEmailQueueModel.class.getName());
+	//static Logger log = Logger.getLogger(OrderEmailQueueModel.class.getName());
 	public String SearchXL(String path, String keyword, String filetype, String Sheetname, String filename) {
 		String content = keyword.trim();
 		path = path.trim();
@@ -110,12 +112,14 @@ public class SearchCell {
 			}
 		}
 		
-		}catch(NullPointerException e)
+		}catch(NullPointerException en)
         {
-            System.out.print("NullPointerException caught sheet  not found");
+			en.printStackTrace();
+           // System.out.print("NullPointerException caught sheet  not found");
         }catch (Exception e) {
-			System.out.println("Search Cell 2");
-			log.error(e);
+        	e.printStackTrace();
+			//System.out.println("Search Cell 2");
+			//log.error(e);
 		}
 		return address;
 	}
@@ -152,10 +156,12 @@ public class SearchCell {
 		}
 		} catch(NullPointerException e)
         {
-            System.out.print("NullPointerException caught sheet  not found");
+			e.printStackTrace();
+            //System.out.print("NullPointerException caught sheet  not found");
         }catch (Exception e) {
-			System.out.println("Search Cell 3");
-			log.error(e);
+        	e.printStackTrace();
+			//System.out.println("Search Cell 3");
+			//log.error(e);
 		}
 		return address;
 	}
@@ -182,6 +188,7 @@ public class SearchCell {
 
 			}*/
 		} catch (Exception e) {
+			e.printStackTrace();
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 			//log.error("sheet check."+e.getMessage(),e);

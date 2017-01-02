@@ -258,7 +258,7 @@ public class OrderLine {
 	String lastModifiedByName;
 	@Column(name = "productLineType", length = 50)
 	String productLineType;
-	@Column(name="addditionalFileId",length=100)
+	@Column(name="additionalFileId",length=100)
 	String additionalFileId;
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="orderQueueId",nullable=false)

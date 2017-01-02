@@ -270,6 +270,16 @@ public class OrderLine {
 	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<SalesOrderLine> listSalesOrderLine=new ArrayList<SalesOrderLine>();*/
 	
+	@Column(name = "averyMOQ", length = 50)
+	String averyMOQ;
+	@Column(name = "averyRoundupQty", length = 50)
+	String averyRoundupQty;
+	@Column(name = "averyATO", length = 50)
+	String averyATO;
+	@Column(name = "averyRegion", length = 50)
+	String averyRegion;
+	@Column(name = "averyProductLineType", length = 50)
+	String averyProductLineType;
 	
 	public OrderLine() {
 	}
@@ -1472,6 +1482,56 @@ public class OrderLine {
 
 	public void setListOrderlineDetails(List<OrderLineDetails> listOrderlineDetails) {
 		this.listOrderlineDetails = listOrderlineDetails;
+	}
+
+
+	public String getAveryMOQ() {
+		return averyMOQ;
+	}
+
+
+	public void setAveryMOQ(String averyMOQ) {
+		this.averyMOQ = averyMOQ;
+	}
+
+
+	public String getAveryRoundupQty() {
+		return averyRoundupQty;
+	}
+
+
+	public void setAveryRoundupQty(String averyRoundupQty) {
+		this.averyRoundupQty = averyRoundupQty;
+	}
+
+
+	public String getAveryATO() {
+		return averyATO;
+	}
+
+
+	public void setAveryATO(String averyATO) {
+		this.averyATO = averyATO;
+	}
+
+
+	public String getAveryRegion() {
+		return averyRegion;
+	}
+
+
+	public void setAveryRegion(String averyRegion) {
+		this.averyRegion = averyRegion;
+	}
+
+
+	public String getAveryProductLineType() {
+		return averyProductLineType;
+	}
+
+
+	public void setAveryProductLineType(String averyProductLineType) {
+		this.averyProductLineType = averyProductLineType;
 	}
 
 

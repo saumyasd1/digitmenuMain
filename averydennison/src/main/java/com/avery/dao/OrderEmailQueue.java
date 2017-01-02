@@ -65,7 +65,14 @@ public class OrderEmailQueue {
 	@OneToMany(mappedBy = "varOrderEmailQueue", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	List<OrderFileAttachment> varOrderFileAttachment = new ArrayList<OrderFileAttachment>();
 
-	
+	@Column(name = "emailSubjectProductLineMatch", length = 100)
+	String emailSubjectProductLineMatch;
+	@Column(name = "emailSubjectRBOMatch", length = 100)
+	String emailSubjectRBOMatch;
+	@Column(name = "emailBodyProductLineMatch", length = 100)
+	String emailBodyProductLineMatch;
+	@Column(name = "emailBodyRBOMatch", length = 100)
+	String emailBodyRBOMatch;
 	
 	public OrderEmailQueue() {
 	}
@@ -254,6 +261,38 @@ public class OrderEmailQueue {
 	public void setVarOrderFileAttachment(
 			List<OrderFileAttachment> varOrderFileAttachment) {
 		this.varOrderFileAttachment = varOrderFileAttachment;
+	}
+
+	public String getEmailSubjectProductLineMatch() {
+		return emailSubjectProductLineMatch;
+	}
+
+	public void setEmailSubjectProductLineMatch(String emailSubjectProductLineMatch) {
+		this.emailSubjectProductLineMatch = emailSubjectProductLineMatch;
+	}
+
+	public String getEmailSubjectRBOMatch() {
+		return emailSubjectRBOMatch;
+	}
+
+	public void setEmailSubjectRBOMatch(String emailSubjectRBOMatch) {
+		this.emailSubjectRBOMatch = emailSubjectRBOMatch;
+	}
+
+	public String getEmailBodyProductLineMatch() {
+		return emailBodyProductLineMatch;
+	}
+
+	public void setEmailBodyProductLineMatch(String emailBodyProductLineMatch) {
+		this.emailBodyProductLineMatch = emailBodyProductLineMatch;
+	}
+
+	public String getEmailBodyRBOMatch() {
+		return emailBodyRBOMatch;
+	}
+
+	public void setEmailBodyRBOMatch(String emailBodyRBOMatch) {
+		this.emailBodyRBOMatch = emailBodyRBOMatch;
 	}
 
 	

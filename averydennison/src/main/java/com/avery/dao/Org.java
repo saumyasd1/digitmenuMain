@@ -42,6 +42,10 @@ public class Org {
 	@OneToMany(mappedBy = "varOrg", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<AOC_OrderConfiguration> listAOC_OrderConfiguration = new ArrayList<AOC_OrderConfiguration>();
 	
+	@Column(name = "systemId",length=20, nullable=false)
+	int systemId;
+	
+	
 	public Org() {}
 
 
@@ -123,6 +127,16 @@ public class Org {
 	public void setListAOC_OrderConfiguration(
 			List<AOC_OrderConfiguration> listAOC_OrderConfiguration) {
 		this.listAOC_OrderConfiguration = listAOC_OrderConfiguration;
+	}
+
+
+	public int getSystemId() {
+		return systemId;
+	}
+
+
+	public void setSystemId(int systemId) {
+		this.systemId = systemId;
 	}
 
 

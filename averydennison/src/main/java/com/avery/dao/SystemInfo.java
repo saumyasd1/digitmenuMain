@@ -45,6 +45,8 @@ public class SystemInfo {
 	@OneToMany(mappedBy = "varSystem", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<AOC_OrderConfiguration> listAOC_OrderConfiguration = new ArrayList<AOC_OrderConfiguration>();
 	
+	@Column(name = "siteId",length=20,nullable=false)
+	int siteId;
 	
 
 
@@ -148,6 +150,20 @@ public class SystemInfo {
 	public void setListAOC_OrderConfiguration(
 			List<AOC_OrderConfiguration> listAOC_OrderConfiguration) {
 		this.listAOC_OrderConfiguration = listAOC_OrderConfiguration;
+	}
+
+
+
+
+	public int getSiteId() {
+		return siteId;
+	}
+
+
+
+
+	public void setSiteId(int siteId) {
+		this.siteId = siteId;
 	}
 
 	

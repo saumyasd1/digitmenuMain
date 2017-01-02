@@ -1,11 +1,15 @@
 package com.avery;
 
-import com.avery.services.OrderEmailService;
+import com.avery.config.ConfigService;
+import com.avery.services.OrderEmailQueueServices;
 
- class OrderEmailManager {
+class OrderEmailManager {
 	public static void main(String[] args) {
-		
-		OrderEmailService orderEmailService = new OrderEmailService();
-//		orderEmailService.OrderEmailSourceservice(1);
+		/*OrderEmailQueueServices orderEmailService = new OrderEmailQueueServices();
+		String configFilePath = "D:\\hibernate.cfg.xml";
+		ConfigService configService = new ConfigService();
+		configService.setConfigFilePath(configFilePath);
+		String directoryLocation = "C:\\AveryDennisonFiles\\";
+		orderEmailService.OrderEmailSourceservice(directoryLocation, 9);*/ 
 	}
 }

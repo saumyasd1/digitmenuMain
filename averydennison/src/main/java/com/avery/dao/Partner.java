@@ -81,7 +81,8 @@ public class Partner {
 	//@LazyCollection(LazyCollectionOption.FALSE)
 	//@OneToMany(mappedBy = "varPartner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	//List<SalesOrderLine> varSalesOrderLine = new ArrayList<SalesOrderLine>();
-	
+	@Column(name="partnerName",length=250)
+	String partnerName;
 	
 	public Partner() {
 
@@ -283,6 +284,14 @@ public class Partner {
 
 	public void setVarProductLine(List<Partner_RBOProductLine> varProductLine) {
 		this.varProductLine = varProductLine;
+	}
+
+	public String getPartnerName() {
+		return partnerName;
+	}
+
+	public void setPartnerName(String partnerName) {
+		this.partnerName = partnerName;
 	}
 
 	/*public List<SalesOrderLine> getVarSalesOrderLine() {

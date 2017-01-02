@@ -78,12 +78,12 @@ public class OrderFileAttachment {
     	this.fileName = fileName;
     	this.fileExtension = fileExtension;
     	this.filePath = filePath;
-    	this.fileContentType = contentType;
+//    	this.fileContentType = contentType;
     	this.createdBy = "Adeptia";
     	this.createdDate = new Date();
     	this.lastModifiedBy = "Adeptia";
     	this.lastModifiedDate = new Date();
-    	this.status = "Unidentified";
+    	this.status = "6";
     }
 
 	public int getId() {

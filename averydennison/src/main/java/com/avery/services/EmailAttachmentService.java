@@ -1,10 +1,15 @@
 package com.avery.services;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeUtility;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
+
 
 //import com.avery.dao.OrderEmailAttachment;
 import com.avery.dao.OrderEmailQueue;
@@ -20,9 +25,12 @@ public class EmailAttachmentService {
 		String contentType = "";
 		String fileName = "";
 		try {
-			contentType = part.getContentType();
-			fileName = part.getFileName(); 
+			contentType = part.getContentType(); 
+			fileName = MimeUtility.decodeText(part.getFileName()); 
 		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) { 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

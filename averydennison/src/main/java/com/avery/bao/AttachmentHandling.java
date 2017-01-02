@@ -128,7 +128,7 @@ public class AttachmentHandling {
 								+ attachmentFileName);
 
 						emailAttachmentService.insertIntoEmailAttachment(part,
-								filePath, emailqueueid);
+								dir, emailqueueid); 
 					}
 				}
 			}

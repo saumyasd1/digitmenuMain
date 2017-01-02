@@ -90,7 +90,7 @@ public class OrderEmailQueue {
 		this.lastModifiedBy = "Adeptia";
 		this.lastModifiedDate = new Date();
 		this.orderSource = "Email";
-		this.status = "Mail Received";
+		this.status = "1";
 	}
 	
 	public int getId() {

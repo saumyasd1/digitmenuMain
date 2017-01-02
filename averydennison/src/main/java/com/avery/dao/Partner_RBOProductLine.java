@@ -233,7 +233,7 @@ public class Partner_RBOProductLine {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "partnerId")
 	Partner varPartner;
-	@OneToOne(mappedBy = "varProductLine", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "varProductLine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	OrderFileQueue listOrderFileQueue;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varProductLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)

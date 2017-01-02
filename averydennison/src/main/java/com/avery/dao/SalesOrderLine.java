@@ -182,16 +182,16 @@ public class SalesOrderLine {
 	String status;
 	@Column(name="productionLine",length=50)
 	String productionLine;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderLineId")
 	OrderLine varOrderLine;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderQueueId")
 	OrderFileQueue varOrderFileQueue;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "partnerId")
 	Partner varPartner;
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "rboId")
 	RBO varRbo;
 	@LazyCollection(LazyCollectionOption.FALSE)

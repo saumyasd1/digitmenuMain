@@ -62,7 +62,7 @@ public class OrderEmailQueue {
 	String comment;
 	@Column(name = "orderSource", length = 50)
 	String orderSource;
-	@OneToMany(mappedBy = "varOrderEmailQueue", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "varOrderEmailQueue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<OrderFileAttachment> varOrderFileAttachment = new ArrayList<OrderFileAttachment>();
 
 	@Column(name = "emailSubjectProductLineMatch", length = 100)

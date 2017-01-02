@@ -111,7 +111,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	        	 Partner partner =  iterator.next(); 
 			     partnerId = partner.getID();
 			  }
-	        
+	         
 	         if(partnerId == 0){
 	        	// System.out.println("partner id111111 " + partnerId);
 	        	 Criteria cr1 = session.createCriteria(Partner.class)

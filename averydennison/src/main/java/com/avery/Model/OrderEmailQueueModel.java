@@ -97,7 +97,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		 
 		Criteria cr = session.createCriteria(Partner.class)
     		    .setProjection(Projections.projectionList()
-    		      .add(Projections.property("id"), "id")
+    		      .add(Projections.property("ID"), "ID")
     		      .add(Projections.property("partnerName"), "partnerName"))
     		    .setResultTransformer(Transformers.aliasToBean(Partner.class));
 			cr.add(Restrictions.eq("active", true));
@@ -116,7 +116,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	        	// System.out.println("partner id111111 " + partnerId);
 	        	 Criteria cr1 = session.createCriteria(Partner.class)
 	         		    .setProjection(Projections.projectionList()
-	         		    .add(Projections.property("id"), "id")
+	         		    .add(Projections.property("ID"), "ID")
 	         		    .add(Projections.property("partnerName"), "partnerName"))
 	         		    .setResultTransformer(Transformers.aliasToBean(Partner.class));
 	     			cr1.add(Restrictions.eq("active", true));

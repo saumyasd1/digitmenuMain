@@ -1,7 +1,6 @@
 package com.avery.dao;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -12,13 +11,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -65,15 +61,15 @@ public class OrderFileQueue {
 	//@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderFileQueue",fetch=FetchType.LAZY)
 	List<OrderLine> varOrderLine=new ArrayList<OrderLine>();
-	@LazyCollection(LazyCollectionOption.FALSE)
+//	@LazyCollection(LazyCollectionOption.FALSE)
 //	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 //	List<SalesOrderLine> varSalesOrderLine=new ArrayList<SalesOrderLine>();
 //	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<AuditTrail> varAuditTrail=new ArrayList<AuditTrail>();
+//	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+//	List<SalesOrderDetails> varSalesOrderDetails=new ArrayList<SalesOrderDetails>();
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+//	List<AuditTrail> varAuditTrail=new ArrayList<AuditTrail>();
 	
 	public OrderFileQueue() {}
 
@@ -213,7 +209,7 @@ public class OrderFileQueue {
 		this.varSalesOrderLine = varSalesOrderLine;
 	}*/
 
-	public List<SalesOrderDetails> getVarSalesOrderDetails() {
+	/*public List<SalesOrderDetails> getVarSalesOrderDetails() {
 		return varSalesOrderDetails;
 	}
 
@@ -227,7 +223,7 @@ public class OrderFileQueue {
 
 	public void setVarAuditTrail(List<AuditTrail> varAuditTrail) {
 		this.varAuditTrail = varAuditTrail;
-	}
+	}*/
 
 	
 	

@@ -258,14 +258,14 @@ public class OrderLine {
 	String lastModifiedByName;
 	@Column(name = "productLineType", length = 50)
 	String productLineType;
-	@Column(name="additionalFileId",length=100)
+	@Column(name="addditionalFileId",length=100)
 	String additionalFileId;
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="orderQueueId",nullable=false)
 	OrderFileQueue varOrderFileQueue;
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<OrderLineDetails> listOrderlineDetails=new ArrayList<OrderLineDetails>();
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+//	List<OrderLineDetails> listOrderlineDetails=new ArrayList<OrderLineDetails>();
 /*	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varOrderLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<SalesOrderLine> listSalesOrderLine=new ArrayList<SalesOrderLine>();*/
@@ -1475,14 +1475,14 @@ public class OrderLine {
 	}
 
 
-	public List<OrderLineDetails> getListOrderlineDetails() {
+	/*public List<OrderLineDetails> getListOrderlineDetails() {
 		return listOrderlineDetails;
 	}
 
 
 	public void setListOrderlineDetails(List<OrderLineDetails> listOrderlineDetails) {
 		this.listOrderlineDetails = listOrderlineDetails;
-	}
+	}*/
 
 
 	public String getAveryMOQ() {

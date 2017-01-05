@@ -35,6 +35,10 @@ public class StatusCode {
 	Date lastModifiedDate;
 	@Column(name = "comment",length=250)
 	String comment;
+	@Column(name = "iconName",length=100)
+	String iconName;
+	@Column(name = "colorCode",length=100)
+	String colorCode;
 	
 	
   
@@ -134,6 +138,26 @@ public class StatusCode {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+
+	public String getIconName() {
+		return iconName;
+	}
+
+
+	public void setIconName(String iconName) {
+		this.iconName = iconName;
+	}
+
+
+	public String getColorCode() {
+		return colorCode;
+	}
+
+
+	public void setColorCode(String colorCode) {
+		this.colorCode = colorCode;
 	}
 	
 	

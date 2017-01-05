@@ -281,6 +281,9 @@ public class OrderLine {
 	@Column(name = "averyProductLineType", length = 50)
 	String averyProductLineType;
 	
+	@Column(name = "averySample", length = 50)
+	String averySample;
+	
 	public OrderLine() {
 	}
 
@@ -1532,6 +1535,16 @@ public class OrderLine {
 
 	public void setAveryProductLineType(String averyProductLineType) {
 		this.averyProductLineType = averyProductLineType;
+	}
+
+
+	public String getAverySample() {
+		return averySample;
+	}
+
+
+	public void setAverySample(String averySample) {
+		this.averySample = averySample;
 	}
 
 

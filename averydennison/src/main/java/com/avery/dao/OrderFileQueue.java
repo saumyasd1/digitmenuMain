@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+
 @Entity
 @Table(name = "orderfilequeue")
 public class OrderFileQueue {
@@ -70,6 +71,16 @@ public class OrderFileQueue {
 //	@LazyCollection(LazyCollectionOption.FALSE)
 //	@OneToMany(mappedBy="varOrderFileQueue",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 //	List<AuditTrail> varAuditTrail=new ArrayList<AuditTrail>();
+	
+	@Column(name="error",length=1000)
+	String error;
+	
+	@Column(name="feedbackAcknowledgementDate")
+	Date feedbackAcknowledgementDate;
+	
+	@Column(name="acknowledgementDate")
+	Date acknowledgementDate;
+	
 	
 	public OrderFileQueue() {}
 
@@ -199,6 +210,30 @@ public class OrderFileQueue {
 
 	public void setVarOrderLine(List<OrderLine> varOrderLine) {
 		this.varOrderLine = varOrderLine;
+	}
+
+	public Date getFeedbackAcknowledgementDate() {
+		return feedbackAcknowledgementDate;
+	}
+
+	public void setFeedbackAcknowledgementDate(Date feedbackAcknowledgementDate) {
+		this.feedbackAcknowledgementDate = feedbackAcknowledgementDate;
+	}
+
+	public Date getAcknowledgementDate() {
+		return acknowledgementDate;
+	}
+
+	public void setAcknowledgementDate(Date acknowledgementDate) {
+		this.acknowledgementDate = acknowledgementDate;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 
 	/*public List<SalesOrderLine> getVarSalesOrderLine() {

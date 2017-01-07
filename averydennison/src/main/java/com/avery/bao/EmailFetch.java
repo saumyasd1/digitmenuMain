@@ -201,7 +201,7 @@ public class EmailFetch {
 		session.beginTransaction();
 		OrderEmailQueue orderEmailQueue=(OrderEmailQueue)session.get(OrderEmailQueue.class, emailqueueid);
 		//System.out.println("Content Type : "+contentType);
-		OrderFileAttachment orderFileAttachment = new OrderFileAttachment(emailqueueid, "CompleteEmail", ".pdf", dir, "PDF"); 
+		OrderFileAttachment orderFileAttachment = new OrderFileAttachment(emailqueueid, "CompleteEmail.pdf", ".pdf", dir, "PDF"); 
 		orderFileAttachment.setVarOrderEmailQueue(orderEmailQueue);
 		session.persist(orderFileAttachment);
 		session.getTransaction().commit();

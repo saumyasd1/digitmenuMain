@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
-
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -22,10 +20,8 @@ import org.hibernate.transform.Transformers;
 import com.avery.dao.ErrorLog;
 import com.avery.dao.OrderEmailQueue;
 import com.avery.dao.OrderFileAttachment;
-import com.avery.dao.OrderFileQueue;
 import com.avery.dao.Partner;
 import com.avery.dao.Partner_RBOProductLine;
-import com.avery.dao.RBO;
 import com.avery.utils.HibernateUtil;
 //import com.mysql.jdbc.Blob;
 
@@ -66,10 +62,8 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		         emailinfo.put("source", Source_email);
 		         emailinfo.put("subject", Source_email_subject);
 		         emailinfo.put("body", Source_email_body);
-	        // if(session.isOpen()){
 		         session.getTransaction().commit();
 		         session.close();
-	       //  }
 	 	 	
 		}catch(HibernateException  ex){
 			ex.printStackTrace();
@@ -113,7 +107,6 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			  }
 	          
 	         if(partnerId == 0){
-	        	// System.out.println("partner id111111 " + partnerId);
 	        	 Criteria cr1 = session.createCriteria(Partner.class)
 	         		    .setProjection(Projections.projectionList()
 	         		    .add(Projections.property("ID"), "ID")
@@ -130,7 +123,6 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	     			     partnerId = partnerid.getID(); 
 	     			  }
 	         }
-	        // System.out.println("partner idwewew " + partnerId);
 	         session.getTransaction().commit();
 	         session.close();
 	 	
@@ -149,8 +141,56 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		return partnerId;
 	      
 	}
-	
-	public ArrayList<Object> getPartnerRbo_productlines(int partnerId ){
+	public ArrayList<Object> getPartnerRbo_productlines(String email ){
+		 ArrayList<Object> rboproduclines= new ArrayList();
+		
+			String emailId = "";
+			String domain = "";
+		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		try{
+			if (email.contains("@")) {
+				String[] p_email = email.split("@");
+				emailId = p_email[0];
+				domain = p_email[1];
+				
+			}
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			Criteria cr = session.createCriteria(Partner_RBOProductLine.class);
+	    		  
+			cr.add(Restrictions.eq("active", true));
+			cr.add(Restrictions.like("email","%"+domain+"%"));
+			List<Partner_RBOProductLine> list = cr.list();
+    		rboproduclines=(ArrayList<Object>) cr.list();
+    		
+    		if(rboproduclines.size()==0){
+    			Criteria cr1 = session.createCriteria(Partner_RBOProductLine.class);
+	    		  
+   			cr1.add(Restrictions.eq("active", true));
+   			cr1.add(Restrictions.like("email",emailId+"%"));
+   			List<Partner_RBOProductLine> p_list = cr1.list();
+        		rboproduclines=(ArrayList<Object>) cr1.list();
+    		}
+	     		
+	     		session.getTransaction().commit();
+		        session.close();
+			}catch(HibernateException  ex){
+				ex.printStackTrace();
+				String error=ex.toString();
+				this.updateError("service hibernate error9",error);
+				//log.error(ex);
+			}catch(Exception  e){
+				e.printStackTrace();
+				String error=e.toString();
+				this.updateError("service hibernate error00",error);
+				//log.error(e);
+			}
+		//log.info("Exit method getPartnerRbo  class OrderEmailQueueModel");
+		return rboproduclines;
+	 	
+	}
+	/*public ArrayList<Object> getPartnerRbo_productlines(int partnerId ){
 		 ArrayList<Object> rboproduclines= new ArrayList();
 		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
 		try{
@@ -170,7 +210,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	    		      .add(Projections.property("attachmentProductlineMatch"), "attachmentProductlineMatch")
 	    		      .add(Projections.property("emailSubjectRBOMatchRequired"), "emailSubjectRBOMatchRequired")
 	    		      .add(Projections.property("emailSubjectRBOMatchLocation"), "emailSubjectRBOMatchLocation")
-	    		      .add(Projections.property("emailSubjectRBOMatch"), "emailSubjectRBOMatch"))*/
+	    		      .add(Projections.property("emailSubjectRBOMatch"), "emailSubjectRBOMatch"))* /
 	    		   // .setResultTransformer(Transformers.aliasToBean(Partner_RBOProductLine.class));
 				cr.add(Restrictions.eq("active", true));
 				cr.add(Restrictions.eq("varPartner.id", partnerId));
@@ -193,7 +233,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		//log.info("Exit method getPartnerRbo  class OrderEmailQueueModel");
 		return rboproduclines;
 	 	
-	}
+	}*/
 	public ArrayList<Object> getPartner_productline(int productlineId ){
 		 ArrayList<Object> rboproduclines= new ArrayList<Object>();
 		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
@@ -226,10 +266,12 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	     		session.getTransaction().commit();
 		        session.close();
 			}catch(HibernateException  ex){
+				ex.printStackTrace();
 				String error=ex.toString();
 				this.updateError("service hibernate error01",error);
 				//log.error(ex);
 			}catch(Exception  e){
+				e.printStackTrace();
 				String error=e.toString();
 				this.updateError("service hibernate error02",error);
 				//log.error(e);
@@ -269,6 +311,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			String error=ex.toString();
 			this.updateError("service hibernate error03",error);
 				//log.error(ex);
+				ex.printStackTrace();
 			}catch(Exception  e){
 				e.printStackTrace();
 				String error=e.toString();
@@ -277,7 +320,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			}
 		return EmailAttachments;
 	}
-	public int updateOrderEmail(int orderEmailId, String orderEmailStatus, String subject_rboMatch, String subject_productlineMatch, String body_rboMatch, String body_productlineMatch ){
+	public int updateOrderEmail(int orderEmailId, String orderEmailStatus, String subject_rboMatch, String subject_productlineMatch, String body_rboMatch, String body_productlineMatch, String comment ){
 		
 		int result = 0;
 		try{
@@ -302,6 +345,9 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			if(subject_rboMatch.length()!=0){
 				orderEmail.setEmailSubjectRBOMatch(subject_rboMatch);
 			}
+			if(comment.length()!=0){
+				orderEmail.setComment(comment);
+			}
 			session.persist(orderEmail);
 			result=1;
 			
@@ -316,7 +362,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		return result;
 	}
 	
-	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch){
+	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment){
 		int result = 0;
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
@@ -334,6 +380,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			orderEmail.setProductLineMatch(productlineMatch);
 			orderEmail.setRboMatch(rboMatch);
 			orderEmail.setId(attachmentId);
+			orderEmail.setComment(comment);
 			
 			session.update(orderEmail);
 			result=1;
@@ -346,10 +393,9 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			this.updateError("service hibernate error06",error);
 			//log.error(e);
 		}
-		//System.out.println("result "+ result);
 		return result;
 	}
-	public boolean updateAllAttachment(int email_id, int productlineId, String Status){
+	public boolean updateAllAttachment(int email_id, int productlineId, String Status, String comment){
 		int result = 0;
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
@@ -370,11 +416,8 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 					pline.setId(productlineId);
 					orderFileAttachment.setVarProductLine(pline);
 				}
-			   /* if(!filetype.isEmpty()){
-			    	
-					orderFileAttachment.setFileContentType(filetype);
-				}*/
 			     orderFileAttachment.setStatus(Status); 
+			     orderFileAttachment.setComment(comment);
 			     session.persist(orderFileAttachment);
 			}
 	        result=1;
@@ -425,20 +468,16 @@ public int updateError(String ErrorCategory,String description ){
 			
 			orderEmail.setId(att_id);
 			orderEmail.setFileContentType(contentType);
-			//System.out.println("contentType size "+contentType);
 			session.update(orderEmail);
 			 result=1;
-			//System.out.println("contentType111 size "+result);
 			session.getTransaction().commit();
 			session.close();
-			//System.out.println("contentType111 size "+result);
 		}catch(Exception e){
 			e.printStackTrace();
 			String error=e.toString();
 			this.updateError("service hibernate error06",error);
 			//log.error(e);
 		}
-		//System.out.println("contentType111222 size "+result);
 		return true;
 	}
 	

@@ -33,7 +33,7 @@ public class SearchCell {
 		
 			try {
 				InputStream inp;
-					inp = new FileInputStream(path+filename);
+					inp = new FileInputStream(path+"/"+filename);
 				Workbook wb = WorkbookFactory.create(inp);
 				int num = wb.getNumberOfSheets();
 				if(checkSheetNameExist(wb, Sheetname)){

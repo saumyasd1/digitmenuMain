@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 
+import java.nio.charset.StandardCharsets;
+
 import org.apache.log4j.Logger;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -33,26 +35,33 @@ public class SearchCellAddress {
 		System.out.println("filetype id33cc " + filetype);
 		System.out.println("cell id33cc " + cell);
 		System.out.println("filename id33cc " + filename);*/
+		//System.out.println("keyword id33cc " + keyword);
+		//System.out.println("filename id33cc " + path+filename);
 		filename = filename.trim();
 		String res=""; 
 		String result=""; 
 		try {
 			InputStream inp;
-			inp = new FileInputStream(path+filename);
+			inp = new FileInputStream(path+"/"+filename);
 			Workbook wb = WorkbookFactory.create(inp);
 			int num = wb.getNumberOfSheets();
 			for (int i = 0; i < num; i++) {
 				
 				if(filetype.equals(".xls") ){
-					//System.out.println("partner id33cc11 " );
 					HSSFSheet sheet = (HSSFSheet) wb.getSheetAt(i);
 					res = this.findRow(sheet, content, cell);
+					if(!res.isEmpty()){
+						return res;
+					}
 					//System.out.println("partner id33cc112 " + res);
 				}else{
 				///for xlsx files
 				//	System.out.println("partner id33cc1122 " );
 					XSSFSheet sheet= (XSSFSheet)wb.getSheetAt(i);
 					res = this.findRow(sheet, content, cell_address);
+					if(!res.isEmpty()){
+						return res;
+					}
 					//System.out.println("partner id33cc11 " + res);
 				}
 
@@ -112,22 +121,29 @@ public class SearchCellAddress {
 		int add_row=0;
 		int add_column=0;
 		String address= "";
+		//cellContent= "Under Armour- Woven Size Label Order Form";
 		//String array[] = new String[50];
 		//CellAddress celladd[]=new CellAddress[50];
 		//System.out.println("Search Cell 731");
 		try{
 			//System.out.println("add_row Cell 324"+sheet.getSheetName());
+			//System.out.println("cellContent 324"+cellContent);
 		for (Row row : sheet) {
 			for (Cell cell : row) {
 				if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+					if(cell.getRichStringCellValue().getString().contains(cellContent)){
+						//System.out.println("cellContent yes+++++");
+					}
 					if (cell.getRichStringCellValue().getString().trim()
 							
 							.equals(cellContent)) {
-					
+						//System.out.println("CellRangeAddress======");
 						CellRangeAddress cra = new  CellRangeAddress(cell.getRowIndex(), cell.getRowIndex(), cell.getColumnIndex(), cell.getColumnIndex());
+						
 						if(cell_address.equals(cra.formatAsString())){
 							//System.out.println("CellRangeAddress::"+cra.formatAsString());
 							address=cra.formatAsString();
+							//System.out.println("address   "+address);
 						}
 						//address=add_row.toString(add_row)+add_column.toString(add_column);
 						

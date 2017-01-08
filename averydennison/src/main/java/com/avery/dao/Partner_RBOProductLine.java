@@ -105,6 +105,8 @@ public class Partner_RBOProductLine {
 	String createdBy;// 50
 	@Column(name = "createdDate")
 	Date createdDate;
+	
+	
 	@Column(name="email",length=1000)
 	String email;
 	
@@ -206,6 +208,9 @@ public class Partner_RBOProductLine {
 	boolean orderInMailBody;
 	@Column(name = "dataStructureName",length=100)
 	String dataStructureName ;
+	
+	@Column(name = "revisecancelorder",length=100)
+	String revisecancelorder;
 	/*
     @Column(name = "packingInstruction", length = 500)
 	String packingInstruction;// 500
@@ -1207,6 +1212,16 @@ public class Partner_RBOProductLine {
 
 	public void setDataStructureName(String dataStructureName) {
 		this.dataStructureName = dataStructureName;
+	}
+
+
+	public String getRevisecancelorder() {
+		return revisecancelorder;
+	}
+
+
+	public void setRevisecancelorder(String revisecancelorder) {
+		this.revisecancelorder = revisecancelorder;
 	}
 	
 	

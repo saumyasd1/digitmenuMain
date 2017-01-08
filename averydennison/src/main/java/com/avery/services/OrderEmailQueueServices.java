@@ -854,7 +854,7 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 		Iterator iterator = keywords.iterator();
 		while (iterator.hasNext()) {
 			String keyword = (String) iterator.next();
-			if(subject.contains(keyword)&& !searchpdf(file_name, keyword, file_path).isEmpty()){
+			if(subject.contains(keyword)|| !searchpdf(file_name, keyword, file_path).isEmpty()){
 				return true;
 			}
 		}

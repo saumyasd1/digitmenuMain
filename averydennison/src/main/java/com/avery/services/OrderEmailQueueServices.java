@@ -14,10 +14,20 @@ import java.util.Set;
 
 
 
+
+
+
+
 import org.hibernate.HibernateException;
 
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.apache.log4j.Logger;
+
+
+
+
 /*aspose dependency removed
  * import com.aspose.pdf.Document;
 import com.aspose.pdf.TextFragment;
@@ -33,6 +43,7 @@ import com.avery.Model.SearchCell;
 import com.avery.Model.SearchCellAddress;
 import com.avery.dao.OrderFileAttachment;
 import com.avery.dao.Partner_RBOProductLine;
+import com.avery.utils.HibernateUtil;
 /*created by Dipanshu
  * Date 22dec2016
  * scope to identify partner rbo productline from email body subject and attachment
@@ -703,8 +714,12 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 			TextExtractionStrategy strategy;
 			
 			for (int i = 1; i <= reader.getNumberOfPages(); i++) {
-	            strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
-	            result = strategy.getResultantText(); 
+				
+				strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
+	            String pdf_data = strategy.getResultantText(); 
+	            if(pdf_data.contains(keyword)){
+	            	result= keyword;
+	            }
 	        }
 	        reader.close();
 	        out.flush();
@@ -807,5 +822,82 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 			orderEmailQueue.updateAllAttachment(orderEmailId, productline_id,"6", "identified multiple matches extention");
 		}
 		//return true;
+	}
+	/**identify ****/
+	
+	public boolean getemaildetail(int orderfileQueueId) {
+		Partner_RBOProductLine partner_RBOProductLine= new Partner_RBOProductLine();
+		
+		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+		int att_id = orderEmailQueue.GeteAttachmentId(orderfileQueueId);
+		int EmailQueueId = orderEmailQueue.GetOrderEmailQueueId(att_id);
+		int schema_id=0;
+		String file_name="";
+		String file_ext="";
+		String file_path ="";
+		String subject = this.getemailsubject(EmailQueueId);
+		//ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(EmailQueueId);
+		ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachmentDetail(EmailQueueId);
+		Iterator<Object> iterat = email_list.iterator();
+		OrderFileAttachment email_att = new OrderFileAttachment();
+		while (iterat.hasNext()) {
+			email_att = (OrderFileAttachment) iterat.next();
+			if(email_att.getFileName().contains("CompleteEmail")){
+				file_name = email_att.getFileName();
+				file_ext = email_att.getFileExtension();
+				file_path = email_att.getFilePath();
+				partner_RBOProductLine = email_att.getVarProductLine();
+				schema_id= partner_RBOProductLine.getId();
+			}
+		}
+		ArrayList<String> keywords= this.getkeyword(schema_id);
+		Iterator iterator = keywords.iterator();
+		while (iterator.hasNext()) {
+			String keyword = (String) iterator.next();
+			if(subject.contains(keyword)&& !searchpdf(file_name, keyword, file_path).isEmpty()){
+				return true;
+			}
+		}
+		return false;
+	}
+	public String getemailsubject(int emailid) {
+		String subject="";
+		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+		HashMap<String, String> emailinfo = orderEmailQueue.EmailSource(emailid);
+		Iterator it = emailinfo.entrySet().iterator();
+			
+			////get email subject  
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			if (pair.getKey() == "subject") {
+				subject = (String) pair.getValue();
+			}
+		}
+		return subject;
+	}
+	
+	public ArrayList getkeyword(int schema_id) {
+		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+		
+		ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartner_productline(schema_id);
+		Iterator<Object> iterator = partner_rboinfo.iterator();
+		Partner_RBOProductLine p_info = new Partner_RBOProductLine();
+		ArrayList<String> keyword= new ArrayList<String>();
+		
+		while (iterator.hasNext()) {
+			p_info = (Partner_RBOProductLine) iterator.next();
+			String keyword_s=p_info.getRevisecancelorder();
+			
+			if(keyword_s.contains(",")){
+				String[] keywords = keyword_s.split(",");
+				for (String skeyword : keywords) {
+					
+					keyword.add(skeyword);
+				}
+			}else if(!keyword_s.isEmpty()){
+				keyword.add(keyword_s);
+			}
+		}
+		return keyword;
 	}
 }

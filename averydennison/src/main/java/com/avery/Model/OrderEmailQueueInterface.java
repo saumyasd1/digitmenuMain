@@ -15,4 +15,9 @@ public interface OrderEmailQueueInterface {
 	public int updateError(String ErrorCategory, String description );
 	public boolean updateAllAttachment(int email_id, int productlineId, String Status, String comment);
 	public boolean updateAttachmenttype(int att_id, String contentType);
+	
+	
+	public int GeteAttachmentId(int fileQueueId);
+	public int GetOrderEmailQueueId(int att_id);
+	public ArrayList<Object> GetEmailAttachmentDetail(int orderEmailId);
 }

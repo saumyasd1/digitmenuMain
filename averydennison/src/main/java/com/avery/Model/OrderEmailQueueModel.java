@@ -20,6 +20,7 @@ import org.hibernate.transform.Transformers;
 import com.avery.dao.ErrorLog;
 import com.avery.dao.OrderEmailQueue;
 import com.avery.dao.OrderFileAttachment;
+import com.avery.dao.OrderFileQueue;
 import com.avery.dao.Partner;
 import com.avery.dao.Partner_RBOProductLine;
 import com.avery.utils.HibernateUtil;
@@ -480,5 +481,102 @@ public int updateError(String ErrorCategory,String description ){
 		}
 		return true;
 	}
-	
+	/**
+	 * get attachment id andorderemailqueue id for order file queue
+	 * author Dipanshu Ahuja
+	 * **/
+	public int GeteAttachmentId(int fileQueueId){
+		int attachment_id=0;
+		OrderFileAttachment orderFileAttachment=new OrderFileAttachment();
+		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		try{
+			
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			OrderFileQueue orderfilequeue=(OrderFileQueue)session.load(OrderFileQueue.class, fileQueueId);
+			orderFileAttachment = orderfilequeue.getVarOrderFileAttachment();
+			attachment_id= orderFileAttachment.getId();
+			session.getTransaction().commit();
+	        session.close();
+		}catch(HibernateException  ex){
+			ex.printStackTrace();
+		}catch(Exception  e){
+			e.printStackTrace();		
+		}
+		return attachment_id;
+	}
+	public int GetOrderEmailQueueId(int att_id){
+		int orderEmailQueueid=0;
+		OrderEmailQueue orderEmailQueue=new OrderEmailQueue();
+		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		try{
+			
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			OrderFileAttachment orderFileAttachment=(OrderFileAttachment)session.load(OrderFileAttachment.class, att_id);
+			
+			orderEmailQueue= orderFileAttachment.getVarOrderEmailQueue();
+			orderEmailQueueid=orderEmailQueue.getId();
+			session.getTransaction().commit();
+	        session.close();
+		}catch(HibernateException  ex){
+			ex.printStackTrace();
+		}catch(Exception  e){
+			e.printStackTrace();		
+		}
+		return orderEmailQueueid;
+	}
+	public ArrayList<Object> GetEmailAttachmentDetail(int orderEmailId){
+		ArrayList<Object> EmailAttachments= new ArrayList();
+		OrderFileAttachment orderFileAttachment = new OrderFileAttachment();
+		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		try{
+			
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			Criteria cr = session.createCriteria(OrderFileAttachment.class)
+	    		    .setProjection(Projections.projectionList()
+	    		      .add(Projections.property("id"), "id")
+	    		      .add(Projections.property("fileExtension"), "fileExtension")
+	    		      .add(Projections.property("fileName"), "fileName")
+	    		      .add(Projections.property("fileContentMatch"), "fileContentMatch")
+	    		      .add(Projections.property("fileContentType"), "fileContentType")
+	    		      .add(Projections.property("varProductLine"), "varProductLine")
+	    		      .add(Projections.property("filePath"), "filePath"))
+	    		    .setResultTransformer(Transformers.aliasToBean(OrderFileAttachment.class));
+				//cr.add(Restrictions.eq("active", true));
+				cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
+				
+	     		OrderFileAttachment ofa  = (OrderFileAttachment) cr.list().get(0);
+	     		ofa.getVarProductLine().getId();
+	     		/*Iterator<OrderFileAttachment> iterator = list.iterator(); 
+	     		while (iterator.hasNext()){
+	     			 orderFileAttachment =  iterator.next(); 
+	     			orderFileAttachment.getVarProductLine().getId();
+		     	/*	if(!list.isEmpty()){
+		     			//Partner_RBOProductLine partner_RBOProductLine= new Partner_RBOProductLine();
+		     			partner_RBOProductLine = orderFileAttachment.getVarProductLine();
+		     		}*/
+	     		
+	     		EmailAttachments.add(ofa);
+	     		
+	     		session.getTransaction().commit();
+		        session.close();
+		}catch(HibernateException  ex){
+			ex.printStackTrace();
+			String error=ex.toString();
+			this.updateError("service hibernate error03",error);
+				//log.error(ex);
+				ex.printStackTrace();
+			}catch(Exception  e){
+				e.printStackTrace();
+				String error=e.toString();
+				this.updateError("service hibernate error04",error);
+				//log.error(e);
+			}
+		return EmailAttachments;
+	}
 }

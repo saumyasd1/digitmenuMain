@@ -89,14 +89,14 @@ public class SearchCellAddress {
 					if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
 						//System.out.println("Search Cell 324---");
 						if (cell.getRichStringCellValue().getString().trim()
-								.equals(cellContent)) {
+								.contains(cellContent)) {
 							//System.out.println("Search Cell 324---++");
 //						String aadd_row=cell.getRow().;
 //						add_column =cell.getColumnIndex();
 							
 							CellRangeAddress cra = new  CellRangeAddress(cell.getRowIndex(), cell.getRowIndex(), cell.getColumnIndex(), cell.getColumnIndex());
-							
-							if(cell_address.equals(cra.formatAsString())){
+							if(cra.formatAsString().contains(cell_address)){
+							//if(cell_address.contains(cra.formatAsString())){
 								//System.out.println("CellRangeAddress::"+cra.formatAsString());
 								address=cra.formatAsString();
 							}
@@ -139,8 +139,8 @@ public class SearchCellAddress {
 							.equals(cellContent)) {
 						//System.out.println("CellRangeAddress======");
 						CellRangeAddress cra = new  CellRangeAddress(cell.getRowIndex(), cell.getRowIndex(), cell.getColumnIndex(), cell.getColumnIndex());
-						
-						if(cell_address.equals(cra.formatAsString())){
+						if(cra.formatAsString().contains(cell_address)){
+						//if(cell_address.contains(cra.formatAsString())){
 							//System.out.println("CellRangeAddress::"+cra.formatAsString());
 							address=cra.formatAsString();
 							//System.out.println("address   "+address);

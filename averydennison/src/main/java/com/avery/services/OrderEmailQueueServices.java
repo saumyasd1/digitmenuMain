@@ -178,6 +178,7 @@ public class OrderEmailQueueServices {
 		if(partner_rboinfo.size()<=0){
 			
 			orderEmailQueue.updateOrderEmail(id,"4","","","","","unidentified partner");
+			orderEmailQueue.updateAllAttachment(id, productline_id, "6","unidentified  partner");
 			return 0;
 		}
 		
@@ -247,7 +248,9 @@ public class OrderEmailQueueServices {
 			return productline_id;
 		}else if (schema_id.size() == 2) {
 			////2 matches found
-			this.read_attachment_ext(id, schema_id,rbo_string,pline_string);
+			//System.out.println("11111");
+			productline_id = this.read_attachment_ext(id, schema_id,rbo_string,pline_string);
+			
 			return productline_id;
 		}else if (schema_id.size() >=2) {
 			///multiple productline matches
@@ -341,6 +344,7 @@ public class OrderEmailQueueServices {
 			return productline_id;
 		}else if (schema_id.size() == 2) {
 			////2 matches found
+			//System.out.print("1121542124");
 			this.read_attachment_ext(id, schema_id,rbo_string,pline_string);
 		}else if (schema_id.size() >=2) {
 			///multiple productline matches
@@ -483,6 +487,7 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 				
 				if (schema_id.size() == 0) {
 					////no matches found
+					//System.out.println("789654");
 					orderEmailQueue.updateOrderEmail(id,"3","","","","","unidentified attachment");
 					orderEmailQueue.updateAllAttachment(id, productline_id, "6","unidentified  attachment");
 					return productline_id;
@@ -717,7 +722,7 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 				
 				strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
 	            String pdf_data = strategy.getResultantText(); 
-	            if(pdf_data.contains(keyword)){
+	            if(pdf_data.toLowerCase().contains(keyword.toLowerCase())){
 	            	result= keyword;
 	            }
 	        }
@@ -770,16 +775,17 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 	/*
 	 * read email ext to identify email productline_id
 	 * done by Dipanshu Ahuja*/
-	public void read_attachment_ext(int orderEmailId, List schema_id,String rbo_string,String pline_string) {
+	public int read_attachment_ext(int orderEmailId, List schema_id,String rbo_string,String pline_string) {
 		List<Integer> ext_schema_id = new ArrayList<Integer>();
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
-		
+		int productline_id=0;
 		ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(orderEmailId);
 		Iterator<Object> iterat = email_list.iterator();
 		OrderFileAttachment email_att = new OrderFileAttachment();
 		while (iterat.hasNext()) {
 			email_att = (OrderFileAttachment) iterat.next();
 			int att_id = email_att.getId();
+			//System.out.println("att_id"+att_id);
 			String file_name = email_att.getFileName();
 			String file_ext = email_att.getFileExtension();
 			Set<Integer> uniqe_p_ids = new LinkedHashSet<Integer>(schema_id);
@@ -799,28 +805,33 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 			}
 		}
 		ext_schema_id = new ArrayList(new HashSet(ext_schema_id));
+		
 		if (ext_schema_id.size() == 0) {
 			////no matches found
-			int productline_id=0;
+			//System.out.println("1111");
+			productline_id=0;
 			orderEmailQueue.updateOrderEmail(orderEmailId,"3","","","","","unidentified attachment");
 			orderEmailQueue.updateAllAttachment(orderEmailId, productline_id, "6","unidentified  attachment");
-			
+			return productline_id;
 		}else if (ext_schema_id.size() ==1) {
+			//System.out.println(ext_schema_id);
 			////update id and match result
 			orderEmailQueue.updateOrderEmail(orderEmailId,"5",rbo_string,pline_string,"","","identified by order file ext");
 			////update attachment as identified
 			Set<Integer> uniqe_p_ids = new LinkedHashSet<Integer>(ext_schema_id);
 			for (Integer p_id : uniqe_p_ids) {
 				orderEmailQueue.updateAllAttachment(orderEmailId, p_id,"8", "identified by order file ext");
-				this.checkFileType(orderEmailId, p_id);	
+				this.checkFileType(orderEmailId, p_id);
+				productline_id=p_id;
 			}
-			
+			return productline_id;
 		}else if (ext_schema_id.size() >=1) {
 			///multiple productline matches
-			int productline_id=0;
 			orderEmailQueue.updateOrderEmail(orderEmailId,"3",rbo_string,pline_string,"","","identified multiple matches extention");
 			orderEmailQueue.updateAllAttachment(orderEmailId, productline_id,"6", "identified multiple matches extention");
+			return productline_id;
 		}
+		return productline_id;
 		//return true;
 	}
 	/**identify ****/
@@ -854,7 +865,7 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 		Iterator iterator = keywords.iterator();
 		while (iterator.hasNext()) {
 			String keyword = (String) iterator.next();
-			if(subject.contains(keyword)|| !searchpdf(file_name, keyword, file_path).isEmpty()){
+			if(subject.toLowerCase().contains(keyword.toLowerCase())|| !searchpdf(file_name, keyword, file_path).isEmpty()){
 				return true;
 			}
 		}

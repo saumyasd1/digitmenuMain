@@ -325,6 +325,8 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		
 		int result = 0;
 		try{
+			//System.out.println("orderEmailId "+orderEmailId);
+			//System.out.println("orderEmailStatus "+orderEmailStatus);
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 			Session session=sessionFactory.openSession();
 			session.beginTransaction();
@@ -350,6 +352,8 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 				orderEmail.setComment(comment);
 			}
 			session.persist(orderEmail);
+			//System.out.println("orderEmailId "+orderEmailId);
+			//System.out.println("orderEmailStatus "+orderEmailStatus);
 			result=1;
 			
 			session.getTransaction().commit();

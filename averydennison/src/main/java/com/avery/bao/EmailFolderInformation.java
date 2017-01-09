@@ -1,21 +1,17 @@
 package com.avery.bao;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
-import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
-import javax.mail.Multipart;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.search.FlagTerm;
-
-
 
 //import com.aspose.email.ImapClient;
 //import com.aspose.email.ImapFolderInfo;
@@ -75,39 +71,66 @@ public void receiveFolderInformation(EmailManager emailManager) throws Exception
 
 		// Connect using IMAPS
 		Session session = Session.getDefaultInstance(props, null);
-		Store store = session.getStore("imaps");
-		store.connect(emailManager.smtpHost, emailManager.username, emailManager.password);
+		Message messages[] = null;
+		Folder inbox = null;
+		Store store;
+		try {
+			store = session.getStore("imaps");
+			store.connect(emailManager.smtpHost, emailManager.username, emailManager.password);
+			
+			// Get the all emails from INBOX
+			inbox = store.getFolder("inbox");
+			
+			System.out.println("No of Unread Messages : " + inbox.getUnreadMessageCount()); 
+			
+			inbox.open(Folder.READ_WRITE); 
+//			Message[] messages = inbox.getMessages();
+			
+			/*  Get the messages which is unread in the Inbox*/
+			 messages = inbox.search(new FlagTerm(new Flags(Flag.SEEN), false));
+		} catch (NoSuchProviderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
 		
-		// Get the all emails from INBOX
-		Folder inbox = store.getFolder("inbox");
-		
-		System.out.println("No of Unread Messages : " + inbox.getUnreadMessageCount()); 
-		
-		inbox.open(Folder.READ_WRITE); 
-//		Message[] messages = inbox.getMessages();
-		
-		/*  Get the messages which is unread in the Inbox*/
-		 Message messages[] = inbox.search(new FlagTerm(new Flags(Flag.SEEN), false));
 		 
 		
 		for (int i = 0; i < messages.length; i++) {
 			Message message = messages[i];
 			String msgContent = "";
-			Object objectContent = message.getContent();
-			emailFetch.messageFetch( message,  inbox,  objectContent);
-			message.setFlag(Flags.Flag.SEEN, true);
+			Object objectContent;
+			try {
+				objectContent = message.getContent();
+				emailFetch.messageFetch( message,  inbox,  objectContent);
+				message.setFlag(Flags.Flag.SEEN, true);
+			} catch (IOException | MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				try {
+					message.setFlag(Flags.Flag.SEEN, false);
+				} catch (MessagingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				throw e;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				try {
+					message.setFlag(Flags.Flag.SEEN, false);
+				} catch (MessagingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				throw e;
+			}
+			
 			System.out.println("Checked");
-//			message.setFlag(Flag.SEEN, true); 
-//			if (objectContent instanceof Multipart) {
-//				Multipart mp = (Multipart) objectContent;
-//				for (int ii = 0; ii < mp.getCount(); ii++) {
-//					BodyPart bp = mp.getBodyPart(ii);
-//					if (Pattern.compile(Pattern.quote("text/html"),Pattern.CASE_INSENSITIVE).matcher(bp.getContentType()).find()) {
-//						msgContent = msgContent + (String) bp.getContent();
-//						
-//					}
-//				}
-//			} 
 		}
 		
 			

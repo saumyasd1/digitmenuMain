@@ -59,6 +59,13 @@ public class Partner_RBOProductLine {
 	String attachmentFileProductlineMatchLocation;// 100
 	@Column(name = "attachmentFileProductlineMatchRequired")
 	boolean attachmentFileProductlineMatchRequired;
+	
+	@Column(name = "coocheck ")
+	boolean coocheck;
+	@Column(name = "fiberpercentagecheck")
+	boolean fiberpercentagecheck;
+	
+	 
 	@Column(name = "attachmentFileRBOMatch", length = 100)
 	String attachmentFileRBOMatch;// 100
 	@Column(name = "attachmentIdentifier_1", length = 50)
@@ -1222,6 +1229,26 @@ public class Partner_RBOProductLine {
 
 	public void setRevisecancelorder(String revisecancelorder) {
 		this.revisecancelorder = revisecancelorder;
+	}
+
+
+	public boolean isCoocheck() {
+		return coocheck;
+	}
+
+
+	public void setCoocheck(boolean coocheck) {
+		this.coocheck = coocheck;
+	}
+
+
+	public boolean isFiberpercentagecheck() {
+		return fiberpercentagecheck;
+	}
+
+
+	public void setFiberpercentagecheck(boolean fiberpercentagecheck) {
+		this.fiberpercentagecheck = fiberpercentagecheck;
 	}
 	
 	

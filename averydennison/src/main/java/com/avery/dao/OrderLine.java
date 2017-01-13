@@ -252,10 +252,10 @@ public class OrderLine {
 	String account;
 	@Column(name = "shipVia", length = 100)
 	String shipVia;
-	@Column(name = "createdByName", length = 50)
+	/*@Column(name = "createdByName", length = 50)
 	String createdByName;
 	@Column(name = "lastModifiedByName", length = 50)
-	String lastModifiedByName;
+	String lastModifiedByName;*/
 	@Column(name = "productLineType", length = 50)
 	String productLineType;
 	@Column(name="addditionalFileId",length=100)
@@ -1429,7 +1429,7 @@ public class OrderLine {
 	}
 
 
-	public String getCreatedByName() {
+	/*public String getCreatedByName() {
 		return createdByName;
 	}
 
@@ -1446,7 +1446,7 @@ public class OrderLine {
 
 	public void setLastModifiedByName(String lastModifiedByName) {
 		this.lastModifiedByName = lastModifiedByName;
-	}
+	}*/
 
 
 	public String getProductLineType() {

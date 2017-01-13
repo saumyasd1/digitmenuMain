@@ -13,8 +13,6 @@ import javax.mail.Message;
 import javax.mail.UIDFolder;
 import javax.mail.internet.InternetAddress;
 
-
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -29,7 +27,6 @@ import com.avery.dao.OrderFileAttachment;
 //import com.avery.dao.UnreadEmailInformation;
 import com.avery.services.EmailQueueService;
 import com.avery.utils.HibernateUtil;
-import com.sun.mail.imap.IMAPFolder;
 
 public class EmailFetch {
 	

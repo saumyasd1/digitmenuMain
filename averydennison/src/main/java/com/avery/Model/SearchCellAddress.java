@@ -1,16 +1,14 @@
 package com.avery.Model;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 
-import java.nio.charset.StandardCharsets;
+
+
 
 import org.apache.log4j.Logger;
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -24,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 
 public class SearchCellAddress {
+	static Logger log = Logger.getLogger(OrderEmailQueueModel.class.getName());
 	public String SearchXL(String path, String keyword, String filetype, String cell, String filename) {
 		String content = keyword.trim();
 		path = path.trim();
@@ -47,16 +46,18 @@ public class SearchCellAddress {
 			int num = wb.getNumberOfSheets();
 			for (int i = 0; i < num; i++) {
 				
-				if(filetype.equals(".xls") ){
+				if(filetype.equalsIgnoreCase(".xls") ){
 					HSSFSheet sheet = (HSSFSheet) wb.getSheetAt(i);
-					res = this.findRow(sheet, content, cell);
+					
+					res = this.findRow_hssf(sheet, content, cell_address);
 					if(!res.isEmpty()){
 						return res;
 					}
 					//System.out.println("partner id33cc112 " + res);
-				}else{
+				}else if(filetype.equalsIgnoreCase(".xlsx") ){
+					
 				///for xlsx files
-				//	System.out.println("partner id33cc1122 " );
+					//System.out.println("partner id33cc1122 " );
 					XSSFSheet sheet= (XSSFSheet)wb.getSheetAt(i);
 					res = this.findRow(sheet, content, cell_address);
 					if(!res.isEmpty()){
@@ -72,7 +73,7 @@ public class SearchCellAddress {
 		return res;
 	}
 
-	private String findRow(HSSFSheet sheet, String cellContent, String cell_address) {
+	private String findRow_hssf(HSSFSheet sheet, String cellContent, String cell_address) {
 		int i = 0;
 		int add_row=0;
 		int add_column=0;

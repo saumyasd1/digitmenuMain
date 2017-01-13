@@ -3,6 +3,10 @@ package com.avery.Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author Shalini
+ *
+ */
 public interface OrderEmailQueueInterface {
 	public HashMap<String, String> EmailSource(int id );
 	public int getPartnerId(String email, String domain );
@@ -11,6 +15,16 @@ public interface OrderEmailQueueInterface {
 	public ArrayList<Object> GetEmailAttachments(int id);
 	public ArrayList<Object> getPartner_productline(int productlineId );
 	public int updateOrderEmail(int orderEmailId, String orderEmailStatus, String subject_rboMatch, String subject_productlineMatch, String body_rboMatch, String body_productlineMatch, String comment );
+	
+	/** method updateOrderEmailAttachment
+	 * @param attachmentId
+	 * @param productlineId
+	 * @param Status
+	 * @param rboMatch
+	 * @param productlineMatch
+	 * @param comment
+	 * @return
+	 */
 	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment);
 	public int updateError(String ErrorCategory, String description );
 	public boolean updateAllAttachment(int email_id, int productlineId, String Status, String comment);
@@ -18,6 +32,18 @@ public interface OrderEmailQueueInterface {
 	
 	
 	public int GeteAttachmentId(int fileQueueId);
-	public int GetOrderEmailQueueId(int att_id);
+	public HashMap<String, Integer> GetOrderEmailQueueId(int att_id);
+	
 	public ArrayList<Object> GetEmailAttachmentDetail(int orderEmailId);
+	/**
+	 * @param attachmentId
+	 * @param productlineId
+	 * @param Status
+	 * @param rboMatch
+	 * @param productlineMatch
+	 * @param comment
+	 * @param fileType
+	 * @return
+	 */
+	public int updateOrderEmailAttachmentContent(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment,String fileType);
 }

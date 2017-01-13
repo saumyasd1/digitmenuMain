@@ -168,9 +168,9 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
     		if(rboproduclines.size()==0){
     			Criteria cr1 = session.createCriteria(Partner_RBOProductLine.class);
 	    		  
-   			cr1.add(Restrictions.eq("active", true));
-   			cr1.add(Restrictions.like("email",emailId+"%"));
-   			List<Partner_RBOProductLine> p_list = cr1.list();
+	   			cr1.add(Restrictions.eq("active", true));
+	   			cr1.add(Restrictions.like("email",emailId+"%"));
+	   			List<Partner_RBOProductLine> p_list = cr1.list();
         		rboproduclines=(ArrayList<Object>) cr1.list();
     		}
 	     		
@@ -295,6 +295,8 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	    		      .add(Projections.property("id"), "id")
 	    		      .add(Projections.property("fileExtension"), "fileExtension")
 	    		      .add(Projections.property("fileName"), "fileName")
+	    		       .add(Projections.property("status"), "status")
+	    		        .add(Projections.property("comment"), "comment")
 	    		      .add(Projections.property("fileContentMatch"), "fileContentMatch")
 	    		      .add(Projections.property("fileContentType"), "fileContentType")
 	    		      .add(Projections.property("varProductLine"), "varProductLine")
@@ -366,6 +368,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		}
 		return result;
 	}
+	
 	
 	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment){
 		int result = 0;
@@ -510,9 +513,11 @@ public int updateError(String ErrorCategory,String description ){
 		}
 		return attachment_id;
 	}
-	public int GetOrderEmailQueueId(int att_id){
+	public HashMap<String, Integer> GetOrderEmailQueueId(int att_id){
 		int orderEmailQueueid=0;
+		HashMap<String, Integer> emailatt_info = new HashMap<String, Integer>();
 		OrderEmailQueue orderEmailQueue=new OrderEmailQueue();
+		Partner_RBOProductLine partner_RBOProductLine=new Partner_RBOProductLine();
 		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
 		try{
 			
@@ -521,8 +526,15 @@ public int updateError(String ErrorCategory,String description ){
 			session.beginTransaction();
 			OrderFileAttachment orderFileAttachment=(OrderFileAttachment)session.load(OrderFileAttachment.class, att_id);
 			
-			orderEmailQueue= orderFileAttachment.getVarOrderEmailQueue();
-			orderEmailQueueid=orderEmailQueue.getId();
+			orderEmailQueue = orderFileAttachment.getVarOrderEmailQueue();
+			orderEmailQueueid = orderEmailQueue.getId();
+			
+			partner_RBOProductLine=orderFileAttachment.getVarProductLine();
+			
+			//System.out.println("partner_RBOProductLine id ="+partner_RBOProductLine.getId());
+			emailatt_info.put("emailQueue_id", orderEmailQueue.getId());
+			emailatt_info.put("schema_id", partner_RBOProductLine.getId());
+			
 			session.getTransaction().commit();
 	        session.close();
 		}catch(HibernateException  ex){
@@ -530,11 +542,12 @@ public int updateError(String ErrorCategory,String description ){
 		}catch(Exception  e){
 			e.printStackTrace();		
 		}
-		return orderEmailQueueid;
+		return emailatt_info;
 	}
 	public ArrayList<Object> GetEmailAttachmentDetail(int orderEmailId){
-		ArrayList<Object> EmailAttachments= new ArrayList();
+		
 		OrderFileAttachment orderFileAttachment = new OrderFileAttachment();
+		ArrayList<Object> EmailAttachments= new ArrayList();
 		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
 		try{
 			
@@ -582,5 +595,38 @@ public int updateError(String ErrorCategory,String description ){
 				//log.error(e);
 			}
 		return EmailAttachments;
+	}
+	public int updateOrderEmailAttachmentContent(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment,String fileType){
+		int result = 0;
+		try{
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			OrderFileAttachment orderEmail=(OrderFileAttachment)session.load(OrderFileAttachment.class, attachmentId);
+			
+			if(productlineId!=0){
+				Partner_RBOProductLine pline=(Partner_RBOProductLine)session.load(Partner_RBOProductLine.class, productlineId);
+				pline.setId(productlineId);
+				orderEmail.setVarProductLine(pline);
+			}
+			orderEmail.setFileContentType(fileType);
+			orderEmail.setStatus(Status);
+			orderEmail.setProductLineMatch(productlineMatch);
+			orderEmail.setRboMatch(rboMatch);
+			orderEmail.setId(attachmentId);
+			orderEmail.setComment(comment);
+			
+			session.update(orderEmail);
+			result=1;
+			
+			session.getTransaction().commit();
+			session.close();
+		}catch(Exception e){
+			e.printStackTrace();
+			String error=e.toString();
+			this.updateError("service hibernate error06",error);
+			//log.error(e);
+		}
+		return result;
 	}
 }

@@ -281,8 +281,8 @@ public class OrderLine {
 	@Column(name = "averyProductLineType", length = 50)
 	String averyProductLineType;
 	
-	@Column(name = "averySample", length = 50)
-	String averySample;
+	@Column(name = "averyBulk", length = 50)
+	String averyBulk;
 	
 	public OrderLine() {
 	}
@@ -1538,14 +1538,16 @@ public class OrderLine {
 	}
 
 
-	public String getAverySample() {
-		return averySample;
+	public String getAveryBulk() {
+		return averyBulk;
 	}
 
 
-	public void setAverySample(String averySample) {
-		this.averySample = averySample;
+	public void setAveryBulk(String averyBulk) {
+		this.averyBulk = averyBulk;
 	}
+
+
 
 
 	/*public List<SalesOrderLine> getListSalesOrderLine() {

@@ -4,6 +4,7 @@ package com.avery.bao;
 //import com.aspose.email.SecurityOptions;
 //import com.aspose.email.SmtpClient;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -89,10 +90,13 @@ public class SendingAcknowledgement {
 	       // Now set the actual message
 	          message.setText(body);
 	          
+	       Date acknowledgementDate = new Date();
+	          
+	       message.setSentDate(acknowledgementDate);
 	       // Send message
 	          Transport.send(message);
 	          System.out.println("Sent message successfully....");
-	    	  
+	          acknowledgementService.updateAcknowledgementDate(emailqueueid, acknowledgementDate); 
 	      }catch (MessagingException mex) {
 	          mex.printStackTrace();
 	          throw new MessagingException("Error while sending mail from:\""+username+"\" to:\""+to+"\".",mex);

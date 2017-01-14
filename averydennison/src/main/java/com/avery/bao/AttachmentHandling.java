@@ -17,10 +17,9 @@ import javax.mail.internet.MimeBodyPart;
 
 import javax.mail.internet.MimeUtility;
 
-//import com.aspose.email.Attachment;
-//import com.aspose.email.AttachmentCollection;
-//import com.aspose.email.EmlLoadOptions;
-//import com.aspose.email.MailMessage;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 import com.avery.services.AcknowledgementService;
 import com.avery.services.EmailAttachmentService;
 
@@ -124,11 +123,18 @@ public class AttachmentHandling {
 					if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
 						// this part is attachment
 						String attachmentFileName =  MimeUtility.decodeText( part.getFileName());
+						StringBuffer sb = new StringBuffer();
+						checkFileName(dir,
+								FilenameUtils.getBaseName(attachmentFileName), 
+								FilenameUtils.getExtension(attachmentFileName),
+								0, sb);
 						part.saveFile(dir + File.separatorChar
-								+ attachmentFileName);
+								+ sb.toString());
 
 						emailAttachmentService.insertIntoEmailAttachment(part,
-								dir, emailqueueid); 
+								dir, emailqueueid, 
+								sb.toString(), 
+								FilenameUtils.getExtension( sb.toString()));   
 					}
 				}
 			}
@@ -237,5 +243,33 @@ public class AttachmentHandling {
         }
         bos.close();
     }
+    
+	/**Method to handle duplicate file
+	 * @param path
+	 * @param fileName
+	 * @param fileExtension
+	 * @param i
+	 * @param sb
+	 */
+	public void checkFileName(String path, String fileName,
+			String fileExtension, int i, StringBuffer sb) {
+		sb.delete(0, sb.length());
+		String updatedFileExtension = fileExtension == null
+				|| fileExtension.trim().equals("") ? "" : "." + fileExtension;
+		if (i == 0) {
+			sb.append(fileName + updatedFileExtension);
+		}
+		else{
+			sb.append(fileName+ "_" + i+ updatedFileExtension);
+		}
+		File file = new File(path+File.separatorChar+sb.toString());
+
+		if (file.exists()) {
+			i++;
+			checkFileName(path, fileName, fileExtension, i, sb);  
+		} else {
+			return; 
+		}
+	}
 
 }

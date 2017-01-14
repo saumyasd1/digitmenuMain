@@ -77,7 +77,7 @@ public class OrderEmailQueue {
 	public OrderEmailQueue() {
 	}
 
-	public OrderEmailQueue(String subject, String sender, String mailBody, Date receivedDate, Date readDate, String cc, String to) {
+	public OrderEmailQueue(String subject, String sender, String mailBody, Date receivedDate, Date readDate, String cc, String to, String assignCSR) {
 		this.subject = subject;
 		this.senderEmailId = sender;
 //		this.mailBody = mailBody;
@@ -91,6 +91,7 @@ public class OrderEmailQueue {
 		this.lastModifiedDate = new Date();
 		this.orderSource = "Email";
 		this.status = "1";
+		this.assignCSR = assignCSR;
 	}
 	
 	public int getId() {

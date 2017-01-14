@@ -1,11 +1,13 @@
 package com.avery.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.avery.dao.OrderEmailQueue;
 import com.avery.utils.HibernateUtil;
 
 public class AcknowledgementService {
@@ -24,6 +26,21 @@ public class AcknowledgementService {
 		//System.out.println("The result is : "+senderID);
 		session.close();
 		return senderID;
+	}
+	
+	
+	public void updateAcknowledgementDate(int emailqueueid, Date acknowledgementDate){
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		session.beginTransaction();
+		
+		OrderEmailQueue orderEmailQueue = (OrderEmailQueue) session.get(OrderEmailQueue.class, emailqueueid) ;
+		orderEmailQueue.setAcknowledgementDate(acknowledgementDate); 
+		session.persist(orderEmailQueue);
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("Successfully Inserted record in the emailqueue table");
+		
 	}
 
 }

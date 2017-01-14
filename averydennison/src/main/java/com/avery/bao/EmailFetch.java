@@ -187,7 +187,7 @@ public class EmailFetch {
 			}
 		}
 		EmailQueueService emailQueueService = new EmailQueueService(); 
-		int emailqueueid = emailQueueService.insertData(subject,sender,mailbodypath,receivedDate, currentDate, cc, to);
+		int emailqueueid = emailQueueService.insertData(subject,sender,mailbodypath,receivedDate, currentDate, cc, to, "1");
 		//System.out.println("Emailqueue Id is : "+emailqueueid);
 	    //Write the code here for inserting into the emailqueue table and get the email queue id
 	    

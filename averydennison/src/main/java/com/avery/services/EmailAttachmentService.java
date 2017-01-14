@@ -18,28 +18,16 @@ import com.avery.utils.HibernateUtil;
 
 public class EmailAttachmentService {
 	
-	public void insertIntoEmailAttachment(MimeBodyPart part, String filePath, int emailqueueid){
+	public void insertIntoEmailAttachment(MimeBodyPart part, String filePath, int emailqueueid, String fileName, String fileExtension){
 		
-		/*String contentType = part.getContentType().getMediaType().toString();
-		String fileName = part.getName();*/
 		String contentType = "";
-		String fileName = "";
 		try {
-			contentType = part.getContentType(); 
-			fileName = MimeUtility.decodeText(part.getFileName()); 
+			contentType = part.getContentType();
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) { 
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 		
-		
-		String fileExtension = "";
-		if(fileName.contains(".")){
-			fileExtension = fileName.substring(fileName.lastIndexOf("."));
-		}
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();

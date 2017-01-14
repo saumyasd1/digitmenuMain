@@ -161,17 +161,25 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			Criteria cr = session.createCriteria(Partner_RBOProductLine.class);
 	    		  
 			cr.add(Restrictions.eq("active", true));
-			cr.add(Restrictions.like("email","%"+domain+"%"));
+			//cr.add(Restrictions.
+			cr.add(Restrictions.like("email","%"+email+"%"));
 			List<Partner_RBOProductLine> list = cr.list();
     		rboproduclines=(ArrayList<Object>) cr.list();
-    		
+    		//System.out.println("size     "+rboproduclines.size());
     		if(rboproduclines.size()==0){
+    			//System.out.println("size11     "+rboproduclines.size());
     			Criteria cr1 = session.createCriteria(Partner_RBOProductLine.class);
+	    		  
+    			cr1.add(Restrictions.eq("active", true));
+    			cr1.add(Restrictions.like("email","%"+domain+"%"));
+    			List<Partner_RBOProductLine> p_list = cr1.list();
+        		rboproduclines=(ArrayList<Object>) cr1.list();
+    			/*Criteria cr1 = session.createCriteria(Partner_RBOProductLine.class);
 	    		  
 	   			cr1.add(Restrictions.eq("active", true));
 	   			cr1.add(Restrictions.like("email",emailId+"%"));
 	   			List<Partner_RBOProductLine> p_list = cr1.list();
-        		rboproduclines=(ArrayList<Object>) cr1.list();
+        		rboproduclines=(ArrayList<Object>) cr1.list();*/
     		}
 	     		
 	     		session.getTransaction().commit();

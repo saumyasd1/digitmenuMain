@@ -1125,4 +1125,16 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 		
 		return 0;
 	}
+	/**
+	 * method updateOrderEmailStatus
+	 * @param orderemailqueue_id
+	 * @param Status
+	 * @return
+	 */
+	public void updateOrderEmailStatus(int orderemailqueue_id, int Status){
+		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+		String Status_s =""+Status;
+		orderEmailQueue.updateOrderEmail(orderemailqueue_id,Status_s,"","","","","");
+		
+	}
 }

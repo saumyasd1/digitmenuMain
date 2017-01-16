@@ -157,25 +157,31 @@ public class OrderEmailQueueServices {
 	}
 	/*
 	 * read email subject to identify rbo product line
-	 * done by Dipanshu Ahuja* /
-	public int readEmailSubject(int id, String subject, String email){
+	 * done by Dipanshu Ahuja*/
+	public int readEmailSubject(int id, int attachment_id, List<Integer> productline_id ){
 		
 		List<String> rbo_match = new ArrayList<String>();
 		List<String> productline_match = new ArrayList<String>();
 		List<Integer> schema_id = new ArrayList<Integer>();
-		int productline_id=0;
-		
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
-		ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartnerRbo_productlines(email);
+		HashMap<String, String> emailinfo = orderEmailQueue.EmailSource(id);
+		Iterator it = emailinfo.entrySet().iterator();
+		String subject="";
+		////get email subject and source 
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			if (pair.getKey() == "subject") {
+				subject = (String) pair.getValue();
+			}
+		}
+		for (Integer p_ids : productline_id){
+			System.out.println("p_ids  "+p_ids);
+		}
+		return 1;
+	/*	ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartner_productline(productline_id);
+		ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartnerRbo_productlines(1);
 		Partner_RBOProductLine rbodetails = new Partner_RBOProductLine();
 		Iterator<Object> iterator = partner_rboinfo.iterator();
-		
-		if(partner_rboinfo.size()<=0){
-			
-			orderEmailQueue.updateOrderEmail(id,"4","","","","","unidentified partner");
-			orderEmailQueue.updateAllAttachment(id, productline_id, "6","unidentified  partner");
-			return 0;
-		}
 		
 		
 		while (iterator.hasNext()) {
@@ -227,34 +233,23 @@ public class OrderEmailQueueServices {
 		}
 		if (schema_id.size() == 0) {
 			////no matches found
-			orderEmailQueue.updateOrderEmail(id,"3","","","","","unidentified subject");
 			orderEmailQueue.updateAllAttachment(id, productline_id, "6","unidentified  subject");
 			return productline_id;
 		}else if (schema_id.size() ==1) {
 			////update id and match result
-			orderEmailQueue.updateOrderEmail(id,"5",rbo_string,pline_string,"",""," from subject");
 			////update attachment as identified
 			Set<Integer> uniqe_p_ids = new LinkedHashSet<Integer>(schema_id);
 			for (Integer p_id : uniqe_p_ids) {
 				orderEmailQueue.updateAllAttachment(id, p_id, "8","from subject");
-				
 				productline_id=p_id;
 			}
 			return productline_id;
-		}else if (schema_id.size() == 2) {
-			////2 matches found
-			//System.out.println("11111");
-			productline_id = this.read_attachment_ext(id, schema_id,rbo_string,pline_string);
-			
-			return productline_id;
 		}else if (schema_id.size() >=2) {
 			///multiple productline matches
-			orderEmailQueue.updateOrderEmail(id,"3",rbo_string,pline_string,"","","identified multiple matches subject");
 			orderEmailQueue.updateAllAttachment(id, productline_id, "6","identified multiple matches subject");
 			return productline_id;
 		}
-			
-		return productline_id;
+		return productline_id;*/
 	}
 	/*
 	 * read email body to identify rbo product line
@@ -970,12 +965,10 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 		String status="unidentified";
 		String schema_id_comment="";
 		ArrayList<Integer> selected_schema= new ArrayList<Integer>();
+		//System.out.println("attachment id "+ att_id);
 		int productline_id=0;
-		//System.out.println(email);
 			try {
 				ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartnerRbo_productlines(email);
-				//System.out.println(partner_rboinfo.size());
-				//System.out.println(email);
 				if(partner_rboinfo.size()<=0){
 					orderEmailQueue.updateOrderEmail(id,"4","","","","","unidentified partner");
 					orderEmailQueue.updateAllAttachment(id, productline_id, "6","unidentified  partner");
@@ -992,6 +985,7 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 					keyword_location="";
 					p_info = (Partner_RBOProductLine) iterator.next();
 					productline_rbo_id=p_info.getId();
+					//System.out.println("productline_rbo_id  "+ productline_rbo_id);
 					if(schema_id_comment.isEmpty()){
 						schema_id_comment = "" +productline_rbo_id;
 					}else{
@@ -1013,19 +1007,18 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 										
 										if(order_file_name.matches(p_file_Name)&&order_file_ext.contains(p_file_ext)){
 											selected_schema.add(productline_rbo_id);
-											
-											//orderEmailQueue.updateOrderEmailAttachment(att_id, productline_rbo_id, "8","","","attachment identified");
-											//productline_id=productline_rbo_id;
+											//System.out.println("shortlisted id1  "+ productline_rbo_id);
 										}
 									}
 								}
 							}
 						}else if(p_info.getFileOrderMatchLocation().equals("FileContent")){
-							
 							String Sheetinfo = p_info.getFileOrderMatch();
 							if(!Sheetinfo.isEmpty()){
 								if(p_info.getOrderFileNameExtension().contains(file_ext)){
-									if(p_info.getOrderFileNameExtension().contains(".xls")){
+									if(p_info.getOrderFileNameExtension().contains("xls")){
+										//System.out.println("p_info.getOrderFileNameExtension()  "+ p_info.getOrderFileNameExtension());
+										
 										if (Sheetinfo.contains(";")) {
 											String[] Sheetdetails = Sheetinfo.split(";");
 											for (String Sheetdetail : Sheetdetails) {
@@ -1042,18 +1035,20 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 												}
 											}
 											if(!cell_value.isEmpty()&&!cell_no.isEmpty()){
+												/*System.out.println("file_path"+file_path);
+												System.out.println("cell_value"+cell_value);
+												System.out.println("file_ext"+file_ext);
+												System.out.println("cell_no"+cell_no);
+												System.out.println("file_name  11  "+file_name);*/
+												
 												keyword_location = read_att_cell.SearchXL(
 														file_path, cell_value, file_ext,
 														cell_no, file_name);
+												//System.out.println("keyword_location"+keyword_location);
 											}else{
 												log.info("cell value and call number are empty");
 											}
-											/*if(!keyword_location.isEmpty()){
-												selected_schema.add(productline_rbo_id);
-												System.out.println("p_file_Name 1 "+productline_rbo_id);
-												//orderEmailQueue.updateOrderEmailAttachment(att_id, productline_rbo_id, "8","","","attachment identified");
-											//	productline_id=productline_rbo_id;
-											}*/
+											
 										}
 									
 									}else if(file_ext.contains(".pdf")){
@@ -1070,7 +1065,11 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 								}
 								if(!keyword_location.trim().isEmpty()){
 									selected_schema.add(productline_rbo_id);
-									
+									/*System.out.println("keyword  "+ cell_value);
+									System.out.println("file_name  "+ file_name);
+									System.out.println("file_path  "+ file_path);
+									System.out.println("selected_schema 22  "+ productline_rbo_id);
+									System.out.println("keyword_location 22  "+ keyword_location);*/
 									//orderEmailQueue.updateOrderEmailAttachment(att_id, productline_rbo_id, "8","","","attachment identified");
 									//productline_id=productline_rbo_id;
 								}
@@ -1080,7 +1079,8 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 				}
 				if(selected_schema.size()==1){
 					productline_rbo_id = selected_schema.get(0);
-					orderEmailQueue.updateOrderEmailAttachmentContent(att_id, productline_rbo_id, "8","","","attachment identified","Order");
+					//readEmailSubject(id, att_id, selected_schema);
+					orderEmailQueue.updateOrderEmailAttachmentContent(att_id, productline_rbo_id, "8","","","","Order");
 				}else if(selected_schema.size()==0){
 					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema_id_comment);
 				}else{
@@ -1089,7 +1089,7 @@ public int readAttachment(int id, int att_id, String file_path, String file_name
 					{
 						schema += ids + ",";
 					}
-					
+					//readEmailSubject(id, att_id, selected_schema);
 					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema);
 				}
 			} catch (Exception e) {

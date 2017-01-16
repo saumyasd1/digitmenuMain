@@ -42,19 +42,23 @@ public class SearchCellAddress {
 		try {
 			InputStream inp;
 			inp = new FileInputStream(path+"/"+filename);
+			
 			Workbook wb = WorkbookFactory.create(inp);
 			int num = wb.getNumberOfSheets();
+			
 			for (int i = 0; i < num; i++) {
-				
-				if(filetype.equalsIgnoreCase(".xls") ){
+				//System.out.println("xls c112 " +filetype);
+				if(filetype.equalsIgnoreCase("xls") ){
+					//System.out.println("xls c112 " + res);
 					HSSFSheet sheet = (HSSFSheet) wb.getSheetAt(i);
 					
 					res = this.findRow_hssf(sheet, content, cell_address);
+					//System.out.println("partner id33cc112 " + res);
 					if(!res.isEmpty()){
 						return res;
 					}
 					//System.out.println("partner id33cc112 " + res);
-				}else if(filetype.equalsIgnoreCase(".xlsx") ){
+				}else if(filetype.equalsIgnoreCase("xlsx") ){
 					
 				///for xlsx files
 					//System.out.println("partner id33cc1122 " );

@@ -13,7 +13,23 @@ public interface OrderEmailQueueInterface {
 	public ArrayList<Object> getPartnerRbo_productlines(String email);
 	//public ArrayList<Object> getPartnerRbo_productlines(int partnerId );
 	public ArrayList<Object> GetEmailAttachments(int id);
+	/**
+	 * method GetEmailAttachments
+	 * @param productlineId
+	 * @return productline rbo details
+	 */
 	public ArrayList<Object> getPartner_productline(int productlineId );
+	/**
+	 * mrthod updateOrderEmail
+	 * @param orderEmailId
+	 * @param orderEmailStatus
+	 * @param subject_rboMatch
+	 * @param subject_productlineMatch
+	 * @param body_rboMatch
+	 * @param body_productlineMatch
+	 * @param comment
+	 * @return
+	 */
 	public int updateOrderEmail(int orderEmailId, String orderEmailStatus, String subject_rboMatch, String subject_productlineMatch, String body_rboMatch, String body_productlineMatch, String comment );
 	
 	/** method updateOrderEmailAttachment

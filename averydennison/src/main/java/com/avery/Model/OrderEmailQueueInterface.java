@@ -4,14 +4,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author Shalini
+ * @author Dipanshu
  *
  */
+
 public interface OrderEmailQueueInterface {
+	/**
+	 * @param email queue id
+	 * @return email content
+	 */
 	public HashMap<String, String> EmailSource(int id );
+	
+	/**
+	 * @param email
+	 * @param domain
+	 * @return
+	 */
 	public int getPartnerId(String email, String domain );
+	/**
+	 * @param email
+	 * @return
+	 */
 	public ArrayList<Object> getPartnerRbo_productlines(String email);
 	//public ArrayList<Object> getPartnerRbo_productlines(int partnerId );
+	/**
+	 * @param id
+	 * @return
+	 */
 	public ArrayList<Object> GetEmailAttachments(int id);
 	/**
 	 * method GetEmailAttachments
@@ -42,14 +61,40 @@ public interface OrderEmailQueueInterface {
 	 * @return
 	 */
 	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment);
+	/**
+	 * @param ErrorCategory
+	 * @param description
+	 * @return
+	 */
 	public int updateError(String ErrorCategory, String description );
+	/**
+	 * @param email_id
+	 * @param productlineId
+	 * @param Status
+	 * @param comment
+	 * @return
+	 */
 	public boolean updateAllAttachment(int email_id, int productlineId, String Status, String comment);
+	/**
+	 * @param att_id
+	 * @param contentType
+	 * @return
+	 */
 	public boolean updateAttachmenttype(int att_id, String contentType);
-	
-	
+	/**
+	 * @param fileQueueId
+	 * @return
+	 */
 	public int GeteAttachmentId(int fileQueueId);
+	/**
+	 * @param att_id
+	 * @return
+	 */
 	public HashMap<String, Integer> GetOrderEmailQueueId(int att_id);
-	
+	/**
+	 * @param orderEmailId
+	 * @return
+	 */
 	public ArrayList<Object> GetEmailAttachmentDetail(int orderEmailId);
 	/**
 	 * @param attachmentId

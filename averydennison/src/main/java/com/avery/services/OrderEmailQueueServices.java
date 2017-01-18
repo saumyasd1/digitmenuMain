@@ -111,6 +111,7 @@ public class OrderEmailQueueServices {
 	public void readEmailSubject(int id, int attachment_id, List<Integer> productline_id ){
 		
 		List<String> rbo_match = new ArrayList<String>();
+		List<String> productline_match = new ArrayList<String>();
 		List<Integer> schema_id = new ArrayList<Integer>();
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		HashMap<String, String> emailinfo = orderEmailQueue.EmailSource(id);
@@ -152,18 +153,40 @@ public class OrderEmailQueueServices {
 						}
 					}
 				}
+				if(rbodetails.isEmailSubjectProductlineMatchRequired()){
+					String productlines = rbodetails.getEmailSubjectProductLineMatch();
+					if (productlines.contains("|")||!productlines.isEmpty()) {
+						String[] pline = productlines.split("\\|");
+						for (String productline : pline) {
+							if(!productline.isEmpty()){
+								if (subject.toLowerCase().contains(productline.toLowerCase())) {
+									productline_match.add(productline);
+									schema_id.add(rbodetails.getId());
+									
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 		schema_id = new ArrayList(new HashSet(schema_id));
 		rbo_match = new ArrayList(new HashSet(rbo_match));
+		productline_match = new ArrayList(new HashSet(productline_match));
 		System.out.println("schema_id"+schema_id);
 		System.out.println("rbo_match"+rbo_match);
+		System.out.println("productline_match"+productline_match);
 		String rbo_string="";
 		for (String s : rbo_match)
 		{
 			rbo_string += s + ",";
 		}
-		orderEmailQueue.updateOrderEmail(id,"3",rbo_string,"","","","");
+		String pline_string="";
+		for (String s : productline_match)
+		{
+			pline_string += s + ",";
+		}
+		orderEmailQueue.updateOrderEmail(id,"3",rbo_string,pline_string,"","","");
 	}
 	
 	/*

@@ -252,6 +252,8 @@ public class OrderLine {
 	String account;
 	@Column(name = "shipVia", length = 100)
 	String shipVia;
+	@Column(name = "productionLine", length = 1000)
+	String productionLine;
 	/*@Column(name = "createdByName", length = 50)
 	String createdByName;
 	@Column(name = "lastModifiedByName", length = 50)
@@ -1428,7 +1430,7 @@ public class OrderLine {
 		this.shipVia = shipVia;
 	}
 
-
+	
 	/*public String getCreatedByName() {
 		return createdByName;
 	}
@@ -1447,6 +1449,16 @@ public class OrderLine {
 	public void setLastModifiedByName(String lastModifiedByName) {
 		this.lastModifiedByName = lastModifiedByName;
 	}*/
+
+
+	public String getProductionLine() {
+		return productionLine;
+	}
+
+
+	public void setProductionLine(String productionLine) {
+		this.productionLine = productionLine;
+	}
 
 
 	public String getProductLineType() {

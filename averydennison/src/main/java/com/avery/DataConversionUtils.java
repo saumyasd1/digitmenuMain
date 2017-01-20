@@ -139,6 +139,10 @@ public class DataConversionUtils {
 			if (msgContent.trim().equals("")) {
 				msgContent = getBodyMessage(message, "text/HTML", "UTF-8");
 			}
+			msgContent = msgContent.trim();
+			if(msgContent.startsWith("<div")){
+				msgContent = "<html>\n"+msgContent+"\n</html>";  
+			}
 			FileOutputStream fos = new FileOutputStream(location
 					+ File.separatorChar + fileName + ".html");
 			Writer out = new OutputStreamWriter(fos, "UTF-8");

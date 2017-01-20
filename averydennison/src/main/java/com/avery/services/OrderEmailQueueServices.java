@@ -193,13 +193,18 @@ public class OrderEmailQueueServices {
 		
 		for (String s : rbo_match)
 		{
-			subjectRbo += s + ",";
+			System.out.println("rbo_match length"+subjectRbo.length());
+			if(subjectRbo.length()<=85){
+				System.out.println("rbo_match length22"+subjectRbo.length());
+				subjectRbo += s + ",";
+			}
 		}
 		
 		for (String s : productline_match)
 		{
-			
-			subjectProductline += s + ",";
+			if(subjectProductline.length()<=85){
+				subjectProductline += s + ",";
+			}
 		}
 		orderEmailQueue.updateOrderEmail(id,"3",subjectRbo,subjectProductline,"","","");
 	}
@@ -302,13 +307,16 @@ public class OrderEmailQueueServices {
 				
 				for (String s : rbo_match)
 				{
-					fileContentMatch += s + ",";
+					if(fileContentMatch.length()<=85){
+						fileContentMatch += s + ",";
+					}
 				}
 				
 				for (String s : productline_match)
 				{
-					
-					fileContentMatch += s + ",";
+					if(fileContentMatch.length()<=85){
+						fileContentMatch += s + ",";
+					}
 				}
 				int att_productline_id=0;
 				//System.out.println("attachment_id"+attachment_id);

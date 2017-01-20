@@ -168,6 +168,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 				domain = p_email[1];
 				
 			}
+			domain="*@"+domain;
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 			Session session=sessionFactory.openSession();
 			session.beginTransaction();

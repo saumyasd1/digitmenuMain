@@ -624,11 +624,22 @@ public class OrderEmailQueueServices {
 									
 									}else if(file_ext.contains("pdf")){ 
 										String keyword = Sheetinfo.trim();
-										keyword=keyword.replace("*", "(.*)");
 										
-										if(!keyword_location.trim().isEmpty()){
-											keyword_location =searchpdf(file_name, keyword, file_path);
-											
+
+										String[] keyword_s;
+										if (keyword.contains("Value")){ 
+											keyword_s = keyword.split(":");
+											cell_value=keyword_s[1];
+											cell_value=cell_value.replace("*", "(.*)");
+										}
+										//keyword=keyword.replace("*", "(.*)");
+										System.out.println("cell_value "+cell_value);
+										System.out.println("file_name "+file_name);
+										System.out.println("file_path "+file_path);
+										
+										if(!keyword.trim().isEmpty()){
+											keyword_location =searchpdf(file_name, cell_value, file_path);
+											System.out.println("keyword_location "+keyword_location);
 										}else{
 											log.info("keyword is empty for pdf");
 										}
@@ -636,6 +647,7 @@ public class OrderEmailQueueServices {
 								}
 								if(!keyword_location.trim().isEmpty()){
 									selected_schema.add(productline_rbo_id);
+									System.out.println("keyword_location123  "+ keyword_location);
 									/*System.out.println("keyword  "+ cell_value);
 									System.out.println("file_name  "+ file_name);
 									System.out.println("file_path  "+ file_path);

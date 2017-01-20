@@ -33,7 +33,10 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	public HashMap<String, String> EmailSource(int id ){
 		
 		String Source_email="";
-		String Source_email_body ="";
+		String subjectRbo ="";
+		String subjectProductline ="";
+		String BodyRbo ="";
+		String BodyProductline ="";
 		String Source_email_subject ="";
 		HashMap<String, String> emailinfo = new HashMap<String, String>();
 		try{
@@ -44,8 +47,12 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 				Criteria cr = session.createCriteria(OrderEmailQueue.class)
 	    		    .setProjection(Projections.projectionList()
 	    		      .add(Projections.property("id"), "id")
-	    		      .add(Projections.property("mailBody"), "mailBody")
+	    		      //.add(Projections.property("mailBody"), "mailBody")
 	    		      .add(Projections.property("subject"), "subject")
+	    		      .add(Projections.property("emailSubjectProductLineMatch"), "emailSubjectProductLineMatch")
+	    		      .add(Projections.property("emailSubjectRBOMatch"), "emailSubjectRBOMatch")
+	    		      .add(Projections.property("emailBodyProductLineMatch"), "emailBodyProductLineMatch")
+	    		      .add(Projections.property("emailBodyRBOMatch"), "emailBodyRBOMatch")
 	    		      .add(Projections.property("senderEmailId"), "senderEmailId"))
 	    		    .setResultTransformer(Transformers.aliasToBean(OrderEmailQueue.class));
 	
@@ -57,12 +64,18 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		        	 OrderEmailQueue orderEmailQueue =  iterator.next(); 
 				    
 				      Source_email= orderEmailQueue.getSenderEmailId(); 
-				      Source_email_body= orderEmailQueue.getMailBody();
+				      subjectRbo= orderEmailQueue.getEmailSubjectRBOMatch();
+				      subjectProductline= orderEmailQueue.getEmailSubjectProductLineMatch();
+				      BodyRbo= orderEmailQueue.getEmailBodyRBOMatch();
+				      BodyProductline= orderEmailQueue.getEmailBodyProductLineMatch();
 				      Source_email_subject= orderEmailQueue.getSubject();
 				  }
 		         emailinfo.put("source", Source_email);
 		         emailinfo.put("subject", Source_email_subject);
-		         emailinfo.put("body", Source_email_body);
+		         emailinfo.put("subjectRbo", subjectRbo);
+		         emailinfo.put("subjectProductline", subjectProductline);
+		         emailinfo.put("BodyRbo", BodyRbo);
+		         emailinfo.put("BodyProductline", BodyProductline);
 		         session.getTransaction().commit();
 		         session.close();
 	 	 	
@@ -378,7 +391,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	}
 	
 	
-	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment){
+	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment, String contentMatch){
 		int result = 0;
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
@@ -397,6 +410,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			orderEmail.setRboMatch(rboMatch);
 			orderEmail.setId(attachmentId);
 			orderEmail.setComment(comment);
+			orderEmail.setFileContentMatch(contentMatch);
 			
 			session.update(orderEmail);
 			result=1;

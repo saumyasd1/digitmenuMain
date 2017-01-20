@@ -117,12 +117,26 @@ public class OrderEmailQueueServices {
 		HashMap<String, String> emailinfo = orderEmailQueue.EmailSource(id);
 		Iterator it = emailinfo.entrySet().iterator();
 		String subject="";
+		String subjectRbo="";
+		String subjectProductline="";
 		////get email subject  
 		while (it.hasNext()) {
 			Map.Entry pair = (Map.Entry) it.next();
 			if (pair.getKey() == "subject") {
 				subject = (String) pair.getValue();
 			}
+			if (pair.getKey() == "subjectRbo") {
+				subjectRbo = (String) pair.getValue();
+			}
+			if (pair.getKey() == "subjectProductline") {
+				subjectProductline = (String) pair.getValue();
+			}
+		}
+		if(subjectRbo==null){
+			subjectRbo="";
+		}
+		if(subjectProductline==null){
+			subjectProductline="";
 		}
 		if(subject==null||subject.trim().isEmpty()){
 			log.info("subject is empty");
@@ -176,19 +190,133 @@ public class OrderEmailQueueServices {
 		System.out.println("schema_id"+schema_id);
 		System.out.println("rbo_match"+rbo_match);
 		System.out.println("productline_match"+productline_match);
-		String rbo_string="";
+		
 		for (String s : rbo_match)
 		{
-			rbo_string += s + ",";
+			subjectRbo += s + ",";
 		}
-		String pline_string="";
+		
 		for (String s : productline_match)
 		{
-			pline_string += s + ",";
+			
+			subjectProductline += s + ",";
 		}
-		orderEmailQueue.updateOrderEmail(id,"3",rbo_string,pline_string,"","","");
+		orderEmailQueue.updateOrderEmail(id,"3",subjectRbo,subjectProductline,"","","");
 	}
-	
+	/**
+	 * method EmailBodyAnalysis
+	 * @param id
+	 * @param attachment_id
+	 * @param productline_id
+	 */
+	public void EmailBodyAnalysis(int id, int attachment_id, List<Integer> productline_id ){
+			
+		List<String> rbo_match = new ArrayList<String>();
+		List<String> productline_match = new ArrayList<String>();
+		List<Integer> schema_id = new ArrayList<Integer>();
+		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+		ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(id);
+		Iterator<Object> iterat = email_list.iterator();
+		OrderFileAttachment email_att = new OrderFileAttachment();
+		String file_path="";
+		String fileName="";
+		String fileContentMatch="";
+		String result="";
+		String att_status="";
+		String comment="";
+		while (iterat.hasNext()) {
+			email_att = (OrderFileAttachment) iterat.next();
+			if(email_att.getFileName().trim().contains("CompleteEmail")){
+				attachment_id=email_att.getId();
+				fileName=email_att.getFileName();
+				file_path=email_att.getFilePath();
+				fileContentMatch=email_att.getFileContentMatch();
+				att_status = email_att.getStatus();
+				comment=email_att.getComment();
+				
+			
+				if(fileContentMatch==null||fileContentMatch.trim().isEmpty()){
+					fileContentMatch="";
+				}
+				if(comment==null||comment.trim().isEmpty()){
+					comment="";
+				}
+				System.out.println("fileName "+fileName);
+				System.out.println("file_path "+file_path);
+				System.out.println("comment "+comment);
+				//get product line id in loop and check
+				for (Integer p_id : productline_id){
+					System.out.println("p_id "+p_id);
+					//fetch productline info
+					ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartner_productline(p_id);
+					Partner_RBOProductLine rbodetails = new Partner_RBOProductLine();
+					Iterator<Object> iterator = partner_rboinfo.iterator();
+					while (iterator.hasNext()) {
+						rbodetails = (Partner_RBOProductLine) iterator.next();
+						if(rbodetails.isEmailBodyRBOMatchRequired()){
+							String rbolist = rbodetails.getEmailBodyRBOMatch();
+							System.out.println("rbolist "+rbolist);
+							if (rbolist.contains("|")||!rbolist.isEmpty()) {
+								String[] rbos = rbolist.split("\\|");
+								
+								for (String prbo : rbos) {
+									System.out.println("prbo "+prbo);
+									result="";
+									if(!prbo.trim().isEmpty()){
+										prbo=prbo.trim();
+										result= searchpdf(fileName,prbo,file_path);
+									}
+									if (!result.isEmpty()) {
+										rbo_match.add(prbo);
+										schema_id.add(rbodetails.getId());
+									}
+								}
+							}
+						}
+						if(rbodetails.isEmailBodyProductlineMatchRequired()){
+							String productlines = rbodetails.getEmailBodyProductLineMatch();
+							if (productlines.contains("|")||!productlines.isEmpty()) {
+								String[] pline = productlines.split("\\|");
+								for (String productline : pline) {
+									if(!productline.trim().isEmpty()){
+										result="";
+										productline=productline.trim();
+										result= searchpdf(fileName,productline,file_path);
+										if (!result.isEmpty()) {
+											productline_match.add(productline);
+											schema_id.add(rbodetails.getId());
+											
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				schema_id = new ArrayList(new HashSet(schema_id));
+				rbo_match = new ArrayList(new HashSet(rbo_match));
+				productline_match = new ArrayList(new HashSet(productline_match));
+				System.out.println("schema_id"+schema_id);
+				System.out.println("rbo_match"+rbo_match);
+				System.out.println("productline_match"+productline_match);
+				
+				for (String s : rbo_match)
+				{
+					fileContentMatch += s + ",";
+				}
+				
+				for (String s : productline_match)
+				{
+					
+					fileContentMatch += s + ",";
+				}
+				int att_productline_id=0;
+				//System.out.println("attachment_id"+attachment_id);
+				//System.out.println("comment"+comment);
+				orderEmailQueue.updateOrderEmailAttachment(attachment_id, att_productline_id, "6","","",comment,fileContentMatch);
+			}
+		}//orderEmailQueue.updateOrderEmailAttachment(id,"3",subjectRbo,subjectProductline,"","","");
+	}
 	/*
 	 * new method to search string in pdf file 
 	 * with api itext
@@ -487,7 +615,7 @@ public class OrderEmailQueueServices {
 										}
 									
 									}else if(file_ext.contains("pdf")){
-										String keyword = Sheetinfo;
+										String keyword = Sheetinfo.trim();
 										keyword=keyword.replace("*", "(.*)");
 										
 										if(!keyword_location.trim().isEmpty()){
@@ -518,8 +646,9 @@ public class OrderEmailQueueServices {
 					//readEmailSubject(id, att_id, selected_schema);
 					orderEmailQueue.updateOrderEmailAttachmentContent(att_id, productline_rbo_id, "8","","","","Order");
 					readEmailSubject(id,att_id,selected_schema);
+					EmailBodyAnalysis(id,att_id,selected_schema);
 				}else if(selected_schema.size()==0){
-					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema_id_comment);
+					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema_id_comment,"");
 				}else{
 					String schema="";
 					for (Integer ids : selected_schema)
@@ -527,8 +656,9 @@ public class OrderEmailQueueServices {
 						schema += ids + ",";
 					}
 					//readEmailSubject(id, att_id, selected_schema);
-					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema);
+					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema,"");
 					readEmailSubject(id,att_id,selected_schema);
+					EmailBodyAnalysis(id,att_id,selected_schema);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

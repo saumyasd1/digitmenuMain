@@ -58,9 +58,10 @@ public interface OrderEmailQueueInterface {
 	 * @param rboMatch
 	 * @param productlineMatch
 	 * @param comment
+	 * @param contentMatch
 	 * @return
 	 */
-	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment);
+	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment,String contentMatch);
 	/**
 	 * @param ErrorCategory
 	 * @param description

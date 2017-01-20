@@ -622,10 +622,8 @@ public class OrderEmailQueueServices {
 											
 										}
 									
-									}else if(file_ext.contains("pdf")){ 
+									}else if(p_info.getOrderFileNameExtension().contains("pdf")){ 
 										String keyword = Sheetinfo.trim();
-										
-
 										String[] keyword_s;
 										if (keyword.contains("Value")){ 
 											keyword_s = keyword.split(":");

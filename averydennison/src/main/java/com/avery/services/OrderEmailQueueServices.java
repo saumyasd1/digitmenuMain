@@ -193,9 +193,9 @@ public class OrderEmailQueueServices {
 		
 		for (String s : rbo_match)
 		{
-			System.out.println("rbo_match length"+subjectRbo.length());
+			//System.out.println("rbo_match length"+subjectRbo.length());
 			if(subjectRbo.length()<=85){
-				System.out.println("rbo_match length22"+subjectRbo.length());
+				//System.out.println("rbo_match length22"+subjectRbo.length());
 				subjectRbo += s + ",";
 			}
 		}

@@ -614,7 +614,7 @@ public class OrderEmailQueueServices {
 											
 										}
 									
-									}else if(file_ext.contains("pdf")){
+									}else if(file_ext.contains("pdf")){ 
 										String keyword = Sheetinfo.trim();
 										keyword=keyword.replace("*", "(.*)");
 										

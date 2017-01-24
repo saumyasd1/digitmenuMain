@@ -7,9 +7,22 @@ import java.util.Iterator;
 import java.util.List;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
-
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,7 +43,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	
 	static Logger log = Logger.getLogger(OrderEmailQueueModel.class.getName());
 
-	public HashMap<String, String> EmailSource(int id ){
+	public HashMap<String, String> EmailSource(int id ) throws Exception{
 		
 		String Source_email="";
 		String subjectRbo ="";
@@ -44,6 +57,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 			Session session=sessionFactory.openSession();
 			session.beginTransaction();
+			
 				Criteria cr = session.createCriteria(OrderEmailQueue.class)
 	    		    .setProjection(Projections.projectionList()
 	    		      .add(Projections.property("id"), "id")
@@ -80,14 +94,9 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		         session.close();
 	 	 	
 		}catch(HibernateException  ex){
-			ex.printStackTrace();
-			//String error=ex.toString();
-			this.updateError("error in fetching emailinfo hibernate","");
-		//	log.error(ex);
-		}catch(Exception  e){
-			e.printStackTrace();
-			String error=e.toString();
-			this.updateError("error in fetching emailinfo",error);
+			throw  ex;
+		}catch(Exception e){
+			throw e;
 			//log.error(e);
 		}
 		//log.info("Exit method emailsource  class OrderEmailQueueModel");
@@ -141,21 +150,17 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	         session.close();
 	 	
 		}catch(HibernateException  ex){
-			ex.printStackTrace();
-			String error=ex.toString();
-			this.updateError(" hibernate error for partner id",error);
+			throw  ex;
 			//log.error(ex);
 		}catch(Exception  e){
-			e.printStackTrace();
-			String error=e.toString();
-			this.updateError(" error for partner id",error);
+			throw  e;
 			//log.error(e);
 		}
 		//log.info("Exit method getPartnerId  class OrderEmailQueueModel");
 		return partnerId;
 	      
 	}
-	public ArrayList<Object> getPartnerRbo_productlines(String email ){
+	public ArrayList<Object> getPartnerRbo_productlines(String email ) throws Exception{
 		 ArrayList<Object> rboproduclines= new ArrayList();
 		
 			String emailId = "";
@@ -168,6 +173,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 				domain = p_email[1];
 				
 			}
+		
 			domain="*@"+domain;
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 			Session session=sessionFactory.openSession();
@@ -199,14 +205,11 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	     		session.getTransaction().commit();
 		        session.close();
 			}catch(HibernateException  ex){
-				ex.printStackTrace();
-				String error=ex.toString();
-				this.updateError("service hibernate error9",error);
-				//log.error(ex);
+				//ex.printStackTrace();
+				throw  ex;
+				
 			}catch(Exception  e){
-				e.printStackTrace();
-				String error=e.toString();
-				this.updateError("service hibernate error00",error);
+				throw  e;
 				//log.error(e);
 			}
 		//log.info("Exit method getPartnerRbo  class OrderEmailQueueModel");
@@ -257,7 +260,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		return rboproduclines;
 	 	
 	}*/
-	public ArrayList<Object> getPartner_productline(int productlineId ){
+	public ArrayList<Object> getPartner_productline(int productlineId )throws Exception{
 		 ArrayList<Object> rboproduclines= new ArrayList<Object>();
 		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
 		try{
@@ -289,22 +292,16 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	     		session.getTransaction().commit();
 		        session.close();
 			}catch(HibernateException  ex){
-				ex.printStackTrace();
-				String error=ex.toString();
-				this.updateError("service hibernate error01",error);
-				//log.error(ex);
+				throw  ex;
 			}catch(Exception  e){
-				e.printStackTrace();
-				String error=e.toString();
-				this.updateError("service hibernate error02",error);
-				//log.error(e);
+				throw  e;
 			}
 		
 		//log.info("Exit method getPartnerRbo  class OrderEmailQueueModel");
 		return rboproduclines;
 	 	
 	}
-	public ArrayList<Object> GetEmailAttachments(int orderEmailId){
+	public ArrayList<Object> GetEmailAttachments(int orderEmailId)throws Exception{
 		ArrayList<Object> EmailAttachments= new ArrayList();
 		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
 		try{
@@ -332,20 +329,14 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	     		session.getTransaction().commit();
 		        session.close();
 		}catch(HibernateException  ex){
-			ex.printStackTrace();
-			String error=ex.toString();
-			this.updateError("service hibernate error03",error);
-				//log.error(ex);
-				ex.printStackTrace();
+			throw  ex;
 			}catch(Exception  e){
-				e.printStackTrace();
-				String error=e.toString();
-				this.updateError("service hibernate error04",error);
+				throw  e;
 				//log.error(e);
 			}
 		return EmailAttachments;
 	}
-	public int updateOrderEmail(int orderEmailId, String orderEmailStatus, String subject_rboMatch, String subject_productlineMatch, String body_rboMatch, String body_productlineMatch, String comment ){
+	public int updateOrderEmail(int orderEmailId, String orderEmailStatus, String subject_rboMatch, String subject_productlineMatch, String body_rboMatch, String body_productlineMatch, String comment )throws Exception{
 		
 		int result = 0;
 		try{
@@ -383,16 +374,14 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			session.getTransaction().commit();
 			session.close();
 		}catch(Exception e){
-			e.printStackTrace();
-			String error=e.toString();
-			this.updateError("service hibernate error05",error);
+			throw  e;
 			//log.error(e);
 		}
 		return result;
 	}
 	
 	
-	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment, String contentMatch){
+	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment, String contentMatch)throws Exception{
 		int result = 0;
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
@@ -419,14 +408,11 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			session.getTransaction().commit();
 			session.close();
 		}catch(Exception e){
-			e.printStackTrace();
-			String error=e.toString();
-			this.updateError("service hibernate error06",error);
-			//log.error(e);
+			throw  e;
 		}
 		return result;
 	}
-	public boolean updateAllAttachment(int email_id, int productlineId, String Status, String comment){
+	public boolean updateAllAttachment(int email_id, int productlineId, String Status, String comment)throws Exception{
 		int result = 0;
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
@@ -455,15 +441,12 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			session.getTransaction().commit();
 			session.close();
 		}catch(Exception e){
-			e.printStackTrace();
-			String error=e.toString();
-			this.updateError("service hibernate error06",error);
-			//log.error(e);
+			throw  e;
 		}
 		return true;
 	}
 	
-public int updateError(String ErrorCategory,String description ){
+public int updateError(String ErrorCategory,String description )throws Exception{
 		
 		int result = 0;
 		try{
@@ -481,15 +464,11 @@ public int updateError(String ErrorCategory,String description ){
 			session.getTransaction().commit();
 			session.close();
 		}catch(Exception e){
-			e.printStackTrace();
-			String error=e.toString();
-			
-			//this.updateError("error method models",error);
-			//log.error(e);
+			throw  e;
 		}
 		return result;
 	}
-	public boolean updateAttachmenttype(int att_id, String contentType){
+	public boolean updateAttachmenttype(int att_id, String contentType)throws Exception{
 		int result=0;
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
@@ -504,10 +483,7 @@ public int updateError(String ErrorCategory,String description ){
 			session.getTransaction().commit();
 			session.close();
 		}catch(Exception e){
-			e.printStackTrace();
-			String error=e.toString();
-			this.updateError("service hibernate error06",error);
-			//log.error(e);
+			throw  e;
 		}
 		return true;
 	}
@@ -515,7 +491,7 @@ public int updateError(String ErrorCategory,String description ){
 	 * get attachment id andorderemailqueue id for order file queue
 	 * author Dipanshu Ahuja
 	 * **/
-	public int GeteAttachmentId(int fileQueueId){
+	public int GeteAttachmentId(int fileQueueId)throws Exception{
 		int attachment_id=0;
 		OrderFileAttachment orderFileAttachment=new OrderFileAttachment();
 		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
@@ -530,13 +506,13 @@ public int updateError(String ErrorCategory,String description ){
 			session.getTransaction().commit();
 	        session.close();
 		}catch(HibernateException  ex){
-			ex.printStackTrace();
+			throw  ex;
 		}catch(Exception  e){
-			e.printStackTrace();		
+			throw  e;		
 		}
 		return attachment_id;
 	}
-	public HashMap<String, Integer> GetOrderEmailQueueId(int att_id){
+	public HashMap<String, Integer> GetOrderEmailQueueId(int att_id)throws Exception{
 		int orderEmailQueueid=0;
 		HashMap<String, Integer> emailatt_info = new HashMap<String, Integer>();
 		OrderEmailQueue orderEmailQueue=new OrderEmailQueue();
@@ -561,13 +537,13 @@ public int updateError(String ErrorCategory,String description ){
 			session.getTransaction().commit();
 	        session.close();
 		}catch(HibernateException  ex){
-			ex.printStackTrace();
+			throw  ex;
 		}catch(Exception  e){
-			e.printStackTrace();		
+			throw  e;		
 		}
 		return emailatt_info;
 	}
-	public ArrayList<Object> GetEmailAttachmentDetail(int orderEmailId){
+	public ArrayList<Object> GetEmailAttachmentDetail(int orderEmailId)throws Exception{
 		
 		OrderFileAttachment orderFileAttachment = new OrderFileAttachment();
 		ArrayList<Object> EmailAttachments= new ArrayList();
@@ -606,20 +582,13 @@ public int updateError(String ErrorCategory,String description ){
 	     		session.getTransaction().commit();
 		        session.close();
 		}catch(HibernateException  ex){
-			ex.printStackTrace();
-			String error=ex.toString();
-			this.updateError("service hibernate error03",error);
-				//log.error(ex);
-				ex.printStackTrace();
-			}catch(Exception  e){
-				e.printStackTrace();
-				String error=e.toString();
-				this.updateError("service hibernate error04",error);
-				//log.error(e);
-			}
+			throw  ex;
+		}catch(Exception  e){
+			throw  e;
+		}
 		return EmailAttachments;
 	}
-	public int updateOrderEmailAttachmentContent(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment,String fileType){
+	public int updateOrderEmailAttachmentContent(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment,String fileType)throws Exception{
 		int result = 0;
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
@@ -645,10 +614,7 @@ public int updateError(String ErrorCategory,String description ){
 			session.getTransaction().commit();
 			session.close();
 		}catch(Exception e){
-			e.printStackTrace();
-			String error=e.toString();
-			this.updateError("service hibernate error06",error);
-			//log.error(e);
+			throw  e;
 		}
 		return result;
 	}

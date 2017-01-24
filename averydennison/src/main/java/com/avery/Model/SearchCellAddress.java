@@ -1,7 +1,10 @@
 package com.avery.Model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+
+
 
 
 
@@ -23,7 +26,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 
 public class SearchCellAddress {
 	static Logger log = Logger.getLogger(OrderEmailQueueModel.class.getName());
-	public String SearchXL(String path, String keyword, String filetype, String cell, String filename) {
+	public String SearchXL(String path, String keyword, String filetype, String cell, String filename) throws Exception {
 		String content = keyword.trim();
 		path = path.trim();
 		filetype = filetype.trim();
@@ -41,7 +44,7 @@ public class SearchCellAddress {
 		String result=""; 
 		try {
 			InputStream inp;
-			inp = new FileInputStream(path+"/"+filename);
+			inp = new FileInputStream(path+File.separatorChar+filename);
 			
 			Workbook wb = WorkbookFactory.create(inp);
 			int num = wb.getNumberOfSheets();
@@ -72,7 +75,7 @@ public class SearchCellAddress {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return res;
 	}

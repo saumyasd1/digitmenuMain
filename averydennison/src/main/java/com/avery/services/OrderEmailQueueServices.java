@@ -79,19 +79,19 @@ public class OrderEmailQueueServices {
 		try {
 			//log.error("Enter method OrderEmailSourceservice  class OrderEmailService");
 			///////get values of email 
-			/*HashMap<String, String> emailinfo = orderEmailQueue.EmailSource(id);
+			HashMap<String, String> emailinfo = orderEmailQueue.EmailSource(id);
 			Iterator it = emailinfo.entrySet().iterator();
 			////get email subject and source 
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry) it.next();
 
-				/*if (pair.getKey() == "source") {
+				if (pair.getKey() == "source") {
 					email = (String) pair.getValue();
-				}*/
+				}
 				/*if (pair.getKey() == "subject") {
 					subject = (String) pair.getValue();
-				}* /
-			}*/
+				}*/
+			}
 			
 			ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(id);
 			Iterator<Object> iterat = email_list.iterator();
@@ -593,13 +593,15 @@ public class OrderEmailQueueServices {
 				while (iterator.hasNext()) {
 					keyword_location="";
 					p_info = (Partner_RBOProductLine) iterator.next();
-					productline_rbo_id=(int) p_info.getId();
+					productline_rbo_id= p_info.getId();
+					//System.out.println(productline_rbo_id);
 					log.info("Processing attachment for productline id \""+productline_rbo_id+".");
 					if(schema_id_comment.isEmpty()){
 						schema_id_comment = "" +productline_rbo_id;
 					}else{
 						schema_id_comment=schema_id_comment+","+productline_rbo_id;
 					}
+					
 					if(p_info.isFileOrderMatchRequired()){
 						
 						if(p_info.getFileOrderMatchLocation().contains("FileName")){
@@ -667,6 +669,7 @@ public class OrderEmailQueueServices {
 						log.info("FileOrderMatchRequired is false for productline id \""+productline_rbo_id+".");
 					}
 				}
+				//System.out.println(selected_schema);
 				if(selected_schema.size()==1){
 					log.info("match schema list \""+selected_schema+".");
 					productline_rbo_id = selected_schema.get(0);

@@ -254,6 +254,10 @@ public class OrderLine {
 	String shipVia;
 	@Column(name = "productionLine", length = 1000)
 	String productionLine;
+	@Column(name = "shipMark")
+	String shipMark;
+	@Column(name = "additionalLabelInternalItem")
+	String additionalLabelInternalItem; 
 	/*@Column(name = "createdByName", length = 50)
 	String createdByName;
 	@Column(name = "lastModifiedByName", length = 50)
@@ -1557,6 +1561,26 @@ public class OrderLine {
 
 	public void setAveryBulk(String averyBulk) {
 		this.averyBulk = averyBulk;
+	}
+
+
+	public String getShipMark() {
+		return shipMark;
+	}
+
+
+	public void setShipMark(String shipMark) {
+		this.shipMark = shipMark;
+	}
+
+
+	public String getAdditionalLabelInternalItem() {
+		return additionalLabelInternalItem;
+	}
+
+
+	public void setAdditionalLabelInternalItem(String additionalLabelInternalItem) {
+		this.additionalLabelInternalItem = additionalLabelInternalItem;
 	}
 
 

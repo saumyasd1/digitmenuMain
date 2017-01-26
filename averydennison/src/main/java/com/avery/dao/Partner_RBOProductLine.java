@@ -53,6 +53,8 @@ public class Partner_RBOProductLine {
 	String attachmentFileOrderMatch;// 100
 	@Column(name = "attachmentFileOrderMatchLocation", length = 100)
 	String attachmentFileOrderMatchLocation;// 100
+	@Column(name = "productLineMatchFlag", length = 50)
+	String productLineMatchFlag; 
 	@Column(name = "attachmentFileOrderMatchRequired")
 	boolean attachmentFileOrderMatchRequired;
 	@Column(name = "attachmentFileProductlineMatchLocation", length = 100)
@@ -1249,6 +1251,16 @@ public class Partner_RBOProductLine {
 
 	public void setFiberpercentagecheck(boolean fiberpercentagecheck) {
 		this.fiberpercentagecheck = fiberpercentagecheck;
+	}
+
+
+	public String getProductLineMatchFlag() {
+		return productLineMatchFlag;
+	}
+
+
+	public void setProductLineMatchFlag(String productLineMatchFlag) {
+		this.productLineMatchFlag = productLineMatchFlag;
 	}
 	
 	

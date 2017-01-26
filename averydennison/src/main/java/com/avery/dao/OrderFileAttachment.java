@@ -52,7 +52,7 @@ public class OrderFileAttachment {
 	@Column(name="error",length=50)
 	String error;
 	@Column(name="orderFileId")
-	int orderFileId;
+	Integer orderFileId;
 	
 	@Column(name="productLineMatch",length=100)
 	String productLineMatch;
@@ -198,11 +198,11 @@ public class OrderFileAttachment {
 		this.error = error;
 	}
 
-	public int getOrderFileId() {
+	public Integer getOrderFileId() {
 		return orderFileId;
 	}
 
-	public void setOrderFileId(int orderFileId) {
+	public void setOrderFileId(Integer orderFileId) {
 		this.orderFileId = orderFileId;
 	}
 

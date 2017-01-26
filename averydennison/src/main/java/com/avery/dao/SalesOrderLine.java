@@ -180,6 +180,10 @@ public class SalesOrderLine {
 	String system_Status;
 	@Column(name = "status",length=2000)
 	String status;
+	@Column(name = "shipMark")
+	String shipMark;
+	@Column(name = "additionalLabelInternalItem")
+	String additionalLabelInternalItem ;
 	@Column(name="productionLine",length=50)
 	String productionLine;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -1047,6 +1051,26 @@ public class SalesOrderLine {
 	public void setListSalesOrderDetails(
 			List<SalesOrderDetails> listSalesOrderDetails) {
 		this.listSalesOrderDetails = listSalesOrderDetails;
+	}
+
+
+	public String getShipMark() {
+		return shipMark;
+	}
+
+
+	public void setShipMark(String shipMark) {
+		this.shipMark = shipMark;
+	}
+
+
+	public String getAdditionalLabelInternalItem() {
+		return additionalLabelInternalItem;
+	}
+
+
+	public void setAdditionalLabelInternalItem(String additionalLabelInternalItem) {
+		this.additionalLabelInternalItem = additionalLabelInternalItem;
 	}
 
 

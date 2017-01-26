@@ -3,6 +3,8 @@ package com.avery.Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.avery.dao.OrderFileAttachment;
+
 /**
  * @author Dipanshu
  *
@@ -110,4 +112,11 @@ public interface OrderEmailQueueInterface {
 	 * @return
 	 */
 	public int updateOrderEmailAttachmentContent(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment,String fileType)throws Exception;
+	/**
+	 * @param orderFileQueueId
+	 * @param comment
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean updateOrderFileQueueComment(int orderFileQueueId, String comment)throws Exception;
 }

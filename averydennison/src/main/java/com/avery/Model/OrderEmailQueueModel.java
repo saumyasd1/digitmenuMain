@@ -6,21 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -126,7 +111,11 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	         Iterator<Partner> iterator = list.iterator(); 
 	         while (iterator.hasNext()){
 	        	 Partner partner =  iterator.next(); 
-			     partnerId = partner.getID();
+	        	 //casted for long
+	        	 if(partner!=null){
+	        		 partnerId = (int) partner.getID();
+	 			}
+			    
 			  }
 	          
 	         if(partnerId == 0){
@@ -143,9 +132,13 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	     	         Iterator<Partner> piterator = plist.iterator(); 
 	     	         while (piterator.hasNext()){
 	     	        	 Partner partnerid =  piterator.next(); 
-	     			     partnerId = partnerid.getID(); 
+	     	        	 //casted for long
+	     	        	if(partnerid != null){
+	     	        		partnerId = (int) partnerid.getID(); 
+	     	        	}
 	     			  }
 	         }
+	        
 	         session.getTransaction().commit();
 	         session.close();
 	 	
@@ -500,15 +493,22 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 			Session session=sessionFactory.openSession();
 			session.beginTransaction();
+			//System.out.print("here1");
 			OrderFileQueue orderfilequeue=(OrderFileQueue)session.load(OrderFileQueue.class, fileQueueId);
 			orderFileAttachment = orderfilequeue.getVarOrderFileAttachment();
-			attachment_id= orderFileAttachment.getId();
+			//casted for long
+			//System.out.println("here"+orderFileAttachment.getId());
+			if(orderFileAttachment!= null){
+				attachment_id = (int) orderFileAttachment.getId();
+			}
 			session.getTransaction().commit();
 	        session.close();
 		}catch(HibernateException  ex){
-			throw  ex;
+			ex.printStackTrace();
+			//throw  ex;
 		}catch(Exception  e){
-			throw  e;		
+			e.printStackTrace();
+			//throw  e;		
 		}
 		return attachment_id;
 	}
@@ -526,13 +526,19 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			OrderFileAttachment orderFileAttachment=(OrderFileAttachment)session.load(OrderFileAttachment.class, att_id);
 			
 			orderEmailQueue = orderFileAttachment.getVarOrderEmailQueue();
-			orderEmailQueueid = orderEmailQueue.getId();
-			
+			///casted for long data types
+			if( orderEmailQueue != null){
+				orderEmailQueueid =  orderEmailQueue.getId();
+			}
 			partner_RBOProductLine=orderFileAttachment.getVarProductLine();
+			int schema_id = 0;
+			if( partner_RBOProductLine!=null){
+				schema_id =  partner_RBOProductLine.getId();
+			}
+			//int schema_id = (int) partner_RBOProductLine.getId();
 			
-			//System.out.println("partner_RBOProductLine id ="+partner_RBOProductLine.getId());
-			emailatt_info.put("emailQueue_id", orderEmailQueue.getId());
-			emailatt_info.put("schema_id", partner_RBOProductLine.getId());
+			emailatt_info.put("emailQueue_id", orderEmailQueueid);
+			emailatt_info.put("schema_id", schema_id);
 			
 			session.getTransaction().commit();
 	        session.close();
@@ -563,28 +569,16 @@ public int updateError(String ErrorCategory,String description )throws Exception
 	    		      .add(Projections.property("varProductLine"), "varProductLine")
 	    		      .add(Projections.property("filePath"), "filePath"))
 	    		    .setResultTransformer(Transformers.aliasToBean(OrderFileAttachment.class));
-				//cr.add(Restrictions.eq("active", true));
 				cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
 				
 	     		OrderFileAttachment ofa  = (OrderFileAttachment) cr.list().get(0);
-	     		ofa.getVarProductLine().getId();
-	     		/*Iterator<OrderFileAttachment> iterator = list.iterator(); 
-	     		while (iterator.hasNext()){
-	     			 orderFileAttachment =  iterator.next(); 
-	     			orderFileAttachment.getVarProductLine().getId();
-		     	/*	if(!list.isEmpty()){
-		     			//Partner_RBOProductLine partner_RBOProductLine= new Partner_RBOProductLine();
-		     			partner_RBOProductLine = orderFileAttachment.getVarProductLine();
-		     		}*/
-	     		
 	     		EmailAttachments.add(ofa);
-	     		
 	     		session.getTransaction().commit();
 		        session.close();
 		}catch(HibernateException  ex){
-			throw  ex;
+			throw ex;
 		}catch(Exception  e){
-			throw  e;
+			throw e;
 		}
 		return EmailAttachments;
 	}
@@ -595,7 +589,6 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			Session session=sessionFactory.openSession();
 			session.beginTransaction();
 			OrderFileAttachment orderEmail=(OrderFileAttachment)session.load(OrderFileAttachment.class, attachmentId);
-			
 			if(productlineId!=0){
 				Partner_RBOProductLine pline=(Partner_RBOProductLine)session.load(Partner_RBOProductLine.class, productlineId);
 				pline.setId(productlineId);
@@ -607,7 +600,6 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			orderEmail.setRboMatch(rboMatch);
 			orderEmail.setId(attachmentId);
 			orderEmail.setComment(comment);
-			
 			session.update(orderEmail);
 			result=1;
 			
@@ -617,5 +609,24 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			throw  e;
 		}
 		return result;
+	}
+	
+	public boolean updateOrderFileQueueComment(int orderFileQueueId, String comment)throws Exception{
+		try{
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			OrderFileQueue orderFileQueue=(OrderFileQueue)session.load(OrderFileQueue.class, orderFileQueueId);
+			
+			orderFileQueue.setId(orderFileQueueId);
+			orderFileQueue.setComment(comment);
+			session.update(orderFileQueue);
+			
+			session.getTransaction().commit();
+			session.close();
+		}catch(Exception e){
+			throw  e;
+		}
+		return true;
 	}
 }

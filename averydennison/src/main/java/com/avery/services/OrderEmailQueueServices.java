@@ -1,7 +1,6 @@
 package com.avery.services;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,9 +29,6 @@ import com.avery.Model.SearchCellAddress;
 import com.avery.dao.OrderFileAttachment;
 import com.avery.dao.Partner_RBOProductLine;
 
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.internet.MimeMessage;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -79,6 +75,7 @@ public class OrderEmailQueueServices {
 		try {
 			//log.error("Enter method OrderEmailSourceservice  class OrderEmailService");
 			///////get values of email 
+			log.info("get email source for id : \""+id+".");
 			HashMap<String, String> emailinfo = orderEmailQueue.EmailSource(id);
 			Iterator it = emailinfo.entrySet().iterator();
 			////get email subject and source 
@@ -92,13 +89,13 @@ public class OrderEmailQueueServices {
 					subject = (String) pair.getValue();
 				}*/
 			}
-			
+			log.info("email source found: \""+email+".");
 			ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(id);
 			Iterator<Object> iterat = email_list.iterator();
 			OrderFileAttachment email_att = new OrderFileAttachment();
 			if(email_list.size()<=0){
-				log.info("No attachments found for emailqueue id \""+id+".");
-				orderEmailQueue.updateOrderEmail(id,"3","","","","","no attachment files");
+				log.info("No attachments found for emailqueue id \""+id+"\".");
+				orderEmailQueue.updateOrderEmail(id,"3","","","","","");
 				return;
 			}
 			total_attachments=email_list.size();
@@ -106,16 +103,18 @@ public class OrderEmailQueueServices {
 			while (iterat.hasNext()) {
 				email_att = (OrderFileAttachment) iterat.next();
 				//casted for long type
+				
 				att_id =  email_att.getId();
 				String file_name = email_att.getFileName();
 				String file_ext = email_att.getFileExtension();
 				String file_path = email_att.getFilePath();
+				log.info("identification attachment for attachment id \""+att_id+"\".");
 				productline_id =identifyAttachment(id, att_id, file_path, file_name, file_ext, email);
 			}
 		} catch (HibernateException ex) {
-			//throw ex;
+			throw ex;
 		} catch (Exception e) {
-			//throw e;
+			throw e;
 		}
 		
 	}
@@ -158,7 +157,7 @@ public class OrderEmailQueueServices {
 			subjectProductline="";
 		}
 		if(subject==null||subject.trim().isEmpty()){
-			log.info("Subject is empty for emailqueueid \"" + id +".");
+			log.info("Subject is empty for emailqueueid \"" + id +"\".");
 			return ;
 		}
 		//get product line id in loop and check
@@ -181,10 +180,10 @@ public class OrderEmailQueueServices {
 							}
 						}
 					}else{
-						log.info("EmailSubjectRBOMatch is empty for productline id \"" + p_id+".");
+						log.info("EmailSubjectRBOMatch is empty for productline id \"" + p_id+"\".");
 					}
 				}else{
-					log.info("EmailSubjectRBOMatchRequired is false for productline id \"" + p_id+".");
+					log.info("EmailSubjectRBOMatchRequired is false for productline id \"" + p_id+"\".");
 				}
 				if(rbodetails.isEmailSubjectProductlineMatchRequired()){
 					String productlines = rbodetails.getEmailSubjectProductLineMatch();
@@ -199,10 +198,10 @@ public class OrderEmailQueueServices {
 							}
 						}
 					}else{
-						log.info("EmailSubjectProductLineMatch is empty for productline id \"" + p_id +".");
+						log.info("EmailSubjectProductLineMatch is empty for productline id \"" + p_id +"\".");
 					}
 				}else{
-					log.info("EmailSubjectProductlineMatchRequired is false for productline id \"" + p_id +".");
+					log.info("EmailSubjectProductlineMatchRequired is false for productline id \"" + p_id +"\".");
 				}
 			}
 		}
@@ -216,7 +215,7 @@ public class OrderEmailQueueServices {
 		subjectRbo=removeDup(subjectRbo);
 		for (String s : rbo_match)
 		{
-			if(subjectRbo.length()<=85){
+			if(subjectRbo.length()<=85 && !s.isEmpty()){
 				s=s.trim();
 				subjectRbo += s + ",";
 			}
@@ -224,7 +223,7 @@ public class OrderEmailQueueServices {
 		subjectRbo=removeDup(subjectRbo);
 		for (String s : productline_match)
 		{
-			if(subjectProductline.length()<=85){
+			if(subjectProductline.length()<=85 && !s.isEmpty()){
 				subjectProductline += s.trim() + ",";
 			}
 		}
@@ -257,7 +256,7 @@ public class OrderEmailQueueServices {
 		List<Integer> schema_id = new ArrayList<Integer>();
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(id);
-		log.info("get attchments list for email id \"" + id+".");
+		log.info("get attchments list for email id \"" + id+"\\.");
 		Iterator<Object> iterat = email_list.iterator();
 		OrderFileAttachment email_att = new OrderFileAttachment();
 		String file_path="";
@@ -272,7 +271,7 @@ public class OrderEmailQueueServices {
 				if( new Long(email_att.getId())!=null){
 					attachment_id=(int)email_att.getId();
 				}else{
-					log.info("stop body analysis order file attachment id is 0 for email queue id \"" + id+".");
+					log.info("stop body analysis order file attachment id is 0 for email queue id \"" + id+"\".");
 					return;
 				}
 				fileName=email_att.getFileName();
@@ -280,7 +279,7 @@ public class OrderEmailQueueServices {
 				fileContentMatch=email_att.getFileContentMatch();
 				att_status = email_att.getStatus();
 				comment=email_att.getComment();
-				log.info("EmailBodyAnalysis for attachment id \"" + attachment_id+".");
+				log.info("EmailBodyAnalysis for attachment id \"" + attachment_id+"\".");
 				if(fileContentMatch==null||fileContentMatch.trim().isEmpty()){
 					fileContentMatch="";
 				}
@@ -295,7 +294,7 @@ public class OrderEmailQueueServices {
 					Partner_RBOProductLine rbodetails = new Partner_RBOProductLine();
 					Iterator<Object> iterator = partner_rboinfo.iterator();
 					while (iterator.hasNext()) {
-						log.info("data fetching for product line id \"" + p_id+".");
+						log.info("data fetching for product line id \"" + p_id+"\".");
 						rbodetails = (Partner_RBOProductLine) iterator.next();
 						if(rbodetails.isEmailBodyRBOMatchRequired()){
 							String rbolist = rbodetails.getEmailBodyRBOMatch();
@@ -315,10 +314,10 @@ public class OrderEmailQueueServices {
 									}
 								}
 							}else{
-								log.info("EmailBodyRBOMatch is empty for productline id \"" + p_id+".");
+								log.info("EmailBodyRBOMatch is empty for productline id \"" + p_id+"\".");
 							}
 						}else{
-							log.info("EmailBodyRBOMatchRequired is false for productline id \"" + p_id+".");
+							log.info("EmailBodyRBOMatchRequired is false for productline id \"" + p_id+"\".");
 						}
 						if(rbodetails.isEmailBodyProductlineMatchRequired()){
 							String productlines = rbodetails.getEmailBodyProductLineMatch();
@@ -338,10 +337,10 @@ public class OrderEmailQueueServices {
 									}
 								}
 							}else{
-								log.info("EmailBodyProductLineMatch is empty for productline id \"" + p_id+".");
+								log.info("EmailBodyProductLineMatch is empty for productline id \"" + p_id+"\".");
 							}
 						}else{
-							log.info("EmailBodyProductlineMatchRequired is false for productline id \"" + p_id+".");
+							log.info("EmailBodyProductlineMatchRequired is false for productline id \"" + p_id+"\".");
 						}
 					}
 				}
@@ -351,7 +350,7 @@ public class OrderEmailQueueServices {
 				
 				for (String s : rbo_match)
 				{
-					if(fileContentMatch.length()<=85){
+					if(fileContentMatch.length()<=85  && !s.isEmpty()){
 						fileContentMatch += s.trim() + ",";
 						
 					}
@@ -359,7 +358,7 @@ public class OrderEmailQueueServices {
 				
 				for (String s : productline_match)
 				{
-					if(fileContentMatch.length()<=85){
+					if(fileContentMatch.length()<=85 && !s.isEmpty()){
 						fileContentMatch += s.trim() + ",";
 						
 					}
@@ -385,7 +384,7 @@ public class OrderEmailQueueServices {
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		String result = "";
 		try{
-			log.info("search pdf for filename \""+filename+" \"for filepath \"" + filepath+".");
+			log.info("search pdf for filename \""+filename+" \"for filepath \"" + filepath+"\".");
 			if (filepath == "") {
 					filepath = directory;
 				}
@@ -404,7 +403,7 @@ public class OrderEmailQueueServices {
 				    String pdf_data = strategy.getResultantText(); 
 				    if(pdf_data.toLowerCase().contains(keyword.toLowerCase())){
 				    	result= keyword;
-				    	log.info("keyword found in pdf is \""+keyword+".");
+				    	log.info("keyword found in pdf is \""+keyword+"\".");
 				    }
 				}
 				reader.close();
@@ -433,12 +432,12 @@ public class OrderEmailQueueServices {
 		//// get attachment id from orderfile queue 
 		int att_id = orderEmailQueue.GeteAttachmentId(orderfileQueueId);
 		if(att_id==0){
-			String comment="return false because order file attachment id is null for file queue id \""+orderfileQueueId+".";
+			String comment="return false because order file attachment id is null for file queue id \""+orderfileQueueId+"\".";
 			orderEmailQueue.updateOrderFileQueueComment(orderfileQueueId, comment);
-			log.info("return false because order file attachment id is null for file queue id \""+orderfileQueueId+".");
+			log.info("return false because order file attachment id is null for file queue id \""+orderfileQueueId+"\".");
 			return true;
 		}
-		log.info("get emailattachment id \""+att_id+" \"for filequeueid \"" + orderfileQueueId+".");
+		log.info("get emailattachment id \""+att_id+" \"for filequeueid \"" + orderfileQueueId+"\".");
 		HashMap<String, Integer> email_info =  orderEmailQueue.GetOrderEmailQueueId(att_id);
 		Iterator it = email_info.entrySet().iterator();
 		////get order email queue id and schema id from order file attachment 
@@ -453,18 +452,18 @@ public class OrderEmailQueueServices {
 			}
 		}
 		if(schema_id==0){
-			log.info("return false because schema id is null for attachment id \""+att_id+".");
-			String comment="return false because schema id is null for attachment id \""+att_id+".";
+			log.info("return false because schema id is null for attachment id \""+att_id+"\".");
+			String comment="return false because schema id is null for attachment id \""+att_id+"\".";
 			orderEmailQueue.updateOrderFileQueueComment(orderfileQueueId, comment);
 			return true;
 		}
 		if(EmailQueueId==0){
-			String comment="return false because emailqueue id is null for attachment id \""+att_id+".";
+			String comment="return false because emailqueue id is null for attachment id \""+att_id+"\".";
 			orderEmailQueue.updateOrderFileQueueComment(orderfileQueueId, comment);
-			log.info("return false because emailqueue id is null for attachment id \""+att_id+".");
+			log.info("return false because emailqueue id is null for attachment id \""+att_id+"\".");
 			return true;
 		}
-		log.info("get schema id\""+schema_id+"\" for fileattachment id \"" + att_id +".");
+		log.info("get schema id\""+schema_id+"\" for fileattachment id \"" + att_id +"\".");
 		String file_name="";
 		String file_ext="";
 		String file_path ="";
@@ -485,17 +484,17 @@ public class OrderEmailQueueServices {
 				file_path = email_att.getFilePath();
 			}
 		}
-		log.info("got emailbody details for email id \""+EmailQueueId+".");
+		log.info("got emailbody details for email id \""+EmailQueueId+"\".");
 		ArrayList<String> keywords= getkeyword(schema_id);
 		Iterator iterator = keywords.iterator();
 		while (iterator.hasNext()) {
 			String keyword = (String) iterator.next();
 			if(subject.toLowerCase().contains(keyword.toLowerCase())){
-				log.info("keyword found in subject \""+subject+"\"keyword."+keyword+".");
+				log.info("keyword found in subject \""+subject+"\"keyword."+keyword+"\".");
 				return true;
 			}
 			if(!searchContentFromMailBody(file_path,file_name, keyword, false).isEmpty()){
-				log.info("keyword found in emailbody\""+keyword +"\"and email body at path \""+file_path+".");
+				log.info("keyword found in emailbody\""+keyword +"\"and email body at path \""+file_path+"\".");
 				return true;
 			}
 		}
@@ -520,7 +519,7 @@ public class OrderEmailQueueServices {
 				subject = (String) pair.getValue();
 			}
 		}
-		log.info("got subject \""+subject+"\" for email queue id \""+emailid+".");
+		log.info("got subject \""+subject+"\" for email queue id \""+emailid+"\".");
 		return subject;
 	}
 	
@@ -551,7 +550,7 @@ public class OrderEmailQueueServices {
 				keyword.add(keyword_s);
 			}
 		}
-		log.info("keyword list for found \""+keyword+".");
+		log.info("keyword list for found \""+keyword+"\".");
 		return keyword;
 	}
 	
@@ -572,12 +571,12 @@ public class OrderEmailQueueServices {
 		String keyword_location="";
 		String cell_value ="";
 		String schema_id_comment="";
-		log.info("identifyAttachment for fileattachment id \""+att_id+".");
+		log.info("identifyAttachment for fileattachment id \""+att_id+"\".");
 		ArrayList<Integer> selected_schema= new ArrayList<Integer>();
 		int productline_id=0;
 			try {
 				ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartnerRbo_productlines(email);
-				log.info("partnerlist \""+partner_rboinfo+"\" found for email source \""+email+".");
+				log.info("partnerlist \""+partner_rboinfo+"\" found for email source \""+email+"\".");
 				if(partner_rboinfo.size()<=0){
 					///update for unrecoginzed
 					orderEmailQueue.updateOrderEmail(id,"4","","","","","");
@@ -595,7 +594,7 @@ public class OrderEmailQueueServices {
 					p_info = (Partner_RBOProductLine) iterator.next();
 					productline_rbo_id= p_info.getId();
 					//System.out.println(productline_rbo_id);
-					log.info("Processing attachment for productline id \""+productline_rbo_id+".");
+					log.info("Processing attachment for productline id \""+productline_rbo_id+"\".");
 					if(schema_id_comment.isEmpty()){
 						schema_id_comment = "" +productline_rbo_id;
 					}else{
@@ -618,9 +617,9 @@ public class OrderEmailQueueServices {
 										
 										if(order_file_name.matches(p_file_Name)&&order_file_ext.contains(p_file_ext)){
 											selected_schema.add(productline_rbo_id);
-											log.info("file name match order_file_name   \""+ order_file_name+".");
+											log.info("file name match order_file_name   \""+ order_file_name+"\".");
 										}else{
-											log.info("file name not match with order file name  \""+ order_file_name+".");
+											log.info("file name not match with order file name  \""+ order_file_name+"\".");
 										}
 									}
 								}
@@ -653,32 +652,32 @@ public class OrderEmailQueueServices {
 											}else{
 												keyword_location =searchpdf(file_name, cell_value,file_path);
 											}
-											log.info("search in pdf for keyword\""+cell_value+"\" file name\"" +file_name+ "\"filepath\""+file_path+".");
+											log.info("search in pdf for keyword\""+cell_value+"\" file name\"" +file_name+ "\"filepath\""+file_path+"\".");
 										}else{
 											log.info("keyword is empty for pdf");
 										}
 									}
 								}
 								if(!keyword_location.trim().isEmpty()){
-									log.info("Match found for product line id \""+ productline_rbo_id+".");
+									log.info("Match found for product line id \""+ productline_rbo_id+"\".");
 									selected_schema.add(productline_rbo_id);
 								}
 							}
 						}
 					}else{
-						log.info("FileOrderMatchRequired is false for productline id \""+productline_rbo_id+".");
+						log.info("FileOrderMatchRequired is false for productline id \""+productline_rbo_id+"\".");
 					}
 				}
 				//System.out.println(selected_schema);
 				if(selected_schema.size()==1){
-					log.info("match schema list \""+selected_schema+".");
+					log.info("match schema list \""+selected_schema+"\".");
 					productline_rbo_id = selected_schema.get(0);
 					//readEmailSubject(id, att_id, selected_schema);
 					orderEmailQueue.updateOrderEmailAttachmentContent(att_id, productline_rbo_id, "8","","","","Order");
 					readEmailSubject(id,att_id,selected_schema);
 					EmailBodyAnalysis(id,att_id,selected_schema);
 				}else if(selected_schema.size()==0){
-					log.info("match schema list \""+selected_schema+".");
+					log.info("match schema list \""+selected_schema+"\".");
 					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema_id_comment,"");
 					
 					ArrayList<Integer> selected_schema_int= new ArrayList<Integer>();
@@ -691,7 +690,7 @@ public class OrderEmailQueueServices {
 					readEmailSubject(id,att_id,selected_schema_int);
 					EmailBodyAnalysis(id,att_id,selected_schema_int);
 				}else{
-					log.info("match schema list \""+selected_schema+".");
+					log.info("match schema list \""+selected_schema+"\".");
 					String schema="";
 					for (Integer ids : selected_schema)
 					{

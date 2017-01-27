@@ -239,7 +239,7 @@ public class OrderEmailQueueServices {
 		String ns = new LinkedHashSet<String>(Arrays.asList(s.split(","))).toString().trim().replaceAll("(^\\[|\\]$)", "");
 	    ns=ns.replaceAll(", ", ",");
 	    ns=ns.replaceAll(" ,", ",");
-	    ns=ns+",";
+	    //ns=ns+",";
 	    return ns;
 	}
 	/**

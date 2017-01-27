@@ -168,6 +168,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			}
 		
 			domain="*@"+domain;
+			//System.out.println("domain     "+domain);
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
 			Session session=sessionFactory.openSession();
 			session.beginTransaction();
@@ -176,7 +177,7 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			cr.add(Restrictions.eq("active", true));
 			//cr.add(Restrictions.
 			cr.add(Restrictions.like("email","%"+email+"%"));
-			List<Partner_RBOProductLine> list = cr.list();
+			//List<Partner_RBOProductLine> list = cr.list();
     		rboproduclines=(ArrayList<Object>) cr.list();
     		//System.out.println("email     "+email);
     		//System.out.println("size     "+rboproduclines.size());

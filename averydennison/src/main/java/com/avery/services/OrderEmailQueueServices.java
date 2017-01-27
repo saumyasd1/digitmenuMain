@@ -576,7 +576,9 @@ public class OrderEmailQueueServices {
 		int productline_id=0;
 			try {
 				ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartnerRbo_productlines(email);
+				log.info("get productlines for email \""+email+"\".");
 				log.info("partnerlist \""+partner_rboinfo+"\" found for email source \""+email+"\".");
+				log.info("productlines size \""+partner_rboinfo.size()+"\".");
 				if(partner_rboinfo.size()<=0){
 					///update for unrecoginzed
 					orderEmailQueue.updateOrderEmail(id,"4","","","","","");

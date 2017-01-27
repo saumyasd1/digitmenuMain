@@ -247,8 +247,8 @@ public class Partner_RBOProductLine {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "partnerId")
 	Partner varPartner;
-	@OneToOne(mappedBy = "varProductLine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	OrderFileQueue listOrderFileQueue;
+	//@OneToOne(mappedBy = "varProductLine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	//OrderFileQueue listOrderFileQueue;
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varProductLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<OrderFileAttachment> listOrderFileAttachments=new ArrayList<OrderFileAttachment>();
@@ -1173,14 +1173,14 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public OrderFileQueue getListOrderFileQueue() {
+	/*public OrderFileQueue getListOrderFileQueue() {
 		return listOrderFileQueue;
 	}
 
 
 	public void setListOrderFileQueue(OrderFileQueue listOrderFileQueue) {
 		this.listOrderFileQueue = listOrderFileQueue;
-	}
+	}*/
 
 
 	public List<OrderFileAttachment> getListOrderFileAttachments() {

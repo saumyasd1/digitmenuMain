@@ -763,14 +763,16 @@ public class OrderEmailQueueServices {
 									if(!searchValue.isEmpty()){
 										log.info("Starting seacrhing process for search content:\""+searchValue+"\".");
 										//if(searchContentList.contains(VALUE_SEPARATOR_WITHOUTESCAPE)){
-											String cellPosition = read_att_cell.SearchXL(
-													FilePath, searchValue, FileExt,
-													cellNo, FileName);
-											if(cellPosition.isEmpty()){
-												result=false;
-											}else{
+											Boolean cellPosition = read_att_cell.searchContentInAllSheet(
+													FilePath,FileName, searchValue, 
+													cellNo);
+											
+											if(cellPosition){
 												result=true;
 												break;
+												
+											}else{
+												result=false;
 											}
 									}else{
 										log.info("Search value is empty, so returning false.");
@@ -1038,7 +1040,7 @@ public class OrderEmailQueueServices {
 	 * @param inputString
 	 * @param isCaseSensitive
 	 */
-	private boolean findMatchingString(String regExString, String inputString,
+	public boolean findMatchingString(String regExString, String inputString,
 			boolean isCaseSensitive) {
 		Matcher matcher = null;
 		Pattern pattern = null;

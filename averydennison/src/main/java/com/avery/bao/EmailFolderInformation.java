@@ -69,7 +69,7 @@ public class EmailFolderInformation {
 			Object objectContent;
 			try {
 				objectContent = message.getContent();
-				emailManager.log.debug("Starting to process mail no:\"" + i + 1
+				emailManager.log.debug("Starting to process mail no:\"" + (i + 1)
 						+ "\" at:\"" + EmailManager.getDate() + "\".");
 				emailFetch.messageFetch(message, inbox, objectContent);
 				message.setFlag(Flags.Flag.SEEN, true);

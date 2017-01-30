@@ -98,9 +98,9 @@ public class SearchCellAddress {
 			if(cell!=null){
 				DataFormatter dataFormatter = new DataFormatter();
 				if(getCellValue(cell, dataFormatter)!=null){
-					if(content.equalsIgnoreCase(getCellValue(cell, dataFormatter).trim())){
+					if(content.toUpperCase().contains(getCellValue(cell, dataFormatter).toUpperCase().trim())){
 						return true;	
-						}	
+					}	
 				}
 			}	
 		}

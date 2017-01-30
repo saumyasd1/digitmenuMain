@@ -33,8 +33,6 @@ public class EmailAttachmentService {
 		session.persist(orderFileAttachment);
 		session.getTransaction().commit();
 		session.close();
-		System.out.println("Data inserted in the email attachment table");
-
 	}
 
 	public void insertUnzippedFile(String fileName, String filePath,

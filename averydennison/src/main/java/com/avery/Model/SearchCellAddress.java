@@ -90,12 +90,19 @@ public class SearchCellAddress {
 	 */
 	public boolean isContentPresent(Sheet sheet, String cellPostion,
 			String content) {
+		System.out.println("content"+ content);
 		CellReference cellReference = new CellReference(cellPostion);
 		Row row = sheet.getRow(cellReference.getRow());
-		Cell cell = row.getCell(cellReference.getCol());
-		DataFormatter dataFormatter = new DataFormatter();
-		if(content.equalsIgnoreCase(getCellValue(cell, dataFormatter).trim())){
-		return true;	
+		if(row!=null){
+			Cell cell = row.getCell(cellReference.getCol());
+			if(cell!=null){
+				DataFormatter dataFormatter = new DataFormatter();
+				if(getCellValue(cell, dataFormatter)!=null){
+					if(content.equalsIgnoreCase(getCellValue(cell, dataFormatter).trim())){
+						return true;	
+						}	
+				}
+			}	
 		}
 		return false;
 	}

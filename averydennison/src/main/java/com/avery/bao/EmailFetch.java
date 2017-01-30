@@ -138,16 +138,16 @@ public class EmailFetch {
 		File file = new File(directoryLocation + File.separatorChar + uniqueID);
 		if (!file.exists()) {
 			if (file.mkdirs()) {
-				System.out.println("Directory is created!");
+				EmailManager.log.debug("Directory:\"" + directoryLocation
+						+ File.separatorChar + uniqueID + " has been created at:\""
+						+ EmailManager.getDate() + "\".");
 			} else {
 				throw new IOException("Failed to create directory:\""
 						+ directoryLocation + File.separatorChar + uniqueID
 						+ "\".");
 			}
 		}
-		EmailManager.log.debug("Directory:\"" + directoryLocation
-				+ File.separatorChar + uniqueID + " has been created at:\""
-				+ EmailManager.getDate() + "\".");
+		
 		return file.getAbsolutePath();
 	}
 

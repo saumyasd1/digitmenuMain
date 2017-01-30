@@ -38,7 +38,7 @@ public class SearchCellAddress {
 	public Workbook getWorkbook(String filePath, String fileName)throws Exception {
 		try {
 			File file = new File(filePath + File.separatorChar + fileName);
-			log.info("Create workbook object for file" +filePath + File.separatorChar + fileName+".");
+			System.out.println("Create workbook object for file" +filePath + File.separatorChar + fileName+".");
 			workbook = WorkbookFactory.create(file); 
 		} catch (IOException e) {
 			throw e;
@@ -68,12 +68,12 @@ public class SearchCellAddress {
 			boolean isSheetHidden = workbook.isSheetHidden(i);
 			if (!isSheetHidden) {
 				Sheet sheet = workbook.getSheetAt(i);
-				log.info("searching for string \""+matchingString+"\" in sheet \""+sheet+"\".");
+				System.out.println("searching for string \""+matchingString+"\" in sheet \""+sheet+"\".");
 				//System.out.println(sheet.getSheetName() + "****Start");
 				resultFlag= isContentPresent(sheet, cellPostion,
 						matchingString);
-				log.info("searching for string finished in sheet \""+sheet+"\".");
-				log.info("resultFlag for string is \""+resultFlag+"\".");
+				System.out.println("searching for string finished in sheet \""+sheet+"\".");
+				System.out.println("resultFlag for string is \""+resultFlag+"\".");
 				
 			}
 		}
@@ -98,9 +98,10 @@ public class SearchCellAddress {
 			if(cell!=null){
 				DataFormatter dataFormatter = new DataFormatter();
 				if(getCellValue(cell, dataFormatter)!=null){
-					if(content.toUpperCase().contains(getCellValue(cell, dataFormatter).toUpperCase().trim())){
+					if(getCellValue(cell, dataFormatter).toUpperCase().trim().contains(content.toUpperCase())){
 						return true;	
-					}	
+					}
+						
 				}
 			}	
 		}

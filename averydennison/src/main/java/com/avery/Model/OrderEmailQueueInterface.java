@@ -37,6 +37,11 @@ public interface OrderEmailQueueInterface {
 	 */
 	public ArrayList<Object> GetEmailAttachments(int id)throws Exception;
 	/**
+	 * @param id
+	 * @return email body details
+	 */
+	public ArrayList<Object> GetEmailBody(int id)throws Exception;
+	/**
 	 * method GetEmailAttachments
 	 * @param productlineId
 	 * @return productline rbo details

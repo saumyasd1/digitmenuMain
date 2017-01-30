@@ -657,7 +657,7 @@ public class OrderEmailQueueServices {
 											}else{
 												keyword_location =searchpdf(file_name, cell_value,file_path);
 											}
-											log.info("search in pdf for keyword\""+cell_value+"\" file name\"" +file_name+ "\"filepath\""+file_path+"\".");
+											System.out.println("search in pdf for keyword\""+cell_value+"\" file name\"" +file_name+ "\"filepath\""+file_path+"\".");
 										}else{
 											log.info("keyword is empty for pdf");
 										}
@@ -732,12 +732,13 @@ public class OrderEmailQueueServices {
 			log.info("fileOrderMatch column value is null in table.");
 			return false;
 		}
-		log.info("Starting seacrhing process for file:\""+FilePath+File.separatorChar+FileName+"\".");		
+		System.out.println("Starting seacrhing process for file:\""+FilePath+File.separatorChar+FileName+"\".");		
 		//if (CellDetail.contains(AND_SEPERATOR)) {
-		log.info("Starting seacrhing process for CellDetail:\""+CellDetail+"\".");
+//		log.info("Starting seacrhing process for CellDetail:\""+CellDetail+"\".");
+		System.out.println("Starting seacrhing process for CellDetail:\""+CellDetail+"\".");
 			String[] searchIdentifierArray = CellDetail.split(AND_SEPERATOR);
 			for (String searchIdentifier : searchIdentifierArray) {
-				log.info("Starting seacrhing process for searchIdentifier:\""+searchIdentifier+"\".");
+				System.out.println("Starting seacrhing process for searchIdentifier:\""+searchIdentifier+"\".");
 				if (searchIdentifier.contains(";") && !searchIdentifier.isEmpty()) {
 					String[] searchDetails = searchIdentifier.split(";");
 					//for (String Sheetdetail_search : Sheetdetails) {
@@ -746,7 +747,7 @@ public class OrderEmailQueueServices {
 						if (searchDetails[1].contains("Cell")){ 
 							cellNos = searchDetails[1].split(":");
 							cellNo=cellNos[1];
-							log.info("Starting seacrhing process for cellNo:\""+cellNo+"\".");
+							System.out.println("Starting seacrhing process for cellNo:\""+cellNo+"\".");
 						}
 						if(cellNo.isEmpty()){
 							return false;
@@ -761,7 +762,7 @@ public class OrderEmailQueueServices {
 								String[] searchContent = searchContentList.split(VALUE_SEPARATOR);
 								for (String searchValue : searchContent) { 
 									if(!searchValue.isEmpty()){
-										log.info("Starting seacrhing process for search content:\""+searchValue+"\".");
+										System.out.println("Starting seacrhing process for search content:\""+searchValue+"\".");
 										//if(searchContentList.contains(VALUE_SEPARATOR_WITHOUTESCAPE)){
 											Boolean cellPosition = read_att_cell.searchContentInAllSheet(
 													FilePath,FileName, searchValue, 
@@ -782,7 +783,7 @@ public class OrderEmailQueueServices {
 					}
 				}
 				if(!result){
-					log.info("Search text is not found for searchIdentifier:\""+searchIdentifier+"\"."); 
+					System.out.println("Search text is not found for searchIdentifier:\""+searchIdentifier+"\"."); 
 					return result;
 				}
 			}
@@ -1064,4 +1065,10 @@ public class OrderEmailQueueServices {
 		  byte[] encoded = Files.readAllBytes(Paths.get(path));
 		  return new String(encoded, encoding);
 		 }
+	
+	/*public String EmailBody(int emailQueueId) throws Exception {
+			OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+			orderEmailQueue.GetEmailBody(emailQueueId);
+		  return "";
+		 }*/
 }

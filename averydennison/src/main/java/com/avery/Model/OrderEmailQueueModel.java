@@ -331,6 +331,41 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			}
 		return EmailAttachments;
 	}
+	public ArrayList<Object> GetEmailBody(int orderEmailId)throws Exception{
+		ArrayList<Object> EmailAttachments= new ArrayList();
+		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		try{
+			
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			Criteria cr = session.createCriteria(OrderFileAttachment.class)
+	    		    .setProjection(Projections.projectionList()
+	    		      .add(Projections.property("id"), "id")
+	    		      .add(Projections.property("fileExtension"), "fileExtension")
+	    		      .add(Projections.property("fileName"), "fileName")
+	    		       .add(Projections.property("status"), "status")
+	    		       .add(Projections.property("comment"), "comment")
+	    		      .add(Projections.property("fileContentMatch"), "fileContentMatch")
+	    		      .add(Projections.property("fileContentType"), "fileContentType")
+	    		      .add(Projections.property("varProductLine"), "varProductLine")
+	    		      .add(Projections.property("filePath"), "filePath"))
+	    		    .setResultTransformer(Transformers.aliasToBean(OrderFileAttachment.class));
+				cr.add(Restrictions.like("fileName","%"+"CompleteEmail"+"%"));
+				cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
+				
+	     		List<OrderFileAttachment> list = cr.list();
+	     		EmailAttachments=(ArrayList<Object>) cr.list();
+	     		session.getTransaction().commit();
+		        session.close();
+		}catch(HibernateException  ex){
+			throw  ex;
+			}catch(Exception  e){
+				throw  e;
+				//log.error(e);
+			}
+		return EmailAttachments;
+	}
 	public int updateOrderEmail(int orderEmailId, String orderEmailStatus, String subject_rboMatch, String subject_productlineMatch, String body_rboMatch, String body_productlineMatch, String comment )throws Exception{
 		
 		int result = 0;

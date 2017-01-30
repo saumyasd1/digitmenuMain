@@ -1,173 +1,169 @@
 package com.avery.Model;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
-
-
-
-
-
+import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
+import org.apache.poi.hssf.util.CellReference;
+import org.apache.poi.xssf.usermodel.XSSFSheet;  
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;   
+import org.apache.poi.xssf.usermodel.XSSFCell;  
+import org.apache.poi.xssf.usermodel.XSSFRow;  
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.format.CellDateFormatter;
+import org.apache.poi.ss.format.CellFormat;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FormulaError;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.ss.util.CellRangeAddress;
-//import org.apache.poi.ss.util.CellAddress;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-
-//import com.aspose.email.system.exceptions.IOException;
-
-
 
 public class SearchCellAddress {
-	static Logger log = Logger.getLogger(OrderEmailQueueModel.class.getName());
-	public String SearchXL(String path, String keyword, String filetype, String cell, String filename) throws Exception {
-		String content = keyword.trim();
-		path = path.trim();
-		filetype = filetype.trim();
-		String cell_address = cell.trim();
-		keyword=keyword.trim();
-		/*System.out.println("path id33cc " + path);
-		System.out.println("keyword id33cc " + keyword);
-		System.out.println("filetype id33cc " + filetype);
-		System.out.println("cell id33cc " + cell);
-		System.out.println("filename id33cc " + filename);*/
-		//System.out.println("keyword id33cc " + keyword);
-		//System.out.println("filename id33cc " + path+filename);
-		filename = filename.trim();
-		String res=""; 
-		String result=""; 
-		try {
-			InputStream inp;
-			inp = new FileInputStream(path+File.separatorChar+filename);
-			
-			Workbook wb = WorkbookFactory.create(inp);
-			int num = wb.getNumberOfSheets();
-			
-			for (int i = 0; i < num; i++) {
-				//System.out.println("xls c112 " +filetype);
-				if(filetype.equalsIgnoreCase("xls") ){
-					//System.out.println("xls c112 " + res);
-					HSSFSheet sheet = (HSSFSheet) wb.getSheetAt(i);
-					
-					res = this.findRow_hssf(sheet, content, cell_address);
-					//System.out.println("partner id33cc112 " + res);
-					if(!res.isEmpty()){
-						return res;
-					}
-					//System.out.println("partner id33cc112 " + res);
-				}else if(filetype.equalsIgnoreCase("xlsx") ){
-					
-				///for xlsx files
-					//System.out.println("partner id33cc1122 " );
-					XSSFSheet sheet= (XSSFSheet)wb.getSheetAt(i);
-					res = this.findRow(sheet, content, cell_address);
-					if(!res.isEmpty()){
-						return res;
-					}
-					//System.out.println("partner id33cc11 " + res);
-				}
 
-			}
-		} catch (Exception e) {
+	
+	
+	private Workbook workbook;
+	static Logger log = Logger.getLogger(OrderEmailQueueModel.class.getName());
+	/**
+	 * Method to get WorkBook object
+	 * @param filePath
+	 * @param fileName
+	 * @return
+	 */
+	public Workbook getWorkbook(String filePath, String fileName)throws Exception {
+		try {
+			File file = new File(filePath + File.separatorChar + fileName);
+			log.info("Create workbook object for file" +filePath + File.separatorChar + fileName+".");
+			workbook = WorkbookFactory.create(file); 
+		} catch (IOException e) {
+			throw e;
+		} catch (InvalidFormatException e) {
 			throw e;
 		}
-		return res;
+		return workbook;
 	}
 
-	private String findRow_hssf(HSSFSheet sheet, String cellContent, String cell_address) {
-		int i = 0;
-		int add_row=0;
-		int add_column=0;
-		cell_address=cell_address.trim();
-		String address= "";
-		//String array[] = new String[50];
-		//CellAddress celladd[]=new CellAddress[50];
-		//System.out.println("sheet name- "+sheet.getSheetName());
-		try {
-			for (Row row : sheet) {
+	
+	/**
+	 * Method to search content in all Sheet
+	 * @param filePath
+	 * @param fileName
+	 * @param matchingString
+	 * @param cellPostion
+	 * @param isCaseSensitive
+	 * @return
+	 */
+	public boolean searchContentInAllSheet(String filePath, String fileName, String matchingString,
+			String cellPostion)throws Exception {
+		
+		Workbook workbook = getWorkbook(filePath, fileName);
+		boolean resultFlag=false;
+		int noOfSheets = workbook.getNumberOfSheets();
+		for (int i = 0; i < noOfSheets; i++) {
+			boolean isSheetHidden = workbook.isSheetHidden(i);
+			if (!isSheetHidden) {
+				Sheet sheet = workbook.getSheetAt(i);
+				log.info("searching for string \""+matchingString+"\" in sheet \""+sheet+"\".");
+				//System.out.println(sheet.getSheetName() + "****Start");
+				resultFlag= isContentPresent(sheet, cellPostion,
+						matchingString);
+				log.info("searching for string finished in sheet \""+sheet+"\".");
+				log.info("resultFlag for string is \""+resultFlag+"\".");
 				
-				for (Cell cell : row) {
-					
-					if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-						//System.out.println("Search Cell 324---");
-						if (cell.getRichStringCellValue().getString().trim()
-								.contains(cellContent)) {
-							//System.out.println("Search Cell 324---++");
-//						String aadd_row=cell.getRow().;
-//						add_column =cell.getColumnIndex();
-							
-							CellRangeAddress cra = new  CellRangeAddress(cell.getRowIndex(), cell.getRowIndex(), cell.getColumnIndex(), cell.getColumnIndex());
-							if(cra.formatAsString().contains(cell_address)){
-							//if(cell_address.contains(cra.formatAsString())){
-								//System.out.println("CellRangeAddress::"+cra.formatAsString());
-								address=cra.formatAsString();
-							}
-							
-							//System.out.println("CellRangeAddress::"+cra.formatAsString());
-							
-							//address=String.valueOf(add_row)+String.valueOf(add_column);
-							//address=add_row.toString(add_row)+add_column.toString(add_column);
-							//System.out.println("address Cell 324"+address);
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return address;
-	}
-	private String findRow(XSSFSheet sheet, String cellContent, String cell_address) {
-		int i = 0;
-		int add_row=0;
-		int add_column=0;
-		String address= "";
-		//cellContent= "Under Armour- Woven Size Label Order Form";
-		//String array[] = new String[50];
-		//CellAddress celladd[]=new CellAddress[50];
-		//System.out.println("Search Cell 731");
-		try{
-			//System.out.println("add_row Cell 324"+sheet.getSheetName());
-			//System.out.println("cellContent 324"+cellContent);
-		for (Row row : sheet) {
-			for (Cell cell : row) {
-				if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-					if(cell.getRichStringCellValue().getString().contains(cellContent)){
-						//System.out.println("cellContent yes+++++");
-					}
-					if (cell.getRichStringCellValue().getString().trim()
-							
-							.equals(cellContent)) {
-						//System.out.println("CellRangeAddress======");
-						CellRangeAddress cra = new  CellRangeAddress(cell.getRowIndex(), cell.getRowIndex(), cell.getColumnIndex(), cell.getColumnIndex());
-						if(cra.formatAsString().contains(cell_address)){
-						//if(cell_address.contains(cra.formatAsString())){
-							//System.out.println("CellRangeAddress::"+cra.formatAsString());
-							address=cra.formatAsString();
-							//System.out.println("address   "+address);
-						}
-						//address=add_row.toString(add_row)+add_column.toString(add_column);
-						
-					}
-				}
 			}
 		}
-		} catch(NullPointerException e)
-        {
-			e.printStackTrace();
-           // System.out.print("NullPointerException caught sheet  not found");
-        }catch (Exception e) {
-        	e.printStackTrace();
-			//System.out.println("Search Cell 3");
-			//log.error(e);
-		}
-		return address;
+		return resultFlag;
 	}
+
+	/**
+	 * Method is Using content match at particular cell position
+	 * 
+	 * @param sheet
+	 * @param cellPostion
+	 * @param content
+	 * @return boolean
+	 */
+	public boolean isContentPresent(Sheet sheet, String cellPostion,
+			String content) {
+		CellReference cellReference = new CellReference(cellPostion);
+		Row row = sheet.getRow(cellReference.getRow());
+		Cell cell = row.getCell(cellReference.getCol());
+		DataFormatter dataFormatter = new DataFormatter();
+		if(content.equalsIgnoreCase(getCellValue(cell, dataFormatter).trim())){
+		return true;	
+		}
+		return false;
+	}
+
+	/**
+	 * Method to get cell value
+	 * 
+	 * @param currentCell
+	 * @param dataFormatter
+	 * @return
+	 */
+	public String getCellValue(Cell currentCell, DataFormatter dataFormatter) {
+		String value = null;
+		try {
+			if ((currentCell).getCellType() != Cell.CELL_TYPE_FORMULA) {
+				value = dataFormatter.formatCellValue(currentCell);
+				if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC
+						&& currentCell.getCellStyle().getDataFormatString()
+								.equalsIgnoreCase("yyyy/m/d\\ AM/PM\\ hh:mm")) {
+					String dateFormat = currentCell.getCellStyle()
+							.getDataFormatString();
+					value = new CellDateFormatter(dateFormat)
+							.format(currentCell.getDateCellValue());
+				}
+			} else {
+				FormulaEvaluator evaluator = workbook.getCreationHelper()
+						.createFormulaEvaluator();
+				CellValue cellValue = evaluator.evaluate(currentCell);
+				switch (cellValue.getCellType()) {
+				case Cell.CELL_TYPE_BOOLEAN:
+					value = Boolean.toString(cellValue.getBooleanValue());
+					break;
+				case Cell.CELL_TYPE_NUMERIC:
+					value = Double.toString(cellValue.getNumberValue());
+					if (currentCell.getCellStyle().getDataFormatString() != null
+							&& currentCell.getCellStyle().getDataFormatString()
+									.equals("\"$\"#,##0.00")) {
+						value = CellFormat.getInstance(
+								currentCell.getCellStyle()
+										.getDataFormatString()).apply(
+								currentCell).text;
+					}
+					if (HSSFDateUtil.isCellDateFormatted(currentCell))
+						value = dataFormatter.formatCellValue(currentCell,
+								evaluator);
+					break;
+				case Cell.CELL_TYPE_STRING:
+					value = cellValue.getStringValue();
+					break;
+				case Cell.CELL_TYPE_BLANK:
+					break;
+				case Cell.CELL_TYPE_ERROR: {
+					try {
+						byte errorCode = currentCell.getErrorCellValue();
+						FormulaError formulaError = FormulaError
+								.forInt(errorCode);
+						value = formulaError.getString();
+					} catch (RuntimeException e) {
+						throw e;
+					}
+				}
+					break;
+				}
+			}
+		} catch (Exception e2) {
+			value = "";
+		}
+		return value;
+	}
+	
 }

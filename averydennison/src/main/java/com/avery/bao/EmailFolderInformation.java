@@ -94,7 +94,7 @@ public class EmailFolderInformation {
 				}
 				throw e;
 			}
-			emailManager.log.debug("All mails have been processed.");
 		}
+		emailManager.log.debug("All mails have been processed.");
 	}
 }

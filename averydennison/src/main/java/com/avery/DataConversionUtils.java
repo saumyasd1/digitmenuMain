@@ -121,6 +121,8 @@ public class DataConversionUtils {
 		// write the html file at specified location
 		FileWriter fileWriter = null;
 		String msgContent = "";
+		Writer out = null;
+		FileOutputStream fos = null;
 		try {
 			Object objectContent = message.getContent();
 			if (objectContent instanceof Multipart) {
@@ -143,11 +145,12 @@ public class DataConversionUtils {
 			if(msgContent.startsWith("<div")){
 				msgContent = "<html>\n"+msgContent+"\n</html>";  
 			}
-			FileOutputStream fos = new FileOutputStream(location
+			 fos = new FileOutputStream(location
 					+ File.separatorChar + fileName + ".html");
-			Writer out = new OutputStreamWriter(fos, "UTF-8");
+			out = new OutputStreamWriter(fos, "UTF-8");
 			out.write(msgContent);
 			out.close();
+			fos.close(); 
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -169,6 +172,22 @@ public class DataConversionUtils {
 					fileWriter.close();
 				} catch (IOException e) {
 					// Ignore;
+				}
+			}
+			if(fos != null){
+				try {
+					fos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(out != null){
+				try {
+					out.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}

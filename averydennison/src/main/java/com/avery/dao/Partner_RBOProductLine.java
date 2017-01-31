@@ -64,9 +64,14 @@ public class Partner_RBOProductLine {
 	
 	@Column(name = "coocheck ")
 	boolean coocheck;
+	@Column(name = "factoryMOQCheck")
+	Boolean factoryMOQCheck;
+	@Column(name = "factoryMOQValue", length = 100)
+	String factoryMOQValue;
+	@Column(name = "assignCSRName")
+	String assignCSRName;
 	@Column(name = "fiberpercentagecheck")
 	boolean fiberpercentagecheck;
-	
 	 
 	@Column(name = "attachmentFileRBOMatch", length = 100)
 	String attachmentFileRBOMatch;// 100
@@ -1171,7 +1176,7 @@ public class Partner_RBOProductLine {
 	public void setVarPartner(Partner varPartner) {
 		this.varPartner = varPartner;
 	}
-
+	
 
 	/*public OrderFileQueue getListOrderFileQueue() {
 		return listOrderFileQueue;
@@ -1181,6 +1186,38 @@ public class Partner_RBOProductLine {
 	public void setListOrderFileQueue(OrderFileQueue listOrderFileQueue) {
 		this.listOrderFileQueue = listOrderFileQueue;
 	}*/
+
+
+	public Boolean isFactoryMOQCheck() {
+		return factoryMOQCheck;
+	}
+
+
+	public void setFactoryMOQCheck(Boolean factoryMOQCheck) {
+		this.factoryMOQCheck = factoryMOQCheck;
+	}
+
+
+	
+
+	public String getFactoryMOQValue() {
+		return factoryMOQValue;
+	}
+
+
+	public void setFactoryMOQValue(String factoryMOQValue) {
+		this.factoryMOQValue = factoryMOQValue;
+	}
+
+
+	public String getAssignCSRName() {
+		return assignCSRName;
+	}
+
+
+	public void setAssignCSRName(String assignCSRName) {
+		this.assignCSRName = assignCSRName;
+	}
 
 
 	public List<OrderFileAttachment> getListOrderFileAttachments() {

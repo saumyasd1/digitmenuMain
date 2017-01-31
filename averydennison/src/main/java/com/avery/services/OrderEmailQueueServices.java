@@ -1066,7 +1066,12 @@ public class OrderEmailQueueServices {
 		  return new String(encoded, encoding);
 		 }
 	
-	public String EmailBody(int emailQueueId) throws Exception {
+	/**Method to get eml file location
+	 * @param emailQueueId
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getEMLFileLocation(int emailQueueId) throws Exception {
 			OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 			ArrayList<Object> orderFileAttachments = new ArrayList<Object>();
 			orderFileAttachments = orderEmailQueue.GetEmailBody(emailQueueId);
@@ -1078,6 +1083,8 @@ public class OrderEmailQueueServices {
 				if(orderFileAttachment!=null){
 					MailbodyPath=orderFileAttachment.getFilePath();
 					MailBodyFileName=orderFileAttachment.getFileName();
+				}else{
+					throw new Exception("No entry is found in the table orderEmailQueue for emailQueueId:\""+emailQueueId+"\".");
 				}
 			}
 		  return MailbodyPath+File.separatorChar+MailBodyFileName;

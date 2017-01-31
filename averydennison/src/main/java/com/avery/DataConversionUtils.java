@@ -179,7 +179,6 @@ public class DataConversionUtils {
 					fos.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 			if(out != null){
@@ -187,7 +186,6 @@ public class DataConversionUtils {
 					out.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
 		}

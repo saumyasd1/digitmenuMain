@@ -493,11 +493,11 @@ public class OrderEmailQueueServices {
 		while (iterator.hasNext()) {
 			String keyword = (String) iterator.next();
 			if(subject.toLowerCase().contains(keyword.toLowerCase())){
-				log.info("keyword found in subject \""+subject+"\"keyword."+keyword+"\".");
+				System.out.println("keyword found in subject \""+subject+"\"keyword."+keyword+"\".");
 				return true;
 			}
 			if(!searchContentFromMailBody(file_path,file_name, keyword, false).isEmpty()){
-				log.info("keyword found in emailbody\""+keyword +"\"and email body at path \""+file_path+"\".");
+				System.out.println("keyword found in emailbody\""+keyword +"\"and email body at path \""+file_path+"\".");
 				return true;
 			}
 		}
@@ -553,7 +553,7 @@ public class OrderEmailQueueServices {
 				keyword.add(keyword_s);
 			}
 		}
-		log.info("keyword list for found \""+keyword+"\".");
+		System.out.println("keyword list for found \""+keyword+"\".");
 		return keyword;
 	}
 	
@@ -622,9 +622,9 @@ public class OrderEmailQueueServices {
 										
 										if(order_file_name.matches(p_file_Name)&&order_file_ext.contains(p_file_ext)){
 											selected_schema.add(productline_rbo_id);
-											log.info("file name match order_file_name   \""+ order_file_name+"\".");
+											System.out.println("file name match order_file_name   \""+ order_file_name+"\".");
 										}else{
-											log.info("file name not match with order file name  \""+ order_file_name+"\".");
+											System.out.println("file name not match with order file name  \""+ order_file_name+"\".");
 										}
 									}
 								}
@@ -1066,9 +1066,20 @@ public class OrderEmailQueueServices {
 		  return new String(encoded, encoding);
 		 }
 	
-	/*public String EmailBody(int emailQueueId) throws Exception {
+	public String EmailBody(int emailQueueId) throws Exception {
 			OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
-			orderEmailQueue.GetEmailBody(emailQueueId);
-		  return "";
-		 }*/
+			ArrayList<Object> orderFileAttachments = new ArrayList<Object>();
+			orderFileAttachments = orderEmailQueue.GetEmailBody(emailQueueId);
+			Iterator<Object> iterat = orderFileAttachments.iterator();
+			String MailbodyPath="";
+			String MailBodyFileName="";
+			while (iterat.hasNext()) {
+				OrderFileAttachment orderFileAttachment = (OrderFileAttachment) iterat.next();
+				if(orderFileAttachment!=null){
+					MailbodyPath=orderFileAttachment.getFilePath();
+					MailBodyFileName=orderFileAttachment.getFileName();
+				}
+			}
+		  return MailbodyPath+File.separatorChar+MailBodyFileName;
+	}
 }

@@ -85,7 +85,7 @@ public class EmailUtils {
 			InternetAddress[] toUserIdArray = InternetAddress
 					.parse(toUserEmailIDList);
 			message.setRecipients(Message.RecipientType.TO, toUserIdArray);
-			addMessageContent(message, additionalBodyContent);
+			addMessageContent(message, additionalBodyContent, log);
 			
 			// Set From: header field of the header.
 			message.setFrom(new InternetAddress(username));
@@ -137,13 +137,18 @@ public class EmailUtils {
 	 * @throws IOException
 	 */
 	public static void addMessageContent(MimeMessage mail,
-			String forwardMailBody) throws MessagingException, IOException {
+			String forwardMailBody, Logger log) throws MessagingException, IOException {
 		Object content = mail.getContent();
+		log.debug("Trying to add additionalBodyContent:\""+forwardMailBody+"\".");
+		log.debug("Mail object content class name:"+(content==null?content:content.getClass()));  
 		if (content.getClass().isAssignableFrom(MimeMultipart.class)) {
+			log.debug("Adding additionalBodyContent:\""+forwardMailBody+"\".");
 			MimeMultipart mimeMultipart = (MimeMultipart) content;
 			BodyPart messageBodyPart = new MimeBodyPart();
 			messageBodyPart.setText(forwardMailBody);
 			mimeMultipart.addBodyPart(messageBodyPart, 0);
+		}else{
+			log.debug("Not able to add additionalBodyContent:\""+forwardMailBody+"\" in mail body content.");
 		}
 	}
 

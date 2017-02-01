@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
@@ -85,6 +86,12 @@ public class EmailUtils {
 					.parse(toUserEmailIDList);
 			message.setRecipients(Message.RecipientType.TO, toUserIdArray);
 			addMessageContent(message, additionalBodyContent);
+			
+			// Set From: header field of the header.
+			message.setFrom(new InternetAddress(username));
+			Date acknowledgementDate = new Date();
+			message.setSentDate(acknowledgementDate); 		
+						
 			message.saveChanges();
 			log.debug("Forwading eml file at:\"" + EmailManager.getDate()
 					+ "\".");

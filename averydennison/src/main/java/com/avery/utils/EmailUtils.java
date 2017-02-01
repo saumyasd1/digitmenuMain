@@ -31,16 +31,6 @@ import com.avery.services.OrderEmailQueueServices;
  */
 public class EmailUtils {
 
-	static Properties properties;
-	static {
-		properties = new Properties();
-		properties.put("mail.smtp.host", "smtp.gmail.com");
-		properties.put("mail.smtp.socketFactory.port", "465");
-		properties.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.port", "465");
-	}
 
 	/**
 	 * Method to forward eml file as Email
@@ -53,7 +43,7 @@ public class EmailUtils {
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
-	public static void forwardEML(String fromUserEmailID,
+	public void forwardEML(String fromUserEmailID,
 			String fromUserPassword, String toUserEmailIDList,
 			String emlFilePath, String additionalBodyContent,
 			String additionalSubjectContent, Logger log)
@@ -63,6 +53,15 @@ public class EmailUtils {
 		final String username = fromUserEmailID;
 		final String password = fromUserPassword;
 		try {
+			
+			Properties properties = new Properties();
+			properties.put("mail.smtp.host", "smtp.gmail.com");
+			properties.put("mail.smtp.socketFactory.port", "465");
+			properties.put("mail.smtp.socketFactory.class",
+					"javax.net.ssl.SSLSocketFactory");
+			properties.put("mail.smtp.auth", "true");
+			properties.put("mail.smtp.port", "465");
+			
 			log.debug("additional body content is:\"" + additionalBodyContent
 					+ "\".");
 			log.debug("additional subject content is:\""
@@ -160,7 +159,7 @@ public class EmailUtils {
 	 * @param additionalBodyContent
 	 * @throws Exception
 	 */
-	public static void forwardEMLFileAsMail(int emailQueueId,
+	public void forwardEMLFileAsMail(int emailQueueId,
 			String fromUserEmailID, String fromUserPassword,
 			String toUserEmailIDList, String additionalBodyContent,
 			String additionalSubjectContent, Logger log) throws Exception {

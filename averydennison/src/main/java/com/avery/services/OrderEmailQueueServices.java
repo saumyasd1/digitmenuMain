@@ -1141,7 +1141,7 @@ public class OrderEmailQueueServices {
 											String fileNameExt = fileName_array[1].trim();
 											additionalFileName=additionalFileName.replace("*", "(.*)");
 											
-											if(fileName.matches(additionalFileName) && fileExt.contains(fileNameExt)){
+											if(fileName.toLowerCase().matches(additionalFileName.toLowerCase()) && fileExt.contains(fileNameExt)){
 												selected_schema.add(produclineData.getId());
 												System.out.println("file name match order_file_name   \""+ fileName+"\".");
 											}else{

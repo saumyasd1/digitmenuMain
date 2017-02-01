@@ -68,6 +68,8 @@ public class EmailUtils {
 		try {
 			log.debug("additional body content is:\"" + additionalBodyContent
 					+ "\".");
+			log.debug("additional subject content is:\"" + additionalSubjectContent
+					+ "\".");
 			log.debug("Creating session at:\"" + EmailManager.getDate() + "\".");
 
 			// Get the Session object.

@@ -8,11 +8,9 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
-import javax.mail.Part;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -21,9 +19,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 
 import com.adeptia.indigo.logging.Logger;
 import com.avery.EmailManager;
@@ -59,7 +55,8 @@ public class EmailUtils {
 	 */
 	public static void forwardEML(String fromUserEmailID,
 			String fromUserPassword, String toUserEmailIDList,
-			String emlFilePath, String additionalBodyContent, String additionalSubjectContent, Logger log)
+			String emlFilePath, String additionalBodyContent,
+			String additionalSubjectContent, Logger log)
 			throws MessagingException, IOException {
 		Transport transport = null;
 		InputStream source = null;
@@ -68,8 +65,8 @@ public class EmailUtils {
 		try {
 			log.debug("additional body content is:\"" + additionalBodyContent
 					+ "\".");
-			log.debug("additional subject content is:\"" + additionalSubjectContent
-					+ "\".");
+			log.debug("additional subject content is:\""
+					+ additionalSubjectContent + "\".");
 			log.debug("Creating session at:\"" + EmailManager.getDate() + "\".");
 
 			// Get the Session object.
@@ -165,8 +162,8 @@ public class EmailUtils {
 	 */
 	public static void forwardEMLFileAsMail(int emailQueueId,
 			String fromUserEmailID, String fromUserPassword,
-			String toUserEmailIDList, String additionalBodyContent,String additionalSubjectContent, Logger log)
-			throws Exception {
+			String toUserEmailIDList, String additionalBodyContent,
+			String additionalSubjectContent, Logger log) throws Exception {
 		log.debug("getting eml file location for emailQueueId:\""
 				+ emailQueueId + "\" at:\"" + EmailManager.getDate() + "\".");
 		String emlFilePath = OrderEmailQueueServices
@@ -178,18 +175,21 @@ public class EmailUtils {
 				+ fromUserEmailID + "\" to toUserEmailIDList:\""
 				+ toUserEmailIDList + "\" at:\"" + EmailManager.getDate()
 				+ "\".");
-		
+
 		File emilFile = new File(emlFilePath);
-		String fileLocation = emlFilePath.substring(0, emlFilePath.lastIndexOf(File.separatorChar)); 
+		String fileLocation = emlFilePath.substring(0,
+				emlFilePath.lastIndexOf(File.separatorChar));
 		String fileName = emilFile.getName();
 		String fileNameWithoutExtension = FilenameUtils.getBaseName(fileName);
-		String fileextension = FilenameUtils.getExtension(fileName); 
-		if(fileextension.equalsIgnoreCase("html")){
+		String fileextension = FilenameUtils.getExtension(fileName);
+		if (fileextension.equalsIgnoreCase("html")) {
 			fileextension = "eml";
 		}
-		emlFilePath = fileLocation+File.separatorChar+fileNameWithoutExtension+"."+fileextension; 
+		emlFilePath = fileLocation + File.separatorChar
+				+ fileNameWithoutExtension + "." + fileextension;
 		forwardEML(fromUserEmailID, fromUserPassword, toUserEmailIDList,
-				emlFilePath, additionalBodyContent,additionalSubjectContent, log);
+				emlFilePath, additionalBodyContent, additionalSubjectContent,
+				log);
 
 	}
 

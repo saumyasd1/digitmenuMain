@@ -58,7 +58,7 @@ public class Partner {
 	@Column(name = "contactPerson", length = 250)
 	String contactPerson;
 	@Column(name = "active")
-	boolean active;
+	Boolean active;
 	@Column(name = "createdDate")
 	Date createdDate;
 	@Column(name = "createdBy", length = 50)
@@ -70,7 +70,7 @@ public class Partner {
 	@Column(name = "comment", length = 250)
 	String comment;
 	@Column(name = "siteId")
-	int siteId;
+	Integer siteId;
 	@Column(name="zip",length=50)
 	String zip;
 	@Column(name = "orgCode", length = 50)
@@ -206,11 +206,11 @@ public class Partner {
 		this.contactPerson = contactPerson;
 	}
 
-	public boolean isActive() {
+	public Boolean isActive() {
 		return active;
 	}
 
-	public void setActive(boolean active) {
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
 
@@ -254,11 +254,11 @@ public class Partner {
 		this.comment = comment;
 	}
 
-	public int getSiteId() {
+	public Integer getSiteId() {
 		return siteId;
 	}
 
-	public void setSiteId(int siteId) {
+	public void setSiteId(Integer siteId) {
 		this.siteId = siteId;
 	}
 

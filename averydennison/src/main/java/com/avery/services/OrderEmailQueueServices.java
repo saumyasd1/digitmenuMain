@@ -75,7 +75,7 @@ public class OrderEmailQueueServices {
 		try {
 			//log.error("Enter method OrderEmailSourceservice  class OrderEmailService");
 			///////get values of email 
-			log.info("get email source for id : \""+id+".");
+			log.info("get email source for id : \""+id+"\".");
 			HashMap<String, String> emailinfo = orderEmailQueue.EmailSource(id);
 			Iterator it = emailinfo.entrySet().iterator();
 			////get email subject and source 
@@ -89,7 +89,7 @@ public class OrderEmailQueueServices {
 					subject = (String) pair.getValue();
 				}*/
 			}
-			log.info("email source found: \""+email+".");
+			log.info("email source found: \""+email+"\".");
 			ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(id);
 			Iterator<Object> iterat = email_list.iterator();
 			OrderFileAttachment email_att = new OrderFileAttachment();
@@ -649,7 +649,6 @@ public class OrderEmailQueueServices {
 										if (keyword.contains("Value")){ 
 											keyword_s = keyword.split(":");
 											cell_value=keyword_s[1];
-											cell_value=cell_value.replace("*", "(.*)");
 										}
 										if(!keyword.trim().isEmpty()){
 											if(file_name.contains("CompleteEmail")){
@@ -681,6 +680,7 @@ public class OrderEmailQueueServices {
 					orderEmailQueue.updateOrderEmailAttachmentContent(att_id, productline_rbo_id, "8","","","","Order");
 					readEmailSubject(id,att_id,selected_schema);
 					EmailBodyAnalysis(id,att_id,selected_schema);
+					identifyAdditionalDataFile(id,selected_schema);
 				}else if(selected_schema.size()==0){
 					log.info("match schema list \""+selected_schema+"\".");
 					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema_id_comment,"");
@@ -694,6 +694,7 @@ public class OrderEmailQueueServices {
 					}
 					readEmailSubject(id,att_id,selected_schema_int);
 					EmailBodyAnalysis(id,att_id,selected_schema_int);
+					identifyAdditionalDataFile(id,selected_schema_int);
 				}else{
 					log.info("match schema list \""+selected_schema+"\".");
 					String schema="";
@@ -701,10 +702,10 @@ public class OrderEmailQueueServices {
 					{
 						schema += ids + ",";
 					}
-					//readEmailSubject(id, att_id, selected_schema);
 					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema,"");
 					readEmailSubject(id,att_id,selected_schema);
 					EmailBodyAnalysis(id,att_id,selected_schema);
+					identifyAdditionalDataFile(id,selected_schema);
 				}
 			} catch (Exception e) {
 				throw e;
@@ -1089,4 +1090,123 @@ public class OrderEmailQueueServices {
 			}
 		  return MailbodyPath+File.separatorChar+MailBodyFileName;
 	}
+	
+		/**
+		 * method identifyAdditionalDataFile
+		 * @param emailQueueId
+		 * @param productline_id
+		 * @throws Exception
+		 */
+		public void identifyAdditionalDataFile(int emailQueueId, List<Integer> productline_id ) throws Exception {
+			System.out.println("identifyAdditionalDataFile ");
+			OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+			ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(emailQueueId);
+			System.out.println("get attchments list for email id \"" + emailQueueId+"\".");
+			Iterator<Object> iterat = email_list.iterator();
+			OrderFileAttachment emailAttachments = new OrderFileAttachment();
+			
+			while (iterat.hasNext()) {
+				
+				ArrayList<Integer> selected_schema= new ArrayList<Integer>();
+				String fileExt="";
+				String fileName="";
+				String keywordLocation="";
+				String filePath="";
+				emailAttachments = (OrderFileAttachment) iterat.next();
+				fileName=emailAttachments.getFileName();
+				fileExt=emailAttachments.getFileExtension();
+				filePath=emailAttachments.getFilePath();
+				int attachmentId =emailAttachments.getId();
+				System.out.println("processsing attachment id \"" + attachmentId+"\".");
+				for (Integer produclineId : productline_id){
+					//fetch product line info
+					ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartner_productline(produclineId);
+					Partner_RBOProductLine produclineData = new Partner_RBOProductLine();
+					Iterator<Object> iterator = partner_rboinfo.iterator();
+					while (iterator.hasNext()) {
+						log.info("data fetching for product line id \"" + produclineId+"\".");
+						produclineData = (Partner_RBOProductLine) iterator.next();
+						
+						if(produclineData.isAttachmentRequired() && produclineData.isAttachmentFileMatchRequired()){
+							
+							if(produclineData.getAttachmentFileOrderMatchLocation().contains("FileName")){
+								log.info("Processing attachment identification from file name.");
+								String fileNamePattern = produclineData.getAttachmentFileOrderMatch();
+								if(!fileNamePattern.isEmpty()){
+									if (fileNamePattern.contains("|")||!fileNamePattern.isEmpty()) {
+										String[] fileNamePattern_array = fileNamePattern.split("\\|");
+										for (String completeFileName : fileNamePattern_array) {
+											String[] fileName_array = completeFileName.split("\\.");
+											String additionalFileName = fileName_array[0].trim();
+											String fileNameExt = fileName_array[1].trim();
+											additionalFileName=additionalFileName.replace("*", "(.*)");
+											
+											if(fileName.matches(additionalFileName) && fileExt.contains(fileNameExt)){
+												selected_schema.add(produclineData.getId());
+												System.out.println("file name match order_file_name   \""+ fileName+"\".");
+											}else{
+												System.out.println("file name not match with order file name  \""+ fileName+"\".");
+											}
+										}
+									}
+								}else{
+									log.info("FileOrderMatch is empty.");
+								}
+							}else if(produclineData.getAttachmentFileOrderMatchLocation().equals("FileContent")){
+								log.info("Processing attachment identification from file Content.");
+								String matchContent = produclineData.getAttachmentFileOrderMatch();
+								if(!matchContent.isEmpty()){
+									if(produclineData.getAttachmentFileNameExtension_1().contains(fileExt)){
+										if(produclineData.getAttachmentFileNameExtension_1().contains("xls")){
+											//method to search different values in excell at different location
+											if(SearchContentInExcel(fileName,filePath,fileExt,matchContent, log)){
+												keywordLocation="true";
+											}
+										
+										}else if(produclineData.getAttachmentFileNameExtension_1().contains("pdf")){ 
+											log.info("searching file extension for pdf");
+											String keyword = matchContent.trim();
+											String[] keywordArray;
+											if (keyword.contains("Value")){ 
+												keywordArray = keyword.split(":");
+												keyword=keywordArray[1];
+												
+											}
+											if(!keyword.trim().isEmpty()){
+												if(fileName.contains("CompleteEmail")){
+													keywordLocation =searchContentFromMailBody(filePath, fileName, keyword, false);
+												}else{
+													keywordLocation = searchpdf(fileName, keyword, filePath);
+												}
+												System.out.println("search in pdf for keyword\""+keyword+"\" file name\"" +fileName+ "\"filepath\""+filePath+"\".");
+												System.out.println("keywordLocation---"+keywordLocation);
+											}else{
+												log.info("keyword is empty for pdf");
+											}
+										}
+									}
+									if(!keywordLocation.trim().isEmpty()){
+										log.info("Match found for product line id \""+ produclineData.getId()+"\".");
+										selected_schema.add(produclineData.getId());
+										keywordLocation="";
+									}
+								}
+							}
+						}else{
+							log.info("attachment required or attachment file match required is false for productline id \""+produclineId+"\".");
+						}
+					}
+				
+					
+				}
+				if(selected_schema.size()==1){
+					System.out.println("match schema list \""+selected_schema+"\".");
+					int schemaId = selected_schema.get(0);
+					orderEmailQueue.updateOrderEmailAttachmentContent(attachmentId, schemaId, "8","","","","AdditionalData");
+					selected_schema.clear();
+				}else{
+					System.out.println("match schema list \""+selected_schema+"\".");
+				}
+			}
+		}
 }

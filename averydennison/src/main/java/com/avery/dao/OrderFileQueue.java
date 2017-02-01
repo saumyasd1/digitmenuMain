@@ -50,7 +50,7 @@ public class OrderFileQueue {
 	@Column(name="poNumber",length=50)
 	 String poNumber;
 	@Column(name="prevOrderQueueId")
-	 int prevOrderQueueId;
+	Integer prevOrderQueueId;
 	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	@JoinColumn(name="productLineId")
 	Partner_RBOProductLine varProductLine;
@@ -180,11 +180,11 @@ public class OrderFileQueue {
 		this.poNumber = poNumber;
 	}
 
-	public int getPrevOrderQueueId() {
+	public Integer getPrevOrderQueueId() {
 		return prevOrderQueueId;
 	}
 
-	public void setPrevOrderQueueId(int prevOrderQueueId) {
+	public void setPrevOrderQueueId(Integer prevOrderQueueId) {
 		this.prevOrderQueueId = prevOrderQueueId;
 	}
 

@@ -33,7 +33,7 @@ public class OrderEmailQueue {
 	@Column(name = "mailBody", length = 500)
 	String mailBody;
 	@Column(name = "orderMail")
-	boolean orderMail;
+	Boolean orderMail;
 	@Column(name = "assignee", length = 100)
 	String assignee;
 	@Column(name = "status", length = 100)
@@ -134,11 +134,11 @@ public class OrderEmailQueue {
 		this.mailBody = mailBody;
 	}
 
-	public boolean isOrderMail() {
+	public Boolean isOrderMail() {
 		return orderMail;
 	}
 
-	public void setOrderMail(boolean orderMail) {
+	public void setOrderMail(Boolean orderMail) {
 		this.orderMail = orderMail;
 	}
 

@@ -28,11 +28,11 @@ public class Partner_RBOProductLine {
 	@Column(name = "id")
 	int id;
 	@Column(name = "active")
-	boolean active;
+	Boolean active;
 	@Column(name = "attachmentFileMatchLocation", length = 100)
 	String attachmentFileMatchLocation;// 100
 	@Column(name = "attachmentFileMatchRequired")
-	boolean attachmentFileMatchRequired;
+	Boolean attachmentFileMatchRequired;
 	@Column(name = "attachmentFileNameExtension_1", length = 50)
 	String attachmentFileNameExtension_1;// 50
 	@Column(name = "attachmentFileNameExtension_2", length = 50)
@@ -56,14 +56,14 @@ public class Partner_RBOProductLine {
 	@Column(name = "productLineMatchFlag", length = 50)
 	String productLineMatchFlag; 
 	@Column(name = "attachmentFileOrderMatchRequired")
-	boolean attachmentFileOrderMatchRequired;
+	Boolean attachmentFileOrderMatchRequired;
 	@Column(name = "attachmentFileProductlineMatchLocation", length = 100)
 	String attachmentFileProductlineMatchLocation;// 100
 	@Column(name = "attachmentFileProductlineMatchRequired")
-	boolean attachmentFileProductlineMatchRequired;
+	Boolean attachmentFileProductlineMatchRequired;
 	
 	@Column(name = "coocheck ")
-	boolean coocheck;
+	Boolean coocheck;
 	@Column(name = "factoryMOQCheck")
 	Boolean factoryMOQCheck;
 	@Column(name = "factoryMOQValue", length = 100)
@@ -71,7 +71,7 @@ public class Partner_RBOProductLine {
 	@Column(name = "assignCSRName")
 	String assignCSRName;
 	@Column(name = "fiberpercentagecheck")
-	boolean fiberpercentagecheck;
+	Boolean fiberpercentagecheck;
 	 
 	@Column(name = "attachmentFileRBOMatch", length = 100)
 	String attachmentFileRBOMatch;// 100
@@ -94,7 +94,7 @@ public class Partner_RBOProductLine {
 	@Column(name = "attachmentProductlineMatch", length = 100)
 	String attachmentProductlineMatch;// 100
 	@Column(name = "attachmentRequired")
-	boolean attachmentRequired;
+	Boolean attachmentRequired;
 	@Column(name = "attachmentSchemaID_1", length = 50)
 	String attachmentSchemaID_1;// 50
 	@Column(name = "attachmentSchemaID_2", length = 50)
@@ -114,7 +114,7 @@ public class Partner_RBOProductLine {
 	@Column(name = "comment", length = 250)
 	String comment;// 250
 	@Column(name = "controlData")
-	boolean controlData;
+	Boolean controlData;
 	@Column(name = "createdBy", length = 50)
 	String createdBy;// 50
 	@Column(name = "createdDate")
@@ -133,47 +133,47 @@ public class Partner_RBOProductLine {
 	@Column(name = "emailSubjectProductlineMatchLocation", length = 100)
 	String emailSubjectProductlineMatchLocation;
 	@Column(name = "emailSubjectProductlineMatchRequired")
-	boolean emailSubjectProductlineMatchRequired;
+	Boolean emailSubjectProductlineMatchRequired;
 	@Column(name = "emailSubjectRBOMatch",length=100)
 	String emailSubjectRBOMatch;
 	@Column(name = "emailSubjectRBOMatchLocation", length = 100)
 	String emailSubjectRBOMatchLocation;// 100
 	@Column(name = "emailSubjectRBOMatchRequired")
-	boolean emailSubjectRBOMatchRequired;
+	Boolean emailSubjectRBOMatchRequired;
 	@Column(name = "emailBodyProductLineMatch",length=100)
 	String  emailBodyProductLineMatch;	
 	@Column(name = "emailBodyProductlineMatchLocation",length=100)
 	String emailBodyProductlineMatchLocation;	
 	@Column(name = "emailBodyProductlineMatchRequired")
-	boolean emailBodyProductlineMatchRequired;	
+	Boolean emailBodyProductlineMatchRequired;	
 	@Column(name = "emailBodyRBOMatch",length=100)
 	String  emailBodyRBOMatch;
 	@Column(name = "emailBodyRBOMatchLocation",length=100)
 	String emailBodyRBOMatchLocation;	
 	@Column(name = "emailBodyRBOMatchRequired")
-	boolean emailBodyRBOMatchRequired;	
+	Boolean emailBodyRBOMatchRequired;	
 	@Column(name = "fileRBOMatchLocation",length=100)
 	String fileRBOMatchLocation;
 	@Column(name = "fileRBOMatchRequired")
-	boolean fileRBOMatchRequired;
+	Boolean fileRBOMatchRequired;
 	@Column(name = "factoryTransfer")
-	boolean factoryTransfer;
+	Boolean factoryTransfer;
 	@Column(name = "fileMatchLocation", length = 100)
 	String fileMatchLocation;// 100
 	@Column(name = "fileMatchRequired")
-	boolean fileMatchRequired;
+	Boolean fileMatchRequired;
 	@Column(name = "fileOrderMatch", length = 100)
 	String fileOrderMatch;// 100
 	@Column(name = "fileOrderMatchLocation", length = 100)
 	String fileOrderMatchLocation;// 100
 	@Column(name = "fileOrderMatchRequired")
-	boolean fileOrderMatchRequired;
+	Boolean fileOrderMatchRequired;
 	@Column(name = "fileProductlineMatch", length = 100)
 	String fileProductlineMatch;// 100
 	@Column(name = "fileProductLineMatchLocation", length = 100)
 	String fileProductLineMatchLocation;// 100
 	@Column(name = "fileProductLineMatchRequired")
-	boolean fileProductLineMatchRequired;
+	Boolean fileProductLineMatchRequired;
 	@Column(name = "fileRBOMatch", length = 100)
 	String fileRBOMatch;// 100
 	@Column(name = "invoicelineInstruction", length = 500)
@@ -183,9 +183,9 @@ public class Partner_RBOProductLine {
 	@Column(name = "lastModifiedDate")
 	Date lastModifiedDate;
 	@Column(name = "LLKK")
-	boolean LLKK;
+	Boolean LLKK;
 	@Column(name = "localBilling")
-	boolean localBilling;
+	Boolean localBilling;
 	@Column(name = "miscCSRInstruction", length = 500)
 	String miscCSRInstruction;// 500
 	@Column(name = "orderFileNameExtension", length = 100)
@@ -199,27 +199,27 @@ public class Partner_RBOProductLine {
 	@Column(name = "orderSchemaType", length = 50)
 	String orderSchemaType;// 50
 	@Column(name = "others")
-	boolean others;// Others (pls specify)
+	Boolean others;// Others (pls specify)
 	@Column(name = "preProcessPID", length = 50)
 	String preProcessPID;// 50
 	@Column(name = "productLineType", length = 25)
 	String productLineType;// 25
 	@Column(name = "shipmentSample")
-	boolean shipmentSample;
+	Boolean shipmentSample;
     @Column(name = "waiveMOA")
-	boolean waiveMOA;
+	Boolean waiveMOA;
 	@Column(name = "waiveMOQ")
-	boolean waiveMOQ;
+	Boolean waiveMOQ;
 	@Column(name = "localItem")
-	boolean localItem;
+	Boolean localItem;
 	@Column(name = "averyItem")
-	boolean averyItem;	
+	Boolean averyItem;	
 	@Column(name = "customerItemIdentifierDescription",length=500)
 	String customerItemIdentifierDescription;
 	@Column(name = "defaultSystem",length=5)
 	String defaultSystem;
 	@Column(name = "orderInMailBody")
-	boolean orderInMailBody;
+	Boolean orderInMailBody;
 	@Column(name = "dataStructureName",length=100)
 	String dataStructureName ;
 	
@@ -275,12 +275,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isActive() {
+	public Boolean isActive() {
 		return active;
 	}
 
 
-	public void setActive(boolean active) {
+	public void setActive(Boolean active) {
 		this.active = active;
 	}
 
@@ -295,12 +295,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isAttachmentFileMatchRequired() {
+	public Boolean isAttachmentFileMatchRequired() {
 		return attachmentFileMatchRequired;
 	}
 
 
-	public void setAttachmentFileMatchRequired(boolean attachmentFileMatchRequired) {
+	public void setAttachmentFileMatchRequired(Boolean attachmentFileMatchRequired) {
 		this.attachmentFileMatchRequired = attachmentFileMatchRequired;
 	}
 
@@ -410,13 +410,13 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isAttachmentFileOrderMatchRequired() {
+	public Boolean isAttachmentFileOrderMatchRequired() {
 		return attachmentFileOrderMatchRequired;
 	}
 
 
 	public void setAttachmentFileOrderMatchRequired(
-			boolean attachmentFileOrderMatchRequired) {
+			Boolean attachmentFileOrderMatchRequired) {
 		this.attachmentFileOrderMatchRequired = attachmentFileOrderMatchRequired;
 	}
 
@@ -432,13 +432,13 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isAttachmentFileProductlineMatchRequired() {
+	public Boolean isAttachmentFileProductlineMatchRequired() {
 		return attachmentFileProductlineMatchRequired;
 	}
 
 
 	public void setAttachmentFileProductlineMatchRequired(
-			boolean attachmentFileProductlineMatchRequired) {
+			Boolean attachmentFileProductlineMatchRequired) {
 		this.attachmentFileProductlineMatchRequired = attachmentFileProductlineMatchRequired;
 	}
 
@@ -543,12 +543,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isAttachmentRequired() {
+	public Boolean isAttachmentRequired() {
 		return attachmentRequired;
 	}
 
 
-	public void setAttachmentRequired(boolean attachmentRequired) {
+	public void setAttachmentRequired(Boolean attachmentRequired) {
 		this.attachmentRequired = attachmentRequired;
 	}
 
@@ -643,12 +643,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isControlData() {
+	public Boolean isControlData() {
 		return controlData;
 	}
 
 
-	public void setControlData(boolean controlData) {
+	public void setControlData(Boolean controlData) {
 		this.controlData = controlData;
 	}
 
@@ -724,13 +724,13 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isEmailSubjectProductlineMatchRequired() {
+	public Boolean isEmailSubjectProductlineMatchRequired() {
 		return emailSubjectProductlineMatchRequired;
 	}
 
 
 	public void setEmailSubjectProductlineMatchRequired(
-			boolean emailSubjectProductlineMatchRequired) {
+			Boolean emailSubjectProductlineMatchRequired) {
 		this.emailSubjectProductlineMatchRequired = emailSubjectProductlineMatchRequired;
 	}
 
@@ -755,12 +755,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isEmailSubjectRBOMatchRequired() {
+	public Boolean isEmailSubjectRBOMatchRequired() {
 		return emailSubjectRBOMatchRequired;
 	}
 
 
-	public void setEmailSubjectRBOMatchRequired(boolean emailSubjectRBOMatchRequired) {
+	public void setEmailSubjectRBOMatchRequired(Boolean emailSubjectRBOMatchRequired) {
 		this.emailSubjectRBOMatchRequired = emailSubjectRBOMatchRequired;
 	}
 
@@ -786,13 +786,13 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isEmailBodyProductlineMatchRequired() {
+	public Boolean isEmailBodyProductlineMatchRequired() {
 		return emailBodyProductlineMatchRequired;
 	}
 
 
 	public void setEmailBodyProductlineMatchRequired(
-			boolean emailBodyProductlineMatchRequired) {
+			Boolean emailBodyProductlineMatchRequired) {
 		this.emailBodyProductlineMatchRequired = emailBodyProductlineMatchRequired;
 	}
 
@@ -817,12 +817,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isEmailBodyRBOMatchRequired() {
+	public Boolean isEmailBodyRBOMatchRequired() {
 		return emailBodyRBOMatchRequired;
 	}
 
 
-	public void setEmailBodyRBOMatchRequired(boolean emailBodyRBOMatchRequired) {
+	public void setEmailBodyRBOMatchRequired(Boolean emailBodyRBOMatchRequired) {
 		this.emailBodyRBOMatchRequired = emailBodyRBOMatchRequired;
 	}
 
@@ -837,22 +837,22 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isFileRBOMatchRequired() {
+	public Boolean isFileRBOMatchRequired() {
 		return fileRBOMatchRequired;
 	}
 
 
-	public void setFileRBOMatchRequired(boolean fileRBOMatchRequired) {
+	public void setFileRBOMatchRequired(Boolean fileRBOMatchRequired) {
 		this.fileRBOMatchRequired = fileRBOMatchRequired;
 	}
 
 
-	public boolean isFactoryTransfer() {
+	public Boolean isFactoryTransfer() {
 		return factoryTransfer;
 	}
 
 
-	public void setFactoryTransfer(boolean factoryTransfer) {
+	public void setFactoryTransfer(Boolean factoryTransfer) {
 		this.factoryTransfer = factoryTransfer;
 	}
 
@@ -867,12 +867,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isFileMatchRequired() {
+	public Boolean isFileMatchRequired() {
 		return fileMatchRequired;
 	}
 
 
-	public void setFileMatchRequired(boolean fileMatchRequired) {
+	public void setFileMatchRequired(Boolean fileMatchRequired) {
 		this.fileMatchRequired = fileMatchRequired;
 	}
 
@@ -897,12 +897,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isFileOrderMatchRequired() {
+	public Boolean isFileOrderMatchRequired() {
 		return fileOrderMatchRequired;
 	}
 
 
-	public void setFileOrderMatchRequired(boolean fileOrderMatchRequired) {
+	public void setFileOrderMatchRequired(Boolean fileOrderMatchRequired) {
 		this.fileOrderMatchRequired = fileOrderMatchRequired;
 	}
 
@@ -927,12 +927,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isFileProductLineMatchRequired() {
+	public Boolean isFileProductLineMatchRequired() {
 		return fileProductLineMatchRequired;
 	}
 
 
-	public void setFileProductLineMatchRequired(boolean fileProductLineMatchRequired) {
+	public void setFileProductLineMatchRequired(Boolean fileProductLineMatchRequired) {
 		this.fileProductLineMatchRequired = fileProductLineMatchRequired;
 	}
 
@@ -977,22 +977,22 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isLLKK() {
+	public Boolean isLLKK() {
 		return LLKK;
 	}
 
 
-	public void setLLKK(boolean lLKK) {
+	public void setLLKK(Boolean lLKK) {
 		LLKK = lLKK;
 	}
 
 
-	public boolean isLocalBilling() {
+	public Boolean isLocalBilling() {
 		return localBilling;
 	}
 
 
-	public void setLocalBilling(boolean localBilling) {
+	public void setLocalBilling(Boolean localBilling) {
 		this.localBilling = localBilling;
 	}
 
@@ -1057,12 +1057,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isOthers() {
+	public Boolean isOthers() {
 		return others;
 	}
 
 
-	public void setOthers(boolean others) {
+	public void setOthers(Boolean others) {
 		this.others = others;
 	}
 
@@ -1087,52 +1087,52 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isShipmentSample() {
+	public Boolean isShipmentSample() {
 		return shipmentSample;
 	}
 
 
-	public void setShipmentSample(boolean shipmentSample) {
+	public void setShipmentSample(Boolean shipmentSample) {
 		this.shipmentSample = shipmentSample;
 	}
 
 
-	public boolean isWaiveMOA() {
+	public Boolean isWaiveMOA() {
 		return waiveMOA;
 	}
 
 
-	public void setWaiveMOA(boolean waiveMOA) {
+	public void setWaiveMOA(Boolean waiveMOA) {
 		this.waiveMOA = waiveMOA;
 	}
 
 
-	public boolean isWaiveMOQ() {
+	public Boolean isWaiveMOQ() {
 		return waiveMOQ;
 	}
 
 
-	public void setWaiveMOQ(boolean waiveMOQ) {
+	public void setWaiveMOQ(Boolean waiveMOQ) {
 		this.waiveMOQ = waiveMOQ;
 	}
 
 
-	public boolean isLocalItem() {
+	public Boolean isLocalItem() {
 		return localItem;
 	}
 
 
-	public void setLocalItem(boolean localItem) {
+	public void setLocalItem(Boolean localItem) {
 		this.localItem = localItem;
 	}
 
 
-	public boolean isAveryItem() {
+	public Boolean isAveryItem() {
 		return averyItem;
 	}
 
 
-	public void setAveryItem(boolean averyItem) {
+	public void setAveryItem(Boolean averyItem) {
 		this.averyItem = averyItem;
 	}
 
@@ -1241,12 +1241,12 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isOrderInMailBody() {
+	public Boolean isOrderInMailBody() {
 		return orderInMailBody;
 	}
 
 
-	public void setOrderInMailBody(boolean orderInMailBody) {
+	public void setOrderInMailBody(Boolean orderInMailBody) {
 		this.orderInMailBody = orderInMailBody;
 	}
 
@@ -1271,22 +1271,22 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public boolean isCoocheck() {
+	public Boolean isCoocheck() {
 		return coocheck;
 	}
 
 
-	public void setCoocheck(boolean coocheck) {
+	public void setCoocheck(Boolean coocheck) {
 		this.coocheck = coocheck;
 	}
 
 
-	public boolean isFiberpercentagecheck() {
+	public Boolean isFiberpercentagecheck() {
 		return fiberpercentagecheck;
 	}
 
 
-	public void setFiberpercentagecheck(boolean fiberpercentagecheck) {
+	public void setFiberpercentagecheck(Boolean fiberpercentagecheck) {
 		this.fiberpercentagecheck = fiberpercentagecheck;
 	}
 

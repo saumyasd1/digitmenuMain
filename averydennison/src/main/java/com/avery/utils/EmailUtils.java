@@ -11,6 +11,8 @@ import java.util.Properties;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Part;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -57,7 +59,7 @@ public class EmailUtils {
 	 */
 	public static void forwardEML(String fromUserEmailID,
 			String fromUserPassword, String toUserEmailIDList,
-			String emlFilePath, String additionalBodyContent, Logger log)
+			String emlFilePath, String additionalBodyContent, String additionalSubjectContent, Logger log)
 			throws MessagingException, IOException {
 		Transport transport = null;
 		InputStream source = null;
@@ -76,26 +78,47 @@ public class EmailUtils {
 									password);
 						}
 					});
-
 			log.debug("Session has been created at:\"" + EmailManager.getDate()
 					+ "\".");
 			File emlFile = new File(emlFilePath);
 			source = new FileInputStream(emlFile);
-			MimeMessage message = new MimeMessage(mailSession, source);
+			Message message = new MimeMessage(mailSession, source);
+
+			log.debug("Creating forwarding mail object at:\""
+					+ EmailManager.getDate() + "\".");
+			Message forward = new MimeMessage(mailSession);
+			log.debug("Setting parameterts for forwarding mail object at:\""
+					+ EmailManager.getDate() + "\".");
 			InternetAddress[] toUserIdArray = InternetAddress
 					.parse(toUserEmailIDList);
-			message.setRecipients(Message.RecipientType.TO, toUserIdArray);
-			addMessageContent(message, additionalBodyContent, log);
-			
-			// Set From: header field of the header.
-			message.setFrom(new InternetAddress(username));
+			forward.setRecipients(Message.RecipientType.TO, toUserIdArray);
+			forward.setSubject(additionalSubjectContent + message.getSubject());
+			forward.setFrom(new InternetAddress(username));
+			// Create the message part
+			MimeBodyPart messageBodyPart = new MimeBodyPart();
+			MimeBodyPart messageBodyPart2 = new MimeBodyPart();
+			// Create a multipart message
+			Multipart multipart = new MimeMultipart();
+			// set custom message
+			messageBodyPart2.setText(additionalBodyContent);
+			messageBodyPart.setContent(message, "message/rfc822");
+			// Add part to multi part
+			multipart.addBodyPart(messageBodyPart2);
+			multipart.addBodyPart(messageBodyPart);
+			// Associate multi-part with message
+			forward.setContent(multipart);
+
 			Date acknowledgementDate = new Date();
-			message.setSentDate(acknowledgementDate); 		
-						
-			message.saveChanges();
+			forward.setSentDate(acknowledgementDate);
+			log.debug("Saving forwarding mail object changes at:\""
+					+ EmailManager.getDate() + "\".");
+			forward.saveChanges();
+			log.debug("Forwarding mail object changes save at:\""
+					+ EmailManager.getDate() + "\".");
+
 			log.debug("Forwading eml file at:\"" + EmailManager.getDate()
 					+ "\".");
-			Transport.send(message);
+			Transport.send(forward);
 			log.debug("eml file has been forwarded successfully at:\""
 					+ EmailManager.getDate() + "\".");
 		} catch (FileNotFoundException e) {
@@ -129,30 +152,6 @@ public class EmailUtils {
 	}
 
 	/**
-	 * Method to add custom content in mail body
-	 * 
-	 * @param mail
-	 * @param forwardMailBody
-	 * @throws MessagingException
-	 * @throws IOException
-	 */
-	public static void addMessageContent(MimeMessage mail,
-			String forwardMailBody, Logger log) throws MessagingException, IOException {
-		Object content = mail.getContent();
-		log.debug("Trying to add additionalBodyContent:\""+forwardMailBody+"\".");
-		log.debug("Mail object content class name:"+(content==null?content:content.getClass()));  
-		if (content.getClass().isAssignableFrom(MimeMultipart.class)) {
-			log.debug("Adding additionalBodyContent:\""+forwardMailBody+"\".");
-			MimeMultipart mimeMultipart = (MimeMultipart) content;
-			BodyPart messageBodyPart = new MimeBodyPart();
-			messageBodyPart.setText(forwardMailBody);
-			mimeMultipart.addBodyPart(messageBodyPart, 0);
-		}else{
-			log.debug("Not able to add additionalBodyContent:\""+forwardMailBody+"\" in mail body content.");
-		}
-	}
-
-	/**
 	 * Method to forward eml file in Email
 	 * 
 	 * @param emailQueueId
@@ -164,7 +163,7 @@ public class EmailUtils {
 	 */
 	public static void forwardEMLFileAsMail(int emailQueueId,
 			String fromUserEmailID, String fromUserPassword,
-			String toUserEmailIDList, String additionalBodyContent, Logger log)
+			String toUserEmailIDList, String additionalBodyContent,String additionalSubjectContent, Logger log)
 			throws Exception {
 		log.debug("getting eml file location for emailQueueId:\""
 				+ emailQueueId + "\" at:\"" + EmailManager.getDate() + "\".");
@@ -188,7 +187,7 @@ public class EmailUtils {
 		}
 		emlFilePath = fileLocation+File.separatorChar+fileNameWithoutExtension+"."+fileextension; 
 		forwardEML(fromUserEmailID, fromUserPassword, toUserEmailIDList,
-				emlFilePath, additionalBodyContent, log);
+				emlFilePath, additionalBodyContent,additionalSubjectContent, log);
 
 	}
 

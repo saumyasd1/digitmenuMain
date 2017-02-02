@@ -323,33 +323,46 @@ public class DataConversionUtils {
 	}
 	
 	
-	/** Method to update cell value
-	 * @param excelFileLocation
+	/**
+	 * Method to update cell value
+	 * 
+	 * @param excelFilePath
+	 * @param excelFilename
 	 * @param sheetName
+	 * @param isProcessAllSheet
 	 * @param cellPosition
 	 * @param updateValue
 	 */
-	public static void updateCellValue(String excelFileLocation, String sheetName,
-			String cellPosition, String updateValue) {
+	public void updateCellValue(String excelFilePath, String excelFilename,
+			String sheetName, boolean isProcessAllSheet, String cellPosition,
+			String updateValue) {
 		FileInputStream file = null;
 		FileOutputStream fos = null;
 		try {
+			String excelFileLocation = excelFilePath + File.separatorChar
+					+ excelFilename;
 			file = new FileInputStream(excelFileLocation);
-			org.apache.poi.ss.usermodel.Workbook workbook = WorkbookFactory.create(file);
-			Sheet sheet = workbook.getSheet(sheetName);
+			org.apache.poi.ss.usermodel.Workbook workbook = WorkbookFactory
+					.create(file);
 
-			Cell cell = null;
-			SearchCellAddress searchCellAddress = new SearchCellAddress();
-			CellReference cellReference = new CellReference(cellPosition);
-			Row row = sheet.getRow(cellReference.getRow());
-			if (row != null) {
-				cell = row.getCell(cellReference.getCol());
-			}
-			if (cell != null) {
-				String value = searchCellAddress.getCellValue(cell,
-						new DataFormatter());
-				if (value == null || value.trim().equals("")) {
-					cell.setCellValue(updateValue);
+			if (isProcessAllSheet) {
+				processAllSheet(workbook, cellPosition, updateValue);
+			} else {
+				Sheet sheet = workbook.getSheet(sheetName);
+
+				Cell cell = null;
+				SearchCellAddress searchCellAddress = new SearchCellAddress();
+				CellReference cellReference = new CellReference(cellPosition);
+				Row row = sheet.getRow(cellReference.getRow());
+				if (row != null) {
+					cell = row.getCell(cellReference.getCol());
+				}
+				if (cell != null) {
+					String value = searchCellAddress.getCellValue(cell,
+							new DataFormatter());
+					if (value == null || value.trim().equals("")) {
+						cell.setCellValue(updateValue);
+					}
 				}
 			}
 			file.close();
@@ -381,6 +394,36 @@ public class DataConversionUtils {
 				}
 			}
 		}
+	}
 
+	/**
+	 * Method to process all sheets
+	 * 
+	 * @param workbook
+	 */
+	public void processAllSheet(org.apache.poi.ss.usermodel.Workbook workbook,
+			String cellPosition, String updateValue) {
+		int noOfSheets = workbook.getNumberOfSheets();
+		for (int i = 0; i < noOfSheets; i++) {
+			boolean isSheetHidden = workbook.isSheetHidden(i);
+			if (!isSheetHidden) {
+				String sheetName = workbook.getSheetName(i);
+				Sheet sheet = workbook.getSheet(sheetName);
+				Cell cell = null;
+				SearchCellAddress searchCellAddress = new SearchCellAddress();
+				CellReference cellReference = new CellReference(cellPosition);
+				Row row = sheet.getRow(cellReference.getRow());
+				if (row != null) {
+					cell = row.getCell(cellReference.getCol());
+				}
+				if (cell != null) {
+					String value = searchCellAddress.getCellValue(cell,
+							new DataFormatter());
+					if (value == null || value.trim().equals("")) {
+						cell.setCellValue(updateValue);
+					}
+				}
+			}
+		}
 	}
 }

@@ -2,6 +2,7 @@ package com.avery;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -25,11 +26,19 @@ import javax.mail.Multipart;
 import javax.mail.Part;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellReference;
 
 import com.aspose.cells.HTMLLoadOptions;
 import com.aspose.cells.LoadFormat;
 import com.aspose.cells.SaveFormat;
 import com.aspose.cells.Workbook;
+import com.avery.Model.SearchCellAddress;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
@@ -311,5 +320,67 @@ public class DataConversionUtils {
 		}
 		return IOUtils.toString(part.getInputStream(), systemencoding);
 		// return part.getInputStream();
+	}
+	
+	
+	/** Method to update cell value
+	 * @param excelFileLocation
+	 * @param sheetName
+	 * @param cellPosition
+	 * @param updateValue
+	 */
+	public static void updateCellValue(String excelFileLocation, String sheetName,
+			String cellPosition, String updateValue) {
+		FileInputStream file = null;
+		FileOutputStream fos = null;
+		try {
+			file = new FileInputStream(excelFileLocation);
+			org.apache.poi.ss.usermodel.Workbook workbook = WorkbookFactory.create(file);
+			Sheet sheet = workbook.getSheet(sheetName);
+
+			Cell cell = null;
+			SearchCellAddress searchCellAddress = new SearchCellAddress();
+			CellReference cellReference = new CellReference(cellPosition);
+			Row row = sheet.getRow(cellReference.getRow());
+			if (row != null) {
+				cell = row.getCell(cellReference.getCol());
+			}
+			if (cell != null) {
+				String value = searchCellAddress.getCellValue(cell,
+						new DataFormatter());
+				if (value == null || value.trim().equals("")) {
+					cell.setCellValue(updateValue);
+				}
+			}
+			file.close();
+			fos = new FileOutputStream(excelFileLocation);
+			workbook.write(fos);
+			fos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (file != null) {
+				try {
+					file.close();
+				} catch (IOException e) {
+					// ignore
+				}
+			}
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					// ignore
+				}
+			}
+		}
+
 	}
 }

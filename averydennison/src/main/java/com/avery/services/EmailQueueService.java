@@ -21,5 +21,20 @@ public class EmailQueueService {
 		System.out.println("Successfully Inserted record in the emailqueue table");
 		return orderEmailQueue.getId();
 	}
+	
+	
+	public void updateStatus(int emailqueueid, String status){
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		session.beginTransaction();
+		
+		OrderEmailQueue orderEmailQueue = (OrderEmailQueue) session.get(OrderEmailQueue.class, emailqueueid) ;
+		orderEmailQueue.setStatus(status);; 
+		session.persist(orderEmailQueue);
+		session.getTransaction().commit();
+		session.close();
+		System.out.println("Successfully updated status in the emailqueue table for emailqueueid\""+emailqueueid+"\".");
+		
+	}
 
 }

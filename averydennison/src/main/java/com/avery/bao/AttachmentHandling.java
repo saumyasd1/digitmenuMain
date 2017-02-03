@@ -19,6 +19,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import com.avery.EmailManager;
 import com.avery.services.EmailAttachmentService;
+import com.avery.services.EmailQueueService;
 
 public class AttachmentHandling {
 
@@ -28,6 +29,8 @@ public class AttachmentHandling {
 			throws IOException, MessagingException {
 
 		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
+		EmailQueueService emailQueueService = new EmailQueueService();
+		
 		String contentType = null;
 		try {
 			contentType = message.getContentType();
@@ -74,6 +77,8 @@ public class AttachmentHandling {
 					}
 				}
 			}
+			
+			emailQueueService.updateStatus(emailqueueid, "1");
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

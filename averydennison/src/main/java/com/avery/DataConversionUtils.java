@@ -152,7 +152,7 @@ public class DataConversionUtils {
 			}
 			msgContent = msgContent.trim();
 			if(msgContent.startsWith("<div")){
-				msgContent = "<html>\n"+msgContent+"\n</html>";  
+				msgContent = "<html>\n<br>\n"+msgContent+"\n</html>";  
 			}
 			 fos = new FileOutputStream(location
 					+ File.separatorChar + fileName + ".html");

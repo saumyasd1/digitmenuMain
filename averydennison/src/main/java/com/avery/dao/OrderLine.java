@@ -290,6 +290,9 @@ public class OrderLine {
 	@Column(name = "averyBulk", length = 50)
 	String averyBulk;
 	
+	@Column(name = "orderFileOrderType", length = 50)
+	String orderFileOrderType;
+	
 	public OrderLine() {
 	}
 
@@ -1581,6 +1584,16 @@ public class OrderLine {
 
 	public void setAdditionalLabelInternalItem(String additionalLabelInternalItem) {
 		this.additionalLabelInternalItem = additionalLabelInternalItem;
+	}
+
+
+	public String getOrderFileOrderType() {
+		return orderFileOrderType;
+	}
+
+
+	public void setOrderFileOrderType(String orderFileOrderType) {
+		this.orderFileOrderType = orderFileOrderType;
 	}
 
 

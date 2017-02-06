@@ -30,7 +30,7 @@ public class OrderEmailQueue {
 	String senderEmailId;
 	@Column(name = "subject", length = 250)
 	String subject;
-	@Column(name = "mailBody", length = 500)
+	@Column(name = "mailBody", length = 1000)
 	String mailBody;
 	@Column(name = "orderMail")
 	Boolean orderMail;

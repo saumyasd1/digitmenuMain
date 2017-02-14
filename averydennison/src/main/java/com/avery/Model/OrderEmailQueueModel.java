@@ -395,6 +395,13 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			orderEmail.setProductLineMatch(productlineMatch);
 			orderEmail.setRboMatch(rboMatch);
 			orderEmail.setId(attachmentId);
+			comment = comment.trim();
+			if (comment.endsWith(",")) {
+				comment = comment.substring(0, comment.lastIndexOf(","));
+			}
+			if (comment.startsWith(",")) {
+				comment = comment.substring(comment.indexOf(",") + 1);
+			}
 			orderEmail.setComment(comment);
 			orderEmail.setFileContentMatch(contentMatch);
 			
@@ -430,6 +437,13 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 					orderFileAttachment.setVarProductLine(pline);
 				}
 			     orderFileAttachment.setStatus(Status); 
+			     comment = comment.trim();
+					if (comment.endsWith(",")) {
+						comment = comment.substring(0, comment.lastIndexOf(","));
+					}
+					if (comment.startsWith(",")) {
+						comment = comment.substring(comment.indexOf(",") + 1);
+					}
 			     orderFileAttachment.setComment(comment);
 			     session.persist(orderFileAttachment);
 			}
@@ -602,6 +616,13 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			orderEmail.setProductLineMatch(productlineMatch);
 			orderEmail.setRboMatch(rboMatch);
 			orderEmail.setId(attachmentId);
+			comment = comment.trim();
+			if (comment.endsWith(",")) {
+				comment = comment.substring(0, comment.lastIndexOf(","));
+			}
+			if (comment.startsWith(",")) {
+				comment = comment.substring(comment.indexOf(",") + 1);
+			}
 			orderEmail.setComment(comment);
 			session.update(orderEmail);
 			result=1;
@@ -622,6 +643,7 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			OrderFileQueue orderFileQueue=(OrderFileQueue)session.load(OrderFileQueue.class, orderFileQueueId);
 			
 			orderFileQueue.setId(orderFileQueueId);
+			
 			orderFileQueue.setComment(comment);
 			session.update(orderFileQueue);
 			

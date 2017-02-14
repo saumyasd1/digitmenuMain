@@ -70,6 +70,7 @@ public class OrderEmailQueueServices {
 		//int count=0;
 		int att_id=0;
 		int productline_id=0;
+		int result=0;
 		///create object of model class to access its methods
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		try {
@@ -109,7 +110,11 @@ public class OrderEmailQueueServices {
 				String file_ext = email_att.getFileExtension();
 				String file_path = email_att.getFilePath();
 				log.info("identification attachment for attachment id \""+att_id+"\".");
-				productline_id =identifyAttachment(id, att_id, file_path, file_name, file_ext, email);
+				System.out.println("identification attachment for attachment id \""+att_id+"\".");
+				result =identifyAttachment(id, att_id, file_path, file_name, file_ext, email);
+			}
+			if(result==1){
+				identifyAdditionalDataFile(id);
 			}
 		} catch (HibernateException ex) {
 			throw ex;
@@ -228,7 +233,7 @@ public class OrderEmailQueueServices {
 			}
 		}
 		subjectProductline=removeDup(subjectProductline);
-		orderEmailQueue.updateOrderEmail(id,"3",subjectRbo,subjectProductline,"","","");
+		orderEmailQueue.updateOrderEmail(id,"",subjectRbo,subjectProductline,"","","");
 	}
 	/**
 	 * method removeDup
@@ -531,7 +536,7 @@ public class OrderEmailQueueServices {
 	 * @return list of keywords from partner rbo productline table
 	 * @throws Exception 
 	 */
-	public ArrayList getkeyword(int schema_id) throws Exception {
+	public ArrayList<String> getkeyword(int schema_id) throws Exception {
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		log.info("get keyword for schema id \""+schema_id+".");
 		ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartner_productline(schema_id);
@@ -632,6 +637,7 @@ public class OrderEmailQueueServices {
 								log.info("FileOrderMatch is empty.");
 							}
 						}else if(p_info.getFileOrderMatchLocation().equals("FileContent")){
+							System.out.println("Processing attachment identification from file Content.");
 							log.info("Processing attachment identification from file Content.");
 							String Sheetinfo = p_info.getFileOrderMatch();
 							if(!Sheetinfo.isEmpty()){
@@ -680,7 +686,7 @@ public class OrderEmailQueueServices {
 					orderEmailQueue.updateOrderEmailAttachmentContent(att_id, productline_rbo_id, "8","","","","Order");
 					readEmailSubject(id,att_id,selected_schema);
 					EmailBodyAnalysis(id,att_id,selected_schema);
-					identifyAdditionalDataFile(id,selected_schema);
+					//identifyAdditionalDataFile(id,selected_schema);
 				}else if(selected_schema.size()==0){
 					log.info("match schema list \""+selected_schema+"\".");
 					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema_id_comment,"");
@@ -694,7 +700,7 @@ public class OrderEmailQueueServices {
 					}
 					readEmailSubject(id,att_id,selected_schema_int);
 					EmailBodyAnalysis(id,att_id,selected_schema_int);
-					identifyAdditionalDataFile(id,selected_schema_int);
+					//identifyAdditionalDataFile(id,selected_schema_int);
 				}else{
 					log.info("match schema list \""+selected_schema+"\".");
 					String schema="";
@@ -705,12 +711,12 @@ public class OrderEmailQueueServices {
 					orderEmailQueue.updateOrderEmailAttachment(att_id, productline_id, "6","","",schema,"");
 					readEmailSubject(id,att_id,selected_schema);
 					EmailBodyAnalysis(id,att_id,selected_schema);
-					identifyAdditionalDataFile(id,selected_schema);
+					//identifyAdditionalDataFile(id,selected_schema);
 				}
 			} catch (Exception e) {
 				throw e;
 			}
-		return 0;
+		return 1;
 	}
 	
 	/**
@@ -1096,7 +1102,7 @@ public class OrderEmailQueueServices {
 		 * @param emailQueueId
 		 * @param productline_id
 		 * @throws Exception
-		 */
+		 * /
 		public void identifyAdditionalDataFile(int emailQueueId, List<Integer> productline_id ) throws Exception {
 			System.out.println("identifyAdditionalDataFile ");
 			OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
@@ -1196,8 +1202,133 @@ public class OrderEmailQueueServices {
 							log.info("attachment required or attachment file match required is false for productline id \""+produclineId+"\".");
 						}
 					}
+				}
+				if(selected_schema.size()==1){
+					System.out.println("match schema list \""+selected_schema+"\".");
+					int schemaId = selected_schema.get(0);
+					orderEmailQueue.updateOrderEmailAttachmentContent(attachmentId, schemaId, "8","","","","AdditionalData");
+					selected_schema.clear();
+				}else{
+					System.out.println("match schema list \""+selected_schema+"\".");
+				}
+			}
+		}*/
+		/**
+		 * method identifyAdditionalDataFile
+		 * @param emailQueueId
+		 * @param productline_id
+		 * @throws Exception
+		 */
+		public void identifyAdditionalDataFile(int emailQueueId ) throws Exception {
+			System.out.println("identifyAdditionalDataFile for email queue\""+emailQueueId+"\".");
+			OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+			ArrayList<Object> email_list = orderEmailQueue.GetEmailAttachments(emailQueueId);
+			System.out.println("get attchments list for email id \"" + emailQueueId+"\".");
+			Iterator<Object> iterat = email_list.iterator();
+			OrderFileAttachment emailAttachments = new OrderFileAttachment();
+			
+			while (iterat.hasNext()) {
 				
-					
+				ArrayList<Integer> selected_schema= new ArrayList<Integer>();
+				String fileExt="";
+				String fileName="";
+				String keywordLocation="";
+				String filePath="";
+				emailAttachments = (OrderFileAttachment) iterat.next();
+				fileName=emailAttachments.getFileName();
+				fileExt=emailAttachments.getFileExtension();
+				filePath=emailAttachments.getFilePath();
+				int attachmentId =emailAttachments.getId();
+				String productlineIdString =emailAttachments.getComment();
+				if(productlineIdString==""||productlineIdString==null){
+					return;
+				}
+				String[] productlineIdArr = productlineIdString.split(",");
+				System.out.println("processing attachment id \"" + attachmentId+"\".");
+				for (String productlineIdStr : productlineIdArr) {
+					if(productlineIdStr.isEmpty() || productlineIdStr == null){
+						break;
+					}
+					int productlineId = Integer.parseInt(productlineIdStr);
+					System.out.println("productlineId \"" + productlineId+"\".");
+				//for (String productlineIdArr : productlineId){
+					//fetch product line info
+					ArrayList<Object> partner_rboinfo = orderEmailQueue.getPartner_productline(productlineId);
+					Partner_RBOProductLine produclineData = new Partner_RBOProductLine();
+					Iterator<Object> iterator = partner_rboinfo.iterator();
+					while (iterator.hasNext()) {
+						log.info("data fetching for product line id \"" + productlineId+"\".");
+						produclineData = (Partner_RBOProductLine) iterator.next();
+						
+						if(produclineData.isAttachmentRequired() && produclineData.isAttachmentFileMatchRequired()){
+							
+							if(produclineData.getAttachmentFileOrderMatchLocation().contains("FileName")){
+								log.info("Processing attachment identification from file name.");
+								String fileNamePattern = produclineData.getAttachmentFileOrderMatch();
+								if(!fileNamePattern.isEmpty()){
+									if (fileNamePattern.contains("|")||!fileNamePattern.isEmpty()) {
+										String[] fileNamePattern_array = fileNamePattern.split("\\|");
+										for (String completeFileName : fileNamePattern_array) {
+											String[] fileName_array = completeFileName.split("\\.");
+											String additionalFileName = fileName_array[0].trim();
+											String fileNameExt = fileName_array[1].trim();
+											additionalFileName=additionalFileName.replace("*", "(.*)");
+											
+											if(fileName.toLowerCase().matches(additionalFileName.toLowerCase()) && fileExt.contains(fileNameExt)){
+												selected_schema.add(produclineData.getId());
+												System.out.println("file name match order_file_name   \""+ fileName+"\".");
+											}else{
+												System.out.println("file name not match with order file name  \""+ fileName+"\".");
+											}
+										}
+									}
+								}else{
+									log.info("FileOrderMatch is empty.");
+								}
+							}else if(produclineData.getAttachmentFileOrderMatchLocation().equals("FileContent")){
+								log.info("Processing attachment identification from file Content.");
+								String matchContent = produclineData.getAttachmentFileOrderMatch();
+								if(!matchContent.isEmpty()){
+									if(produclineData.getAttachmentFileNameExtension_1().contains(fileExt)){
+										if(produclineData.getAttachmentFileNameExtension_1().contains("xls")){
+											//method to search different values in excell at different location
+											if(SearchContentInExcel(fileName,filePath,fileExt,matchContent, log)){
+												keywordLocation="true";
+											}
+										
+										}else if(produclineData.getAttachmentFileNameExtension_1().contains("pdf")){ 
+											log.info("searching file extension for pdf");
+											String keyword = matchContent.trim();
+											String[] keywordArray;
+											if (keyword.contains("Value")){ 
+												keywordArray = keyword.split(":");
+												keyword=keywordArray[1];
+												
+											}
+											if(!keyword.trim().isEmpty()){
+												if(fileName.contains("CompleteEmail")){
+													keywordLocation =searchContentFromMailBody(filePath, fileName, keyword, false);
+												}else{
+													keywordLocation = searchpdf(fileName, keyword, filePath);
+												}
+												System.out.println("search in pdf for keyword\""+keyword+"\" file name\"" +fileName+ "\"filepath\""+filePath+"\".");
+												System.out.println("keywordLocation---"+keywordLocation);
+											}else{
+												log.info("keyword is empty for pdf");
+											}
+										}
+									}
+									if(!keywordLocation.trim().isEmpty()){
+										log.info("Match found for product line id \""+ produclineData.getId()+"\".");
+										selected_schema.add(produclineData.getId());
+										keywordLocation="";
+									}
+								}
+							}
+						}else{
+							log.info("attachment required or attachment file match required is false for productline id \""+productlineId+"\".");
+						}
+					}
 				}
 				if(selected_schema.size()==1){
 					System.out.println("match schema list \""+selected_schema+"\".");

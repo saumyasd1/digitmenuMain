@@ -72,6 +72,9 @@ public class SearchCellAddress {
 				//System.out.println(sheet.getSheetName() + "****Start");
 				resultFlag= isContentPresent(sheet, cellPostion,
 						matchingString);
+				if(resultFlag){
+					return resultFlag;
+				}
 				System.out.println("searching for string finished in sheet \""+sheet+"\".");
 				System.out.println("resultFlag for string is \""+resultFlag+"\".");
 				
@@ -98,7 +101,9 @@ public class SearchCellAddress {
 			if(cell!=null){
 				DataFormatter dataFormatter = new DataFormatter();
 				if(getCellValue(cell, dataFormatter)!=null){
+					System.out.println("cell value"+ getCellValue(cell, dataFormatter));
 					if(getCellValue(cell, dataFormatter).toUpperCase().trim().contains(content.toUpperCase())){
+						System.out.println("result match");
 						return true;	
 					}
 						

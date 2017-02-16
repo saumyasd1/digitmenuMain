@@ -62,7 +62,7 @@ public class OrderEmailQueueServices {
 		////assign value to directory path
 		this.directory = dir;
 		String email = "";
-		//String subject = "";
+		//String subject = "";f
 		//String emailId = "";
 		//String Domain = "";
 		//int partnerId=0;
@@ -679,6 +679,7 @@ public class OrderEmailQueueServices {
 					}
 				}
 				//System.out.println(selected_schema);
+				selected_schema = new ArrayList<Integer>(new LinkedHashSet<Integer>(selected_schema));
 				if(selected_schema.size()==1){
 					log.info("match schema list \""+selected_schema+"\".");
 					productline_rbo_id = selected_schema.get(0);
@@ -1330,6 +1331,7 @@ public class OrderEmailQueueServices {
 						}
 					}
 				}
+				selected_schema = new ArrayList<Integer>(new LinkedHashSet<Integer>(selected_schema));
 				if(selected_schema.size()==1){
 					System.out.println("match schema list \""+selected_schema+"\".");
 					int schemaId = selected_schema.get(0);

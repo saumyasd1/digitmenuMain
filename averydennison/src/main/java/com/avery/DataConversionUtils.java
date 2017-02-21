@@ -1,12 +1,16 @@
 package com.avery;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -19,11 +23,13 @@ import java.util.Enumeration;
 import java.util.regex.Pattern;
 
 import javax.mail.BodyPart;
+import javax.mail.Folder;
 import javax.mail.Header;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
+import javax.mail.Store;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -48,6 +54,11 @@ import com.sun.mail.util.BASE64DecoderStream;
 
 public class DataConversionUtils {
 
+	
+	Folder inbox = null;
+	Store store = null;
+	boolean exportImages = false;
+	
 	public static void main(String[] args) {
 		String inputFileLocation = "C:\\Users\\Vishal\\Desktop\\Avery\\Email to PDF and Excel\\";
 		String htmlFileName = "Under Armour Order AAN#00022912.html";
@@ -150,6 +161,9 @@ public class DataConversionUtils {
 			if (msgContent.trim().equals("")) {
 				msgContent = getBodyMessage(message, "text/HTML", "UTF-8");
 			}
+			if (exportImages) {
+				exportImageFromEmail(message, location, "images");
+			}
 			msgContent = msgContent.trim();
 			if(msgContent.startsWith("<div")){
 				msgContent = "<html>\n<br>\n"+msgContent+"\n</html>";  
@@ -160,6 +174,9 @@ public class DataConversionUtils {
 			out.write(msgContent);
 			out.close();
 			fos.close(); 
+			if (exportImages) {
+				replaceImageName(location, fileName + ".html", "images");
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -315,10 +332,32 @@ public class DataConversionUtils {
 		}
 
 		part = mp.getBodyPart(0);
+		
+		String contentFinal = "";	    
+		Multipart mp1 = (Multipart)part.getContent();
+		int count = mp1.getCount(); 
+		
+		for (int i = 0; i < count; i++) {
+			if (!mp1.getBodyPart(i).getContentType().toLowerCase()
+					.contains("image/png")) {
+				Multipart mp2 = (Multipart) mp1.getBodyPart(i).getContent();
+				int count2 = mp2.getCount();
+				for (int ii = 0; ii < count2; ii++) {
+					if (mp2.getBodyPart(ii).getContentType().toLowerCase()
+							.contains("text/html")) {
+						exportImages = true;
+						contentFinal = mp2.getBodyPart(ii).getContent()
+								.toString();
+					}
+				}
+			}
+		} 
+		
 		if (contentType == null) {
 			throw new Exception("Content Type : Invalid Content Type\n");
 		}
-		return IOUtils.toString(part.getInputStream(), systemencoding);
+//		return IOUtils.toString(part.getInputStream(), systemencoding);
+		return contentFinal;	
 		// return part.getInputStream();
 	}
 	
@@ -423,6 +462,218 @@ public class DataConversionUtils {
 						cell.setCellValue(updateValue);
 					}
 				}
+			}
+		}
+	}
+	
+	
+	/**
+	 * Method to export image from email
+	 * 
+	 * @param msg
+	 * @param htmlFileLocation
+	 * @param imageFolderLocation
+	 */
+	public void exportImageFromEmail(Message msg, String htmlFileLocation,
+			String imageFolderLocation) {
+		try {
+			Multipart mPart = (Multipart) msg.getContent();
+			int count0 = mPart.getCount();
+			File imageFolder = new File(htmlFileLocation + File.separator
+					+ imageFolderLocation);
+			if (!imageFolder.exists()) {
+				if (imageFolder.mkdirs()) {
+					System.out.println("Image folder directory:\""
+							+ htmlFileLocation + File.separator
+							+ imageFolderLocation + "\" is created.");
+				} else {
+					System.out
+							.println("Failed to create image folder directory:\""
+									+ htmlFileLocation
+									+ File.separator
+									+ imageFolderLocation + "\".");
+					System.out.println("Failed to create directory!");
+				}
+			}
+
+			for (int i = 0; i < count0; i++) {
+
+				Part part0 = (Part) mPart.getBodyPart(i);
+				String contentType01 = part0.getContentType();
+				exportImageFromEmailRecur(contentType01, part0,
+						htmlFileLocation, imageFolder);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (inbox != null && inbox.isOpen())
+					inbox.close(true);
+
+				if (store != null && store.isConnected())
+					store.close();
+
+			} catch (MessagingException me) {
+				me.printStackTrace();
+			}
+		}
+	}
+
+	/**
+	 * Recursive method to store all the images for mail
+	 * 
+	 * @param contentType
+	 * @param part0
+	 * @param htmlFileLocation
+	 * @param imageFolder
+	 */
+	public void exportImageFromEmailRecur(String contentType, Part part0,
+			String htmlFileLocation, File imageFolder) {
+		InputStream input = null;
+		FileOutputStream fos = null;
+		try {
+			if (contentType.toLowerCase().contains("image/png")) {
+				String imageName = "";
+				Enumeration eNum = part0.getAllHeaders();
+				while ((eNum != null) && (eNum.hasMoreElements())) {
+					Header header = (Header) eNum.nextElement();
+					if (header.getName().toLowerCase().trim()
+							.equals("content-id")) {
+						imageName = header.getValue();
+						if (imageName.contains(">")) {
+							imageName = imageName.replace(">", "");
+						}
+						if (imageName.contains("<")) {
+							imageName = imageName.replace("<", "");
+						}
+					}
+				}
+				fos = new FileOutputStream(imageFolder.getPath()
+						+ File.separator + imageName);
+				input = part0.getInputStream();
+				byte[] buffer = new byte[4096];
+				int byteRead;
+				while ((byteRead = input.read(buffer)) != -1) {
+					fos.write(buffer, 0, byteRead);
+				}
+			} else {
+				if (part0.getContent() instanceof Multipart) {
+					Multipart mPart0 = (Multipart) part0.getContent();
+					int count1 = mPart0.getCount();
+					for (int p = 0; p < count1; p++) {
+						Part part1 = (Part) mPart0.getBodyPart(p);
+						String contentType1 = part1.getContentType();
+						exportImageFromEmailRecur(contentType1, part1,
+								htmlFileLocation, imageFolder);
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					// Ignore
+				}
+			}
+			if (input != null) {
+				try {
+					input.close();
+				} catch (IOException e) {
+					// Ignore
+				}
+			}
+		}
+	}
+
+	/**
+	 * Replace image name in html file
+	 * 
+	 * @param htmlFileLocation
+	 * @param htmlFileName
+	 * @param imageFolderLocation
+	 */
+	public void replaceImageName(String htmlFileLocation, String htmlFileName,
+			String imageFolderLocation) {
+		FileReader fileReader = null;
+		BufferedReader bufferedReader = null;
+		FileWriter fileWriter = null;
+		BufferedWriter bufferWriter = null;
+		try {
+			String fileNameArray[] = null;
+			File imageFolder = new File(htmlFileLocation + File.separator
+					+ imageFolderLocation);
+			if (imageFolder.exists()) {
+				fileNameArray = imageFolder.list();
+			}
+			if (fileNameArray.length < 0) {
+				return;
+			}
+			File htmlFile = new File(htmlFileLocation + File.separator
+					+ htmlFileName);
+			fileReader = new FileReader(htmlFile);
+			bufferedReader = new BufferedReader(fileReader);
+			StringBuffer stringBuffer = new StringBuffer();
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				stringBuffer.append(line);
+				stringBuffer.append("\n");
+			}
+			String fileContent = stringBuffer.toString();
+			for (String name : fileNameArray) {
+				if (fileContent.contains(name)) {
+					String newContent = "." + File.separator
+							+ imageFolderLocation + File.separator + name;
+					String searchContent = "cid:" + name;
+					String tempSubstring = fileContent.substring(fileContent
+							.indexOf(searchContent));
+					String oldContent = tempSubstring.substring(0,
+							tempSubstring.indexOf("\""));
+					fileContent = fileContent.replace(oldContent, newContent);
+				}
+			}
+			fileWriter = new FileWriter(htmlFile);
+			bufferWriter = new BufferedWriter(fileWriter);
+			bufferWriter.write(fileContent);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (bufferWriter != null) {
+				try {
+					bufferWriter.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			if (fileWriter != null) {
+				try {
+					fileWriter.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+
+			if (bufferedReader != null) {
+				try {
+					bufferedReader.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
+			}
+
+			if (fileReader != null) {
+				try {
+					fileReader.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+
 			}
 		}
 	}

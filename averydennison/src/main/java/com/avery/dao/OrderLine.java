@@ -264,8 +264,8 @@ public class OrderLine {
 	String lastModifiedByName;*/
 	@Column(name = "productLineType", length = 50)
 	String productLineType;
-	@Column(name = "skuQtyDiffrence", length = 100)
-	String skuQtyDiffrence; 
+	@Column(name = "skuQtyDifference", length = 100)
+	String skuQtyDifference; 
 	@Column(name="addditionalFileId",length=100)
 	String additionalFileId;
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
@@ -614,13 +614,15 @@ public class OrderLine {
 	}
 
 
-	public String getSkuQtyDiffrence() {
-		return skuQtyDiffrence;
+	
+
+	public String getSkuQtyDifference() {
+		return skuQtyDifference;
 	}
 
 
-	public void setSkuQtyDiffrence(String skuQtyDiffrence) {
-		this.skuQtyDiffrence = skuQtyDiffrence;
+	public void setSkuQtyDifference(String skuQtyDifference) {
+		this.skuQtyDifference = skuQtyDifference;
 	}
 
 

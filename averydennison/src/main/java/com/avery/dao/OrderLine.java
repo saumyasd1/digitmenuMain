@@ -614,6 +614,16 @@ public class OrderLine {
 	}
 
 
+	public String getSkuQtyDiffrence() {
+		return skuQtyDiffrence;
+	}
+
+
+	public void setSkuQtyDiffrence(String skuQtyDiffrence) {
+		this.skuQtyDiffrence = skuQtyDiffrence;
+	}
+
+
 	public void setShippingMethod(String shippingMethod) {
 		this.shippingMethod = shippingMethod;
 	}

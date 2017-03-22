@@ -264,6 +264,8 @@ public class OrderLine {
 	String lastModifiedByName;*/
 	@Column(name = "productLineType", length = 50)
 	String productLineType;
+	@Column(name = "skuQtyDiffrence", length = 100)
+	String skuQtyDiffrence; 
 	@Column(name="addditionalFileId",length=100)
 	String additionalFileId;
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.LAZY)

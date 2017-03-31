@@ -19,6 +19,7 @@ public class GlobalConfiguration {
 	 String duplicateOrderDuration;
 	 String defaultTimeZone;
 	 String maxSOLine;
+	 String TimeZoneOffset;
 	 
 	 public GlobalConfiguration() {
     	 
@@ -90,5 +91,13 @@ public class GlobalConfiguration {
 		this.maxSOLine = maxSOLine;
 	}
 	 
+	@Column(name="TimeZoneOffset" , length=100)
+	public String getTimeZoneOffset() {
+		return TimeZoneOffset;
+	}
+
+	public void setTimeZoneOffset(String timeZoneOffset) {
+		TimeZoneOffset = timeZoneOffset;
+	}
 	 
 }

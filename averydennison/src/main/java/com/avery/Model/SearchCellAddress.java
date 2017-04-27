@@ -6,10 +6,6 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.util.CellReference;
-import org.apache.poi.xssf.usermodel.XSSFSheet;  
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;   
-import org.apache.poi.xssf.usermodel.XSSFCell;  
-import org.apache.poi.xssf.usermodel.XSSFRow;  
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.format.CellDateFormatter;
 import org.apache.poi.ss.format.CellFormat;
@@ -38,7 +34,7 @@ public class SearchCellAddress {
 	public Workbook getWorkbook(String filePath, String fileName)throws Exception {
 		try {
 			File file = new File(filePath + File.separatorChar + fileName);
-			System.out.println("Create workbook object for file" +filePath + File.separatorChar + fileName+".");
+			log.debug("Create workbook object for file" +filePath + File.separatorChar + fileName+".");
 			workbook = WorkbookFactory.create(file); 
 		} catch (IOException e) {
 			throw e;
@@ -68,16 +64,15 @@ public class SearchCellAddress {
 			boolean isSheetHidden = workbook.isSheetHidden(i);
 			if (!isSheetHidden) {
 				Sheet sheet = workbook.getSheetAt(i);
-				System.out.println("searching for string \""+matchingString+"\" in sheet \""+sheet+"\".");
-				//System.out.println(sheet.getSheetName() + "****Start");
+				log.debug("searching for string \""+matchingString+"\" in sheet \""+sheet+"\".");
+				//log.debug(sheet.getSheetName() + "****Start");
 				resultFlag= isContentPresent(sheet, cellPostion,
 						matchingString);
 				if(resultFlag){
 					return resultFlag;
 				}
-				System.out.println("searching for string finished in sheet \""+sheet+"\".");
-				System.out.println("resultFlag for string is \""+resultFlag+"\".");
-				
+				log.debug("searching for string finished in sheet \""+sheet+"\".");
+				log.debug("resultFlag for string is \""+resultFlag+"\".");
 			}
 		}
 		return resultFlag;
@@ -93,7 +88,7 @@ public class SearchCellAddress {
 	 */
 	public boolean isContentPresent(Sheet sheet, String cellPostion,
 			String content) {
-		//System.out.println("content"+ content);
+		//log.debug("content"+ content);
 		CellReference cellReference = new CellReference(cellPostion);
 		Row row = sheet.getRow(cellReference.getRow());
 		if(row!=null){
@@ -101,9 +96,9 @@ public class SearchCellAddress {
 			if(cell!=null){
 				DataFormatter dataFormatter = new DataFormatter();
 				if(getCellValue(cell, dataFormatter)!=null){
-					System.out.println("cell value"+ getCellValue(cell, dataFormatter));
+					log.debug("cell value"+ getCellValue(cell, dataFormatter));
 					if(getCellValue(cell, dataFormatter).toUpperCase().trim().contains(content.toUpperCase())){
-						System.out.println("result match");
+						log.debug("result match");
 						return true;	
 					}
 						

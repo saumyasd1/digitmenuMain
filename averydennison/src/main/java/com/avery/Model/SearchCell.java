@@ -86,25 +86,14 @@ public class SearchCell {
 		//String array[] = new String[50];
 		//CellAddress celladd[]=new CellAddress[50];
 		try{
-			//System.out.println("filename11111111111 ");
-		
+			
 		for (Row row : sheet) {
-			//System.out.println("filename111111111110000 ");
 			for (Cell cell : row) {
-				//System.out.println("filename111111111110000 87");
 				if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-					//System.out.println("filename111111111110000 2323232");
 					if (cell.getRichStringCellValue().getString().trim()
 							.equals(cellContent)) {
-						//System.out.println("filename11111111111 2222222222222");
-						/*int colIdx = cell.getColumnIndex();
-						int rowIdx = cell.getRowIndex();*/
 						add_row =cell.getRowIndex();
 						add_column =cell.getColumnIndex();
-						//CellAddress add=new CellAddress(cell);
-					//	System.out.println("filename11111111111 2222222222222 3333333333");
-						//array[i++] = "ROW:"+rowIdx + " COl:" + colIdx+" CellAddress:"+add.toString() ;
-						//celladd[i++]=add;
 						address="Row"+add_row+"-column"+add_column;
 						System.out.println("Search Cell 324"+address);
 					}
@@ -115,11 +104,8 @@ public class SearchCell {
 		}catch(NullPointerException en)
         {
 			en.printStackTrace();
-           // System.out.print("NullPointerException caught sheet  not found");
-        }catch (Exception e) {
+       }catch (Exception e) {
         	e.printStackTrace();
-			//System.out.println("Search Cell 2");
-			//log.error(e);
 		}
 		return address;
 	}
@@ -128,9 +114,6 @@ public class SearchCell {
 		int add_row=0;
 		int add_column=0;
 		String address= "";
-		//String array[] = new String[50];
-		//CellAddress celladd[]=new CellAddress[50];
-		//System.out.println("Search Cell 731");
 		try{
 			
 		for (Row row : sheet) {
@@ -139,15 +122,8 @@ public class SearchCell {
 					if (cell.getRichStringCellValue().getString().trim()
 							
 							.equals(cellContent)) {
-					//	System.out.println("Search Cell 323");
-						/*int colIdx = cell.getColumnIndex();
-						int rowIdx = cell.getRowIndex();*/
-						//CellAddress add=new CellAddress(cell);
 						add_row =cell.getRowIndex();
 						add_column =cell.getColumnIndex();
-					//	System.out.println("Search Cell 324");
-						//array[i++] = "ROW:"+rowIdx + " COl:" + colIdx+" CellAddress:"+add.toString() ;
-						//celladd[i++]=add;
 						address="Row"+add_row+"-column"+add_column;
 						System.out.println("Search Cell 324"+address);
 					}
@@ -157,11 +133,8 @@ public class SearchCell {
 		} catch(NullPointerException e)
         {
 			e.printStackTrace();
-            //System.out.print("NullPointerException caught sheet  not found");
         }catch (Exception e) {
         	e.printStackTrace();
-			//System.out.println("Search Cell 3");
-			//log.error(e);
 		}
 		return address;
 	}
@@ -178,20 +151,10 @@ public class SearchCell {
 					break;
 				}
 			}
-			/*if (!isSheetExist) {
-				if (workbook.getSheetAt(0) != null) {
-					//log.error("Sheet name:\"" + sheetName
-							//+ "\" defined in schema not found in Workbook.");
-					//throw new ServiceException("Sheet name:\"" + sheetName
-						//	+ "\" defined in schema not found in Workbook.");
-				}
-
-			}*/
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			//log.error("sheet check."+e.getMessage(),e);
+			
 		}
 		return isSheetExist;
 

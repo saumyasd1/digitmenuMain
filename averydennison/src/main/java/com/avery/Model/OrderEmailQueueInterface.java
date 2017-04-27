@@ -3,7 +3,7 @@ package com.avery.Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.avery.dao.OrderFileAttachment;
+
 
 /**
  * @author Dipanshu
@@ -30,7 +30,6 @@ public interface OrderEmailQueueInterface {
 	 * @throws Exception 
 	 */
 	public ArrayList<Object> getPartnerRbo_productlines(String email) throws Exception;
-	//public ArrayList<Object> getPartnerRbo_productlines(int partnerId );
 	/**
 	 * @param id
 	 * @return

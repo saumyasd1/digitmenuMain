@@ -3,15 +3,17 @@ package com.avery.services;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.avery.Model.OrderEmailQueueModel;
 import com.avery.dao.OrderEmailQueue;
 import com.avery.utils.HibernateUtil;
 
 public class AcknowledgementService {
-	
+	static Logger log = Logger.getLogger(AcknowledgementService.class.getName());
 	public String getAcknowledgementEmailID(int emailqueueid){
 		
 		String senderID = "";
@@ -23,7 +25,7 @@ public class AcknowledgementService {
 		query.setParameter("id", emailqueueid);
 		List result = query.list();
 		senderID = (String) result.get(0);
-		//System.out.println("The result is : "+senderID);
+		log.debug("acknowledgement email id : "+senderID);
 		session.close();
 		return senderID;
 	}

@@ -22,7 +22,6 @@ import com.avery.dao.OrderFileQueue;
 import com.avery.dao.Partner;
 import com.avery.dao.Partner_RBOProductLine;
 import com.avery.utils.HibernateUtil;
-//import com.mysql.jdbc.Blob;
 
 public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 	
@@ -37,10 +36,11 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		String BodyProductline ="";
 		String Source_email_subject ="";
 		HashMap<String, String> emailinfo = new HashMap<String, String>();
+		Session session=null;
 		try{
-			//log.info("Enter method emailsource  class OrderEmailQueueModel");
+			log.debug("get email information \""+id+"\".");
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			
 				Criteria cr = session.createCriteria(OrderEmailQueue.class)
@@ -76,279 +76,204 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 		         emailinfo.put("BodyRbo", BodyRbo);
 		         emailinfo.put("BodyProductline", BodyProductline);
 		         session.getTransaction().commit();
-		         session.close();
-	 	 	
+		         
 		}catch(HibernateException  ex){
 			throw  ex;
 		}catch(Exception e){
 			throw e;
-			//log.error(e);
 		}
-		//log.info("Exit method emailsource  class OrderEmailQueueModel");
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("return email info as subject/body.");
 		return emailinfo;   
 	      
 	}
 	public int getPartnerId(String email, String domain ){
 		
 		int partnerId = 0;
-		//log.info("Enter method getPartnerId  class OrderEmailQueueModel");
+		Session session=null;
+		log.debug("get partner id on the basis of email or domain.");
 		try{
-		SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-		Session session=sessionFactory.openSession();
-		session.beginTransaction();
-		 
-		Criteria cr = session.createCriteria(Partner.class)
-    		    .setProjection(Projections.projectionList()
-    		      .add(Projections.property("ID"), "ID")
-    		      .add(Projections.property("partnerName"), "partnerName"))
-    		    .setResultTransformer(Transformers.aliasToBean(Partner.class));
-			cr.add(Restrictions.eq("active", true));
-			cr.add(Restrictions.eq("emailDomain", domain));
-     		cr.setMaxResults(1);
-     		
-     		List<Partner> list = cr.list();
-     		//System.out.println("p list size "+list.size()); 
-	         Iterator<Partner> iterator = list.iterator(); 
-	         while (iterator.hasNext()){
-	        	 Partner partner =  iterator.next(); 
-	        	 //casted for long
-	        	 if(partner!=null){
-	        		 partnerId = (int) partner.getID();
-	 			}
-			    
-			  }
-	          
-	         if(partnerId == 0){
-	        	 Criteria cr1 = session.createCriteria(Partner.class)
-	         		    .setProjection(Projections.projectionList()
-	         		    .add(Projections.property("ID"), "ID")
-	         		    .add(Projections.property("partnerName"), "partnerName"))
-	         		    .setResultTransformer(Transformers.aliasToBean(Partner.class));
-	     			cr1.add(Restrictions.eq("active", true));
-	     			cr1.add(Restrictions.eq("emailId", email));
-	          		cr1.setMaxResults(1);
-	          		List<Partner> plist = cr1.list();
-	     	         
-	     	         Iterator<Partner> piterator = plist.iterator(); 
-	     	         while (piterator.hasNext()){
-	     	        	 Partner partnerid =  piterator.next(); 
-	     	        	 //casted for long
-	     	        	if(partnerid != null){
-	     	        		partnerId = (int) partnerid.getID(); 
-	     	        	}
-	     			  }
+			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
+			session=sessionFactory.openSession();
+			session.beginTransaction();
+			Criteria cr = session.createCriteria(Partner.class)
+	    		    .setProjection(Projections.projectionList()
+	    		    .add(Projections.property("ID"), "ID")
+	    		    .add(Projections.property("partnerName"), "partnerName"))
+	    		    .setResultTransformer(Transformers.aliasToBean(Partner.class));
+				cr.add(Restrictions.eq("active", true));
+				cr.add(Restrictions.eq("emailDomain", domain));
+	     		cr.setMaxResults(1);
+	     		List<Partner> list = cr.list();
+	     		Iterator<Partner> iterator = list.iterator(); 
+		        while (iterator.hasNext()){
+		        	 Partner partner =  iterator.next(); 
+		        	 if(partner!=null){
+		        		 partnerId = (int) partner.getID();
+		        	 }
+				}
+		        if(partnerId == 0){
+		        	 Criteria cr1 = session.createCriteria(Partner.class)
+		         		    .setProjection(Projections.projectionList()
+		         		    .add(Projections.property("ID"), "ID")
+		         		    .add(Projections.property("partnerName"), "partnerName"))
+		         		    .setResultTransformer(Transformers.aliasToBean(Partner.class));
+		     			cr1.add(Restrictions.eq("active", true));
+		     			cr1.add(Restrictions.eq("emailId", email));
+		          		cr1.setMaxResults(1);
+		          	List<Partner> plist = cr1.list();
+		     	         
+		     	    Iterator<Partner> piterator = plist.iterator(); 
+		     	    while (piterator.hasNext()){
+		     	    	Partner partnerid =  piterator.next(); 
+		     	       	if(partnerid != null){
+		     	        	partnerId = (int) partnerid.getID(); 
+		     	        }
+		     		}
 	         }
-	        
 	         session.getTransaction().commit();
-	         session.close();
-	 	
+	         	 	
 		}catch(HibernateException  ex){
 			throw  ex;
-			//log.error(ex);
 		}catch(Exception  e){
 			throw  e;
-			//log.error(e);
 		}
-		//log.info("Exit method getPartnerId  class OrderEmailQueueModel");
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("return partner id found \""+partnerId+"\".");
 		return partnerId;
 	      
 	}
 	public ArrayList<Object> getPartnerRbo_productlines(String email ) throws Exception{
-		 ArrayList<Object> rboproduclines= new ArrayList();
-		
-			String emailId = "";
-			String domain = "";
-		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		ArrayList<Object> rboproduclines= new ArrayList();
+		String emailId = "";
+		String domain = "";
+		Session session=null;
+		log.debug("fetch multiple productlines info from email \""+email+"\".");
 		try{
 			if (email.contains("@")) {
 				String[] p_email = email.split("@");
 				emailId = p_email[0];
 				domain = p_email[1];
-				
 			}
-		
 			domain="*@"+domain;
-			//System.out.println("domain     "+domain);
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			Criteria cr = session.createCriteria(Partner_RBOProductLine.class);
-	    		  
-			cr.add(Restrictions.eq("active", true));
-			//cr.add(Restrictions.
+	    	cr.add(Restrictions.eq("active", true));
 			cr.add(Restrictions.like("email","%"+email+"%"));
-			//List<Partner_RBOProductLine> list = cr.list();
-    		rboproduclines=(ArrayList<Object>) cr.list();
-    		//System.out.println("email     "+email);
-    		//System.out.println("size     "+rboproduclines.size());
+			rboproduclines=(ArrayList<Object>) cr.list();
     		if(rboproduclines.size()==0){
-    			//System.out.println("size11     "+rboproduclines.size());
     			Criteria cr1 = session.createCriteria(Partner_RBOProductLine.class);
-	    		  
-    			cr1.add(Restrictions.eq("active", true));
+	    		cr1.add(Restrictions.eq("active", true));
     			cr1.add(Restrictions.like("email","%"+domain+"%"));
     			List<Partner_RBOProductLine> p_list = cr1.list();
         		rboproduclines=(ArrayList<Object>) cr1.list();
-    			/*Criteria cr1 = session.createCriteria(Partner_RBOProductLine.class);
-	    		  
-	   			cr1.add(Restrictions.eq("active", true));
-	   			cr1.add(Restrictions.like("email",emailId+"%"));
-	   			List<Partner_RBOProductLine> p_list = cr1.list();
-        		rboproduclines=(ArrayList<Object>) cr1.list();*/
     		}
-	     		
-	     		session.getTransaction().commit();
-		        session.close();
-			}catch(HibernateException  ex){
-				//ex.printStackTrace();
-				throw  ex;
-				
-			}catch(Exception  e){
-				throw  e;
-				//log.error(e);
-			}
-		//log.info("Exit method getPartnerRbo  class OrderEmailQueueModel");
+	     	session.getTransaction().commit();
+	    }catch(HibernateException  ex){
+			throw  ex;
+		}catch(Exception  e){
+			throw  e;
+		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("return productlines.");
 		return rboproduclines;
 	 	
 	}
-	/*public ArrayList<Object> getPartnerRbo_productlines(int partnerId ){
-		 ArrayList<Object> rboproduclines= new ArrayList();
-		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
-		try{
-			
-			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
-			session.beginTransaction();
-			Criteria cr = session.createCriteria(Partner_RBOProductLine.class);
-	    		   // .setProjection(Projections.projectionList());
-	    		      /*.add(Projections.property("id"), "id")
-	    		      .add(Projections.property("fileProductlineMatch"), "fileProductlineMatch")
-	    		      .add(Projections.property("fileRBOMatch"), "fileRBOMatch")
-	    		      .add(Projections.property("emailSubjectProductLineMatch"), "emailSubjectProductLineMatch")
-	    		      .add(Projections.property("attachmentFileProductlineMatchLocation"), "attachmentFileProductlineMatchLocation")
-	    		      .add(Projections.property("attachmentFileProductlineMatchRequired"), "attachmentFileProductlineMatchRequired")
-	    		      .add(Projections.property("attachmentFileRBOMatch"), "attachmentFileRBOMatch")
-	    		      .add(Projections.property("attachmentProductlineMatch"), "attachmentProductlineMatch")
-	    		      .add(Projections.property("emailSubjectRBOMatchRequired"), "emailSubjectRBOMatchRequired")
-	    		      .add(Projections.property("emailSubjectRBOMatchLocation"), "emailSubjectRBOMatchLocation")
-	    		      .add(Projections.property("emailSubjectRBOMatch"), "emailSubjectRBOMatch"))* /
-	    		   // .setResultTransformer(Transformers.aliasToBean(Partner_RBOProductLine.class));
-				cr.add(Restrictions.eq("active", true));
-				cr.add(Restrictions.eq("varPartner.id", partnerId));
-				
-	     		List<Partner_RBOProductLine> list = cr.list();
-	     		rboproduclines=(ArrayList<Object>) cr.list();
-	     		session.getTransaction().commit();
-		        session.close();
-			}catch(HibernateException  ex){
-				ex.printStackTrace();
-				String error=ex.toString();
-				this.updateError("service hibernate error9",error);
-				//log.error(ex);
-			}catch(Exception  e){
-				e.printStackTrace();
-				String error=e.toString();
-				this.updateError("service hibernate error00",error);
-				//log.error(e);
-			}
-		//log.info("Exit method getPartnerRbo  class OrderEmailQueueModel");
-		return rboproduclines;
-	 	
-	}*/
+	
 	public ArrayList<Object> getPartner_productline(int productlineId )throws Exception{
 		 ArrayList<Object> rboproduclines= new ArrayList<Object>();
-		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		 Session session=null;
+		 log.debug("fetch productline info from productlineId \""+productlineId+"\".");
 		try{
-			
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			Criteria cr = session.createCriteria(Partner_RBOProductLine.class);
-	    		    /*.setProjection(Projections.projectionList()
-	    		      .add(Projections.property("id"), "id")
-	    		      
-	    		      .add(Projections.property("fileRBOMatch"), "fileRBOMatch")
-	    		      .add(Projections.property("attachmentFileMatchLocation"), "attachmentFileMatchLocation")
-	    		      .add(Projections.property("attachmentFileRBOMatch"), "attachmentFileRBOMatch")
-	    		      .add(Projections.property("attachmentProductlineMatch"), "attachmentProductlineMatch")
-	    		    //  .add(Projections.property("attachmentFileProductlineMatchLocation"), "attachmentFileProductlineMatchLocation")
-	    		      //.add(Projections.property("attachmentFileProductlineMatchRequired"), "attachmentFileProductlineMatchRequired")
-	    		      .add(Projections.property("fileProductlineMatch"), "fileProductlineMatch"))
-	    		     // .add(Projections.property("fileProductLineMatchLocation"), "fileProductLineMatchLocation"))
-	    		     // .add(Projections.property("fileProductLineMatchRequired"), "fileProductLineMatchRequired"))
-	    		    .setResultTransformer(Transformers.aliasToBean(Partner_RBOProductLine.class));*/
-				cr.add(Restrictions.eq("active", true));
-				cr.add(Restrictions.eq("id", productlineId));
-				
-				//cr.add(Restrictions.eq("varPartner.id", partnerId));
-				
-	     		List<Partner_RBOProductLine> list = cr.list();
-	     		rboproduclines=(ArrayList<Object>) cr.list();
-	     		session.getTransaction().commit();
-		        session.close();
-			}catch(HibernateException  ex){
-				throw  ex;
-			}catch(Exception  e){
-				throw  e;
-			}
-		
-		//log.info("Exit method getPartnerRbo  class OrderEmailQueueModel");
+	    	cr.add(Restrictions.eq("active", true));
+			cr.add(Restrictions.eq("id", productlineId));
+			List<Partner_RBOProductLine> list = cr.list();
+	     	rboproduclines=(ArrayList<Object>) cr.list();
+	     	session.getTransaction().commit();
+		}catch(HibernateException  ex){
+			throw  ex;
+		}catch(Exception  e){
+			throw  e;
+		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("return productline info.");
 		return rboproduclines;
-	 	
 	}
 	public ArrayList<Object> GetEmailAttachments(int orderEmailId)throws Exception{
 		ArrayList<Object> EmailAttachments= new ArrayList();
-		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		Session session=null;
+		log.debug("fetch attachments for order email id \""+orderEmailId+"\".");
 		try{
-			
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			Criteria cr = session.createCriteria(OrderFileAttachment.class)
-	    		    .setProjection(Projections.projectionList()
-	    		      .add(Projections.property("id"), "id")
-	    		      .add(Projections.property("fileExtension"), "fileExtension")
-	    		      .add(Projections.property("fileName"), "fileName")
-	    		       .add(Projections.property("status"), "status")
-	    		        .add(Projections.property("comment"), "comment")
-	    		      .add(Projections.property("fileContentMatch"), "fileContentMatch")
-	    		      .add(Projections.property("fileContentType"), "fileContentType")
-	    		      .add(Projections.property("varProductLine"), "varProductLine")
-	    		      .add(Projections.property("filePath"), "filePath"))
+					.setProjection(Projections.projectionList()
+	    		    .add(Projections.property("id"), "id")
+	    		    .add(Projections.property("fileExtension"), "fileExtension")
+	    		    .add(Projections.property("fileName"), "fileName")
+	    		    .add(Projections.property("status"), "status")
+	    		    .add(Projections.property("comment"), "comment")
+	    		    .add(Projections.property("fileContentMatch"), "fileContentMatch")
+	    		    .add(Projections.property("fileContentType"), "fileContentType")
+	    		    .add(Projections.property("varProductLine"), "varProductLine")
+	    		    .add(Projections.property("filePath"), "filePath"))
 	    		    .setResultTransformer(Transformers.aliasToBean(OrderFileAttachment.class));
-				//cr.add(Restrictions.eq("active", true));
-				cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
-				
-	     		List<OrderFileAttachment> list = cr.list();
-	     		EmailAttachments=(ArrayList<Object>) cr.list();
-	     		session.getTransaction().commit();
-		        session.close();
+			cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
+			List<OrderFileAttachment> list = cr.list();
+	     	EmailAttachments=(ArrayList<Object>) cr.list();
+	     	session.getTransaction().commit();
 		}catch(HibernateException  ex){
 			throw  ex;
-			}catch(Exception  e){
-				throw  e;
-				//log.error(e);
-			}
+		}catch(Exception  e){
+			throw  e;
+		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("return email attachments.");
 		return EmailAttachments;
 	}
 	
 	public int updateOrderEmail(int orderEmailId, String orderEmailStatus, String subject_rboMatch, String subject_productlineMatch, String body_rboMatch, String body_productlineMatch, String comment )throws Exception{
 		
 		int result = 0;
+		Session session=null;
+		log.debug("update order email on the basis of id \""+orderEmailId+"\".");
 		try{
-			//System.out.println("orderEmailId "+orderEmailId);
-			//System.out.println("orderEmailStatus "+orderEmailStatus);
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
-			
 			OrderEmailQueue orderEmail=(OrderEmailQueue)session.load(OrderEmailQueue.class, orderEmailId);
 			if(orderEmailStatus.length()!=0){
 				orderEmail.setStatus(orderEmailStatus);
 			}
 			if(body_productlineMatch.length()!=0){
 				orderEmail.setEmailBodyProductLineMatch(body_productlineMatch);
-				//orderEmail.set
 			}
 			if(body_rboMatch.length()!=0){
 				orderEmail.setEmailBodyRBOMatch(body_rboMatch);
@@ -363,25 +288,28 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 				orderEmail.setComment(comment);
 			}
 			session.persist(orderEmail);
-			//System.out.println("orderEmailId "+orderEmailId);
-			//System.out.println("orderEmailStatus "+orderEmailStatus);
 			result=1;
-			
 			session.getTransaction().commit();
-			session.close();
 		}catch(Exception e){
 			throw  e;
-			//log.error(e);
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("OrderEmailQueue update successfull.");
 		return result;
 	}
 	
 	
 	public int updateOrderEmailAttachment(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment, String contentMatch)throws Exception{
 		int result = 0;
+		Session session=null;
+		log.debug("update OrderFileAttachment on the basis of id \""+attachmentId+"\".");
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			OrderFileAttachment orderEmail=(OrderFileAttachment)session.load(OrderFileAttachment.class, attachmentId);
 			
@@ -409,24 +337,27 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 			result=1;
 			
 			session.getTransaction().commit();
-			session.close();
 		}catch(Exception e){
 			throw  e;
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("OrderFileAttachment update successfull.");
 		return result;
 	}
 	public boolean updateAllAttachment(int email_id, int productlineId, String Status, String comment)throws Exception{
-		int result = 0;
+		Session session=null;
+		log.debug("update OrderFileAttachment on the basis of id \""+email_id+"\".");
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
-			
 			Criteria cr = session.createCriteria(OrderFileAttachment.class);
 			cr.add(Restrictions.eq("varOrderEmailQueue.id", email_id));
-			
 			List<OrderFileAttachment> list = cr.list();
-	         
 	        Iterator<OrderFileAttachment> iterator = list.iterator(); 
 	        while (iterator.hasNext()){
 	        	OrderFileAttachment orderFileAttachment =  iterator.next(); 
@@ -436,65 +367,77 @@ public class OrderEmailQueueModel implements OrderEmailQueueInterface{
 					pline.setId(productlineId);
 					orderFileAttachment.setVarProductLine(pline);
 				}
-			     orderFileAttachment.setStatus(Status); 
-			     comment = comment.trim();
-					if (comment.endsWith(",")) {
-						comment = comment.substring(0, comment.lastIndexOf(","));
-					}
-					if (comment.startsWith(",")) {
-						comment = comment.substring(comment.indexOf(",") + 1);
-					}
-			     orderFileAttachment.setComment(comment);
-			     session.persist(orderFileAttachment);
+			    orderFileAttachment.setStatus(Status); 
+			    comment = comment.trim();
+				if (comment.endsWith(",")) {
+					comment = comment.substring(0, comment.lastIndexOf(","));
+				}
+				if (comment.startsWith(",")) {
+					comment = comment.substring(comment.indexOf(",") + 1);
+				}
+			    orderFileAttachment.setComment(comment);
+			    session.persist(orderFileAttachment);
 			}
-	        result=1;
-			session.getTransaction().commit();
-			session.close();
+	    	session.getTransaction().commit();
 		}catch(Exception e){
 			throw  e;
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("OrderFileAttachment update successfull.");
 		return true;
 	}
 	
 public int updateError(String ErrorCategory,String description )throws Exception{
 		
 		int result = 0;
+		Session session=null;
+		log.debug("update error.");
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
-			
 			ErrorLog errorLog=new ErrorLog();
 			errorLog.setErrorCategory(ErrorCategory);
 			errorLog.setErrorContent(description);
 			session.persist(errorLog);
-			
 			result=1;
-			
 			session.getTransaction().commit();
-			session.close();
 		}catch(Exception e){
 			throw  e;
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("error update successfull.");
 		return result;
 	}
 	public boolean updateAttachmenttype(int att_id, String contentType)throws Exception{
-		int result=0;
+		Session session=null;
+		log.debug("update Attachmenttype on the basis of id \""+att_id+"\".");
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			OrderFileAttachment orderEmail=(OrderFileAttachment)session.load(OrderFileAttachment.class, att_id);
-			
 			orderEmail.setId(att_id);
 			orderEmail.setFileContentType(contentType);
 			session.update(orderEmail);
-			 result=1;
 			session.getTransaction().commit();
-			session.close();
 		}catch(Exception e){
 			throw  e;
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("OrderFileAttachment update successfull.");
 		return true;
 	}
 	/**
@@ -504,17 +447,14 @@ public int updateError(String ErrorCategory,String description )throws Exception
 	public int GeteAttachmentId(int fileQueueId)throws Exception{
 		int attachment_id=0;
 		OrderFileAttachment orderFileAttachment=new OrderFileAttachment();
-		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		Session session=null;
+		log.debug("fetch OrderFileAttachment id on the basis of file queue id \""+fileQueueId+"\".");
 		try{
-			
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
-			//System.out.print("here1");
 			OrderFileQueue orderfilequeue=(OrderFileQueue)session.load(OrderFileQueue.class, fileQueueId);
 			orderFileAttachment = orderfilequeue.getVarOrderFileAttachment();
-			//casted for long
-			//System.out.println("here"+orderFileAttachment.getId());
 			if(orderFileAttachment!= null){
 				attachment_id = (int) orderFileAttachment.getId();
 			}
@@ -522,28 +462,30 @@ public int updateError(String ErrorCategory,String description )throws Exception
 	        session.close();
 		}catch(HibernateException  ex){
 			ex.printStackTrace();
-			//throw  ex;
 		}catch(Exception  e){
 			e.printStackTrace();
-			//throw  e;		
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("attachment id fetch successfull \""+attachment_id+"\".");
 		return attachment_id;
 	}
 	public HashMap<String, Integer> GetOrderEmailQueueId(int att_id)throws Exception{
 		int orderEmailQueueid=0;
+		Session session=null;
+		log.debug("fetch order email queue  on the basis of attachment id \""+att_id+"\".");
 		HashMap<String, Integer> emailatt_info = new HashMap<String, Integer>();
 		OrderEmailQueue orderEmailQueue=new OrderEmailQueue();
 		Partner_RBOProductLine partner_RBOProductLine=new Partner_RBOProductLine();
-		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
 		try{
-			
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			OrderFileAttachment orderFileAttachment=(OrderFileAttachment)session.load(OrderFileAttachment.class, att_id);
-			
 			orderEmailQueue = orderFileAttachment.getVarOrderEmailQueue();
-			///casted for long data types
 			if( orderEmailQueue != null){
 				orderEmailQueueid =  orderEmailQueue.getId();
 			}
@@ -552,58 +494,66 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			if( partner_RBOProductLine!=null){
 				schema_id =  partner_RBOProductLine.getId();
 			}
-			//int schema_id = (int) partner_RBOProductLine.getId();
-			
 			emailatt_info.put("emailQueue_id", orderEmailQueueid);
 			emailatt_info.put("schema_id", schema_id);
-			
 			session.getTransaction().commit();
-	        session.close();
-		}catch(HibernateException  ex){
+	   }catch(HibernateException  ex){
 			throw  ex;
 		}catch(Exception  e){
 			throw  e;		
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("fetch order email successfull.");
 		return emailatt_info;
 	}
 	public ArrayList<Object> GetEmailAttachmentDetail(int orderEmailId)throws Exception{
-		
+		Session session=null;
+		log.debug("fetch OrderFileAttachment on the basis of order email id \""+orderEmailId+"\".");
 		OrderFileAttachment orderFileAttachment = new OrderFileAttachment();
 		ArrayList<Object> EmailAttachments= new ArrayList();
-		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
 		try{
-			
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			Criteria cr = session.createCriteria(OrderFileAttachment.class)
-	    		    .setProjection(Projections.projectionList()
-	    		      .add(Projections.property("id"), "id")
-	    		      .add(Projections.property("fileExtension"), "fileExtension")
-	    		      .add(Projections.property("fileName"), "fileName")
-	    		      .add(Projections.property("fileContentMatch"), "fileContentMatch")
-	    		      .add(Projections.property("fileContentType"), "fileContentType")
-	    		      .add(Projections.property("varProductLine"), "varProductLine")
-	    		      .add(Projections.property("filePath"), "filePath"))
+					.setProjection(Projections.projectionList()
+	    		    .add(Projections.property("id"), "id")
+	    		    .add(Projections.property("fileExtension"), "fileExtension")
+	    		    .add(Projections.property("fileName"), "fileName")
+	    		    .add(Projections.property("fileContentMatch"), "fileContentMatch")
+	    		    .add(Projections.property("fileContentType"), "fileContentType")
+	    		    .add(Projections.property("varProductLine"), "varProductLine")
+	    		    .add(Projections.property("filePath"), "filePath"))
 	    		    .setResultTransformer(Transformers.aliasToBean(OrderFileAttachment.class));
-				cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
+			cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
 				
-	     		OrderFileAttachment ofa  = (OrderFileAttachment) cr.list().get(0);
-	     		EmailAttachments.add(ofa);
-	     		session.getTransaction().commit();
-		        session.close();
+     		OrderFileAttachment ofa  = (OrderFileAttachment) cr.list().get(0);
+     		EmailAttachments.add(ofa);
+     		session.getTransaction().commit();
 		}catch(HibernateException  ex){
 			throw ex;
 		}catch(Exception  e){
 			throw e;
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("fetch OrderFileAttachment successfull.");
 		return EmailAttachments;
 	}
 	public int updateOrderEmailAttachmentContent(int attachmentId, int productlineId, String Status, String rboMatch, String productlineMatch, String comment,String fileType)throws Exception{
 		int result = 0;
+		Session session=null;
+		log.debug("update  orderEmail on the basis of attachment id \""+attachmentId+"\".");
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			OrderFileAttachment orderEmail=(OrderFileAttachment)session.load(OrderFileAttachment.class, attachmentId);
 			if(productlineId!=0){
@@ -626,64 +576,74 @@ public int updateError(String ErrorCategory,String description )throws Exception
 			orderEmail.setComment(comment);
 			session.update(orderEmail);
 			result=1;
-			
 			session.getTransaction().commit();
-			session.close();
 		}catch(Exception e){
 			throw  e;
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("orderEmail update successfull.");
 		return result;
 	}
 	
 	public boolean updateOrderFileQueueComment(int orderFileQueueId, String comment)throws Exception{
+		Session session=null;
+		log.debug("update updateOrderFileQueueComment on the basis of orderFileQueueId \""+orderFileQueueId+"\".");
 		try{
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			OrderFileQueue orderFileQueue=(OrderFileQueue)session.load(OrderFileQueue.class, orderFileQueueId);
-			
 			orderFileQueue.setId(orderFileQueueId);
-			
 			orderFileQueue.setComment(comment);
 			session.update(orderFileQueue);
-			
 			session.getTransaction().commit();
-			session.close();
 		}catch(Exception e){
 			throw  e;
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("Order File Queue Comment update successfull.");
 		return true;
 	}
 	
 	
 	public ArrayList<Object> GetEmailBody(int orderEmailId)throws Exception{
 		ArrayList<Object> EmailAttachments= new ArrayList();
-		//log.info("Enter method getPartnerRbo  class OrderEmailQueueModel");
+		Session session=null;
+		log.debug("Get emailbody on the basis of order email id \""+orderEmailId+"\".");
 		try{
-			
 			SessionFactory sessionFactory=HibernateUtil.getSessionFactory();
-			Session session=sessionFactory.openSession();
+			session=sessionFactory.openSession();
 			session.beginTransaction();
 			Criteria cr = session.createCriteria(OrderFileAttachment.class)
-	    		    .setProjection(Projections.projectionList()
-	    		      .add(Projections.property("id"), "id")
-	    		      .add(Projections.property("fileName"), "fileName")
-	    		     
-	    		      .add(Projections.property("filePath"), "filePath"))
+					.setProjection(Projections.projectionList()
+	    		    .add(Projections.property("id"), "id")
+	    		    .add(Projections.property("fileName"), "fileName")
+	    		    .add(Projections.property("filePath"), "filePath"))
 	    		    .setResultTransformer(Transformers.aliasToBean(OrderFileAttachment.class));
 				cr.add(Restrictions.like("fileName","%"+"CompleteEmail"+"%"));
 				cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
-				
-	     		List<OrderFileAttachment> list = cr.list();
-	     		EmailAttachments=(ArrayList<Object>) cr.list();
-	     		session.getTransaction().commit();
-		        session.close();
-		}catch(HibernateException  ex){
+			List<OrderFileAttachment> list = cr.list();
+     		EmailAttachments=(ArrayList<Object>) cr.list();
+     		session.getTransaction().commit();
+	 	}catch(HibernateException  ex){
 			throw  ex;
 		}catch(Exception  e){
 			throw  e;
-			//log.error(e);
 		}
+		finally{
+			if(session !=  null && session.isOpen()){
+	  			session.disconnect();
+	  		}
+		}
+		log.debug("return email attachments.");
 		return EmailAttachments;
 	}
 }

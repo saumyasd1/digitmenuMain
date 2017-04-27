@@ -2,6 +2,7 @@ package com.avery.services;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -9,7 +10,7 @@ import com.avery.dao.OrderEmailQueue;
 import com.avery.utils.HibernateUtil;
 
 public class EmailQueueService {
-	
+	static Logger log = Logger.getLogger(EmailQueueService.class.getName());
 	public int insertData(String subject, String sender, String mailbody, Date receivedDate, Date readDate, String cc, String to, String assignCSR){
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
@@ -18,7 +19,7 @@ public class EmailQueueService {
 		session.persist(orderEmailQueue);
 		session.getTransaction().commit();
 		session.close();
-		System.out.println("Successfully Inserted record in the emailqueue table");
+		log.debug("Successfully Inserted record in the emailqueue table");
 		return orderEmailQueue.getId();
 	}
 	
@@ -33,7 +34,7 @@ public class EmailQueueService {
 		session.persist(orderEmailQueue);
 		session.getTransaction().commit();
 		session.close();
-		System.out.println("Successfully updated status in the emailqueue table for emailqueueid\""+emailqueueid+"\".");
+		log.debug("Successfully updated status in the emailqueue table for emailqueueid\""+emailqueueid+"\".");
 		
 	}
 

@@ -3,6 +3,7 @@ package com.avery.services;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeBodyPart;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -12,6 +13,8 @@ import com.avery.utils.HibernateUtil;
 
 public class EmailAttachmentService {
 
+	static Logger log = Logger.getLogger(EmailAttachmentService.class.getName());
+	
 	public void insertIntoEmailAttachment(MimeBodyPart part, String filePath,
 			int emailqueueid, String fileName, String fileExtension) {
 
@@ -19,9 +22,9 @@ public class EmailAttachmentService {
 		try {
 			contentType = part.getContentType();
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		log.debug("save mail attachments in file and name in database");
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
@@ -31,6 +34,7 @@ public class EmailAttachmentService {
 				emailqueueid, fileName, fileExtension, filePath, contentType);
 		orderFileAttachment.setVarOrderEmailQueue(orderEmailQueue);
 		session.persist(orderFileAttachment);
+		log.debug("successfully saved mail attachments in file and name in database");
 		session.getTransaction().commit();
 		session.close();
 	}
@@ -56,8 +60,7 @@ public class EmailAttachmentService {
 		session.persist(orderFileAttachment);
 		session.getTransaction().commit();
 		session.close();
-		System.out
-				.println("Unzipped file inserted in the email attachment table");
+		log.debug("Unzipped file inserted in the email attachment table");
 	}
 
 }

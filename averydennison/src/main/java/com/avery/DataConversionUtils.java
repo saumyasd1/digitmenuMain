@@ -32,6 +32,7 @@ import javax.mail.Part;
 import javax.mail.Store;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -44,6 +45,7 @@ import com.aspose.cells.HTMLLoadOptions;
 import com.aspose.cells.LoadFormat;
 import com.aspose.cells.SaveFormat;
 import com.aspose.cells.Workbook;
+import com.avery.Model.OrderEmailQueueModel;
 import com.avery.Model.SearchCellAddress;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -54,7 +56,7 @@ import com.sun.mail.util.BASE64DecoderStream;
 
 public class DataConversionUtils {
 
-	
+	static Logger log = Logger.getLogger(DataConversionUtils.class.getName());
 	Folder inbox = null;
 	Store store = null;
 	boolean exportImages = false;
@@ -76,6 +78,7 @@ public class DataConversionUtils {
 		String pdfFileName = null;
 		Document doc = null;
 		FileOutputStream fos = null;
+		log.debug("generating pdf file from html");
 		try {
 			if (htmlFileName.endsWith(".html")) {
 				pdfFileName = htmlFileName.replaceAll(".html", ".pdf");
@@ -93,7 +96,7 @@ public class DataConversionUtils {
 			doc.open();
 			HTMLWorker hw = new HTMLWorker(doc);
 			hw.parse(new StringReader(htmlText));
-
+			log.debug("generating pdf file from html finished");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -137,7 +140,7 @@ public class DataConversionUtils {
 	 */
 	public void generateHTMLFile(String location, String fileName,
 			Message message) {
-
+		log.debug("generating html file : \""+fileName+"\".");
 		// write the html file at specified location
 		FileWriter fileWriter = null;
 		String msgContent = "";
@@ -177,7 +180,7 @@ public class DataConversionUtils {
 			if (exportImages) {
 				replaceImageName(location, fileName + ".html", "images");
 			}
-
+			log.debug("generating html file finished : \""+fileName+"\".");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -229,6 +232,7 @@ public class DataConversionUtils {
 			String excelFileLocation, String excelFileName,
 			String fileExtensionName) {
 		// Load the licence
+		log.debug("generate excel file  with aspose lic.");
 		com.aspose.cells.License license = new com.aspose.cells.License();
 		license.setLicense(this.getClass().getClassLoader()
 				.getResourceAsStream("Aspose.Cells.lic"));
@@ -254,6 +258,7 @@ public class DataConversionUtils {
 			// save the excel file
 			book.save(excelFileLocation + File.separatorChar + excelFileName
 					+ "." + fileExtensionName, saveFormat);
+			log.debug("generate excel file  finished.");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -271,6 +276,7 @@ public class DataConversionUtils {
 	 */
 	private String getBodyMessage(Message msg, String bodyContentType,
 			String systemencoding) throws Exception {
+		log.debug("get message from email body.");
 		Multipart mp = null;
 		String encoding = null;
 		Object content = msg.getContent();
@@ -442,6 +448,7 @@ public class DataConversionUtils {
 	 */
 	public void processAllSheet(org.apache.poi.ss.usermodel.Workbook workbook,
 			String cellPosition, String updateValue) {
+		log.debug("process sheets of excel file with poi api.");
 		int noOfSheets = workbook.getNumberOfSheets();
 		for (int i = 0; i < noOfSheets; i++) {
 			boolean isSheetHidden = workbook.isSheetHidden(i);
@@ -464,6 +471,7 @@ public class DataConversionUtils {
 				}
 			}
 		}
+		log.debug("process sheets of excel file with poi api.");
 	}
 	
 	
@@ -483,16 +491,15 @@ public class DataConversionUtils {
 					+ imageFolderLocation);
 			if (!imageFolder.exists()) {
 				if (imageFolder.mkdirs()) {
-					System.out.println("Image folder directory:\""
+					log.debug("Image folder directory:\""
 							+ htmlFileLocation + File.separator
 							+ imageFolderLocation + "\" is created.");
 				} else {
-					System.out
-							.println("Failed to create image folder directory:\""
+					log.debug("Failed to create image folder directory:\""
 									+ htmlFileLocation
 									+ File.separator
 									+ imageFolderLocation + "\".");
-					System.out.println("Failed to create directory!");
+					log.debug("Failed to create directory!");
 				}
 			}
 

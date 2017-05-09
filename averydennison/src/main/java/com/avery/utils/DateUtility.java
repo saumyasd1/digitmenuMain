@@ -23,12 +23,9 @@ public class DateUtility {
 
 		try {
 			
-		
-			
-			
 			String updatedOffsetTime = "";
 			DateModel dataModel = new DateModel();
-			String offSetTime = dataModel.GetTimeZoneInfo();
+			String offSetTime = dataModel.fetchOffset();
 
 			if (offSetTime.equals("GMT-00:00")) {
 				updatedOffsetTime = offSetTime.replace("-", "+");

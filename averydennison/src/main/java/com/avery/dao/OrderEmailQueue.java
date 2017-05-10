@@ -38,11 +38,15 @@ public class OrderEmailQueue {
 	String assignee;
 	@Column(name = "status", length = 100)
 	String status;
+	
 	@Column(name = "receivedDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	Date receivedDate;
 	@Column(name = "readDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	Date readDate;
 	@Column(name = "acknowledgementDate")
+	@Temporal(TemporalType.TIMESTAMP)
 	Date acknowledgementDate;
 	@Column(name = "toMailId", length = 100)
 	String toMailId;

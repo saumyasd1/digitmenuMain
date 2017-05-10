@@ -37,8 +37,11 @@ public class DateUtility {
 			}
 			log.info("Time zone for database  is \"" + updatedOffsetTime
 					+ "\".");
+			//TimeZone timeZone = TimeZone.getDefault();
 			TimeZone timeZone = TimeZone.getTimeZone(updatedOffsetTime);
+			//timeZone.setID(updatedOffsetTime);
 			timeZone.setDefault(timeZone);
+		
 			String jvmTimeZone= timeZone.getDisplayName();
 			log.info("Time zone for jvm is updated to \""
 					+ timeZone.getDefault() + "\".");

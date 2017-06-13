@@ -18,8 +18,8 @@ public class EmailQueueService {
 		session.beginTransaction();
 		OrderEmailQueue orderEmailQueue = new OrderEmailQueue(subject, sender, mailbody, receivedDate, readDate, cc, to, assignCSR);
 		SiteManagement siteManagement=new SiteManagement();
-		log.info("*****************Sender Mail Id=\" "+sender+"\" *******************************");
-		int siteId=siteManagement.getSiteId(sender);
+		log.info("*****************to Mail Id=\" "+sender+"\" *******************************");
+		int siteId=siteManagement.getSiteId(to);
 		log.info("*******************Site Id=\"  "+siteId+"\"  *********************");
 		if(siteId != 0){
 			orderEmailQueue.setSiteId(siteId);

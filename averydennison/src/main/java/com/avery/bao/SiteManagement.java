@@ -25,7 +25,7 @@ public class SiteManagement {
  * @param sender
  * @return
  */
-public int getSiteId(String sender){
+public int getSiteId(String toEmail){
 	int siteId = 0;
 	Session session=null;
 	try{
@@ -33,7 +33,7 @@ public int getSiteId(String sender){
 		session=sessionFactory.openSession();
 		session.beginTransaction();
 		Criteria cr = session.createCriteria(Site.class);
-			cr.add(Restrictions.eq("emailId", sender));
+			cr.add(Restrictions.eq("emailId", toEmail));
      		cr.setMaxResults(1);
      		@SuppressWarnings("unchecked")
 			List<Site> list = cr.list();

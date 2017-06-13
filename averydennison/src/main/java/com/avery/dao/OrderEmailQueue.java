@@ -77,6 +77,8 @@ public class OrderEmailQueue {
 	String emailBodyProductLineMatch;
 	@Column(name = "emailBodyRBOMatch", length = 100)
 	String emailBodyRBOMatch;
+	@Column(name = "siteId")
+	int siteId;
 	
 	public OrderEmailQueue() {
 	}
@@ -300,5 +302,14 @@ public class OrderEmailQueue {
 		this.emailBodyRBOMatch = emailBodyRBOMatch;
 	}
 
+	public int getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(int siteId) {
+		this.siteId = siteId;
+	}
+	
+	
 	
 }

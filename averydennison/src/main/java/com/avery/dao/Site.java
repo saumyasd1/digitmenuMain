@@ -1,7 +1,6 @@
 package com.avery.dao;
 
 import java.sql.Date;
-import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 
 @Entity
@@ -32,7 +29,8 @@ public class Site {
 	Date lastModifiedDate;
 	@Column(name = "name",length=50)
 	String name;
-	
+	@Column(name = "emailId",length=100)
+	String emailId;
 	
 	
 	public Site() {}
@@ -80,7 +78,15 @@ public class Site {
 		return name;
 	}
 	public void setName(String name) {
-		name = name;
+		this.name = name;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 	
 	

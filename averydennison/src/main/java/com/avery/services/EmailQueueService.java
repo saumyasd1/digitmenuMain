@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.avery.bao.SiteManagement;
 import com.avery.dao.OrderEmailQueue;
 import com.avery.utils.HibernateUtil;
 
@@ -16,6 +17,11 @@ public class EmailQueueService {
 		Session session = sf.openSession();
 		session.beginTransaction();
 		OrderEmailQueue orderEmailQueue = new OrderEmailQueue(subject, sender, mailbody, receivedDate, readDate, cc, to, assignCSR);
+		SiteManagement siteManagement=new SiteManagement();
+		int siteId=siteManagement.getSiteId(sender);
+		if(siteId != 0){
+			orderEmailQueue.setSiteId(siteId);
+		}
 		session.persist(orderEmailQueue);
 		session.getTransaction().commit();
 		session.close();

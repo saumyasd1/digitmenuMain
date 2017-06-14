@@ -11,16 +11,18 @@ import com.avery.dao.OrderEmailQueue;
 import com.avery.utils.HibernateUtil;
 
 public class EmailQueueService {
-	static Logger log = Logger.getLogger(EmailQueueService.class.getName());
+	static Logger log;
 	public int insertData(String subject, String sender, String mailbody, Date receivedDate, Date readDate, String cc, String to, String assignCSR){
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
 		OrderEmailQueue orderEmailQueue = new OrderEmailQueue(subject, sender, mailbody, receivedDate, readDate, cc, to, assignCSR);
 		SiteManagement siteManagement=new SiteManagement();
-		log.info("*****************to Mail Id=\" "+sender+"\" *******************************");
+		log.info("*****************to Mail Id=\""+to+"\"*******************************");
+		System.out.println("*****************to Mail Id=\""+to+"\"*******************************");
 		int siteId=siteManagement.getSiteId(to);
-		log.info("*******************Site Id=\"  "+siteId+"\"  *********************");
+		log.info("*******************Site Id=\""+siteId+"\"*********************");
+		System.out.println("*******************Site Id=\""+siteId+"\"*********************");
 		if(siteId != 0){
 			orderEmailQueue.setSiteId(siteId);
 		}

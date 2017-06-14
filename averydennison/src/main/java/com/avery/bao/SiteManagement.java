@@ -3,6 +3,7 @@ package com.avery.bao;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -19,7 +20,7 @@ import com.avery.utils.HibernateUtil;
  *
  */
 public class SiteManagement {
-	
+	static Logger log;
 /**
  * Method to get siteId using sender email id
  * @param sender
@@ -37,6 +38,8 @@ public int getSiteId(String toEmail){
      		cr.setMaxResults(1);
      		@SuppressWarnings("unchecked")
 			List<Site> list = cr.list();
+     		log.info("List<Site>=\""+list+"\"");
+     		System.out.println("List<Site>=\""+list+"\"");
      		Iterator<Site> iterator = list.iterator(); 
 	        while (iterator.hasNext()){
 	        	Site site =  iterator.next(); 

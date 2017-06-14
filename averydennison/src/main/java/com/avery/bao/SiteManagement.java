@@ -3,15 +3,13 @@ package com.avery.bao;
 import java.util.Iterator;
 import java.util.List;
 
-
-
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
-import com.adeptia.indigo.logging.Logger;
+import com.avery.EmailManager;
 import com.avery.dao.Site;
 import com.avery.utils.HibernateUtil;
 
@@ -22,7 +20,7 @@ import com.avery.utils.HibernateUtil;
  *
  */
 public class SiteManagement {
-	static Logger log;
+
 /**
  * Method to get siteId using sender email id
  * @param sender
@@ -40,7 +38,7 @@ public int getSiteId(String toEmail){
      		cr.setMaxResults(1);
      		@SuppressWarnings("unchecked")
 			List<Site> list = cr.list();
-     		log.info("List<Site>=\""+list+"\"");
+     		EmailManager.log.info("List<Site>=\""+list+"\"");
      		System.out.println("List<Site>=\""+list+"\"");
      		Iterator<Site> iterator = list.iterator(); 
 	        while (iterator.hasNext()){

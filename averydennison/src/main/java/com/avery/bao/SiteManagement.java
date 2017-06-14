@@ -3,13 +3,15 @@ package com.avery.bao;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
+import com.adeptia.indigo.logging.Logger;
 import com.avery.dao.Site;
 import com.avery.utils.HibernateUtil;
 

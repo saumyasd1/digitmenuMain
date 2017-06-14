@@ -2,10 +2,12 @@ package com.avery.services;
 
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import com.adeptia.indigo.logging.Logger;
 import com.avery.bao.SiteManagement;
 import com.avery.dao.OrderEmailQueue;
 import com.avery.utils.HibernateUtil;

@@ -31,7 +31,8 @@ public class Site {
 	String name;
 	@Column(name = "emailId",length=100)
 	String emailId;
-	
+	@Column(name = "password",length=100)
+	String password;
 	
 	public Site() {}
 	
@@ -88,9 +89,15 @@ public class Site {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
-	
-	
-	
-	
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	
+	
 }

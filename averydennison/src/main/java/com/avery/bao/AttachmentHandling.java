@@ -1,10 +1,12 @@
 package com.avery.bao;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -15,6 +17,9 @@ import javax.mail.Part;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeUtility;
 
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+
 import org.apache.commons.io.FilenameUtils;
 
 import com.avery.EmailManager;
@@ -24,7 +29,9 @@ import com.avery.services.EmailQueueService;
 public class AttachmentHandling {
 
 	private static final int BUFFER_SIZE = 4096;
-
+	private HashSet<String> zipFiles=new HashSet<String>();
+	public String currentFile;
+	
 	public void extractAttachment(String dir, int emailqueueid, Message message)
 			throws IOException, MessagingException {
 
@@ -44,6 +51,7 @@ public class AttachmentHandling {
 						// this part is attachment
 						String attachmentFileName = MimeUtility.decodeText(part
 								.getFileName());
+						
 						StringBuffer sb = new StringBuffer();
 						checkFileName(dir,
 								FilenameUtils.getBaseName(attachmentFileName),
@@ -53,6 +61,10 @@ public class AttachmentHandling {
 								+ sb.toString() + " at:\""
 								+ EmailManager.getDate() + "\".");
 						part.saveFile(dir + File.separatorChar + sb.toString());
+						if(attachmentFileName.endsWith(".zip")){
+							zipFiles.clear();
+							unzip(attachmentFileName, dir);
+						}
 						EmailManager.log.debug("Attachment file:\""
 								+ sb.toString()
 								+ " has been written successfully at:\""
@@ -99,7 +111,7 @@ public class AttachmentHandling {
 				+ EmailManager.getDate() + "\".");
 	}
 
-	public void unzip(String zipFilePath) throws IOException {
+	/*public void unzip(String zipFilePath) throws IOException {
 
 		File destDir = new File(zipFilePath.substring(0,
 				zipFilePath.lastIndexOf(".")));
@@ -139,10 +151,142 @@ public class AttachmentHandling {
 		}
 		bos.close();
 	}
-
+*/
+	
+	/**
+	 * Method to extract zip file
+	 * @param zipFileName
+	 * @param destinationDirectory
+	 * @author Rakesh
+	 */
+	private  void unzip(String zipFileName, String destinationDirectory) {
+		File folder = new File(destinationDirectory);
+		if (!folder.exists()) {
+			EmailManager.log.info("Directory of destination folder isn't exist.So, we have create it.");
+			folder.mkdirs();
+		}
+		FileInputStream fileInputStream=null;
+		try {
+			ZipFile zipFile = new ZipFile(destinationDirectory+File.separatorChar+zipFileName);
+			if (zipFile.isEncrypted()) {
+				EmailManager.log.debug("zipFile along with it's path =\""
+						+ zipFile.getFile().getPath()
+						+ "\" is password protected");
+			} else {
+				EmailManager.log.info("Start unZip of zipFile");
+				fileInputStream = new FileInputStream(destinationDirectory+File.separatorChar+zipFileName);
+				ZipInputStream zipInputStream = new ZipInputStream(
+						fileInputStream);
+				ZipEntry zipEntry = zipInputStream.getNextEntry();
+				while (zipEntry != null) {
+						String fileName=FilenameUtils.getName( zipEntry.getName());
+						extractFile(destinationDirectory, fileName, zipInputStream);
+					if (fileName.contains(".zip")) {
+						EmailManager.log.info("ZipFile contains also another zip name as =\""
+								+ fileName + "\"");
+						if(checkZipIsExtracted(fileName)){
+							unzip(fileName, destinationDirectory);
+						}
+						zipFiles.add(fileName);
+					}else{
+						EmailManager.log.info("ZipFile Contains filename as =\""
+								+ fileName + "\"");	
+					}
+					zipInputStream.closeEntry();
+					zipEntry = zipInputStream.getNextEntry();
+				}
+				zipInputStream.closeEntry();
+				zipInputStream.close();
+				
+			}
+		} catch (ZipException e) {
+			// TODO Auto-generated catch block
+			EmailManager.log.error("ZipFile must be curroupted or should be missing.");
+			e.printStackTrace();
+		}catch(FileNotFoundException e){
+			// TODO Auto-generated catch block
+			EmailManager.log.error("File is missing from given location.");
+			e.printStackTrace();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			EmailManager.log.error("File is missing from given location which you want to do read or write opertion.");
+			e.printStackTrace();
+		}finally{
+			try {
+				if(fileInputStream != null){
+				fileInputStream.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				EmailManager.log.error("File is missing from given location which you want to close.");
+				e.printStackTrace();
+			}
+		}
+		EmailManager.log.info("End unZip of zipFile");
+	}
+	
+	/**
+	 * Method to generate extracted File at destination location 
+	 * @param destinationDirectory
+	 * @param fileName
+	 * @param zipInputStream
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @author Rakesh
+	 */
+	private void extractFile(String destinationDirectory,String fileName,ZipInputStream zipInputStream) throws FileNotFoundException, IOException {
+		FileOutputStream fileOutputStream=null;
+		try{
+			if(!FilenameUtils.getExtension(fileName).trim().isEmpty()){
+				byte[] buffer = new byte[BUFFER_SIZE];
+				File newFile = new File(destinationDirectory
+						+ File.separator + fileName);
+				int length;
+				
+				if(!fileName.endsWith(".zip")){
+					System.out.println(fileName);
+					checkFileName(destinationDirectory,FilenameUtils.getBaseName(fileName), FilenameUtils.getExtension(fileName), 0, new StringBuffer());
+					fileOutputStream = new FileOutputStream(currentFile);
+				}
+				else{
+					fileOutputStream = new FileOutputStream(newFile);
+				}
+				while ((length = zipInputStream.read(buffer)) > 0) {
+					fileOutputStream.write(buffer, 0, length);
+				}
+			}
+		}finally{
+			if(fileOutputStream != null){
+				fileOutputStream.close();
+			}
+		}
+	
+	}
+	
+	/**
+	 * Method to check weather zip is Extracted before 
+	 * @param fileName
+	 * @return boolean
+	 * @author Rakesh 
+	 */
+	public boolean checkZipIsExtracted(String fileName) {
+		if (zipFiles.isEmpty()) {
+			return true;
+		} else {
+			Iterator<String> iterator = zipFiles.iterator();
+			while (iterator.hasNext()) {
+				String savedZipFilesName = iterator.next();
+				if (savedZipFilesName.equals(fileName)) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+	
+	
 	/**
 	 * Method to handle duplicate file
-	 * 
 	 * @param path
 	 * @param fileName
 	 * @param fileExtension
@@ -165,6 +309,8 @@ public class AttachmentHandling {
 			i++;
 			checkFileName(path, fileName, fileExtension, i, sb);
 		} else {
+			//Add to get new File if FIle is duplicate
+			currentFile=path + File.separatorChar + sb.toString();
 			return;
 		}
 	}

@@ -262,6 +262,31 @@ public class Partner_RBOProductLine {
 	List<OrderSystemInfo> listOrderSystemInfo=new ArrayList<OrderSystemInfo>();
 	
 	
+	//////////new fields for identification process////////////////////
+	@Column(name = "emailBodyPartnerRequired")
+	boolean emailBodyPartnerRequired;
+	@Column(name = "emailBodyPartnerMatch",length=250)
+	String emailBodyPartnerMatch;
+	@Column(name = "emailSubjectPartnerRequired")
+	boolean emailSubjectPartnerRequired;
+	@Column(name = "emailSubjectPartnerMatch",length=250)
+	String emailSubjectPartnerMatch;
+	@Column(name = "fileOrderPartnerMatch",length=250)
+	String fileOrderPartnerMatch;
+	@Column(name = "fileOrderPartnerRequired")
+	boolean fileOrderPartnerRequired;
+	@Column(name = "OrderInEmailBodyMatch",length=100)
+	String OrderInEmailBodyMatch;
+	@Column(name = "OrderInEmailSubjectMatch",length=100)
+	String OrderInEmailSubjectMatch;
+	
+	
+	/////////new fields finish/////////////////////////////////////////
+	
+	
+	
+
+
 	public Partner_RBOProductLine() {}
 
 
@@ -1300,7 +1325,86 @@ public class Partner_RBOProductLine {
 		this.productLineMatchFlag = productLineMatchFlag;
 	}
 	
-	
+	////////getter setter for new field of identification/////////////////////
+	public boolean isEmailBodyPartnerRequired() {
+		return emailBodyPartnerRequired;
+	}
+
+
+	public void setEmailBodyPartnerRequired(boolean emailBodyPartnerRequired) {
+		this.emailBodyPartnerRequired = emailBodyPartnerRequired;
+	}
+
+
+	public String getEmailBodyPartnerMatch() {
+		return emailBodyPartnerMatch;
+	}
+
+
+	public void setEmailBodyPartnerMatch(String emailBodyPartnerMatch) {
+		this.emailBodyPartnerMatch = emailBodyPartnerMatch;
+	}
+
+
+	public boolean isEmailSubjectPartnerRequired() {
+		return emailSubjectPartnerRequired;
+	}
+
+
+	public void setEmailSubjectPartnerRequired(boolean emailSubjectPartnerRequired) {
+		this.emailSubjectPartnerRequired = emailSubjectPartnerRequired;
+	}
+
+
+	public String getEmailSubjectPartnerMatch() {
+		return emailSubjectPartnerMatch;
+	}
+
+
+	public void setEmailSubjectPartnerMatch(String emailSubjectPartnerMatch) {
+		this.emailSubjectPartnerMatch = emailSubjectPartnerMatch;
+	}
+
+
+	public String getFileOrderPartnerMatch() {
+		return fileOrderPartnerMatch;
+	}
+
+
+	public void setFileOrderPartnerMatch(String fileOrderPartnerMatch) {
+		this.fileOrderPartnerMatch = fileOrderPartnerMatch;
+	}
+
+
+	public boolean isFileOrderPartnerRequired() {
+		return fileOrderPartnerRequired;
+	}
+
+
+	public void setFileOrderPartnerRequired(boolean fileOrderPartnerRequired) {
+		this.fileOrderPartnerRequired = fileOrderPartnerRequired;
+	}
+
+
+	public String getOrderInEmailBodyMatch() {
+		return OrderInEmailBodyMatch;
+	}
+
+
+	public void setOrderInEmailBodyMatch(String orderInEmailBodyMatch) {
+		OrderInEmailBodyMatch = orderInEmailBodyMatch;
+	}
+
+
+	public String getOrderInEmailSubjectMatch() {
+		return OrderInEmailSubjectMatch;
+	}
+
+
+	public void setOrderInEmailSubjectMatch(String orderInEmailSubjectMatch) {
+		OrderInEmailSubjectMatch = orderInEmailSubjectMatch;
+	}
+	/////////identification 2b fields finish////////////////////////////////
 
 	
 

@@ -68,15 +68,18 @@ public class OrderEmailQueue {
 	String orderSource;
 	@OneToMany(mappedBy = "varOrderEmailQueue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	List<OrderFileAttachment> varOrderFileAttachment = new ArrayList<OrderFileAttachment>();
-
-	@Column(name = "emailSubjectProductLineMatch", length = 100)
+	///new fields added modifed in length///
+	@Column(name = "emailSubjectProductLineMatch", length = 250)
 	String emailSubjectProductLineMatch;
-	@Column(name = "emailSubjectRBOMatch", length = 100)
+	@Column(name = "emailSubjectRBOMatch", length = 250)
 	String emailSubjectRBOMatch;
 	@Column(name = "emailBodyProductLineMatch", length = 100)
 	String emailBodyProductLineMatch;
 	@Column(name = "emailBodyRBOMatch", length = 100)
 	String emailBodyRBOMatch;
+	@Column(name = "emailSubjectPartnerMatch", length = 250)
+	String emailSubjectPartnerMatch;
+	//////end/////////////
 	@Column(name = "siteId")
 	int siteId;
 	
@@ -309,7 +312,14 @@ public class OrderEmailQueue {
 	public void setSiteId(int siteId) {
 		this.siteId = siteId;
 	}
-	
+	////new getter setter for new field/////////////
+	public String getEmailSubjectPartnerMatch() {
+		return emailSubjectPartnerMatch;
+	}
+
+	public void setEmailSubjectPartnerMatch(String emailSubjectPartnerMatch) {
+		this.emailSubjectPartnerMatch = emailSubjectPartnerMatch;
+	}
 	
 	
 }

@@ -53,14 +53,16 @@ public class OrderFileAttachment {
 	String error;
 	@Column(name="orderFileId")
 	Integer orderFileId;
-	
-	@Column(name="productLineMatch",length=100)
+	////added and increased length ////////
+	@Column(name="productLineMatch",length=250)
 	String productLineMatch;
-	@Column(name="rboMatch",length=100)
+	@Column(name="rboMatch",length=250)
 	String rboMatch;
-	@Column(name="fileContentMatch",length=100)
+	@Column(name="fileContentMatch",length=250)
 	String fileContentMatch;
-	
+	@Column(name="partnerMatch",length=250)
+	String partnerMatch;
+	/////////end///////////////
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "orderEmailQueueId")
 	OrderEmailQueue varOrderEmailQueue;
@@ -254,6 +256,13 @@ public class OrderFileAttachment {
 		this.listOrderFileQueue = listOrderFileQueue;
 	}
 
+	public String getPartnerMatch() {
+		return partnerMatch;
+	}
+
+	public void setPartnerMatch(String partnerMatch) {
+		this.partnerMatch = partnerMatch;
+	}
 	
 	
 }

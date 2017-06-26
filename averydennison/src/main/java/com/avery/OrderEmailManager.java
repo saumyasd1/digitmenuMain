@@ -26,7 +26,8 @@ class OrderEmailManager {
 			configService.setConfigFilePath(configFilePath);
 			String directoryLocation = "C:\\AveryDennisonFiles\\"; 
 			//DateUtility.SetDbTimeZone();
-			orderEmailService.OrderEmailSourceservice(directoryLocation, 1213);
+			orderEmailService.orderEmailSourceservice(1213);
+			System.out.println("hello");
 			//System.out.println(orderEmailService.getemaildetail(1191));
 			//System.out.println(orderEmailService.EmailBody(1213));
 			}catch(Exception e){

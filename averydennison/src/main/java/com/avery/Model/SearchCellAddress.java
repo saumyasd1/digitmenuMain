@@ -3,7 +3,7 @@ package com.avery.Model;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import com.adeptia.indigo.logging.Logger;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -21,21 +21,24 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 public class SearchCellAddress {
 
-	
-	
 	private Workbook workbook;
-	static Logger log = Logger.getLogger(OrderEmailQueueModel.class.getName());
+	static Logger log = Logger
+			.getLogger(SearchCellAddress.class.getName());
+
 	/**
 	 * Method to get WorkBook object
+	 * 
 	 * @param filePath
 	 * @param fileName
 	 * @return
 	 */
-	public Workbook getWorkbook(String filePath, String fileName)throws Exception {
+	public Workbook getWorkbook(String filePath, String fileName)
+			throws Exception {
 		try {
 			File file = new File(filePath + File.separatorChar + fileName);
-			log.debug("Create workbook object for file" +filePath + File.separatorChar + fileName+".");
-			workbook = WorkbookFactory.create(file); 
+			log.debug("Create workbook object for file" + filePath
+					+ File.separatorChar + fileName + ".");
+			workbook = WorkbookFactory.create(file);
 		} catch (IOException e) {
 			throw e;
 		} catch (InvalidFormatException e) {
@@ -44,9 +47,9 @@ public class SearchCellAddress {
 		return workbook;
 	}
 
-	
 	/**
 	 * Method to search content in all Sheet
+	 * 
 	 * @param filePath
 	 * @param fileName
 	 * @param matchingString
@@ -54,25 +57,27 @@ public class SearchCellAddress {
 	 * @param isCaseSensitive
 	 * @return
 	 */
-	public boolean searchContentInAllSheet(String filePath, String fileName, String matchingString,
-			String cellPostion)throws Exception {
-		
+	public boolean searchContentInAllSheet(String filePath, String fileName,
+			String matchingString, String cellPostion) throws Exception {
+
 		Workbook workbook = getWorkbook(filePath, fileName);
-		boolean resultFlag=false;
+		boolean resultFlag = false;
 		int noOfSheets = workbook.getNumberOfSheets();
 		for (int i = 0; i < noOfSheets; i++) {
 			boolean isSheetHidden = workbook.isSheetHidden(i);
 			if (!isSheetHidden) {
 				Sheet sheet = workbook.getSheetAt(i);
-				log.debug("searching for string \""+matchingString+"\" in sheet \""+sheet+"\".");
-				//log.debug(sheet.getSheetName() + "****Start");
-				resultFlag= isContentPresent(sheet, cellPostion,
+				log.debug("searching for string \"" + matchingString
+						+ "\" in sheet \"" + sheet + "\".");
+				// log.debug(sheet.getSheetName() + "****Start");
+				resultFlag = isContentPresent(sheet, cellPostion,
 						matchingString);
-				if(resultFlag){
+				if (resultFlag) {
 					return resultFlag;
 				}
-				log.debug("searching for string finished in sheet \""+sheet+"\".");
-				log.debug("resultFlag for string is \""+resultFlag+"\".");
+				log.debug("searching for string finished in sheet \"" + sheet
+						+ "\".");
+				log.debug("resultFlag for string is \"" + resultFlag + "\".");
 			}
 		}
 		return resultFlag;
@@ -88,22 +93,23 @@ public class SearchCellAddress {
 	 */
 	public boolean isContentPresent(Sheet sheet, String cellPostion,
 			String content) {
-		//log.debug("content"+ content);
+		// log.debug("content"+ content);
 		CellReference cellReference = new CellReference(cellPostion);
 		Row row = sheet.getRow(cellReference.getRow());
-		if(row!=null){
+		if (row != null) {
 			Cell cell = row.getCell(cellReference.getCol());
-			if(cell!=null){
+			if (cell != null) {
 				DataFormatter dataFormatter = new DataFormatter();
-				if(getCellValue(cell, dataFormatter)!=null){
-					log.debug("cell value"+ getCellValue(cell, dataFormatter));
-					if(getCellValue(cell, dataFormatter).toUpperCase().trim().contains(content.toUpperCase())){
+				if (getCellValue(cell, dataFormatter) != null) {
+					log.debug("cell value" + getCellValue(cell, dataFormatter));
+					if (getCellValue(cell, dataFormatter).toUpperCase().trim()
+							.contains(content.toUpperCase())) {
 						log.debug("result match");
-						return true;	
+						return true;
 					}
-						
+
 				}
-			}	
+			}
 		}
 		return false;
 	}
@@ -173,5 +179,5 @@ public class SearchCellAddress {
 		}
 		return value;
 	}
-	
+
 }

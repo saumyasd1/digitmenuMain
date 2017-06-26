@@ -41,6 +41,9 @@ public class FileSearch {
 	public String searchContentFromMailBody(String filePath, String fileName,
 			String content, boolean isCaseSensitive) throws Exception {
 		try {
+			if(content==""|| content.isEmpty()|| content==null){
+				return "";
+			}
 			log.info("search in emailbody path :\"" + filePath + "for content"
 					+ content + "\".");
 			if (fileName.contains("CompleteEmail")) {
@@ -371,6 +374,9 @@ public class FileSearch {
 		// OrderEmailQueueModel();
 		String result = "";
 		try {
+			if(keyword==""|| keyword.isEmpty()|| keyword==null){
+				return "";
+			}
 			log.debug("search pdf for filename \"" + filename
 					+ " \"for filepath \"" + filepath + "\".");
 			if (filepath == "") {

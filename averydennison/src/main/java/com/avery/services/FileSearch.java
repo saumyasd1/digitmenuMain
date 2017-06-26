@@ -274,6 +274,9 @@ public class FileSearch {
 		SearchCellAddress readExcel = new SearchCellAddress();
 		String result = "";
 		try {
+			if(keyvalues==null){
+				return result;
+			}
 			if (keyvalues.contains("|") || !keyvalues.isEmpty()) {
 				String[] keyWords = keyvalues.split("\\|");
 				for (String keyWord : keyWords) {

@@ -1,5 +1,6 @@
 package com.avery.services;
 
+import java.io.File;
 import java.util.*;
 
 import com.avery.Model.OrderEmailQueueInterface;
@@ -107,6 +108,7 @@ public class OrderEmailQueueServices {
 		}
 	}
 
+	
 	/**
 	 * method getemaildetail
 	 * 
@@ -267,5 +269,27 @@ public class OrderEmailQueueServices {
 		log.debug("keyword list for found \"" + keyword + "\".");
 		return keyword;
 	}
-
+	/**Method to get eml file location
+	 * @param emailQueueId
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getEMLFileLocation(int emailQueueId) throws Exception {
+			OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+			ArrayList<Object> orderFileAttachments = new ArrayList<Object>();
+			orderFileAttachments = orderEmailQueue.GetEmailBody(emailQueueId);
+			Iterator<Object> iterat = orderFileAttachments.iterator();
+			String MailbodyPath="";
+			String MailBodyFileName="";
+			while (iterat.hasNext()) {
+				OrderFileAttachment orderFileAttachment = (OrderFileAttachment) iterat.next();
+				if(orderFileAttachment!=null){
+					MailbodyPath=orderFileAttachment.getFilePath();
+					MailBodyFileName=orderFileAttachment.getFileName();
+				}else{
+					throw new Exception("No entry is found in the table orderEmailQueue for emailQueueId:\""+emailQueueId+"\".");
+				}
+			}
+		  return MailbodyPath+File.separatorChar+MailBodyFileName;
+	}
 }

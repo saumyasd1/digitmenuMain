@@ -19,7 +19,8 @@ public class PartnerAnalysis {
 	public ArrayList<Integer> partnerSearch(String email, String filePath,
 			String FileName, int EmailQueueId, int AttachmentId)
 			throws Exception {
-		log.info("search partner method starts.");
+		log.info("search partner method starts for id.\"" + AttachmentId + ".");
+		//log.debug("get schema ids for email \"" + email + ".");
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		ArrayList<Integer> schemaIdListPartner = new ArrayList<Integer>();
 		ArrayList<Integer> schemaIdListRbo = new ArrayList<Integer>();
@@ -57,7 +58,7 @@ public class PartnerAnalysis {
 			while (iterator.hasNext()) {
 				schemaInfo = (Partner_RBOProductLine) iterator.next();
 				schemaIdListEmail.add(schemaInfo.getId());
-				log.debug("Processing attachment for productline id \""
+				log.info("Processing attachment for productline id \""
 						+ schemaInfo.getId() + "\".");
 				if (FileNameString.contains("CompleteEmail")) {
 					log.debug("Processing starts for file name \""
@@ -112,10 +113,10 @@ public class PartnerAnalysis {
 
 				} else if (FileExtString.contains("xls")
 						|| FileExtString.contains("pdf")) {
-					log.debug("Processing starts for file name \""
+					log.info("Processing starts for file name \""
 							+ FileNameString + "\".");
 					if (schemaInfo.isFileProductLineMatchRequired()) {
-						log.debug("productline match list \""
+						log.info("productline match list \""
 								+ schemaInfo.getFileProductlineMatch() + ".");
 
 						String res = fs.searchStringInFile(filePath, FileName,
@@ -134,7 +135,7 @@ public class PartnerAnalysis {
 					if (schemaInfo.isFileRBOMatchRequired()) {
 						String res = fs.searchStringInFile(filePath, FileName,
 								schemaInfo.getFileRBOMatch());
-						log.debug("rbo match list \""
+						log.info("rbo match list \""
 								+ schemaInfo.getFileRBOMatch() + ".");
 
 						if (!res.isEmpty() && res != "") {
@@ -147,7 +148,7 @@ public class PartnerAnalysis {
 						}
 					}
 					if (schemaInfo.isFileOrderPartnerRequired()) {
-						log.debug("Partner match list \""
+						log.info("Partner match list \""
 								+ schemaInfo.getFileOrderPartnerMatch() + ".");
 
 						String res = fs.searchStringInFile(filePath, FileName,

@@ -142,7 +142,7 @@ public class SubjectAnalysis {
 	public String searchSubject(String subject, String keyvalues) {
 		String results = "";
 		log.debug("searchSubject for value. \"" + keyvalues + "\".");
-		if (keyvalues == null) {
+		if(keyvalues==null||keyvalues==""|| keyvalues.isEmpty()){
 			return results;
 		}
 		if (keyvalues.contains("|") || !keyvalues.isEmpty()) {

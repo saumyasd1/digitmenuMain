@@ -232,7 +232,7 @@ public class OrderFileContentAnalysis {
 			log.debug("search for value" + keyvalues);
 			log.debug("search for filePath" + filePath);
 			log.debug("search for fileName" + fileName);
-			if (keyvalues == null) {
+			if(keyvalues==null||keyvalues==""|| keyvalues.isEmpty()){
 				log.debug("data match valuse is null");
 				return responseResults;
 			}
@@ -281,6 +281,9 @@ public class OrderFileContentAnalysis {
 		log.debug("Processing attachment identification from file name.");
 		String result = "";
 		try {
+			if(MatchString==null||MatchString==""|| MatchString.isEmpty()){
+				return result;
+			}
 			if (!MatchString.isEmpty()) {
 				if (MatchString.contains("|")) {
 					String[] fileNamePattrens = MatchString.split("\\|");

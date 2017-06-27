@@ -41,7 +41,7 @@ public class FileSearch {
 	public String searchContentFromMailBody(String filePath, String fileName,
 			String content, boolean isCaseSensitive) throws Exception {
 		try {
-			if(content==""|| content.isEmpty()|| content==null){
+			if(content==null||content==""|| content.isEmpty()){
 				return "";
 			}
 			log.info("search in emailbody path :\"" + filePath + "for content"
@@ -141,10 +141,11 @@ public class FileSearch {
 		try {
 			SearchCellAddress read_att_cell = new SearchCellAddress();
 			// add handling for CellDetail null value
-			if (CellDetail.isEmpty() || CellDetail == null) {
+			if(CellDetail==null||CellDetail==""|| CellDetail.isEmpty()){
 				log.info("fileOrderMatch column value is null in table.");
 				return false;
 			}
+			
 			log.info("Starting seacrhing process for file:\"" + FilePath
 					+ File.separatorChar + FileName + "\".");
 			// if (CellDetail.contains(AND_SEPERATOR)) {
@@ -229,7 +230,7 @@ public class FileSearch {
 		String responseResults = "";
 		try {
 			FileSearch fs = new FileSearch();
-			if (keyvalues == null) {
+			if(keyvalues==null||keyvalues==""|| keyvalues.isEmpty()){
 				return responseResults;
 			}
 			if (keyvalues.contains("|") || !keyvalues.isEmpty()) {
@@ -276,8 +277,11 @@ public class FileSearch {
 
 		SearchCellAddress readExcel = new SearchCellAddress();
 		String result = "";
+		log.info("search value in file \"" + keyvalues
+				+ "\".");
+		
 		try {
-			if(keyvalues==null){
+			if(keyvalues==null||keyvalues==""|| keyvalues.isEmpty()){
 				return result;
 			}
 			if (keyvalues.contains("|") || !keyvalues.isEmpty()) {
@@ -374,7 +378,7 @@ public class FileSearch {
 		// OrderEmailQueueModel();
 		String result = "";
 		try {
-			if(keyword==""|| keyword.isEmpty()|| keyword==null){
+			if(keyword==null||keyword==""|| keyword.isEmpty()){
 				return "";
 			}
 			log.debug("search pdf for filename \"" + filename

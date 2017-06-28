@@ -93,7 +93,10 @@ public class OrderFileContentAnalysis {
 					} else if (schemaInfo.getFileOrderMatchLocation().contains(
 							"FileContent")) {
 						String Sheetinfo = schemaInfo.getFileOrderMatch();
-						if (!Sheetinfo.isEmpty()) {
+						
+						
+						//if (!Sheetinfo.isEmpty()) {
+						if (Sheetinfo!=null && !Sheetinfo.isEmpty()) {
 							if (schemaInfo.getOrderFileNameExtension()
 									.contains(fileExt)
 									|| schemaInfo.getOrderFileNameExtension()
@@ -314,32 +317,4 @@ public class OrderFileContentAnalysis {
 		return result;
 	}
 
-	/**
-	 * @param FileName
-	 * @param FileExt
-	 * @param MatchString
-	 * @return
-	 * @throws Exception
-	 *             / public String FileContentMatch(String FileName, String
-	 *             FileExt, String MatchString) throws Exception {
-	 *             log.debug("Processing attachment identification from file name."
-	 *             ); String result = ""; try{ if (!MatchString.isEmpty()) { if
-	 *             (MatchString.contains("|")) { String[] fileNamePattrens =
-	 *             MatchString.split("\\|"); for (String fileNamePattren :
-	 *             fileNamePattrens) { String[] fileNameMatch =
-	 *             fileNamePattren.split("\\."); String fileNameP =
-	 *             fileNameMatch[0].trim(); String fileExtP =
-	 *             fileNameMatch[1].trim(); fileNameP = fileNameP.replace("*",
-	 *             "(.*)");
-	 * 
-	 *             if (FileName.matches(fileNameP) &&
-	 *             FileExt.contains(fileExtP)) { result = fileNameP;
-	 *             log.debug("file name match order_file_name   \"" + FileName +
-	 *             "\"."); } else {
-	 *             log.debug("file name not match with order file name  \"" +
-	 *             FileName + "\"."); } } } } else {
-	 *             log.debug("FileOrderMatch is empty."); } } catch (Exception
-	 *             e) { log.error("Exception while filecontent match."); throw
-	 *             e; } return result; }
-	 */
 }

@@ -28,7 +28,8 @@ public class EmailFetch {
 
 	String uniqueID;
 	String messageId;
-
+	public static int siteId;
+	
 	public void messageFetch(Message message, Folder folder,
 			Object objectContent) throws Exception {
 		UIDFolder uf = (UIDFolder) folder;
@@ -36,7 +37,12 @@ public class EmailFetch {
 		uniqueID = msgId[0];
 		// Create the directory for saving the email information
 		uniqueID = uniqueID.replaceAll("[\\/:*?\"<>|]", "");
-		String dir = createDirectory(uniqueID, EmailManager.directoryLocation);
+		//For getting siteId to generate directory unique
+		SiteManagement siteManagement=new SiteManagement();
+		EmailManager.log.info("TO Mail Id=\""+EmailManager.username+"\"");
+		siteId=siteManagement.getSiteId(EmailManager.username);
+		EmailManager.log.info("Site Id=\""+siteId+"\"");
+		String dir = createDirectory(uniqueID+"_"+siteId, EmailManager.directoryLocation);
 		try {
 			EmailManager.log.debug("Writing CompleteEmail.eml file at:\""
 					+ EmailManager.getDate() + "\".");

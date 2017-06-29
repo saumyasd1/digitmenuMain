@@ -19,7 +19,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+
 import com.adeptia.indigo.logging.Logger;
+
+import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Cell;
 
 import com.adeptia.indigo.services.ServiceException;
@@ -458,7 +461,7 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 			log.error("Either StringBuffer of comment is null or StringBuffer is empty!");
 			throw new ServiceException("Error in StringBuffer while creating XSD.");
 		} else {
-			inputFile = inputFile.split("\\.")[0] + ".xsd";
+			inputFile = inputFile.substring(0, inputFile.length()-FilenameUtils.getExtension(inputFile).length()) + "xsd";
 			log.info("Output file along with it's location =\"" + inputFile
 					+ "\"");
 			try {

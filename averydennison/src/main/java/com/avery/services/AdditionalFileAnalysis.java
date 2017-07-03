@@ -30,14 +30,15 @@ public class AdditionalFileAnalysis {
 	 * @return
 	 * @throws Exception
 	 */
-	public Set<Integer> identifyAdditionalDataFile(int emailQueueId,
+	public Set<Integer> identifyAdditionalDataFile(int orderFileAttachmentId,
 			String fileName, String filePath, String fileExt,
 			String schemaIdString) throws Exception {
-		log.debug("identifyAdditionalDataFile for email queue\"" + emailQueueId
+		log.debug("identifyAdditionalDataFile for email queue\"" + orderFileAttachmentId
 				+ "\".");
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		OrderFileContentAnalysis ofca = new OrderFileContentAnalysis();
 		Set<Integer> schemaId = new HashSet<Integer>();
+		String fileContentMatch="";
 		try {
 			//if (schemaIdString == "" || schemaIdString == null) {
 				if ( schemaIdString == null || schemaIdString.isEmpty() ) {
@@ -84,9 +85,15 @@ public class AdditionalFileAnalysis {
 								//String orderFileExt = PatterenfileName[1];
 								String res = ofca.FileNameMatch(orderFileName,
 										orderFileExt,
-										produclineData.getFileOrderMatch());
+										produclineData.getAttachmentFileOrderMatch());
 								if (!res.isEmpty() || res != "") {
 									schemaId.add(produclineData.getId());
+									if (fileContentMatch == "") {
+										fileContentMatch = produclineData.getAttachmentFileOrderMatch();
+									} else {
+										fileContentMatch = fileContentMatch
+												+ "," + produclineData.getAttachmentFileOrderMatch();
+									}
 								}
 							} else {
 								log.debug("FileOrderMatch is empty.");
@@ -108,6 +115,12 @@ public class AdditionalFileAnalysis {
 												filePath, fileExt,
 												matchContent, log)) {
 											schemaId.add(produclineData.getId());
+											if (fileContentMatch == "") {
+												fileContentMatch = matchContent;
+											} else {
+												fileContentMatch = fileContentMatch
+														+ "," +matchContent;
+											}
 										}
 
 									} else if (produclineData
@@ -129,6 +142,12 @@ public class AdditionalFileAnalysis {
 																keyword, filePath).isEmpty()) {
 													schemaId.add(produclineData
 															.getId());
+													if (fileContentMatch == "") {
+														fileContentMatch = matchContent;
+													} else {
+														fileContentMatch = fileContentMatch
+																+ "," +matchContent;
+													}
 												}
 
 											}
@@ -153,6 +172,33 @@ public class AdditionalFileAnalysis {
 					}
 				}
 
+			}
+			fileContentMatch = fs.removeDup(fileContentMatch);
+			if (schemaId.size() == 1) {
+				
+				orderEmailQueue.updateOrderEmailAttachmentContent(
+						orderFileAttachmentId, schemaId.iterator().next(), "8", "", "", "",
+						"AdditionalData", fileContentMatch);
+				
+			}else if(schemaId.size() > 1){
+				String schema_id_comment="";
+				for (Integer s : schemaId) {
+					if (schema_id_comment == "") {
+						schema_id_comment = "" + s;
+					} else {
+						schema_id_comment = schema_id_comment + "," + s;
+					}
+
+				}
+				orderEmailQueue.updateOrderEmailAttachmentContent(
+						orderFileAttachmentId, 0, "8", "", schema_id_comment, "",
+						"AdditionalData", fileContentMatch);
+				/*orderEmailQueue.updateOrderEmailAttachmentContent(
+						orderFileAttachmentId, schemaId.iterator().next(), "8", "", "", "",
+						"AdditionalData", fileContentMatch);
+				orderEmailQueue.updateOrderEmailAttachment(
+						orderFileAttachmentId, 0, "6", "", "",
+						schema_id_comment, fileContentMatch, "", "AdditionalData");*/
 			}
 		} catch (Exception e) {
 			log.error("Exception while additional file analysis.");

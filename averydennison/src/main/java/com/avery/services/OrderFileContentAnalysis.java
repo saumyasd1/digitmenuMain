@@ -178,17 +178,26 @@ public class OrderFileContentAnalysis {
 				}
 				AdditionalFileAnalysis afa = new AdditionalFileAnalysis();
 				Set<Integer> addFileIds = afa.identifyAdditionalDataFile(
-						emailQueueId, fileName, filePath, fileExt,
+						orderFileAttachmentId, fileName, filePath, fileExt,
 						schema_id_comment);
 				if (addFileIds.size() == 0) {
 					orderEmailQueue.updateOrderEmailAttachment(
 							orderFileAttachmentId, 0, "6", "", "",
 							schema_id_comment, fileContentMatch);
-				} else if (addFileIds.size() == 1) {
+				}else{
+					/*schema_id_comment="";
+					for (Integer s : addFileIds) {
+						if (schema_id_comment == "") {
+							schema_id_comment = "" + s;
+						} else {
+							schema_id_comment = schema_id_comment + "," + s;
+						}
+
+					}
 					orderEmailQueue.updateOrderEmailAttachment(
-							orderFileAttachmentId,
-							addFileIds.iterator().next(), "8", "", "", "",
-							"AdditionalData");
+							orderFileAttachmentId, 0, "6", "", "",
+							schema_id_comment, fileContentMatch, "", "AdditionalData");
+					*/
 				}
 				schemaId.addAll(schemaIdList);
 				sa.subjectSearch(emailQueueId, orderFileAttachmentId, schemaId);
@@ -288,7 +297,7 @@ public class OrderFileContentAnalysis {
 				return result;
 			}
 			if (!MatchString.isEmpty()) {
-				if (MatchString.contains("|")) {
+				if (MatchString.contains("|") || MatchString !="") {
 					String[] fileNamePattrens = MatchString.split("\\|");
 					for (String fileNamePattren : fileNamePattrens) {
 						String[] fileNameMatch = fileNamePattren.split("\\.");
@@ -301,6 +310,7 @@ public class OrderFileContentAnalysis {
 							result = fileNameP;
 							log.debug("file name match order_file_name   \""
 									+ FileName + "\".");
+							return MatchString;
 						} else {
 							log.debug("file name not match with order file name  \""
 									+ FileName + "\".");

@@ -61,31 +61,33 @@ public class AttachmentHandling {
 								+ sb.toString() + " at:\""
 								+ EmailManager.getDate() + "\".");
 						part.saveFile(dir + File.separatorChar + sb.toString());
-						if(attachmentFileName.endsWith(".zip")){
+						if(FilenameUtils.getExtension(attachmentFileName.trim()).equals("zip")){
 							zipFiles.clear();
-							unzip(attachmentFileName, dir);
+							unzip(attachmentFileName, dir, part, emailqueueid);
 						}
-						EmailManager.log.debug("Attachment file:\""
-								+ sb.toString()
-								+ " has been written successfully at:\""
-								+ EmailManager.getDate() + "\".");
-						EmailManager.log
-								.debug("Inserting attachment details for the file:\""
-										+ sb.toString()
-										+ "\" in the table orderfileattachment having emailqueueid:\""
-										+ emailqueueid
-										+ "\" at:\""
-										+ EmailManager.getDate() + "\".");
-						emailAttachmentService.insertIntoEmailAttachment(part,
-								dir, emailqueueid, sb.toString(),
-								FilenameUtils.getExtension(sb.toString()));
-						EmailManager.log
-								.debug("Attachment details for the  file:\""
-										+ sb.toString()
-										+ "\" in the table orderfileattachment having emailqueueid:\""
-										+ emailqueueid
-										+ "\" has been inserted at:\""
-										+ EmailManager.getDate() + "\".");
+						else{
+							EmailManager.log.debug("Attachment file:\""
+									+ sb.toString()
+									+ " has been written successfully at:\""
+									+ EmailManager.getDate() + "\".");
+							EmailManager.log
+									.debug("Inserting attachment details for the file:\""
+											+ sb.toString()
+											+ "\" in the table orderfileattachment having emailqueueid:\""
+											+ emailqueueid
+											+ "\" at:\""
+											+ EmailManager.getDate() + "\".");
+							emailAttachmentService.insertIntoEmailAttachment(part,
+									dir, emailqueueid, sb.toString(),
+									FilenameUtils.getExtension(sb.toString()));
+							EmailManager.log
+							.debug("Attachment details for the  file:\""
+									+ sb.toString()
+									+ "\" in the table orderfileattachment having emailqueueid:\""
+									+ emailqueueid
+									+ "\" has been inserted at:\""
+									+ EmailManager.getDate() + "\".");
+						}
 					}
 				}
 			}
@@ -157,68 +159,81 @@ public class AttachmentHandling {
 	 * Method to extract zip file
 	 * @param zipFileName
 	 * @param destinationDirectory
+	 * @param part
+	 * @param emailqueueid
 	 * @author Rakesh
 	 */
-	private  void unzip(String zipFileName, String destinationDirectory) {
+	private void unzip(String zipFileName, String destinationDirectory,
+			MimeBodyPart part, int emailqueueid) {
+		EmailManager.log.info("Start unZip of zipFile");
 		File folder = new File(destinationDirectory);
 		if (!folder.exists()) {
-			EmailManager.log.info("Directory of destination folder isn't exist.So, we have create it.");
+			EmailManager.log
+					.info("Directory of destination folder isn't exist.So, we have create it.");
 			folder.mkdirs();
 		}
-		FileInputStream fileInputStream=null;
+		FileInputStream fileInputStream = null;
 		try {
-			ZipFile zipFile = new ZipFile(destinationDirectory+File.separatorChar+zipFileName);
+			ZipFile zipFile = new ZipFile(destinationDirectory
+					+ File.separatorChar + zipFileName);
 			if (zipFile.isEncrypted()) {
 				EmailManager.log.debug("zipFile along with it's path =\""
 						+ zipFile.getFile().getPath()
 						+ "\" is password protected");
 			} else {
-				EmailManager.log.info("Start unZip of zipFile");
-				fileInputStream = new FileInputStream(destinationDirectory+File.separatorChar+zipFileName);
+				fileInputStream = new FileInputStream(destinationDirectory
+						+ File.separatorChar + zipFileName);
 				ZipInputStream zipInputStream = new ZipInputStream(
 						fileInputStream);
 				ZipEntry zipEntry = zipInputStream.getNextEntry();
 				while (zipEntry != null) {
-						String fileName=FilenameUtils.getName( zipEntry.getName());
-						extractFile(destinationDirectory, fileName, zipInputStream);
+					String fileName = FilenameUtils.getName(zipEntry.getName());
+					extractFile(destinationDirectory, fileName, zipInputStream,
+							part, emailqueueid, zipFileName);
 					if (fileName.contains(".zip")) {
-						EmailManager.log.info("ZipFile contains also another zip name as =\""
-								+ fileName + "\"");
-						if(checkZipIsExtracted(fileName)){
-							unzip(fileName, destinationDirectory);
+						EmailManager.log
+								.info("ZipFile contains also another zip name as =\""
+										+ fileName + "\"");
+						if (checkZipIsExtracted(fileName)) {
+							unzip(fileName, destinationDirectory, part,
+									emailqueueid);
 						}
 						zipFiles.add(fileName);
-					}else{
-						EmailManager.log.info("ZipFile Contains filename as =\""
-								+ fileName + "\"");	
+					} else {
+						EmailManager.log
+								.info("ZipFile Contains filename as =\""
+										+ fileName + "\"");
 					}
 					zipInputStream.closeEntry();
 					zipEntry = zipInputStream.getNextEntry();
 				}
 				zipInputStream.closeEntry();
 				zipInputStream.close();
-				
+
 			}
 		} catch (ZipException e) {
 			// TODO Auto-generated catch block
-			EmailManager.log.error("ZipFile must be curroupted or should be missing.");
+			EmailManager.log
+					.error("ZipFile must be curroupted or should be missing.");
 			e.printStackTrace();
-		}catch(FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			EmailManager.log.error("File is missing from given location.");
 			e.printStackTrace();
-		}catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			EmailManager.log.error("File is missing from given location which you want to do read or write opertion.");
+			EmailManager.log
+					.error("File is missing from given location which you want to do read or write opertion.");
 			e.printStackTrace();
-		}finally{
+		} finally {
 			try {
-				if(fileInputStream != null){
-				fileInputStream.close();
+				if (fileInputStream != null) {
+					fileInputStream.close();
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				EmailManager.log.error("File is missing from given location which you want to close.");
+				EmailManager.log
+						.error("File is missing from given location which you want to close.");
 				e.printStackTrace();
 			}
 		}
@@ -230,37 +245,75 @@ public class AttachmentHandling {
 	 * @param destinationDirectory
 	 * @param fileName
 	 * @param zipInputStream
+	 * @param part
+	 * @param emailqueueid
+	 * @param zipFileName
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @author Rakesh
 	 */
-	private void extractFile(String destinationDirectory,String fileName,ZipInputStream zipInputStream) throws FileNotFoundException, IOException {
-		FileOutputStream fileOutputStream=null;
-		try{
-			if(!FilenameUtils.getExtension(fileName).trim().isEmpty()){
+	private void extractFile(String destinationDirectory, String fileName,
+			ZipInputStream zipInputStream, MimeBodyPart part, int emailqueueid,String zipFileName)
+			throws FileNotFoundException, IOException {
+		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
+		FileOutputStream fileOutputStream = null;
+		try {
+			if (!FilenameUtils.getExtension(fileName).trim().isEmpty()) {
 				byte[] buffer = new byte[BUFFER_SIZE];
-				File newFile = new File(destinationDirectory
-						+ File.separator + fileName);
+				File newFile = new File(destinationDirectory + File.separator
+						+ fileName);
 				int length;
-				
-				if(!fileName.endsWith(".zip")){
+
+				if (!fileName.endsWith(".zip")) {
 					System.out.println(fileName);
-					checkFileName(destinationDirectory,FilenameUtils.getBaseName(fileName), FilenameUtils.getExtension(fileName), 0, new StringBuffer());
+					checkFileName(destinationDirectory,
+							FilenameUtils.getBaseName(fileName),
+							FilenameUtils.getExtension(fileName), 0,
+							new StringBuffer());
 					fileOutputStream = new FileOutputStream(currentFile);
-				}
-				else{
+					while ((length = zipInputStream.read(buffer)) > 0) {
+						fileOutputStream.write(buffer, 0, length);
+					}
+					EmailManager.log.debug("Attachment file:\"" + currentFile
+							+"\"containing by Zip:\""
+							+zipFileName
+							+ " has been written successfully at:\""
+							+ EmailManager.getDate() + "\".");
+					EmailManager.log
+							.debug("Inserting attachment details for the file:\""
+									+ currentFile
+									+"\"containing by Zip:\""
+									+zipFileName
+									+ "\" in the table orderfileattachment having emailqueueid:\""
+									+ emailqueueid
+									+ "\" at:\""
+									+ EmailManager.getDate() + "\".");
+					emailAttachmentService.insertIntoEmailAttachment(part,
+							destinationDirectory, emailqueueid,
+							FilenameUtils.getName(currentFile),
+							FilenameUtils.getExtension(currentFile));
+					EmailManager.log
+							.debug("Attachment details for the  file:\""
+									+ currentFile
+									+"\"containing by Zip:\""
+									+zipFileName
+									+ "\" in the table orderfileattachment having emailqueueid:\""
+									+ emailqueueid
+									+ "\" has been inserted at:\""
+									+ EmailManager.getDate() + "\".");
+				} else {
 					fileOutputStream = new FileOutputStream(newFile);
-				}
-				while ((length = zipInputStream.read(buffer)) > 0) {
-					fileOutputStream.write(buffer, 0, length);
+					while ((length = zipInputStream.read(buffer)) > 0) {
+						fileOutputStream.write(buffer, 0, length);
+					}
 				}
 			}
-		}finally{
-			if(fileOutputStream != null){
+		} finally {
+			if (fileOutputStream != null) {
 				fileOutputStream.close();
 			}
 		}
-	
+
 	}
 	
 	/**

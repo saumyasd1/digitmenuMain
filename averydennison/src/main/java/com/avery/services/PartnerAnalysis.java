@@ -26,6 +26,11 @@ public class PartnerAnalysis {
 		ArrayList<Integer> schemaIdListRbo = new ArrayList<Integer>();
 		ArrayList<Integer> schemaIdListProductLine = new ArrayList<Integer>();
 		ArrayList<Integer> schemaIdListEmail = new ArrayList<Integer>();
+		
+		ArrayList<Integer> schemaIdListPartnerORG = new ArrayList<Integer>();
+		ArrayList<Integer> schemaIdListRboORG = new ArrayList<Integer>();
+		ArrayList<Integer> schemaIdListProductLineORG = new ArrayList<Integer>();
+		
 		try {
 			log.debug("get schema ids for email \"" + email + ".");
 
@@ -190,15 +195,38 @@ public class PartnerAnalysis {
 		if (schemaIdListPartner.size() != 0) {
 
 			if (schemaIdListRbo.size() != 0 && schemaIdListPartner.size() != 1) {
+				schemaIdListPartnerORG.addAll(schemaIdListPartner);
 				schemaIdListPartner.retainAll(schemaIdListRbo);
-
+				if(schemaIdListPartner.size()==0){
+					schemaIdListPartner.addAll(schemaIdListPartnerORG);
+				}
 				if (schemaIdListProductLine.size() != 0
 						&& schemaIdListPartner.size() != 1) {
+					schemaIdListPartnerORG.clear();
+					schemaIdListPartnerORG.addAll(schemaIdListPartner);
 					schemaIdListPartner.retainAll(schemaIdListProductLine);
-
+						if(schemaIdListPartner.size()==0){
+							schemaIdListPartner.addAll(schemaIdListPartnerORG);
+						}
 				}
 			}
 			return schemaIdListPartner;
+		}else if(schemaIdListRbo.size() != 0){
+			//schemaIdListPartner.retainAll(schemaIdListRbo);
+
+			if (schemaIdListProductLine.size() != 0
+					&& schemaIdListRbo.size() != 1) {
+				schemaIdListRboORG.addAll(schemaIdListRbo);
+				schemaIdListRbo.retainAll(schemaIdListProductLine);
+				if(schemaIdListRbo.size()==0){
+					schemaIdListRbo.addAll(schemaIdListRboORG);
+				}
+				
+			}
+			return schemaIdListRbo;
+		}else if(schemaIdListProductLine.size() != 0){
+			
+			return schemaIdListProductLine;
 		} else {
 			return schemaIdListEmail;
 		}

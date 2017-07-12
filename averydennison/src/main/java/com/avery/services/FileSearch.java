@@ -393,7 +393,7 @@ public class FileSearch {
 
 			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
 
-			PrintWriter out = new PrintWriter(new FileOutputStream(keyword));
+			//PrintWriter out = new PrintWriter(new FileOutputStream(keyword));
 
 			TextExtractionStrategy strategy;
 
@@ -408,8 +408,8 @@ public class FileSearch {
 				}
 			}
 			reader.close();
-			out.flush();
-			out.close();
+			//out.flush();
+			//out.close();
 		} catch (FileNotFoundException e) {
 			log.error("File not found exception while searching pdf file");
 			throw e;

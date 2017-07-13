@@ -5,6 +5,8 @@ import java.util.*;
 
 import com.avery.Model.OrderEmailQueueInterface;
 import com.avery.Model.OrderEmailQueueModel;
+import com.avery.Model.ProductLineBean;
+import com.avery.Model.SearchCellAddress;
 import com.avery.dao.OrderFileAttachment;
 import com.avery.dao.Partner_RBOProductLine;
 import com.adeptia.indigo.logging.Logger;
@@ -23,13 +25,15 @@ public class OrderEmailQueueServices {
 	// /set directory path for attached files ///////////
 	public static String directory;
 	// public static Logger log;
-	static Logger log = Logger
-			.getLogger(OrderEmailQueueServices.class.getName());
+	public static Logger log ;
+	static ArrayList<Object> productLinesData = new ArrayList<Object>();
 	public static String AND_SEPERATOR = "_\\&\\&_";
 	public static String OR_SEPERATOR = "_\\|\\|_";
 	public static String VALUE_SEPARATOR = "_\\._";
 	public static String VALUE_SEPARATOR_WITHOUTESCAPE = "_._";
 	public String regexSupportString = "\\b";
+	
+	
 
 	/**
 	 * method OrderEmailSourceservice
@@ -38,20 +42,21 @@ public class OrderEmailQueueServices {
 	 * @param id
 	 * @throws Exception
 	 */
-	public void orderEmailSourceservice(int id) throws Exception {
-		// //assign value to directory path
-		// this.directory = dir;
-		String email = "";
+	public void orderEmailSourceservice(int id,Logger _log) throws Exception {
 
+		log= _log;
+		String email = "";
 		int AttachmentId = 0;
-		int result = 0;
+		//int result = 0;
+	//	Workbook workbook =null;
 		log.info("identification sevice starts");
-		// /create object of model class to access its methods
+		long startTime_1 = System.nanoTime();
+		
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+		
 		try {
-			// log.error("Enter method OrderEmailSourceservice  class OrderEmailService");
+			
 			log.debug("get email source for id : \"" + id + "\".");
-			// ArrayList<Integer> SchemaIdList = new ArrayList;
 			HashMap<String, String> emailinfo = orderEmailQueue.emailSource(id);
 			Iterator it = emailinfo.entrySet().iterator();
 			// //get email subject and source
@@ -62,6 +67,11 @@ public class OrderEmailQueueServices {
 				}
 			}
 			log.debug("email source found: \"" + email + "\".");
+			//get productlines for email.
+			ProductLineBean plb= new ProductLineBean();
+			SearchCellAddress sca = new SearchCellAddress();
+			plb.setProductLinesForEmail(email);
+			
 			ArrayList<Object> email_list = orderEmailQueue
 					.getEmailAttachments(id);
 			Iterator<Object> iterat = email_list.iterator();
@@ -74,19 +84,25 @@ public class OrderEmailQueueServices {
 			}
 			// loop to iterate all attachment and perform operation
 			while (iterat.hasNext()) {
+				long startTime_2 = System.nanoTime();
 				email_att = (OrderFileAttachment) iterat.next();
 				AttachmentId = email_att.getId();
-				String FileName = email_att.getFileName();
+				String fileName = email_att.getFileName();
 				String fileExt = email_att.getFileExtension();
 				String filePath = email_att.getFilePath();
 				log.debug("identification attachment for attachment id \""
-						+ AttachmentId + "\" and file name \"" + FileName
+						+ AttachmentId + "\" and file name \"" + fileName
 						+ "\"" + ".");
 				// getlist from partner analysis
+				
 				PartnerAnalysis PA = new PartnerAnalysis();
 				OrderFileContentAnalysis ofa = new OrderFileContentAnalysis();
-				ArrayList<Integer> SchemaIdList = PA.partnerSearch(email,
-						filePath, FileName, id, AttachmentId);
+				long startTime_3 = System.nanoTime();
+				ArrayList<Integer> SchemaIdList = PA.partnerSearch(plb,
+						filePath, fileName, id, AttachmentId);
+				long endTime_3 = System.nanoTime();
+				double duration_3 = (double)(endTime_3 - startTime_3)/(1000000*1000);
+				log.debug("Total elapsed time in seconds. for partner rbo productline analysis--> "+duration_3+"s");
 				log.debug("SchemaIdList for content analysis is \""
 						+ SchemaIdList + ".");
 				if (SchemaIdList.size() == 0 || SchemaIdList.isEmpty()
@@ -94,21 +110,31 @@ public class OrderEmailQueueServices {
 					log.debug("SchemaIdList is empty .");
 					return;
 				}
-				ofa.identifyAttachment(id, AttachmentId, filePath, FileName,
+				long startTime_4 = System.nanoTime();
+				ofa.identifyAttachment(id, AttachmentId, filePath, fileName,
 						fileExt, SchemaIdList);
-				// ffile content analysis among list given for partner
-				// result = identifyAttachment(id, AttachmentId, filePath,
-				// FileName,
-				// fileExt, email);
+				long endTime_4 = System.nanoTime();
+				double duration_4 = (double)(endTime_4 - startTime_4)/(1000000*1000);
+				log.debug("Total elapsed time in seconds. for  File analysis--> "+duration_4+"s");
+				
+				long endTime_2 = System.nanoTime();
+				double duration_2 = (double)(endTime_2 - startTime_2)/(1000000*1000);
+				log.debug("Total elapsed time in seconds--> \""
+						+ duration_2 + "\" for file name \"" + fileName
+						+ "\"" + ".");
 			}
 
 		} catch (Exception e) {
 			log.error("Exception while getting mail data");
 			throw e;
+		}finally{
+			long endTime_1 = System.nanoTime();
+			double duration_1 = (double)(endTime_1 - startTime_1)/(1000000*1000);
+			log.debug("Total elapsed time in seconds. for overall process--> "+duration_1+"s");
+			
 		}
 	}
 
-	
 	/**
 	 * method getemaildetail
 	 * 
@@ -269,27 +295,5 @@ public class OrderEmailQueueServices {
 		log.debug("keyword list for found \"" + keyword + "\".");
 		return keyword;
 	}
-	/**Method to get eml file location
-	 * @param emailQueueId
-	 * @return
-	 * @throws Exception
-	 */
-	public static String getEMLFileLocation(int emailQueueId) throws Exception {
-			OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
-			ArrayList<Object> orderFileAttachments = new ArrayList<Object>();
-			orderFileAttachments = orderEmailQueue.GetEmailBody(emailQueueId);
-			Iterator<Object> iterat = orderFileAttachments.iterator();
-			String MailbodyPath="";
-			String MailBodyFileName="";
-			while (iterat.hasNext()) {
-				OrderFileAttachment orderFileAttachment = (OrderFileAttachment) iterat.next();
-				if(orderFileAttachment!=null){
-					MailbodyPath=orderFileAttachment.getFilePath();
-					MailBodyFileName=orderFileAttachment.getFileName();
-				}else{
-					throw new Exception("No entry is found in the table orderEmailQueue for emailQueueId:\""+emailQueueId+"\".");
-				}
-			}
-		  return MailbodyPath+File.separatorChar+MailBodyFileName;
-	}
+
 }

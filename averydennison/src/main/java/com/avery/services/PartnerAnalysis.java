@@ -1,41 +1,37 @@
 package com.avery.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 
 import com.adeptia.indigo.logging.Logger;
 import com.avery.Model.OrderEmailQueueInterface;
 import com.avery.Model.OrderEmailQueueModel;
+import com.avery.Model.ProductLineBean;
 import com.avery.dao.Partner_RBOProductLine;
 
 public class PartnerAnalysis {
 	// static Logger log = Logger.getLogger(PartnerAnalysis.class.getName());
-	public static Logger log = Logger
-			.getLogger(PartnerAnalysis.class.getName());
+	public static Logger log = OrderEmailQueueServices.log;
 	FileSearch fs = new FileSearch();
 
-	public ArrayList<Integer> partnerSearch(String email, String filePath,
+	public ArrayList<Integer> partnerSearch(ProductLineBean plb, String filePath,
 			String FileName, int EmailQueueId, int AttachmentId)
 			throws Exception {
-		log.info("search partner method starts for id.\"" + AttachmentId + ".");
-		//log.debug("get schema ids for email \"" + email + ".");
+		log.info("search partner method starts.");
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		ArrayList<Integer> schemaIdListPartner = new ArrayList<Integer>();
 		ArrayList<Integer> schemaIdListRbo = new ArrayList<Integer>();
 		ArrayList<Integer> schemaIdListProductLine = new ArrayList<Integer>();
 		ArrayList<Integer> schemaIdListEmail = new ArrayList<Integer>();
-		
 		ArrayList<Integer> schemaIdListPartnerORG = new ArrayList<Integer>();
 		ArrayList<Integer> schemaIdListRboORG = new ArrayList<Integer>();
-		ArrayList<Integer> schemaIdListProductLineORG = new ArrayList<Integer>();
-		
 		try {
-			log.debug("get schema ids for email \"" + email + ".");
-
-			ArrayList<Object> partner_rboinfo = orderEmailQueue
-					.getPartnerRbo_productlines(email);
+			
+			HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.getProductLinesForEmail();
 			String rboMatchResult = "";
 			String productlineMatchResult = "";
 			String partnerMatchResult = "";
@@ -47,23 +43,22 @@ public class PartnerAnalysis {
 						"", "");
 				orderEmailQueue.updateAllAttachment(EmailQueueId, schemaId,
 						"6", "");
-				log.debug("unrecoginzed email \"" + email + ".");
+				log.debug("unrecoginzed emailqueue id  \"" + EmailQueueId + ".");
 				return schemaIdListPartner;
 			}
-			log.debug("got schema ids for  email \"" + email + ".");
+			log.debug("got schema ids for  emailqueue id \"" + EmailQueueId + ".");
 			Partner_RBOProductLine schemaInfo = new Partner_RBOProductLine();
-			Iterator<Object> iterator = partner_rboinfo.iterator();
 			
 			String FileExtString = FilenameUtils.getExtension(FileName);
 			String FileNameString = FilenameUtils.getBaseName(FileName);
-			//String[] FilNamePattern = FileName.split("\\.");
 			
-			//String FileNameString = FilNamePattern[0];
-			//String FileExtString = FilNamePattern[1];
+			Iterator iterator = partner_rboinfo.entrySet().iterator();
+			// //get email subject and source
 			while (iterator.hasNext()) {
-				schemaInfo = (Partner_RBOProductLine) iterator.next();
+				Map.Entry pair = (Map.Entry) iterator.next();
+				schemaInfo = (Partner_RBOProductLine) pair.getValue();
 				schemaIdListEmail.add(schemaInfo.getId());
-				log.info("Processing attachment for productline id \""
+				log.debug("Processing attachment for productline id \""
 						+ schemaInfo.getId() + "\".");
 				if (FileNameString.contains("CompleteEmail")) {
 					log.debug("Processing starts for file name \""
@@ -73,8 +68,7 @@ public class PartnerAnalysis {
 								schemaInfo.getEmailBodyRBOMatch());
 						log.debug("rbo match list \""
 								+ schemaInfo.getEmailBodyRBOMatch() + ".");
-						//if (!res.isEmpty() && res != "") {
-						if (res != null && !res.isEmpty()) {
+						if (!res.isEmpty() && res != "") {
 							schemaIdListRbo.add(schemaInfo.getId());
 							if (rboMatchResult == "") {
 								rboMatchResult = res;
@@ -90,8 +84,7 @@ public class PartnerAnalysis {
 						log.debug("productline match list \""
 								+ schemaInfo.getEmailBodyProductLineMatch()
 								+ ".");
-						//if (!res.isEmpty() && res != "") {
-						if (res != null && !res.isEmpty()) {
+						if (!res.isEmpty() && res != "") {
 							schemaIdListProductLine.add(schemaInfo.getId());
 							if (productlineMatchResult == "") {
 								productlineMatchResult = res;
@@ -107,8 +100,7 @@ public class PartnerAnalysis {
 
 						String res = fs.searchStringInBody(filePath, FileName,
 								schemaInfo.getEmailBodyPartnerMatch());
-						//if (!res.isEmpty() && res != "") {
-						if (res != null && !res.isEmpty()) {
+						if (!res.isEmpty() && res != "") {
 							schemaIdListPartner.add(schemaInfo.getId());
 							if (partnerMatchResult == "") {
 								partnerMatchResult = res;
@@ -121,16 +113,15 @@ public class PartnerAnalysis {
 
 				} else if (FileExtString.contains("xls")
 						|| FileExtString.contains("pdf")) {
-					log.info("Processing starts for file name \""
+					log.debug("Processing starts for file name \""
 							+ FileNameString + "\".");
 					if (schemaInfo.isFileProductLineMatchRequired()) {
-						log.info("productline match list \""
+						log.debug("productline match list \""
 								+ schemaInfo.getFileProductlineMatch() + ".");
 
 						String res = fs.searchStringInFile(filePath, FileName,
 								schemaInfo.getFileProductlineMatch());
-						//if (!res.isEmpty() && res != "") {
-						if (res != null && !res.isEmpty()) {
+						if (!res.isEmpty() && res != "") {
 							schemaIdListProductLine.add(schemaInfo.getId());
 							if (productlineMatchResult == "") {
 								productlineMatchResult = res;
@@ -144,11 +135,10 @@ public class PartnerAnalysis {
 					if (schemaInfo.isFileRBOMatchRequired()) {
 						String res = fs.searchStringInFile(filePath, FileName,
 								schemaInfo.getFileRBOMatch());
-						log.info("rbo match list \""
+						log.debug("rbo match list \""
 								+ schemaInfo.getFileRBOMatch() + ".");
 
-						//if (!res.isEmpty() && res != "") {
-						if (res != null && !res.isEmpty()) {
+						if (!res.isEmpty() && res != "") {
 							schemaIdListRbo.add(schemaInfo.getId());
 							if (rboMatchResult == "") {
 								rboMatchResult = res;
@@ -158,14 +148,12 @@ public class PartnerAnalysis {
 						}
 					}
 					if (schemaInfo.isFileOrderPartnerRequired()) {
-						log.info("Partner match list \""
+						log.debug("Partner match list \""
 								+ schemaInfo.getFileOrderPartnerMatch() + ".");
 
 						String res = fs.searchStringInFile(filePath, FileName,
 								schemaInfo.getFileOrderPartnerMatch());
-						
-						if(res != null && !res.isEmpty()){
-						//if (!res.isEmpty() && res != "") {
+						if (!res.isEmpty() && res != "") {
 							schemaIdListPartner.add(schemaInfo.getId());
 							if (partnerMatchResult == "") {
 								partnerMatchResult = res;
@@ -233,4 +221,7 @@ public class PartnerAnalysis {
 
 	}
 
+	
+	
 }
+

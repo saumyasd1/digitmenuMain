@@ -9,11 +9,12 @@ import java.util.Set;
 import com.adeptia.indigo.logging.Logger;
 import com.avery.Model.OrderEmailQueueInterface;
 import com.avery.Model.OrderEmailQueueModel;
+import com.avery.Model.ProductLineBean;
 import com.avery.dao.Partner_RBOProductLine;
 
 public class SubjectAnalysis {
 
-	static Logger log = Logger.getLogger(SubjectAnalysis.class.getName());
+	public static Logger log = OrderEmailQueueServices.log;
 	FileSearch fs = new FileSearch();
 
 	// /Partner search in subject
@@ -69,12 +70,12 @@ public class SubjectAnalysis {
 		// get product line id in loop and check
 		for (Integer p_id : productlineId) {
 			// fetch productline info
-			ArrayList<Object> partner_rboinfo = orderEmailQueue
-					.getPartner_productline(p_id);
+			//ArrayList<Object> partner_rboinfo = orderEmailQueue
+			//		.getPartner_productline(p_id);
 			Partner_RBOProductLine SchemaDetails = new Partner_RBOProductLine();
-			Iterator<Object> iterator = partner_rboinfo.iterator();
-			while (iterator.hasNext()) {
-				SchemaDetails = (Partner_RBOProductLine) iterator.next();
+			//Iterator<Object> iterator = partner_rboinfo.iterator();
+			//while (iterator.hasNext()) {
+				SchemaDetails = ProductLineBean.productLineMap.get(p_id);
 				if (SchemaDetails.isEmailSubjectRBOMatchRequired()) {
 					String resultRbo = searchSubject(subject,
 							SchemaDetails.getEmailSubjectRBOMatch());
@@ -122,7 +123,7 @@ public class SubjectAnalysis {
 					log.debug("EmailSubjectRBOMatchRequired is false for productline id \""
 							+ p_id + "\".");
 				}
-			}
+			//}
 		}
 
 		log.debug("subject rbo. \"" + subjectRbo + "\".");
@@ -142,7 +143,7 @@ public class SubjectAnalysis {
 	public String searchSubject(String subject, String keyvalues) {
 		String results = "";
 		log.debug("searchSubject for value. \"" + keyvalues + "\".");
-		if(keyvalues==null||keyvalues==""|| keyvalues.isEmpty()){
+		if (keyvalues == null) {
 			return results;
 		}
 		if (keyvalues.contains("|") || !keyvalues.isEmpty()) {

@@ -23,7 +23,7 @@ import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
 public class FileSearch {
 
-	static Logger log = Logger.getLogger(FileSearch.class.getName());
+	public static Logger log = OrderEmailQueueServices.log;
 	public String regexSupportString = "\\b";
 	public static String AND_SEPERATOR = "_\\&\\&_";
 	public static String OR_SEPERATOR = "_\\|\\|_";

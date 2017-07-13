@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import com.adeptia.indigo.logging.Logger;
+import com.avery.services.OrderEmailQueueServices;
+
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -22,8 +24,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 public class SearchCellAddress {
 
 	private Workbook workbook;
-	static Logger log = Logger
-			.getLogger(SearchCellAddress.class.getName());
+	public static Logger log = OrderEmailQueueServices.log;
 
 	/**
 	 * Method to get WorkBook object

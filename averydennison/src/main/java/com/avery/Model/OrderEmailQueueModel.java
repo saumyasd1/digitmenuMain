@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.adeptia.indigo.logging.Logger;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -20,13 +21,13 @@ import com.avery.dao.OrderFileAttachment;
 import com.avery.dao.OrderFileQueue;
 import com.avery.dao.Partner;
 import com.avery.dao.Partner_RBOProductLine;
+import com.avery.services.OrderEmailQueueServices;
 import com.avery.utils.HibernateUtil;
 
 public class OrderEmailQueueModel implements
 		OrderEmailQueueInterface {
 
-	static Logger log = Logger
-			.getLogger(OrderEmailQueueModel.class.getName());
+	public static Logger log = OrderEmailQueueServices.log;
 
 	public HashMap<String, String> emailSource(int id) throws Exception {
 

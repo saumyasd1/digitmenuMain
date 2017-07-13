@@ -8,6 +8,7 @@ import java.util.Map;*/
 
 //import com.avery.Model.OrderEmailQueueInterface;
 //import com.avery.Model.OrderEmailQueueModel;
+import com.adeptia.indigo.logging.Logger;
 import com.avery.config.ConfigService;
 //import com.avery.dao.OrderFileAttachment;
 //import com.avery.dao.Partner_RBOProductLine;
@@ -16,7 +17,8 @@ import com.avery.utils.DateUtility;
 //import com.avery.DateManager;
 
 class OrderEmailManager {
-	
+	static Logger log = Logger
+			.getLogger(OrderEmailQueueServices.class.getName());
 	public static void main(String[] args) throws Exception {
 		try{
 			
@@ -26,7 +28,7 @@ class OrderEmailManager {
 			configService.setConfigFilePath(configFilePath);
 			String directoryLocation = "C:\\AveryDennisonFiles\\"; 
 			//DateUtility.SetDbTimeZone();
-			orderEmailService.orderEmailSourceservice(1213);
+			orderEmailService.orderEmailSourceservice(2149, log);
 			System.out.println("hello");
 			//System.out.println(orderEmailService.getemaildetail(1191));
 			//System.out.println(orderEmailService.EmailBody(1213));

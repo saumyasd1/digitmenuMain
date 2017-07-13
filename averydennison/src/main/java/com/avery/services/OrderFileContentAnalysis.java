@@ -9,11 +9,11 @@ import org.apache.commons.io.FilenameUtils;
 import com.adeptia.indigo.logging.Logger;
 import com.avery.Model.OrderEmailQueueInterface;
 import com.avery.Model.OrderEmailQueueModel;
+import com.avery.Model.ProductLineBean;
 import com.avery.dao.Partner_RBOProductLine;
 
 public class OrderFileContentAnalysis {
-	static Logger log = Logger.getLogger(OrderFileContentAnalysis.class
-			.getName());
+	public static Logger log = OrderEmailQueueServices.log;
 
 	FileSearch fs = new FileSearch();
 
@@ -46,12 +46,11 @@ public class OrderFileContentAnalysis {
 			Partner_RBOProductLine schemaInfo = new Partner_RBOProductLine();
 			String orderFileExt = FilenameUtils.getExtension(fileName);
 			String orderFileName = FilenameUtils.getBaseName(fileName);
-			//String[] fileNamePattern = fileName.split("\\.");
-			//String orderFileName = fileNamePattern[0];
-			//String orderFileExt = fileNamePattern[1];
 			for (int i = 0; i < schemaIdList.size(); i++) {
-				schemaInfo = orderEmailQueue.getProductlineInfo(schemaIdList
+				
+				schemaInfo = ProductLineBean.productLineMap.get(schemaIdList
 						.get(i));
+				
 				productline_rbo_id = schemaInfo.getId();
 				log.debug("Processing attachment for productline id \""
 						+ productline_rbo_id + "\".");
@@ -79,8 +78,10 @@ public class OrderFileContentAnalysis {
 					if (schemaInfo.getFileOrderMatchLocation().contains(
 							"FileName")) {
 						// /check file name
+						//String res = FileNameMatch(orderFileName, orderFileExt,
+						//		schemaInfo.getFileOrderMatch());
 						String res = FileNameMatch(orderFileName, orderFileExt,
-								schemaInfo.getFileOrderMatch());
+								schemaInfo.getOrderFileNamePattern());
 						if (!res.isEmpty() || res != "") {
 							if (fileContentMatch == "") {
 								fileContentMatch = schemaInfo
@@ -93,10 +94,7 @@ public class OrderFileContentAnalysis {
 					} else if (schemaInfo.getFileOrderMatchLocation().contains(
 							"FileContent")) {
 						String Sheetinfo = schemaInfo.getFileOrderMatch();
-						
-						
-						//if (!Sheetinfo.isEmpty()) {
-						if (Sheetinfo!=null && !Sheetinfo.isEmpty()) {
+						if (!Sheetinfo.isEmpty()) {
 							if (schemaInfo.getOrderFileNameExtension()
 									.contains(fileExt)
 									|| schemaInfo.getOrderFileNameExtension()
@@ -178,26 +176,17 @@ public class OrderFileContentAnalysis {
 				}
 				AdditionalFileAnalysis afa = new AdditionalFileAnalysis();
 				Set<Integer> addFileIds = afa.identifyAdditionalDataFile(
-						orderFileAttachmentId, fileName, filePath, fileExt,
+						emailQueueId, fileName, filePath, fileExt,
 						schema_id_comment);
 				if (addFileIds.size() == 0) {
 					orderEmailQueue.updateOrderEmailAttachment(
 							orderFileAttachmentId, 0, "6", "", "",
 							schema_id_comment, fileContentMatch);
-				}else{
-					/*schema_id_comment="";
-					for (Integer s : addFileIds) {
-						if (schema_id_comment == "") {
-							schema_id_comment = "" + s;
-						} else {
-							schema_id_comment = schema_id_comment + "," + s;
-						}
-
-					}
+				} else if (addFileIds.size() == 1) {
 					orderEmailQueue.updateOrderEmailAttachment(
-							orderFileAttachmentId, 0, "6", "", "",
-							schema_id_comment, fileContentMatch, "", "AdditionalData");
-					*/
+							orderFileAttachmentId,
+							addFileIds.iterator().next(), "8", "", "", "",
+							"AdditionalData");
 				}
 				schemaId.addAll(schemaIdList);
 				sa.subjectSearch(emailQueueId, orderFileAttachmentId, schemaId);
@@ -217,9 +206,6 @@ public class OrderFileContentAnalysis {
 				orderEmailQueue.updateOrderEmailAttachment(
 						orderFileAttachmentId, 0, "6", "", "",
 						schema_id_comment, fileContentMatch, "", "Order");
-
-				// orderEmailQueue.updateOrderEmailAttachment(orderFileAttachmentId,
-				// 0, "6", "", "", schema_id_comment, fileContentMatch);
 
 			}
 		} catch (Exception e) {
@@ -244,7 +230,7 @@ public class OrderFileContentAnalysis {
 			log.debug("search for value" + keyvalues);
 			log.debug("search for filePath" + filePath);
 			log.debug("search for fileName" + fileName);
-			if(keyvalues==null||keyvalues==""|| keyvalues.isEmpty()){
+			if (keyvalues == null) {
 				log.debug("data match valuse is null");
 				return responseResults;
 			}
@@ -293,11 +279,8 @@ public class OrderFileContentAnalysis {
 		log.debug("Processing attachment identification from file name.");
 		String result = "";
 		try {
-			if(MatchString==null||MatchString==""|| MatchString.isEmpty()){
-				return result;
-			}
 			if (!MatchString.isEmpty()) {
-				if (MatchString.contains("|") || MatchString !="") {
+				if (MatchString.contains("|")) {
 					String[] fileNamePattrens = MatchString.split("\\|");
 					for (String fileNamePattren : fileNamePattrens) {
 						String[] fileNameMatch = fileNamePattren.split("\\.");
@@ -310,7 +293,6 @@ public class OrderFileContentAnalysis {
 							result = fileNameP;
 							log.debug("file name match order_file_name   \""
 									+ FileName + "\".");
-							return MatchString;
 						} else {
 							log.debug("file name not match with order file name  \""
 									+ FileName + "\".");
@@ -327,4 +309,5 @@ public class OrderFileContentAnalysis {
 		return result;
 	}
 
+	
 }

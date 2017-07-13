@@ -68,7 +68,7 @@ public class PartnerAnalysis {
 								schemaInfo.getEmailBodyRBOMatch());
 						log.debug("rbo match list \""
 								+ schemaInfo.getEmailBodyRBOMatch() + ".");
-						if (!res.isEmpty() && res != "") {
+						if(res != null && !res.isEmpty()){
 							schemaIdListRbo.add(schemaInfo.getId());
 							if (rboMatchResult == "") {
 								rboMatchResult = res;
@@ -100,7 +100,7 @@ public class PartnerAnalysis {
 
 						String res = fs.searchStringInBody(filePath, FileName,
 								schemaInfo.getEmailBodyPartnerMatch());
-						if (!res.isEmpty() && res != "") {
+						if(res != null && !res.isEmpty()){
 							schemaIdListPartner.add(schemaInfo.getId());
 							if (partnerMatchResult == "") {
 								partnerMatchResult = res;
@@ -121,7 +121,7 @@ public class PartnerAnalysis {
 
 						String res = fs.searchStringInFile(filePath, FileName,
 								schemaInfo.getFileProductlineMatch());
-						if (!res.isEmpty() && res != "") {
+						if(res != null && !res.isEmpty()){
 							schemaIdListProductLine.add(schemaInfo.getId());
 							if (productlineMatchResult == "") {
 								productlineMatchResult = res;
@@ -138,7 +138,7 @@ public class PartnerAnalysis {
 						log.debug("rbo match list \""
 								+ schemaInfo.getFileRBOMatch() + ".");
 
-						if (!res.isEmpty() && res != "") {
+						if(res != null && !res.isEmpty()){
 							schemaIdListRbo.add(schemaInfo.getId());
 							if (rboMatchResult == "") {
 								rboMatchResult = res;
@@ -153,7 +153,7 @@ public class PartnerAnalysis {
 
 						String res = fs.searchStringInFile(filePath, FileName,
 								schemaInfo.getFileOrderPartnerMatch());
-						if (!res.isEmpty() && res != "") {
+						if(res != null && !res.isEmpty()){
 							schemaIdListPartner.add(schemaInfo.getId());
 							if (partnerMatchResult == "") {
 								partnerMatchResult = res;

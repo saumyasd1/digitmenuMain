@@ -39,13 +39,13 @@ public class AdditionalFileAnalysis {
 		OrderFileContentAnalysis ofca = new OrderFileContentAnalysis();
 		Set<Integer> schemaId = new HashSet<Integer>();
 		try {
-			if (schemaIdString == "" || schemaIdString == null) {
+			if (schemaIdString == null||schemaIdString == ""  ) {
 				return schemaId;
 			}
 			String[] productlineIdArr = schemaIdString.split(",");
 			// log.debug("processing attachment id \"" + attachmentId + "\".");
 			for (String productlineIdStr : productlineIdArr) {
-				if (productlineIdStr.isEmpty() || productlineIdStr == null) {
+				if ( productlineIdStr == null || productlineIdStr.isEmpty() ) {
 					break;
 				}
 				int productlineId = Integer.parseInt(productlineIdStr.trim());
@@ -77,7 +77,7 @@ public class AdditionalFileAnalysis {
 							log.debug("Processing attachment identification from file name.");
 							String fileNamePattern = produclineData
 									.getAttachmentFileOrderMatch();
-							if (!fileNamePattern.isEmpty()) {
+							if (fileNamePattern!=null && !fileNamePattern.isEmpty()) {
 								
 								String orderFileExt = FilenameUtils.getExtension(fileName);
 								String orderFileName = FilenameUtils.getBaseName(fileName);
@@ -89,7 +89,7 @@ public class AdditionalFileAnalysis {
 								String res = ofca.FileNameMatch(orderFileName,
 										orderFileExt,
 										produclineData.getAttachmentFileOrderMatch());
-								if (!res.isEmpty() || res != "") {
+								if (res!=null && !res.isEmpty() ) {
 									schemaId.add(produclineData.getId());
 								}
 							} else {

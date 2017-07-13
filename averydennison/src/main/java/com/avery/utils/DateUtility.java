@@ -1,6 +1,7 @@
 package com.avery.utils;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -54,25 +55,35 @@ public class DateUtility {
 	}
 	
 	
-
 	/**
 	 * Method to convert Date according to Site ID
-	 * @param date
-	 * @param siteId
+	 * @param stringDate
+	 * @param stringSiteId
 	 * @return String
 	 * @author Rakesh
 	 */
-	public static String convertDateUsingSite(Date date, int siteId) {
+	public String convertDateUsingSite(String stringDate, String stringSiteId) {
+		Date date;
+		String siteDate = null;
+		try {
+			date = formatter.parse(stringDate);
+		int siteId=Integer.parseInt(stringSiteId);
 		TimeZone timezone = TimeZone.getDefault();
 		long currentDateOffset = date.getTime();
 		long utcOffset = currentDateOffset - timezone.getRawOffset();
-		String siteDate = null;
-		if (siteId == 2 || siteId == 3) {
+				if (siteId == 2 || siteId == 3) {
 			long Offset = 480 * 60 * 1000;
 			siteDate = formatter.format(new Date(utcOffset + Offset));
 		} else if (siteId == 4) {
 			long Offset = 420 * 60 * 1000;
 			siteDate = formatter.format(new Date(utcOffset + Offset));
+		}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch(NumberFormatException e){
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return siteDate;
 	}

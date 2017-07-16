@@ -62,7 +62,7 @@ public class DateUtility {
 	 * @return String
 	 * @author Rakesh
 	 */
-	public String convertDateUsingSite(String stringDate, String stringSiteId) {
+	public static String convertDateUsingSite(String stringDate, String stringSiteId) {
 		Date date;
 		String siteDate = null;
 		try {

@@ -176,18 +176,13 @@ public class OrderFileContentAnalysis {
 				}
 				AdditionalFileAnalysis afa = new AdditionalFileAnalysis();
 				Set<Integer> addFileIds = afa.identifyAdditionalDataFile(
-						emailQueueId, fileName, filePath, fileExt,
+						emailQueueId,orderFileAttachmentId, fileName, filePath, fileExt,
 						schema_id_comment);
 				if (addFileIds.size() == 0) {
 					orderEmailQueue.updateOrderEmailAttachment(
 							orderFileAttachmentId, 0, "6", "", "",
 							schema_id_comment, fileContentMatch);
-				} else if (addFileIds.size() == 1) {
-					orderEmailQueue.updateOrderEmailAttachment(
-							orderFileAttachmentId,
-							addFileIds.iterator().next(), "8", "", "", "",
-							"AdditionalData");
-				}
+				} 
 				schemaId.addAll(schemaIdList);
 				sa.subjectSearch(emailQueueId, orderFileAttachmentId, schemaId);
 

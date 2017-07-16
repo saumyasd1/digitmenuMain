@@ -30,7 +30,7 @@ public class AdditionalFileAnalysis {
 	 * @return
 	 * @throws Exception
 	 */
-	public Set<Integer> identifyAdditionalDataFile(int emailQueueId,
+	public Set<Integer> identifyAdditionalDataFile(int emailQueueId, int orderFileAttachmentId,
 			String fileName, String filePath, String fileExt,
 			String schemaIdString) throws Exception {
 		log.debug("identifyAdditionalDataFile for email queue\"" + emailQueueId
@@ -38,6 +38,7 @@ public class AdditionalFileAnalysis {
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		OrderFileContentAnalysis ofca = new OrderFileContentAnalysis();
 		Set<Integer> schemaId = new HashSet<Integer>();
+		String fileContentMatch="";
 		try {
 			if (schemaIdString == null||schemaIdString == ""  ) {
 				return schemaId;
@@ -50,17 +51,7 @@ public class AdditionalFileAnalysis {
 				}
 				int productlineId = Integer.parseInt(productlineIdStr.trim());
 				log.debug("productlineId \"" + productlineId + "\".");
-				// fetch product line info
-				//ArrayList<Object> partner_rboinfo = orderEmailQueue
-					//	.getPartner_productline(productlineId);
 				
-				//schemaInfo = ProductLineBean.productLineMap.get(schemaIdList
-				//		.get(i));
-				
-				
-				
-				//ArrayList<Object> partner_rboinfo = orderEmailQueue
-				//		.getPartner_productline(productlineId);
 				Partner_RBOProductLine produclineData = new Partner_RBOProductLine();
 				//Iterator<Object> iterator = partner_rboinfo.iterator();
 				//while (iterator.hasNext()) {
@@ -82,15 +73,17 @@ public class AdditionalFileAnalysis {
 								String orderFileExt = FilenameUtils.getExtension(fileName);
 								String orderFileName = FilenameUtils.getBaseName(fileName);
 								
-								//String[] PatterenfileName = fileName
-								//		.split("\\.");
-								//String orderFileName = PatterenfileName[0];
-								//String orderFileExt = PatterenfileName[1];
 								String res = ofca.FileNameMatch(orderFileName,
 										orderFileExt,
 										produclineData.getAttachmentFileOrderMatch());
 								if (res!=null && !res.isEmpty() ) {
 									schemaId.add(produclineData.getId());
+									if (fileContentMatch == "") {
+										fileContentMatch = produclineData.getAttachmentFileOrderMatch();
+									} else {
+										fileContentMatch = fileContentMatch
+												+ "," + produclineData.getAttachmentFileOrderMatch();
+									}
 								}
 							} else {
 								log.debug("FileOrderMatch is empty.");
@@ -112,6 +105,12 @@ public class AdditionalFileAnalysis {
 												filePath, fileExt,
 												matchContent, log)) {
 											schemaId.add(produclineData.getId());
+											if (fileContentMatch == "") {
+												fileContentMatch = matchContent;
+											} else {
+												fileContentMatch = fileContentMatch
+														+ "," +matchContent;
+											}
 										}
 
 									} else if (produclineData
@@ -133,6 +132,12 @@ public class AdditionalFileAnalysis {
 																keyword, filePath).isEmpty()) {
 													schemaId.add(produclineData
 															.getId());
+													if (fileContentMatch == "") {
+														fileContentMatch = matchContent;
+													} else {
+														fileContentMatch = fileContentMatch
+																+ "," +matchContent;
+													}
 												}
 
 											}
@@ -150,6 +155,28 @@ public class AdditionalFileAnalysis {
 								}
 
 							}
+						}
+						fileContentMatch = fs.removeDup(fileContentMatch);
+						if (schemaId.size() == 1) {
+							
+							orderEmailQueue.updateOrderEmailAttachmentContent(
+									orderFileAttachmentId, schemaId.iterator().next(), "8", "", "", "",
+									"AdditionalData", fileContentMatch);
+							
+						}else if(schemaId.size() > 1){
+							String schema_id_comment="";
+							for (Integer s : schemaId) {
+								if (schema_id_comment == "") {
+									schema_id_comment = "" + s;
+								} else {
+									schema_id_comment = schema_id_comment + "," + s;
+								}
+
+							}
+							orderEmailQueue.updateOrderEmailAttachmentContent(
+									orderFileAttachmentId, 0, "8", "", schema_id_comment, "",
+									"AdditionalData", fileContentMatch);
+						
 						}
 					} else {
 						log.debug("attachment required or attachment file match required is false for productline id \""

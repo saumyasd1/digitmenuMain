@@ -68,15 +68,16 @@ public class DateUtility {
 		try {
 			date = formatter.parse(stringDate);
 		int siteId=Integer.parseInt(stringSiteId);
-		TimeZone timezone = TimeZone.getDefault();
-		long currentDateOffset = date.getTime();
-		long utcOffset = currentDateOffset - timezone.getRawOffset();
-				if (siteId == 2 || siteId == 3) {
+		formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Date UTCDate=formatter.parse(formatter.format(date));
+		long UTCoffset=UTCDate.getTime();
+		System.out.println(UTCoffset);
+		if (siteId == 2 || siteId == 3) {
 			long Offset = 480 * 60 * 1000;
-			siteDate = formatter.format(new Date(utcOffset + Offset));
+			siteDate = formatter.format(new Date(UTCoffset + Offset));
 		} else if (siteId == 4) {
 			long Offset = 420 * 60 * 1000;
-			siteDate = formatter.format(new Date(utcOffset + Offset));
+			siteDate = formatter.format(new Date(UTCoffset + Offset));
 		}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

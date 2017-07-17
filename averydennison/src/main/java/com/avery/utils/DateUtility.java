@@ -78,7 +78,6 @@ public class DateUtility {
 				siteDate = formatter.format(new Date(utcOffset + Offset));
 			} else if (siteId == 4) {
 				long Offset = TimeZone.getTimeZone("VST").getRawOffset();
-				;
 				siteDate = formatter.format(new Date(utcOffset + Offset));
 			}
 		} catch (ParseException e) {

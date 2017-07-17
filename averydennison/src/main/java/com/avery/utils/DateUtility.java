@@ -62,26 +62,29 @@ public class DateUtility {
 	 * @return String
 	 * @author Rakesh
 	 */
-	public static String convertDateUsingSite(String stringDate, String stringSiteId) {
+	public static String convertDateUsingSite(String stringDate,
+			String stringSiteId) {
 		Date date;
 		String siteDate = null;
 		try {
 			date = formatter.parse(stringDate);
-		int siteId=Integer.parseInt(stringSiteId);
-		long currentDateOffset = date.getTime();
-		System.out.println(currentDateOffset);
-		long utcOffset = currentDateOffset + (4*60*60*1000);
-		if (siteId == 2 || siteId == 3) {
-			long Offset = 480 * 60 * 1000;
-			siteDate = formatter.format(new Date(utcOffset + Offset));
-		} else if (siteId == 4) {
-			long Offset = 420 * 60 * 1000;
-			siteDate = formatter.format(new Date(utcOffset + Offset));
-		}
+			int siteId = Integer.parseInt(stringSiteId);
+			TimeZone timezone = TimeZone.getDefault();
+			long currentDateOffset = date.getTime();
+			long utcOffset = currentDateOffset
+					- timezone.getOffset(currentDateOffset);
+			if (siteId == 2 || siteId == 3) {
+				long Offset = TimeZone.getTimeZone("CTT").getRawOffset();
+				siteDate = formatter.format(new Date(utcOffset + Offset));
+			} else if (siteId == 4) {
+				long Offset = TimeZone.getTimeZone("VST").getRawOffset();
+				;
+				siteDate = formatter.format(new Date(utcOffset + Offset));
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch(NumberFormatException e){
+		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

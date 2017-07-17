@@ -147,8 +147,9 @@ public class OrderEmailQueueServices {
 	 *         body
 	 * @throws Exception
 	 */
-	public boolean getemaildetail(int orderfileQueueId) throws Exception {
+	public boolean getemaildetail(int orderfileQueueId, Logger _log) throws Exception {
 		int schema_id = 0;
+		log = _log;
 		int EmailQueueId = 0;
 		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
 		FileSearch fs = new FileSearch();

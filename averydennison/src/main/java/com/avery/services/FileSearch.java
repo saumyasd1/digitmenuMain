@@ -2,19 +2,20 @@ package com.avery.services;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.adeptia.indigo.logging.Logger;
+//import com.adeptia.indigo.logging.Logger;
 import com.avery.Model.SearchCellAddress;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
@@ -25,11 +26,10 @@ public class FileSearch {
 
 	public static Logger log = OrderEmailQueueServices.log;
 	public String regexSupportString = "\\b";
-	public static String AND_SEPERATOR = "_\\&\\&_";
-	public static String OR_SEPERATOR = "_\\|\\|_";
+	public static String AND_SEPERATOR = "_&&_";
 	public static String VALUE_SEPARATOR = "_\\._";
-	public static String VALUE_SEPARATOR_WITHOUTESCAPE = "_._";
-
+	public static String OR_SEPERATOR = "_._";
+	public static String VALUE_SEPARATOR_WITHOUTESCAPE = "_\\|\\|_";
 	/**
 	 * method searchContentFromMailBody
 	 * 
@@ -297,6 +297,9 @@ public class FileSearch {
 
 							cellNos = searchDetails[1].split(":");
 							cellNo = cellNos[1].trim();
+							
+							
+							
 							log.debug("Starting seacrhing process for cellNo:\""
 									+ cellNo + "\".");
 						}
@@ -464,6 +467,69 @@ public class FileSearch {
 			// e.printStackTrace();
 		}
 		return "";
+	}
+	/**
+	 * method  added to handle and /or conditions in exce search
+	 * @param FileName
+	 * @param FilePath
+	 * @param FileExt
+	 * @param CellDetail
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean SearchContentInExcelFile(String FileName, String FilePath,
+			String FileExt, String CellDetail, Logger log) throws Exception {
+		//log= log;
+		// String keywordLocation = "";
+		Boolean result = false;
+		boolean andResult = true;
+		Set<Boolean> orResult = new HashSet<Boolean>();
+		try {
+			if(CellDetail==null||CellDetail==""|| CellDetail.isEmpty()){
+				log.info("fileOrderMatch column value is null in table.");
+				
+				return false;
+			}
+			
+			log.info("Starting seacrhing process for file:\"" + FilePath
+					+ File.separatorChar + FileName + "\".");
+			if(CellDetail.contains(AND_SEPERATOR) && CellDetail.contains(OR_SEPERATOR)){
+				log.error("match string contains both and and or condition.");
+				return false;
+			}else if (CellDetail.contains(AND_SEPERATOR)) {
+					String [] keyWords = CellDetail.split(AND_SEPERATOR);
+					for (String keyWord : keyWords) {
+						if(!SearchContentInExcel(FileName, FilePath,
+								FileExt, keyWord, log)){
+							andResult=false;
+							break;
+						}
+						
+					}
+				}else if(CellDetail.contains(OR_SEPERATOR)){
+					String [] keyWords = CellDetail.split(VALUE_SEPARATOR);
+					for (String keyWord : keyWords) {
+						orResult.add(SearchContentInExcel(FileName, FilePath,
+								FileExt, keyWord, log));
+						
+					}
+				}else{
+					andResult = SearchContentInExcel(FileName, FilePath,
+							FileExt, CellDetail, log);
+				}
+			
+		} catch (Exception e) {
+			log.error("Exception while excel file content search");
+			throw e;
+		}
+		if(andResult && orResult.size()==0){
+			return true;
+		}else if(andResult && orResult.contains(true)){
+			return true;
+		}else{
+			return andResult;
+		}
+		
 	}
 
 }

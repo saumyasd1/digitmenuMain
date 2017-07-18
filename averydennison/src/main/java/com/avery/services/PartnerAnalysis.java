@@ -118,50 +118,99 @@ public class PartnerAnalysis {
 					if (schemaInfo.isFileProductLineMatchRequired()) {
 						log.debug("productline match list \""
 								+ schemaInfo.getFileProductlineMatch() + ".");
-
-						String res = fs.searchStringInFile(filePath, FileName,
-								schemaInfo.getFileProductlineMatch());
-						if(res != null && !res.isEmpty()){
-							schemaIdListProductLine.add(schemaInfo.getId());
-							if (productlineMatchResult == "") {
-								productlineMatchResult = res;
-							} else {
-								productlineMatchResult = productlineMatchResult
-										+ "," + res;
+						//condition added to handle and or conditions in keywords
+						if(FileExtString.toLowerCase().contains("xls")){
+							boolean res = fs.SearchContentInExcelFile(FileName,filePath,FileExtString,
+									schemaInfo.getFileProductlineMatch(), log);
+							if(res){
+								schemaIdListProductLine.add(schemaInfo.getId());
+								if (productlineMatchResult.isEmpty()) {
+									productlineMatchResult = schemaInfo.getFileProductlineMatch();
+								} else {
+									productlineMatchResult = productlineMatchResult
+											+ "," + schemaInfo.getFileProductlineMatch();
+								}
 							}
+						}else if(FileExtString.toLowerCase().contains("pdf")){
+							String res = fs.searchStringInFile(filePath, FileName,
+									schemaInfo.getFileProductlineMatch());
+								if(res != null && !res.isEmpty()){
+									schemaIdListProductLine.add(schemaInfo.getId());
+									if (productlineMatchResult == "") {
+										productlineMatchResult = res;
+									} else {
+										productlineMatchResult = productlineMatchResult
+												+ "," + res;
+									}
 
+								}
 						}
+						
 					}
 					if (schemaInfo.isFileRBOMatchRequired()) {
-						String res = fs.searchStringInFile(filePath, FileName,
-								schemaInfo.getFileRBOMatch());
 						log.debug("rbo match list \""
 								+ schemaInfo.getFileRBOMatch() + ".");
-
-						if(res != null && !res.isEmpty()){
-							schemaIdListRbo.add(schemaInfo.getId());
-							if (rboMatchResult == "") {
-								rboMatchResult = res;
-							} else {
-								rboMatchResult = rboMatchResult + "," + res;
+						//condition added to handle and or conditions in keywords
+						if(FileExtString.toLowerCase().contains("xls")){
+							boolean res = fs.SearchContentInExcelFile(FileName,filePath,FileExtString,
+									schemaInfo.getFileRBOMatch(), log);
+							if(res){
+								schemaIdListRbo.add(schemaInfo.getId());
+								if (rboMatchResult == "") {
+									rboMatchResult = schemaInfo.getFileRBOMatch();
+								} else {
+									rboMatchResult = rboMatchResult
+											+ "," + schemaInfo.getFileRBOMatch();
+								}
 							}
+						}else if(FileExtString.toLowerCase().contains("pdf")){
+							String res = fs.searchStringInFile(filePath, FileName,
+									schemaInfo.getFileRBOMatch());
+								if(res != null && !res.isEmpty()){
+									schemaIdListRbo.add(schemaInfo.getId());
+									if (rboMatchResult == "") {
+										rboMatchResult = res;
+									} else {
+										rboMatchResult = rboMatchResult
+												+ "," + res;
+									}
+
+								}
 						}
+						
+						
 					}
 					if (schemaInfo.isFileOrderPartnerRequired()) {
 						log.debug("Partner match list \""
 								+ schemaInfo.getFileOrderPartnerMatch() + ".");
-
-						String res = fs.searchStringInFile(filePath, FileName,
-								schemaInfo.getFileOrderPartnerMatch());
-						if(res != null && !res.isEmpty()){
-							schemaIdListPartner.add(schemaInfo.getId());
-							if (partnerMatchResult == "") {
-								partnerMatchResult = res;
-							} else {
-								partnerMatchResult = partnerMatchResult + ","
-										+ res;
+						//condition added to handle and or conditions in keywords
+						if(FileExtString.toLowerCase().contains("xls")){
+							boolean res = fs.SearchContentInExcelFile(FileName,filePath,FileExtString,
+									schemaInfo.getFileOrderPartnerMatch(), log);
+							if(res){
+								schemaIdListPartner.add(schemaInfo.getId());
+								if (partnerMatchResult == "") {
+									partnerMatchResult = schemaInfo.getFileOrderPartnerMatch();
+								} else {
+									partnerMatchResult = partnerMatchResult
+											+ "," + schemaInfo.getFileOrderPartnerMatch();
+								}
 							}
+						}else if(FileExtString.toLowerCase().contains("pdf")){
+							String res = fs.searchStringInFile(filePath, FileName,
+									schemaInfo.getFileOrderPartnerMatch());
+								if(res != null && !res.isEmpty()){
+									schemaIdListPartner.add(schemaInfo.getId());
+									if (partnerMatchResult == "") {
+										partnerMatchResult = res;
+									} else {
+										partnerMatchResult = partnerMatchResult
+												+ "," + res;
+									}
+
+								}
 						}
+						
 					}
 				}
 
@@ -170,8 +219,10 @@ public class PartnerAnalysis {
 			partnerMatchResult = fs.removeDup(partnerMatchResult);
 			rboMatchResult = fs.removeDup(rboMatchResult);
 			productlineMatchResult = fs.removeDup(productlineMatchResult);
-			// log.debug("partnerMatchResult "+rboMatchResult);
-			// log.debug("partnerMatchResult----------------- "+partnerMatchResult);
+			
+			partnerMatchResult = partnerMatchResult.substring(0, Math.min(partnerMatchResult.length(), 240));
+			productlineMatchResult = productlineMatchResult.substring(0, Math.min(productlineMatchResult.length(), 240));
+			rboMatchResult = rboMatchResult.substring(0, Math.min(rboMatchResult.length(), 240));
 			orderEmailQueue.updateOrderEmailAttachment(AttachmentId, schemaId,
 					Status, rboMatchResult, productlineMatchResult, "", "",
 					partnerMatchResult, "");
@@ -180,6 +231,7 @@ public class PartnerAnalysis {
 			throw e;
 		}
 		log.debug("Partner analysis finish");
+		
 		if (schemaIdListPartner.size() != 0) {
 
 			if (schemaIdListRbo.size() != 0 && schemaIdListPartner.size() != 1) {

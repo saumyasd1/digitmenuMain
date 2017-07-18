@@ -101,10 +101,10 @@ public class OrderFileContentAnalysis {
 											.equalsIgnoreCase(fileExt)) {
 								if (schemaInfo.getOrderFileNameExtension()
 										.contains("xls")) {
-									// method to search different values in
-									// excell at different location
-									if (fs.SearchContentInExcel(fileName,
-											filePath, fileExt, Sheetinfo, log)) {
+									///change method name to handle and/or condition
+									if (fs.SearchContentInExcelFile(fileName,
+												filePath, fileExt, Sheetinfo, log)) {
+										
 										// /create file content string and
 										// schema id
 										// list
@@ -154,7 +154,8 @@ public class OrderFileContentAnalysis {
 				}
 			}
 			fileContentMatch = fs.removeDup(fileContentMatch);
-			//System.out.println("fileContentMatch   " + fileContentMatch);
+			fileContentMatch = fileContentMatch.substring(0, Math.min(fileContentMatch.length(), 240));
+			
 			if (schemaId.size() == 1) {
 				log.debug("match schema list \"" + schemaId + "\".");
 				int schema = schemaId.iterator().next();

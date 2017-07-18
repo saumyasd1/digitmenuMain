@@ -101,9 +101,11 @@ public class AdditionalFileAnalysis {
 									if (produclineData
 											.getAttachmentFileNameExtension_1()
 											.contains("xls")) {
-										if (fs.SearchContentInExcel(fileName,
+									//change method to handle and/or condition in excel search
+										if (fs.SearchContentInExcelFile(fileName,
 												filePath, fileExt,
 												matchContent, log)) {
+											
 											schemaId.add(produclineData.getId());
 											if (fileContentMatch == "") {
 												fileContentMatch = matchContent;

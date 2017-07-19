@@ -164,7 +164,7 @@ public class FileSearch {
 					String[] cellNos;
 					if (searchDetails[1].contains("Cell")) {
 						cellNos = searchDetails[1].split(":");
-						cellNo = cellNos[1];
+						cellNo = cellNos[1].trim();
 						log.debug("Starting seacrhing process for cellNo:\""
 								+ cellNo + "\".");
 					}
@@ -189,7 +189,7 @@ public class FileSearch {
 								// if(searchContentList.contains(VALUE_SEPARATOR_WITHOUTESCAPE)){
 								Boolean cellPosition = read_att_cell
 										.searchContentInAllSheet(FilePath,
-												FileName, searchValue, cellNo);
+												FileName, searchValue.trim(), cellNo);
 
 								if (cellPosition) {
 									result = true;
@@ -522,13 +522,22 @@ public class FileSearch {
 			log.error("Exception while excel file content search");
 			throw e;
 		}
-		if(andResult && orResult.size()==0){
-			return true;
-		}else if(andResult && orResult.contains(true)){
-			return true;
+		if(CellDetail.contains(OR_SEPERATOR) && !orResult.contains(true)){
+			return false;
 		}else{
 			return andResult;
 		}
+		
+		
+		/*if(andResult && orResult.size()==0){
+			return true;
+		}else if(andResult && orResult.contains(true)){
+			return true;
+		}else if(CellDetail.contains(OR_SEPERATOR) && !orResult.contains(true)){
+			return false;
+		}else{
+			return andResult;
+		}*/
 		
 	}
 

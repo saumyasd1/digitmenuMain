@@ -75,7 +75,8 @@ public class ProductLineModel {
 											.add(Projections.property("OrderInEmailSubjectMatch"), "OrderInEmailSubjectMatch")
 											.add(Projections.property("orderInMailBody"), "orderInMailBody")
 											.add(Projections.property("orderFileNamePattern"),"orderFileNamePattern")
-												
+											.add(Projections.property("active"),"active")
+											.add(Projections.property("email"),"email")
 											.add(Projections.property("orderFileNameExtension"), "orderFileNameExtension"))
 					.setResultTransformer(
 							Transformers.aliasToBean(Partner_RBOProductLine.class));
@@ -125,7 +126,8 @@ public class ProductLineModel {
 												.add(Projections.property("OrderInEmailBodyMatch"), "OrderInEmailBodyMatch")
 												.add(Projections.property("OrderInEmailSubjectMatch"), "OrderInEmailSubjectMatch")
 												.add(Projections.property("orderInMailBody"), "orderInMailBody")
-												
+												.add(Projections.property("active"),"active")
+												.add(Projections.property("email"),"email")
 												.add(Projections.property("orderFileNamePattern"),"orderFileNamePattern")
 												.add(Projections.property("orderFileNameExtension"), "orderFileNameExtension"))
 						.setResultTransformer(

@@ -133,6 +133,7 @@ public class OrderEmailQueueServices {
 			long endTime_1 = System.nanoTime();
 			double duration_1 = (double) (endTime_1 - startTime_1)
 					/ (1000000 * 1000);
+			ProductLineBean.productLineMap.clear();
 			log.debug("Total elapsed time in seconds. for overall process--> "
 					+ duration_1 + "s");
 

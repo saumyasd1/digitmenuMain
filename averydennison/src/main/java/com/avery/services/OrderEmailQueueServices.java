@@ -24,6 +24,7 @@ public class OrderEmailQueueServices {
 
 	// /set directory path for attached files ///////////
 	public static String directory;
+	public static String email = "";
 	// public static Logger log;
 	public static Logger log;
 	static ArrayList<Object> productLinesData = new ArrayList<Object>();
@@ -43,7 +44,7 @@ public class OrderEmailQueueServices {
 	public void orderEmailSourceservice(int id, Logger _log) throws Exception {
 
 		log = _log;
-		String email = "";
+		
 		int AttachmentId = 0;
 		// int result = 0;
 		// Workbook workbook =null;
@@ -67,7 +68,6 @@ public class OrderEmailQueueServices {
 			log.debug("email source found: \"" + email + "\".");
 			// get productlines for email.
 			ProductLineBean plb = new ProductLineBean();
-			SearchCellAddress sca = new SearchCellAddress();
 			plb.setProductLinesForEmail(email);
 
 			ArrayList<Object> email_list = orderEmailQueue

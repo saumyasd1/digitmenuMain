@@ -49,6 +49,7 @@ public class ProductLineModel {
 											.add(Projections.property("attachmentFileOrderMatch"), "attachmentFileOrderMatch")
 											.add(Projections.property("attachmentFileOrderMatchLocation"), "attachmentFileOrderMatchLocation")
 											.add(Projections.property("attachmentRequired"), "attachmentRequired")
+											.add(Projections.property("attachmentFileNameExtension_1"), "attachmentFileNameExtension_1")
 											.add(Projections.property("emailBodyPartnerMatch"), "emailBodyPartnerMatch")
 											.add(Projections.property("emailBodyPartnerRequired"), "emailBodyPartnerRequired")
 											.add(Projections.property("emailBodyProductLineMatch"), "emailBodyProductLineMatch")
@@ -73,15 +74,20 @@ public class ProductLineModel {
 											.add(Projections.property("OrderInEmailBodyMatch"), "OrderInEmailBodyMatch")
 											.add(Projections.property("OrderInEmailSubjectMatch"), "OrderInEmailSubjectMatch")
 											.add(Projections.property("orderInMailBody"), "orderInMailBody")
+											.add(Projections.property("orderFileNamePattern"),"orderFileNamePattern")
+												
 											.add(Projections.property("orderFileNameExtension"), "orderFileNameExtension"))
 					.setResultTransformer(
 							Transformers.aliasToBean(Partner_RBOProductLine.class));
 			cr.add(Restrictions.eq("active", true));
 			cr.add(Restrictions.like("email", "%" + email + "%"));
+			cr.setCacheable(false);
 			rboproduclines = (ArrayList<Object>) cr.list();
-			log.debug("no result found for email match. \"" + email
-					+ "\".");
+			session.getTransaction().commit();
 			if (rboproduclines.size() == 0) {
+				log.debug("no result found for email match. \"" + email
+						+ "\".");
+				session.beginTransaction();
 				Criteria cr1 = session
 						.createCriteria(Partner_RBOProductLine.class)
 						.setProjection(
@@ -126,16 +132,25 @@ public class ProductLineModel {
 								Transformers.aliasToBean(Partner_RBOProductLine.class));
 				cr1.add(Restrictions.eq("active", true));
 				cr1.add(Restrictions.like("email", "%" + domain + "%"));
+				cr1.setCacheable(false);
 				rboproduclines = (ArrayList<Object>) cr1.list();
+				session.getTransaction().commit();
 			}
-			session.getTransaction().commit();
+			else{
+				log.debug("Result found for complete  email match. \"" + email
+						+ "\".");
+			}
+			
 		} catch (HibernateException ex) {
 			throw ex;
 		} catch (Exception e) {
 			throw e;
 		} finally {
 			if (session != null && session.isOpen()) {
-				session.disconnect();
+				//session.disconnect();
+				session.flush();
+				session.clear(); // Clearing the session object
+				session.close();
 			}
 		}
 		log.debug("return productlines.");

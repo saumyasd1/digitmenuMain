@@ -175,8 +175,12 @@ public class AdditionalFileAnalysis {
 								}
 
 							}
-							orderEmailQueue.updateOrderEmailAttachmentContent(
+							/*orderEmailQueue.updateOrderEmailAttachmentContent(
 									orderFileAttachmentId, 0, "8", "", schema_id_comment, "",
+									"AdditionalData", fileContentMatch);*/
+							
+							orderEmailQueue.updateOrderEmailAttachmentContent(
+									orderFileAttachmentId, 0, "8", "", "",schema_id_comment,
 									"AdditionalData", fileContentMatch);
 						
 						}

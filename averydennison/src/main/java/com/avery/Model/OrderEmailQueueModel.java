@@ -568,8 +568,114 @@ public class OrderEmailQueueModel implements
 		log.debug("OrderFileAttachment update successfull.");
 		return result;
 	}
-
+	
+	
 	public int updateOrderEmailAttachment(int attachmentId, int productlineId,
+			String Status, String rboMatch, String productlineMatch,
+			String comment, String contentMatch, String partnerMatch,
+			String fileType) throws Exception {
+		int result = 0;
+		Session session = null;
+		log.debug("update OrderFileAttachment on the basis of id \""
+				+ attachmentId + "\".");
+		try {
+			SessionFactory sessionFactory = HibernateUtil
+					.getSessionFactory();
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			OrderFileAttachment orderEmail = (OrderFileAttachment) session
+					.load(OrderFileAttachment.class, attachmentId);
+
+			if (productlineId != 0) {
+				Partner_RBOProductLine pline = (Partner_RBOProductLine) session
+						.load(Partner_RBOProductLine.class, productlineId);
+				pline.setId(productlineId);
+				orderEmail.setVarProductLine(pline);
+			}
+			if (!Status.isEmpty() && Status != "") {
+				orderEmail.setStatus(Status);
+			}
+			if (!productlineMatch.isEmpty() && productlineMatch != "") {
+				productlineMatch = productlineMatch.trim();
+				if (productlineMatch.endsWith(",")) {
+					productlineMatch = productlineMatch.substring(0,
+							productlineMatch.lastIndexOf(","));
+				}
+				if (productlineMatch.startsWith(",")) {
+					productlineMatch = productlineMatch.substring(productlineMatch
+							.indexOf(",") + 1);
+				}
+	
+				orderEmail.setProductLineMatch(productlineMatch);
+			}
+			if (!rboMatch.isEmpty() && rboMatch != "") {
+				if (rboMatch.endsWith(",")) {
+					rboMatch = rboMatch.substring(0, rboMatch.lastIndexOf(","));
+				}
+				if (rboMatch.startsWith(",")) {
+					rboMatch = rboMatch.substring(rboMatch.indexOf(",") + 1);
+				}
+				orderEmail.setRboMatch(rboMatch);
+			}
+			if (!partnerMatch.isEmpty() && partnerMatch != "") {
+				if (partnerMatch.endsWith(",")) {
+					partnerMatch = partnerMatch.substring(0,
+							partnerMatch.lastIndexOf(","));
+				}
+				if (partnerMatch.startsWith(",")) {
+					partnerMatch = partnerMatch
+							.substring(partnerMatch.indexOf(",") + 1);
+				}
+				orderEmail.setPartnerMatch(partnerMatch);
+			}
+			
+			orderEmail.setId(attachmentId);
+			if (!comment.isEmpty() && comment != "") {
+				comment = comment.trim();
+				if (comment.endsWith(",")) {
+					comment = comment.substring(0, comment.lastIndexOf(","));
+				}
+				if (comment.startsWith(",")) {
+					comment = comment.substring(comment.indexOf(",") + 1);
+				}
+				orderEmail.setComment(comment);
+			}
+			if (!contentMatch.isEmpty() || contentMatch != "") {
+				contentMatch = contentMatch.trim();
+				if (contentMatch.endsWith(",")) {
+					contentMatch = contentMatch.substring(0,
+							contentMatch.lastIndexOf(","));
+				}
+				if (contentMatch.startsWith(",")) {
+					contentMatch = contentMatch.substring(contentMatch
+							.indexOf(",") + 1);
+				}
+
+				orderEmail.setFileContentMatch(contentMatch);
+			}
+			if (!fileType.isEmpty() || fileType != "") {
+				fileType = fileType.trim();
+				orderEmail.setFileContentType(fileType);
+			}
+			session.persist(orderEmail);
+
+			// session.update(orderEmail);
+			result = 1;
+
+			session.getTransaction().commit();
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			if (session != null && session.isOpen()) {
+				session.disconnect();
+			}
+		}
+		log.debug("OrderFileAttachment update successfull.");
+		return result;
+	}
+
+
+	/*public int updateOrderEmailAttachment(int attachmentId, int productlineId,
 			String Status, String rboMatch, String productlineMatch,
 			String comment, String contentMatch, String partnerMatch,
 			String fileType) throws Exception {
@@ -662,7 +768,7 @@ public class OrderEmailQueueModel implements
 		}
 		log.debug("OrderFileAttachment update successfull.");
 		return result;
-	}
+	}*/
 
 	public boolean updateAllAttachment(int email_id, int productlineId,
 			String Status, String comment) throws Exception {

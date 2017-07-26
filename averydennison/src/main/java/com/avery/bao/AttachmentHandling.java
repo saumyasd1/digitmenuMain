@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -22,9 +24,20 @@ import net.lingala.zip4j.exception.ZipException;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.adeptia.indigo.services.ServiceException;
 import com.avery.EmailManager;
 import com.avery.services.EmailAttachmentService;
 import com.avery.services.EmailQueueService;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfImportedPage;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.snowtide.PDF;
+import com.snowtide.pdf.Document;
+import com.snowtide.pdf.Page;
+import com.snowtide.pdf.layout.TextUnit;
 
 public class AttachmentHandling {
 
@@ -33,7 +46,7 @@ public class AttachmentHandling {
 	public String currentFile;
 	
 	public void extractAttachment(String dir, int emailqueueid, Message message)
-			throws IOException, MessagingException {
+			throws IOException, MessagingException, ServiceException {
 
 		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
 		EmailQueueService emailQueueService = new EmailQueueService();
@@ -64,8 +77,9 @@ public class AttachmentHandling {
 						if(FilenameUtils.getExtension(attachmentFileName.trim()).equals("zip")){
 							zipFiles.clear();
 							unzip(attachmentFileName, dir, part, emailqueueid);
-						}
-						else{
+						}else if(FilenameUtils.getExtension(attachmentFileName.trim()).equals("pdf")){
+							handelRotatedPdfFile(new File(dir+File.separatorChar+attachmentFileName), part, emailqueueid);
+						}else{
 							EmailManager.log.debug("Attachment file:\""
 									+ sb.toString()
 									+ " has been written successfully at:\""
@@ -214,17 +228,17 @@ public class AttachmentHandling {
 		} catch (ZipException e) {
 			// TODO Auto-generated catch block
 			EmailManager.log
-					.error("ZipFile must be curroupted or should be missing.");
-			e.printStackTrace();
+					.error("ZipFile must be curroupted or should be missing."+e);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			EmailManager.log.error("File is missing from given location.");
-			e.printStackTrace();
+			EmailManager.log.error("File is missing from given location."+e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			EmailManager.log
-					.error("File is missing from given location which you want to do read or write opertion.");
-			e.printStackTrace();
+					.error("File is missing from given location which you want to do read or write opertion."+e);
+		} catch (Exception e) {
+			EmailManager.log
+					.error("Exception occurs while extracting ofzip file."+e);
 		} finally {
 			try {
 				if (fileInputStream != null) {
@@ -233,8 +247,7 @@ public class AttachmentHandling {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				EmailManager.log
-						.error("File is missing from given location which you want to close.");
-				e.printStackTrace();
+						.error("File is missing from given location which you want to close."+e);
 			}
 		}
 		EmailManager.log.info("End unZip of zipFile");
@@ -265,7 +278,6 @@ public class AttachmentHandling {
 				int length;
 
 				if (!fileName.endsWith(".zip")) {
-					System.out.println(fileName);
 					checkFileName(destinationDirectory,
 							FilenameUtils.getBaseName(fileName),
 							FilenameUtils.getExtension(fileName), 0,
@@ -367,5 +379,195 @@ public class AttachmentHandling {
 			return;
 		}
 	}
+	
+	/**
+	 * Method to check file whether it is rotated and return degree of rotation
+	 * @param file
+	 * @return float (Degree Of Rotation)
+	 * @author Rakesh
+	 */
+	public float checkWhetherFileRotated(File file) {
+		float degree = 0.0f;
+		Document stream = null;
+		try {
+			stream = PDF.open(file);
+			int i = stream.getPageCnt();
+			for (int j = 0; j < i; j++) {
+				List<Page> allPages = stream.getPages();
+				Iterator<Page> it = allPages.iterator();
+				while (it.hasNext()) {
+					Page p = it.next();
+					List<TextUnit> textUnits = new ArrayList<TextUnit>(
+							p.getCharacters());
+					Iterator<TextUnit> iterator = textUnits.iterator();
+					while (iterator.hasNext()) {
+						TextUnit textUnit = iterator.next();
+						if (textUnit != null) {
+							if (textUnit.getTheta() != 0) {
+								degree = textUnit.getTheta();
+								break;
+							}
+						}
+					}
+				}
+			}
+		} finally {
+			if (stream != null) {
+				try {
+					stream.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					EmailManager.log
+					.error("File is missing from given location which you want to close while check PDF is rotated."+e);
+				}
+			}
+		}
+		return degree;
+	}
+	
+	
+	/**
+	 * Method to Rotate File by -90 or 90 degree
+	 * @param file
+	 * @param degree
+	 * @return String (FileName)
+	 * @author Rakesh
+	 */
+	public String rotateFile(File file, float degree) {
+		Rectangle rect = null;
+		String strFile = file.getAbsolutePath();
+		String fileName = FilenameUtils.getFullPath(strFile)
+				+ FilenameUtils.getBaseName(strFile) + "_rotated."
+				+ FilenameUtils.getExtension(strFile);
+		com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+		PdfReader pdfReader = null;
+		PdfWriter pdfWriter = null;
+		FileOutputStream fileOutputStream = null;
+		try {
+			fileOutputStream = new FileOutputStream(fileName);
+			pdfReader = new PdfReader(strFile);
+			pdfWriter = PdfWriter.getInstance(document, fileOutputStream);
+			pdfWriter.setStrictImageSequence(false);
+			for (int i = 1; i <= pdfReader.getNumberOfPages(); i++) {
+				rect = new Rectangle(pdfReader.getPageSize(i).getWidth(),
+						pdfReader.getPageSize(i).getHeight());
+			}
+			if (rect != null) {
+				document.setPageSize(rect.rotate());
+			}
+			document.open();
+			int pageCount = pdfReader.getNumberOfPages();
+			for (int i = 1; i <= pageCount; i++) {
+				document.newPage();
+				PdfImportedPage page1 = pdfWriter.getImportedPage(pdfReader, i);
+				Image image = Image.getInstance(page1);
+				if (degree > 0) {
+					image.setRotationDegrees(-degree);
+				} else {
+					image.setRotationDegrees(degree);
+				}
+				image.setAbsolutePosition(0, 0);
+				document.add(image);
+			}
 
+			document.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			EmailManager.log
+					.error("File is missing from given location While rotating PDF."
+							+ e);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			EmailManager.log
+					.error("Error while creating instance of Image While rotating PDF."
+							+ e);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			EmailManager.log.error("Exception occurs While rotating PDF." + e);
+		} finally {
+			try {
+				if (fileOutputStream != null) {
+					fileOutputStream.close();
+				}
+				if (document != null) {
+					document.close();
+				}
+				if (pdfReader != null) {
+					pdfReader.close();
+				}
+				if (pdfWriter != null) {
+					pdfWriter.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				EmailManager.log
+						.error("File is missing from given location which you want to close while rotating PDF."
+								+ e);
+			}
+
+		}
+		return fileName;
+	}
+	
+	/**
+	 * Method to handle Rotated PDF File
+	 * @param file
+	 * @param part
+	 * @param emailqueueid
+	 * @throws ServiceException 
+	 * @author Rakesh
+	 */
+	public void handelRotatedPdfFile(File file, MimeBodyPart part, int emailqueueid) throws ServiceException {
+		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
+		EmailManager.log.debug("Attachment file:\"" + currentFile
+				+ " has been written successfully at:\""
+				+ EmailManager.getDate() + "\".");
+		float degree=checkWhetherFileRotated(file);
+		if (degree == -90.0f) {
+				String fileName = rotateFile(file, degree);
+				EmailManager.log
+						.debug("Inserting attachment details for the file:\""
+								+ fileName
+								+ "\" in the table orderfileattachment having emailqueueid:\""
+								+ emailqueueid + "\" at:\""
+								+ EmailManager.getDate() + "\".");
+				emailAttachmentService.insertIntoEmailAttachment(part,
+						FilenameUtils.getFullPathNoEndSeparator(fileName), emailqueueid,
+						FilenameUtils.getName(fileName),
+						FilenameUtils.getExtension(fileName));
+				EmailManager.log
+						.debug("Attachment details for the  file:\""
+								+ fileName
+								+ "\" in the table orderfileattachment having emailqueueid:\""
+								+ emailqueueid + "\" has been inserted at:\""
+								+ EmailManager.getDate() + "\".");
+			
+		} else {
+			if (degree != 0.0f) {
+				EmailManager.log.error("Attached PDF file is rotated with degree=\""
+								+ degree
+								+ "\" and in our current framework which isn't handled. So, please check your file.");
+			}
+			EmailManager.log
+					.debug("Inserting attachment details for the file:\""
+							+ file.getAbsolutePath()
+							+ "\" in the table orderfileattachment having emailqueueid:\""
+							+ emailqueueid + "\" at:\""
+							+ EmailManager.getDate() + "\".");
+			emailAttachmentService.insertIntoEmailAttachment(part,
+					FilenameUtils.getFullPathNoEndSeparator(file.getAbsolutePath()),
+					emailqueueid,
+					FilenameUtils.getName(file.getAbsolutePath()),
+					FilenameUtils.getExtension(file.getAbsolutePath()));
+			EmailManager.log
+					.debug("Attachment details for the  file:\""
+							+ file.getAbsolutePath()
+							+ "\" in the table orderfileattachment having emailqueueid:\""
+							+ emailqueueid + "\" has been inserted at:\""
+							+ EmailManager.getDate() + "\".");
+		}
+	}
+		
+	
+	
 }

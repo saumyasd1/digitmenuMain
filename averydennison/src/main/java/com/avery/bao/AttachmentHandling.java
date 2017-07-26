@@ -285,34 +285,40 @@ public class AttachmentHandling {
 					fileOutputStream = new FileOutputStream(currentFile);
 					while ((length = zipInputStream.read(buffer)) > 0) {
 						fileOutputStream.write(buffer, 0, length);
+						
 					}
-					EmailManager.log.debug("Attachment file:\"" + currentFile
-							+"\"containing by Zip:\""
-							+zipFileName
-							+ " has been written successfully at:\""
-							+ EmailManager.getDate() + "\".");
-					EmailManager.log
-							.debug("Inserting attachment details for the file:\""
-									+ currentFile
-									+"\"containing by Zip:\""
-									+zipFileName
-									+ "\" in the table orderfileattachment having emailqueueid:\""
-									+ emailqueueid
-									+ "\" at:\""
-									+ EmailManager.getDate() + "\".");
-					emailAttachmentService.insertIntoEmailAttachment(part,
-							destinationDirectory, emailqueueid,
-							FilenameUtils.getName(currentFile),
-							FilenameUtils.getExtension(currentFile));
-					EmailManager.log
-							.debug("Attachment details for the  file:\""
-									+ currentFile
-									+"\"containing by Zip:\""
-									+zipFileName
-									+ "\" in the table orderfileattachment having emailqueueid:\""
-									+ emailqueueid
-									+ "\" has been inserted at:\""
-									+ EmailManager.getDate() + "\".");
+					if(FilenameUtils.getExtension(currentFile).equals("pdf")){
+							handelRotatedPdfFile(new File(currentFile), part, emailqueueid);	
+					}
+					else{
+						EmailManager.log.debug("Attachment file:\"" + currentFile
+								+"\"containing by Zip:\""
+								+zipFileName
+								+ " has been written successfully at:\""
+								+ EmailManager.getDate() + "\".");
+						EmailManager.log
+								.debug("Inserting attachment details for the file:\""
+										+ currentFile
+										+"\"containing by Zip:\""
+										+zipFileName
+										+ "\" in the table orderfileattachment having emailqueueid:\""
+										+ emailqueueid
+										+ "\" at:\""
+										+ EmailManager.getDate() + "\".");
+						emailAttachmentService.insertIntoEmailAttachment(part,
+								destinationDirectory, emailqueueid,
+								FilenameUtils.getName(currentFile),
+								FilenameUtils.getExtension(currentFile));
+						EmailManager.log
+								.debug("Attachment details for the  file:\""
+										+ currentFile
+										+"\"containing by Zip:\""
+										+zipFileName
+										+ "\" in the table orderfileattachment having emailqueueid:\""
+										+ emailqueueid
+										+ "\" has been inserted at:\""
+										+ EmailManager.getDate() + "\".");
+					}
 				} else {
 					fileOutputStream = new FileOutputStream(newFile);
 					while ((length = zipInputStream.read(buffer)) > 0) {
@@ -514,10 +520,9 @@ public class AttachmentHandling {
 	 * @param file
 	 * @param part
 	 * @param emailqueueid
-	 * @throws ServiceException 
 	 * @author Rakesh
 	 */
-	public void handelRotatedPdfFile(File file, MimeBodyPart part, int emailqueueid) throws ServiceException {
+	public void handelRotatedPdfFile(File file, MimeBodyPart part, int emailqueueid){
 		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
 		EmailManager.log.debug("Attachment file:\"" + currentFile
 				+ " has been written successfully at:\""

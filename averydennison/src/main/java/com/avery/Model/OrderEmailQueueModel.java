@@ -37,6 +37,7 @@ public class OrderEmailQueueModel implements
 		String subjectPartner = "";
 		String BodyProductline = "";
 		String Source_email_subject = "";
+		Integer siteId=0 ;// added today 31-07-2017 Rajo for site filtration.
 		HashMap<String, String> emailinfo = new HashMap<String, String>();
 		Session session = null;
 		try {
@@ -69,7 +70,10 @@ public class OrderEmailQueueModel implements
 											.property("emailSubjectPartnerMatch"),
 											"emailSubjectPartnerMatch")
 									.add(Projections.property("senderEmailId"),
-											"senderEmailId"))
+											"senderEmailId")
+									.add(Projections.property("siteId"), // added today 31-07-2017 Rajo for site filtration.
+											"siteId"))
+					
 					.setResultTransformer(
 							Transformers.aliasToBean(OrderEmailQueue.class));
 
@@ -89,6 +93,7 @@ public class OrderEmailQueueModel implements
 				BodyProductline = orderEmailQueue
 						.getEmailBodyProductLineMatch();
 				Source_email_subject = orderEmailQueue.getSubject();
+				siteId=orderEmailQueue.getSiteId();// added today 31-07-2017 Rajo for site filtration.
 			}
 			emailinfo.put("source", Source_email);
 			emailinfo.put("subject", Source_email_subject);
@@ -96,6 +101,7 @@ public class OrderEmailQueueModel implements
 			emailinfo.put("subjectProductline", subjectProductline);
 			emailinfo.put("subjectPartner", subjectPartner);
 			emailinfo.put("BodyProductline", BodyProductline);
+			emailinfo.put("siteId", siteId.toString());// added today 31-07-2017 Rajo for site filtration.
 			session.getTransaction().commit();
 
 		} catch (HibernateException ex) {
@@ -983,8 +989,19 @@ public class OrderEmailQueueModel implements
 					.setResultTransformer(
 							Transformers.aliasToBean(OrderFileAttachment.class));
 			cr.add(Restrictions.eq("varOrderEmailQueue.id", orderEmailId));
-
-			OrderFileAttachment ofa = (OrderFileAttachment) cr.list().get(0);
+			// code added here
+			List<Object> identifyEmailmailAttachments = new ArrayList();
+			identifyEmailmailAttachments=cr.list();
+			OrderFileAttachment orderFileAttachment_1=null;
+			for(Object obj:identifyEmailmailAttachments){
+				 orderFileAttachment_1 = (OrderFileAttachment)obj;
+				if(orderFileAttachment_1.getFileName().contains("CompleteEmail")){
+					break;
+				}
+				
+			}
+			//OrderFileAttachment ofa = (OrderFileAttachment) cr.list().get(0);
+			OrderFileAttachment ofa = orderFileAttachment_1;
 			EmailAttachments.add(ofa);
 			session.getTransaction().commit();
 		} catch (HibernateException ex) {

@@ -36,7 +36,8 @@ public class PartnerAnalysis {
 		ArrayList<Integer> schemaIdListEmail = new ArrayList<Integer>();
 		int schemaId = 0;
 		try {
-			HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.productLineMap(OrderEmailQueueServices.email);
+			//HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.productLineMap(OrderEmailQueueServices.email);
+			HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.getProductLinesForEmail();
 			if (partner_rboinfo.size() <= 0) {
 				// /update for unrecoginzed
 				orderEmailQueue.updateOrderEmail(EmailQueueId, "4", "", "", "",
@@ -219,7 +220,8 @@ public class PartnerAnalysis {
 	public ArrayList<Integer> rboSearch(ProductLineBean plb, String filePath,
 			String FileName, ArrayList<Integer> schemaList)
 			throws Exception {
-		HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.productLineMap(OrderEmailQueueServices.email);
+		//HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.productLineMap(OrderEmailQueueServices.email);
+		HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.getProductLinesForEmail();
 		ArrayList<Integer> schemaIdListRbo = new ArrayList<Integer>();
 		Partner_RBOProductLine schemaInfo = new Partner_RBOProductLine();
 		
@@ -295,7 +297,8 @@ public class PartnerAnalysis {
 	public ArrayList<Integer> productlineSearch(ProductLineBean plb, String filePath,
 			String FileName, ArrayList<Integer> schemaList)
 			throws Exception {
-		HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.productLineMap(OrderEmailQueueServices.email);
+		//HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.productLineMap(OrderEmailQueueServices.email);
+		HashMap<Integer, Partner_RBOProductLine> partner_rboinfo = plb.getProductLinesForEmail();
 		ArrayList<Integer> schemaIdListProductLine = new ArrayList<Integer>();
 		Partner_RBOProductLine schemaInfo = new Partner_RBOProductLine();
 		

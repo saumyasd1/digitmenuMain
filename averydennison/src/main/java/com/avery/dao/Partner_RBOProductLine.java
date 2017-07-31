@@ -254,9 +254,9 @@ public class Partner_RBOProductLine {
 	Partner varPartner;
 	//@OneToOne(mappedBy = "varProductLine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	//OrderFileQueue listOrderFileQueue;
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy="varProductLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<OrderFileAttachment> listOrderFileAttachments=new ArrayList<OrderFileAttachment>();
+	//@LazyCollection(LazyCollectionOption.FALSE)
+	//@OneToMany(mappedBy="varProductLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	//List<OrderFileAttachment> listOrderFileAttachments=new ArrayList<OrderFileAttachment>();
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="varProductLine",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<OrderSystemInfo> listOrderSystemInfo=new ArrayList<OrderSystemInfo>();
@@ -279,6 +279,9 @@ public class Partner_RBOProductLine {
 	String OrderInEmailBodyMatch;
 	@Column(name = "OrderInEmailSubjectMatch",length=100)
 	String OrderInEmailSubjectMatch;
+	
+	@Column(name = "site",length=100)
+	String site;
 	
 	
 	/////////new fields finish/////////////////////////////////////////
@@ -1245,7 +1248,7 @@ public class Partner_RBOProductLine {
 	}
 
 
-	public List<OrderFileAttachment> getListOrderFileAttachments() {
+	/*public List<OrderFileAttachment> getListOrderFileAttachments() {
 		return listOrderFileAttachments;
 	}
 
@@ -1254,7 +1257,7 @@ public class Partner_RBOProductLine {
 			List<OrderFileAttachment> listOrderFileAttachments) {
 		this.listOrderFileAttachments = listOrderFileAttachments;
 	}
-
+*/
 
 	public List<OrderSystemInfo> getListOrderSystemInfo() {
 		return listOrderSystemInfo;
@@ -1404,6 +1407,18 @@ public class Partner_RBOProductLine {
 	public void setOrderInEmailSubjectMatch(String orderInEmailSubjectMatch) {
 		OrderInEmailSubjectMatch = orderInEmailSubjectMatch;
 	}
+
+
+	public String getSite() {
+		return site;
+	}
+
+
+	public void setSite(String site) {
+		this.site = site;
+	}
+	
+	
 	/////////identification 2b fields finish////////////////////////////////
 
 	

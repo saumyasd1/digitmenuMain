@@ -25,6 +25,8 @@ public class OrderEmailQueueServices {
 	// /set directory path for attached files ///////////
 	public static String directory;
 	public static String email = "";
+	public static String siteId = "";
+	
 	// public static Logger log;
 	public static Logger log;
 	static ArrayList<Object> productLinesData = new ArrayList<Object>();
@@ -64,11 +66,16 @@ public class OrderEmailQueueServices {
 				if (pair.getKey() == "source") {
 					email = (String) pair.getValue();
 				}
+				// added today 31-07-2017 Rajo for site filtration.
+				if (pair.getKey() == "siteId") { 
+					siteId = (String) pair.getValue();
+				}
+				
 			}
 			log.debug("email source found: \"" + email + "\".");
 			// get productlines for email.
 			ProductLineBean plb = new ProductLineBean();
-			plb.setProductLinesForEmail(email);
+			plb.setProductLinesForEmail(email,siteId);
 
 			ArrayList<Object> email_list = orderEmailQueue
 					.getEmailAttachments(id);

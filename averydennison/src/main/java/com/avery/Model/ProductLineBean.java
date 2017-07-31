@@ -14,9 +14,9 @@ public class ProductLineBean {
 	ArrayList<Object> productlinesList= new ArrayList<Object>();
 	public static HashMap<Integer, Partner_RBOProductLine> productLineMap =new HashMap<Integer, Partner_RBOProductLine>();
 	
-	public HashMap<Integer, Partner_RBOProductLine> productLineMap(String email) throws Exception{
+	public HashMap<Integer, Partner_RBOProductLine> productLineMap(String email,String siteId) throws Exception{
 		
-		productlinesList = plm.getPartnerRbo_productlines(email);
+		productlinesList = plm.getPartnerRbo_productlines(email,siteId);
 		Iterator<Object> iterator = productlinesList.iterator();
 		Partner_RBOProductLine schemaInfo = new Partner_RBOProductLine();
 		
@@ -39,9 +39,9 @@ public class ProductLineBean {
 		
 		return productLineMap;
 	}
-	public void setProductLinesForEmail(String email) throws Exception{
+	public void setProductLinesForEmail(String email,String siteId) throws Exception{
 		
-		productLineMap = productLineMap(email);
+		productLineMap = productLineMap(email,siteId);
 	}
 	
 	

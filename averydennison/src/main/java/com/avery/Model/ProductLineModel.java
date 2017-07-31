@@ -19,7 +19,7 @@ public class ProductLineModel {
 
 	public static Logger log = OrderEmailQueueServices.log;
 
-	public ArrayList<Object> getPartnerRbo_productlines(String email)
+	public ArrayList<Object> getPartnerRbo_productlines(String email,String siteId)
 			throws Exception {
 		ArrayList<Object> rboproduclines = new ArrayList<Object>();
 		String emailId = "";
@@ -77,10 +77,12 @@ public class ProductLineModel {
 											.add(Projections.property("orderFileNamePattern"),"orderFileNamePattern")
 											.add(Projections.property("active"),"active")
 											.add(Projections.property("email"),"email")
+											.add(Projections.property("site"),"site")
 											.add(Projections.property("orderFileNameExtension"), "orderFileNameExtension"))
 					.setResultTransformer(
 							Transformers.aliasToBean(Partner_RBOProductLine.class));
 			cr.add(Restrictions.eq("active", true));
+			cr.add(Restrictions.eq("site", siteId));
 			cr.add(Restrictions.like("email", "%" + email + "%"));
 			cr.setCacheable(false);
 			rboproduclines = (ArrayList<Object>) cr.list();
@@ -128,11 +130,13 @@ public class ProductLineModel {
 												.add(Projections.property("orderInMailBody"), "orderInMailBody")
 												.add(Projections.property("active"),"active")
 												.add(Projections.property("email"),"email")
+												.add(Projections.property("site"),"site")
 												.add(Projections.property("orderFileNamePattern"),"orderFileNamePattern")
 												.add(Projections.property("orderFileNameExtension"), "orderFileNameExtension"))
 						.setResultTransformer(
 								Transformers.aliasToBean(Partner_RBOProductLine.class));
 				cr1.add(Restrictions.eq("active", true));
+				cr1.add(Restrictions.eq("site", siteId));
 				cr1.add(Restrictions.like("email", "%" + domain + "%"));
 				cr1.setCacheable(false);
 				rboproduclines = (ArrayList<Object>) cr1.list();

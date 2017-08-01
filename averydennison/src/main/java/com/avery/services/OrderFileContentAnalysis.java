@@ -80,8 +80,10 @@ public class OrderFileContentAnalysis {
 						// /check file name
 						//String res = FileNameMatch(orderFileName, orderFileExt,
 						//		schemaInfo.getFileOrderMatch());
+						//String res = FileNameMatch(orderFileName, orderFileExt,
+								//schemaInfo.getOrderFileNamePattern());
 						String res = FileNameMatch(orderFileName, orderFileExt,
-								schemaInfo.getOrderFileNamePattern());
+								schemaInfo.getOrderFileNamePattern(),schemaInfo.getOrderFileNameExtension());
 						if (!res.isEmpty() || res != "") {
 							if (fileContentMatch == "") {
 								fileContentMatch = schemaInfo
@@ -279,6 +281,8 @@ public class OrderFileContentAnalysis {
 				if (MatchString.contains("|")) {
 					String[] fileNamePattrens = MatchString.split("\\|");
 					for (String fileNamePattren : fileNamePattrens) {
+						//String orderFileExt = FilenameUtils.getExtension(fileName);
+						//String orderFileName = FilenameUtils.getBaseName(fileName);
 						String[] fileNameMatch = fileNamePattren.split("\\.");
 						String fileNameP = fileNameMatch[0].trim();
 						String fileExtP = fileNameMatch[1].trim();
@@ -305,5 +309,52 @@ public class OrderFileContentAnalysis {
 		return result;
 	}
 
+	/**
+	 * @param FileName
+	 * @param FileExt
+	 * @param MatchString
+	 * @return
+	 * @throws Exception
+	 */
+	public String FileNameMatch(String FileName, String FileExt,
+			String MatchString, String extTypes) throws Exception {
+		log.debug("Processing attachment identification from file name.");
+		String result = "";
+		try {
+			if (MatchString!=null && !MatchString.isEmpty()) {
+				if(extTypes!=null && !extTypes.isEmpty()){
+					if (MatchString.contains("Value")) {
+						String[] MatchStringArr = MatchString.split(":");
+						String keyValue = MatchStringArr[1].trim();
+					//if (MatchString.contains("|")) {
+						String[] fileNamePattrens = keyValue.split("\\|");
+						for (String fileNameMatcher : fileNamePattrens) {
+							
+							//String fileNameP = FilenameUtils.getExtension(FileName);
+							//String fileExtP = FilenameUtils.getBaseName(FileName);
+							
+							//if (fileNameMatcher.contains(fileNameP)
+								if (FileName.contains(fileNameMatcher)
+									&& extTypes.contains(FileExt)) {
+								result = fileNameMatcher;
+								log.debug("file name match order_file_name   \""
+										+ FileName + "\".");
+							} else {
+								log.debug("file name not match with order file name  \""
+										+ FileName + "\".");
+							}
+						}
+					}
+				}
+				
+			} else {
+				log.debug("FileOrderMatch is empty.");
+			}
+		} catch (Exception e) {
+			log.error("Exception while match file Name.");
+			throw e;
+		}
+		return result;
+	}
 	
 }

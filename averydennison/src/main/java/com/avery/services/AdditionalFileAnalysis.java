@@ -75,7 +75,11 @@ public class AdditionalFileAnalysis {
 								
 								String res = ofca.FileNameMatch(orderFileName,
 										orderFileExt,
-										produclineData.getAttachmentFileOrderMatch());
+										produclineData.getAttachmentFileOrderMatch(),produclineData.getAttachmentFileNameExtension_1());
+								
+								//String res = ofca.FileNameMatch(orderFileName,
+										//orderFileExt,
+										//produclineData.getAttachmentFileOrderMatch());
 								if (res!=null && !res.isEmpty() ) {
 									schemaId.add(produclineData.getId());
 									if (fileContentMatch == "") {

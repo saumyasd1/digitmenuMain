@@ -37,9 +37,10 @@ public interface SchemaInterface {
 	 * @param comment
 	 * @param fileType
 	 * @return boolean
+	 * @throws ServiceException 
 	 * @author Rakesh
 	 */
-	public abstract boolean verifyComment(String comment, String fileType);
+	public abstract boolean verifyComment(String comment, String fileType) throws ServiceException;
 	
 	
 	/**
@@ -101,14 +102,7 @@ public interface SchemaInterface {
 	 */
 	public abstract String getElementNameUsingRegex(String originalName);
 	 
-	/**
-	 * Method to add elementName and originalName in comment
-	 * @param comment
-	 * @param cell
-	 * @return String
-	 * @author Rakesh
-	 */
-	public abstract String modifyComment(String comment, Cell cell);
+
 	 
 	/**
 	 * Method to generate XSD for key-values
@@ -137,8 +131,9 @@ public interface SchemaInterface {
 	 * @param comment
 	 * @param fileType
 	 * @param cell
+	 * @throws ServiceException 
 	 * @author Rakesh
 	 */
-	public abstract void generateMapFromComment(String comment,String fileType, Cell cell);
+	public abstract void generateMapFromComment(String comment,String fileType, Cell cell) throws ServiceException;
 	 
 }

@@ -41,9 +41,10 @@ public class AdvPDFSchemaAutomation extends SchemaAutomation{
 	
 	/**
 	 * Method to generate CommentMap and typeMap
+	 * @throws ServiceException 
 	 * @author Rakesh
 	 */
-	public void readComment(){
+	public void readComment() throws ServiceException{
 		log.debug("Start method name=\"readComment\"");
 		 for (Annotation a : document.getAllAnnotations()) {
 		        if (a.getTypeCd().equals("/Highlight")) {

@@ -7,9 +7,16 @@ import java.util.IllegalFormatException;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.format.CellDateFormatter;
+import org.apache.poi.ss.format.CellFormat;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.FormulaError;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -17,6 +24,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.adeptia.indigo.logging.Logger;
 import com.adeptia.indigo.services.ServiceException;
+import com.adeptia.indigo.utils.IndigoException;
 import com.automation.Utility.SchemaAutomation;
 
 
@@ -114,29 +122,34 @@ public class AdvExcelSchemaAutomation extends SchemaAutomation{
 	public void readComment() throws ServiceException{
 		log.debug("Start method name=\"readComment\"");
 		if (sheetName == null || sheetName.trim().isEmpty()) {
-			log.error("Error while reading SchemaDefinationSheetName");
-			throw new ServiceException("Error while reading SchemaDefinationSheetName");
+			log.error("Error while reading SchemaDefinationSheetName in global Comment.");
+			throw new ServiceException("Error while reading SchemaDefinationSheetName in global Comment.");
 		}else {
 		Sheet sheet=workbook.getSheet(sheetName);
-		for (int j = 0; j <= sheet.getLastRowNum(); j++) {
-			Row rowValue = sheet.getRow(j);
-			if (rowValue != null) {
-				for (int k = 0; k <= rowValue.getLastCellNum(); k++) {
-					Cell cell = rowValue.getCell(k);
-					if (cell != null) {
-						if (cell.getCellComment() != null) {
-							String comment=getComment(cell);
-							if(verifyComment(comment, fileType)){
-								generateMapFromComment(comment, fileType, cell);
-							}else{
-								log.error("Comment at cellRefernce :\""+new CellReference(cell.getRowIndex(), cell.getColumnIndex())+"\" isn't valid.");
+		if(sheet !=null){
+			for (int j = 0; j <= sheet.getLastRowNum(); j++) {
+				Row rowValue = sheet.getRow(j);
+				if (rowValue != null) {
+					for (int k = 0; k <= rowValue.getLastCellNum(); k++) {
+						Cell cell = rowValue.getCell(k);
+						if (cell != null) {
+							if (cell.getCellComment() != null) {
+								String comment=getComment(cell);
+								if(verifyComment(comment, fileType)){
+									generateMapFromComment(comment, fileType, cell);
+								}else{
+									log.error("Comment at cellRefernce :\""+new CellReference(cell.getRowIndex(), cell.getColumnIndex())+"\" isn't valid.");
+								}
 							}
+							//reading cell comment end
 						}
-						//reading cell comment end
-					}
-				}//end of for loop for column count
-			}
-		}//end of for loop for row count
+					}//end of for loop for column count
+				}
+			}//end of for loop for row count
+		}else{
+			log.error("SchemaDefinationSheetName in global Comment isn't proper.");
+			throw new ServiceException("SchemaDefinationSheetName in global Comment isn't proper.");
+		}
 		}
 		log.debug("End method name=\"readComment\"");
 	}
@@ -152,19 +165,23 @@ public class AdvExcelSchemaAutomation extends SchemaAutomation{
 
 		log.debug("Start method name=\"getSchemaDefiniation\"");
 			int noOfSheets = workbook.getNumberOfSheets();
+			boolean flag=false;
 			for (int i = 0; i < noOfSheets; i++) {
 				boolean isSheetHidden = workbook.isSheetHidden(i);
 				if (!isSheetHidden) {
 					Sheet sheet = workbook.getSheetAt(i);
 					String name = sheet.getSheetName();
 					if (name != null && name.equals(globalSheetName)) {
+						flag=true;
 						CellReference cellReference = getCellPositionFromSchemaDefinition(sheet);
 						if (cellReference == null) {
 							log.error("Schema Definition Sheet doesn't have any comment.");
+							throw new ServiceException("Schema Definition Sheet doesn't have any comment.");
 						} else {
 							Cell cell = getCellFromCellReference(cellReference, sheet);
 							if (cell == null || cell.getCellComment() == null) {
 								log.error("Cell Position doesn't have any comment.");
+								throw new ServiceException("Cell Position doesn't have any comment.");
 							} else {
 								String comment = getComment(cell);
 								if (comment != null && verifyComment(comment,fileType)) {
@@ -176,6 +193,8 @@ public class AdvExcelSchemaAutomation extends SchemaAutomation{
 						}
 					}
 				}
+			}if(!flag){
+				throw new ServiceException("Schema Definition sheet isn't present in workbook.");
 			}
 			log.debug("End method name=\"getSchemaDefiniation\"");
 	}
@@ -395,17 +414,103 @@ public class AdvExcelSchemaAutomation extends SchemaAutomation{
 			} catch (Exception e) {
 				log.error("Error while generating XSD." + e.getMessage(), e);
 				throw new ServiceException("Error while generating XSD."
-						+ e.getMessage(), e);
+						, e);
 
 			}
 		}
 	}
 
+	/**
+	 * Method to add elementName and originalName in comment
+	 * @param comment
+	 * @param cell
+	 * @return String
+	 * @throws ServiceException 
+	 */
+	public String modifyComment(String comment, Cell cell) throws ServiceException{
+		log.debug("Start method name=\"modifyComment\"");
+		String originalValue=getCellValue(cell).replaceAll("\n", " ");
+		/*if(!comment.contains("elementName")){
+			String elementName=getElementNameUsingRegex(originalValue);
+			comment=comment.trim()+"\nelementName="+elementName;
+		}*/
+		log.debug("End method name=\"modifyComment\"");
+		return comment+"\noriginalName="+originalValue;
+	}
+	
+	
+	/**
+	 * Method to get cell value
+	 * @param currentCell
+	 * @return String
+	 * @throws ServiceException 
+	 */
+	public String getCellValue(Cell currentCell) throws ServiceException {
+		String value = null;
+		DataFormatter dataFormatter=new DataFormatter();
+		try {
+			if ((currentCell).getCellType() != Cell.CELL_TYPE_FORMULA) {
+				value = dataFormatter.formatCellValue(currentCell);
+				if (currentCell.getCellType() == Cell.CELL_TYPE_NUMERIC
+						&& currentCell.getCellStyle().getDataFormatString() != null
+						&& currentCell.getCellStyle().getDataFormatString()
+								.equalsIgnoreCase("yyyy/m/d\\ AM/PM\\ hh:mm")) {
+					String dateFormat = currentCell.getCellStyle()
+							.getDataFormatString();
+					value = new CellDateFormatter(dateFormat)
+							.format(currentCell.getDateCellValue());
+				}
+			} else {
+				FormulaEvaluator evaluator = workbook.getCreationHelper()
+						.createFormulaEvaluator();
+				CellValue cellValue = evaluator.evaluate(currentCell);
+				switch (cellValue.getCellType()) {
+				case Cell.CELL_TYPE_BOOLEAN:
+					value = Boolean.toString(cellValue.getBooleanValue());
+					break;
+				case Cell.CELL_TYPE_NUMERIC:
+					value = Double.toString(cellValue.getNumberValue());
+					if (currentCell.getCellStyle().getDataFormatString() != null
+							&& currentCell.getCellStyle().getDataFormatString()
+									.equals("\"$\"#,##0.00")) {
+						value = CellFormat.getInstance(
+								currentCell.getCellStyle()
+										.getDataFormatString()).apply(
+								currentCell).text;
+					}
+					if (HSSFDateUtil.isCellDateFormatted(currentCell))
+						value = dataFormatter.formatCellValue(currentCell,
+								evaluator);
+					break;
+				case Cell.CELL_TYPE_STRING:
+					value = cellValue.getStringValue();
+					break;
+				case Cell.CELL_TYPE_BLANK:
+					break;
+				case Cell.CELL_TYPE_ERROR: {
+					try {
+						byte errorCode = currentCell.getErrorCellValue();
+						FormulaError formulaError = FormulaError
+								.forInt(errorCode);
+						value = formulaError.getString();
+					} catch (RuntimeException e) {
+						throw e;
+					}
+				}
+					break;
+				}
+			}
+		} catch (Exception e) {
+			throw new ServiceException("Error while getting value from Cell.");
+		}
+		return value;
+	}
+	
 	/*public static void main(String[] args) throws IndigoException, ServiceException {
 		//String file = "D:\\SchemaAutomationTest\\KumarAnjan\\GAPissue7_commentFile.xlsx";
 		//String file = "D:\\SchemaAutomationTest\\Anubhav\\test\\new gap.xls";
-		String file = "D:\\SchemaAutomationTest\\Phase2B\\JIRA_ID_AOC_529_WI_13\\UA Logo Order form for AOC(update on 2017-4-6).xls";
-		//log.debug("In console");
+		String file = "C:\\Users\\Rakesh\\Downloads\\3210023766 SW62-W.xls";
+		log.debug("In console");
 		new AdvExcelSchemaAutomation().generateSchemaXSD(file);
 		System.out.println("End of XSD creations..");
 	}*/

@@ -24,8 +24,10 @@ import com.adeptia.indigo.logging.Logger;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.xmlbeans.impl.common.XMLChar;
 
 import com.adeptia.indigo.services.ServiceException;
+import com.automation.schema.AdvExcel.AdvExcelSchemaAutomation;
 
 
 /**
@@ -93,12 +95,12 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 	 * @return boolean
 	 * @author Rakesh
 	 */
-	public boolean verifyComment(String comment, String fileType) {
+	public boolean verifyComment(String comment, String fileType) throws ServiceException{
 
 		log.debug("Start method name=\"verifyComment\"");
 		if (!comment.startsWith("Sheets") && !comment.startsWith("sectionName")) {
-			log.info("Comment isn't valid !");
-			return false;
+			log.info("Comment isn't valid because it doesn't start with sectionName or Sheet in comment=\""+comment+"\".");
+			throw new ServiceException("Comment isn't valid because it doesn't start with sectionName or Sheet in comment=\""+comment+"\".");
 		} else {
 			log.info("Start to verify the Comment =\"" + comment + "\"");
 			if (comment.contains(commentLineSeparator) || comment.contains(commentLineSeparator1)) {
@@ -115,19 +117,26 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 						if(count == 1){
 							String elementArray[] = commentArray[i].split(commentValueSeparator);
 							if (!compareCommentValue(elementArray[0], fileType)) {
-								log.info("Comment isn't valid !");
-								log.debug("End method name=\"verifyComment\"");
-								return false;
+								log.info("Comment isn't valid at value=\""+elementArray[0]+"\" from comment=\""+comment+"\".");
+								throw new ServiceException("Comment isn't valid at value=\""+elementArray[0]+"\" from comment=\""+comment+"\".");
 							}
 						}else{
-							log.info("comment line contains multiple equal sign(=) and comment line=\""+commentArray[i]+"\"");
-							return false;
+							log.info("comment line contains multiple equal sign(=) and comment line=\""+commentArray[i]+"\" from comment=\""+comment+"\".");
+							throw new ServiceException("comment line contains multiple equal sign(=) and comment line=\""+commentArray[i]+"\" from comment=\""+comment+"\".");
 						}
 						}
-					}else{
-						if(!commentArray[i].trim().isEmpty()){
-							return false;
-						}
+					}
+				}
+				if(!comment.contains("Sheets")){
+					String elementValue=getValueFromComment(comment, "elementName").trim();
+					String sectionValue=getValueFromComment(comment, "sectionName").trim();
+					if(!XMLChar.isValidName(elementValue)){
+						log.info("elementName=\""+elementValue+"\" is not valid from comment=\""+comment+"\".");
+						throw new ServiceException("elementName=\""+elementValue+"\" is not valid from comment=\""+comment+"\".");
+					}
+					else if(!XMLChar.isValidName(sectionValue)){
+						log.info("sectionName=\""+sectionValue+"\" is not valid from comment=\""+comment+"\".");
+						throw new ServiceException("sectionName=\""+sectionValue+"\" is not valid from comment=\""+comment+"\".");
 					}
 				}
 				log.info("End to verify the Comment");
@@ -136,9 +145,8 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 			} else {
 				log.info("End to verify the Comment");
 				log.debug("End method name=\"verifyComment\"");
-				return false;
+				throw new ServiceException("comment isn't valid because doesn't contains new line Separator.");
 			}
-
 		}
 	}
 	
@@ -443,6 +451,24 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 				}
 			}
 			
+			if(comment.contains("isSingleCell")){
+				boolean isSingleCell = Boolean.parseBoolean(getValueFromComment(comment,"isSingleCell"));
+				if (isSingleCell) {
+					sb.append("<isSingleCell><![CDATA["
+							+ isSingleCell
+							+ "]]></isSingleCell>\n");
+				}
+			}
+			
+			if (comment.contains("fixedCellRange")) {
+				String fixedCellRange = getValueFromComment(comment,"fixedCellRange");
+				if (fixedCellRange != null) {
+					sb.append("<fixedCellRange><![CDATA["
+							+ fixedCellRange
+							+ "]]></fixedCellRange>\n");
+				}
+			}
+			
 			sb.append(FormatTag+DataModeTag+APPINFOFooter+ElementFooter);
 		}
 		log.debug("Start method name=\"generateElementXSD\"");
@@ -461,7 +487,7 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 			log.error("Either StringBuffer of comment is null or StringBuffer is empty!");
 			throw new ServiceException("Error in StringBuffer while creating XSD.");
 		} else {
-			inputFile = inputFile.substring(0, inputFile.length()-FilenameUtils.getExtension(inputFile).length()) + "xsd";
+			inputFile = inputFile.substring(0, inputFile.length()-FilenameUtils.getExtension(inputFile).length()) + ".xsd";
 			log.info("Output file along with it's location =\"" + inputFile
 					+ "\"");
 			try {
@@ -514,23 +540,6 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 	}
 	
 
-	/**
-	 * Method to add elementName and originalName in comment
-	 * @param comment
-	 * @param cell
-	 * @return String
-	 * @author Rakesh
-	 */
-	public String modifyComment(String comment, Cell cell){
-		log.debug("Start method name=\"modifyComment\"");
-		String originalValue=cell.getStringCellValue().replaceAll("\n", " ");
-		/*if(!comment.contains("elementName")){
-			String elementName=getElementNameUsingRegex(originalValue);
-			comment=comment.trim()+"\nelementName="+elementName;
-		}*/
-		log.debug("End method name=\"modifyComment\"");
-		return comment+"\noriginalName="+originalValue;
-	}
 	
 	
 	/**
@@ -630,7 +639,7 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 	 * @param fileType
 	 * @author Rakesh
 	 */
-	public void generateMapFromComment(String comment,String fileType, Cell cell){
+	public void generateMapFromComment(String comment,String fileType, Cell cell) throws ServiceException{
 		log.debug("Start method name=\"generateMapFromComment\"");
 		String sectionName=getValueFromComment(comment, "sectionName");
 		String sectionType=getValueFromComment(comment, "sectionType");
@@ -641,8 +650,8 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 							String keyName = entry.getKey();
 							if(keyName.equals(sectionName)){
 								if(fileType.equals("EXCEL")){
-									if(!comment.contains("originalName")){
-										comment=modifyComment(comment, cell);
+									if(!comment.contains("originalName") && !comment.contains("fixedCellRange")){
+										comment=new AdvExcelSchemaAutomation().modifyComment(comment, cell);
 									}
 								}
 								ArrayList<String> updateList=entry.getValue();
@@ -654,8 +663,8 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 						sectionNameList.add(sectionName);
 						typeMap.put(sectionName, sectionType);
 						if(fileType.equals("EXCEL")){
-							if(!comment.contains("originalName")){
-								comment=modifyComment(comment, cell);
+							if(!comment.contains("originalName") && !comment.contains("fixedCellRange")){
+								comment=new AdvExcelSchemaAutomation().modifyComment(comment, cell);
 							}
 						}
 						ArrayList<String> list = new ArrayList<String>();
@@ -669,8 +678,8 @@ public abstract class SchemaAutomation implements AdvSchemaConstants , SchemaInt
 					typeMap.put(sectionName, sectionType);
 				}
 				if(fileType.equals("EXCEL")){
-					if(!comment.contains("originalName")){
-						comment=modifyComment(comment, cell);
+					if(!comment.contains("originalName") && !comment.contains("fixedCellRange")){
+						comment=new AdvExcelSchemaAutomation().modifyComment(comment, cell);
 					}
 				}
 				ArrayList<String> list = new ArrayList<String>();

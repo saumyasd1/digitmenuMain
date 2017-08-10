@@ -35,7 +35,7 @@ public interface AdvSchemaConstants {
 	String regexPatternOfElement = "[^a-z A-Z]";
 	String commentFieldsForExcel = "sectionOccurrenceLevel|Sheets|allowDiscontinousOrder|allowLessFields|processAllSheets|trimSpacesToReadFieldName"
 			+ "|allowIgnoreCase|isRegexInSheet|SchemaDefinitionSheetName|sectionType|sectionName|elementName|occurrenceLevel|relativeRowRanges"
-			+ "|relativeColumnRanges|ignoreBlankRows|uniqueFieldNames|endTokenIdentifier|primaryFieldNames|originalName|ignoreField";
+			+ "|relativeColumnRanges|ignoreBlankRows|uniqueFieldNames|endTokenIdentifier|primaryFieldNames|originalName|ignoreField|isSingleCell|fixedCellRange";
 	
 	String commentFieldsForPDF = "sectionName|sectionType|sectionIdentifier|nextRecordIdentifier|nextRecordValidationString|sectionEndTokenOperator"
 			+ "|elementName|elementType|originalName|includeIdentifier|valueMatchOpertaor|numOfSectionPart|whichSectionPart|"

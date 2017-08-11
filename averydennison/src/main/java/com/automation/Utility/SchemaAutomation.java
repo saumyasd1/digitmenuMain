@@ -20,11 +20,14 @@ import java.util.regex.Pattern;
 
 
 
+
 import com.adeptia.indigo.logging.Logger;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.xmlbeans.impl.common.XMLChar;
+
+
+import org.apache.xerces.util.XMLChar;
 
 import com.adeptia.indigo.services.ServiceException;
 import com.automation.schema.AdvExcel.AdvExcelSchemaAutomation;

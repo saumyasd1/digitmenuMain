@@ -346,14 +346,18 @@ public class DataConversionUtils {
 		for (int i = 0; i < count; i++) {
 			if (!mp1.getBodyPart(i).getContentType().toLowerCase()
 					.contains("image/png")) {
-				Multipart mp2 = (Multipart) mp1.getBodyPart(i).getContent();
-				int count2 = mp2.getCount();
-				for (int ii = 0; ii < count2; ii++) {
-					if (mp2.getBodyPart(ii).getContentType().toLowerCase()
-							.contains("text/html")) {
-						exportImages = true;
-						contentFinal = mp2.getBodyPart(ii).getContent()
-								.toString();
+				
+				if(mp1.getBodyPart(i).getContent() instanceof Multipart){
+				
+					Multipart mp2 = (Multipart) mp1.getBodyPart(i).getContent();
+					int count2 = mp2.getCount();
+					for (int ii = 0; ii < count2; ii++) {
+						if (mp2.getBodyPart(ii).getContentType().toLowerCase()
+								.contains("text/html")) {
+							exportImages = true;
+							contentFinal = mp2.getBodyPart(ii).getContent()
+									.toString();
+						}
 					}
 				}
 			}

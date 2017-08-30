@@ -345,7 +345,7 @@ public class DataConversionUtils {
 		
 		for (int i = 0; i < count; i++) {
 			if (!mp1.getBodyPart(i).getContentType().toLowerCase()
-					.contains("image/png")) {
+					.contains("image")) {
 				
 				if(mp1.getBodyPart(i).getContent() instanceof Multipart){
 				
@@ -544,7 +544,7 @@ public class DataConversionUtils {
 		InputStream input = null;
 		FileOutputStream fos = null;
 		try {
-			if (contentType.toLowerCase().contains("image/png")) {
+			if (contentType.toLowerCase().contains("image")) {
 				String imageName = "";
 				Enumeration eNum = part0.getAllHeaders();
 				while ((eNum != null) && (eNum.hasMoreElements())) {

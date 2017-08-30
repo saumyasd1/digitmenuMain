@@ -77,9 +77,12 @@ public class AttachmentHandling {
 						if(FilenameUtils.getExtension(attachmentFileName.trim()).equals("zip")){
 							zipFiles.clear();
 							unzip(attachmentFileName, dir, part, emailqueueid);
-						}else if(FilenameUtils.getExtension(attachmentFileName.trim()).equals("pdf")){
+						}
+						//#AOC-438[Revert back Support of Rotataed PDF]
+						/*else if(FilenameUtils.getExtension(attachmentFileName.trim()).equals("pdf")){
 							handelRotatedPdfFile(new File(dir+File.separatorChar+attachmentFileName), part, emailqueueid);
-						}else{
+						}*/
+						else{
 							EmailManager.log.debug("Attachment file:\""
 									+ sb.toString()
 									+ " has been written successfully at:\""
@@ -287,10 +290,11 @@ public class AttachmentHandling {
 						fileOutputStream.write(buffer, 0, length);
 						
 					}
-					if(FilenameUtils.getExtension(currentFile).equals("pdf")){
+					//#AOC-438[Revert back Support of Rotataed PDF]
+					/*if(FilenameUtils.getExtension(currentFile).equals("pdf")){
 							handelRotatedPdfFile(new File(currentFile), part, emailqueueid);	
 					}
-					else{
+					else{*/
 						EmailManager.log.debug("Attachment file:\"" + currentFile
 								+"\"containing by Zip:\""
 								+zipFileName
@@ -318,7 +322,8 @@ public class AttachmentHandling {
 										+ emailqueueid
 										+ "\" has been inserted at:\""
 										+ EmailManager.getDate() + "\".");
-					}
+						//#AOC-438[Revert back Support of Rotataed PDF]
+						//}
 				} else {
 					fileOutputStream = new FileOutputStream(newFile);
 					while ((length = zipInputStream.read(buffer)) > 0) {

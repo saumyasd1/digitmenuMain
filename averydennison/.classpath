@@ -12,23 +12,53 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_45">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/New folder (6)/aspose.pdf-11.7.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/New folder (6)/aspose-cells-8.6.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/New folder (6)/aspose-email-16.11.0-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/New folder (6)/aspose-email-16.11.0-jdk16.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/New folder (6)/aspose-words-16.10.0-jdk16.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/New folder (6)/bcprov-jdk15on-1.52.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/New folder (6)/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/New folder (6)/mysql-connector-java-5.1.39-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/AdeptiaSuite_BackendChange/AdeptiaSuite-6.5/AdeptiaServer/ServerKernel/web/libs/BPMServer.jar"/>
+	<classpathentry kind="lib" path="D:/c3p0-0.9.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="D:/hibernate-c3p0-3.6.0.Final.jar"/>
+	<classpathentry kind="lib" path="D:/hibernate-c3p0-3.6.6.Final.jar"/>
+	<classpathentry kind="lib" path="D:/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/aspose-cells-8.7.1.4.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/commons-collections-3.2.2.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/curvesapi-1.04.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/custom-advanceexcel-1.0.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/EDI.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/hibernate-commons-annotations-3.2.0.Final.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/hibernate-core-3.6.6.Final.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/hibernate-entitymanager-3.6.6.Final.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/iText-2.1.5.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/itextpdf-5.5.10.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/javassist-3.15.0-GA.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/javax.mail.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/jboss-logging-3.1.0.GA.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/mysql-connector-java-5.1.39-bin.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/poi-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/poi-excelant-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/poi-ooxml-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/poi-ooxml-schemas-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/poi-scratchpad-3.10.1-20140818.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/SAPAdapter.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/slf4j-api-1.6.4.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/slf4j-ext-1.6.4.jar"/>
+	<classpathentry kind="lib" path="E:/AveryMainJar/slf4j-log4j12-1.6.4.jar"/>
+	<classpathentry kind="lib" path="D:/UnZipHandling/zip4j-1.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Rakesh/Desktop/vishalSir/LatestPdfxStream/PDFxStream.Java-3.4.1-beta7/lib/PDFxStream.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/AdeptiaSuite_BackendChange/AdeptiaSuite-6.5/AdeptiaServer/ServerKernel/web/libs/xercesImpl-2.7.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

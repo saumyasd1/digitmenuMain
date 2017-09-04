@@ -28,7 +28,8 @@ public class OrderEmailQueueServices {
 	public static String siteId = "";
 	
 	// public static Logger log;
-	public static Logger log;
+	//code added by Rajo for logging related issue in cluster environment due to null value.
+	public static Logger log=Logger.getLogger(OrderEmailQueueServices.class.getName());
 	static ArrayList<Object> productLinesData = new ArrayList<Object>();
 	public static String AND_SEPERATOR = "_\\&\\&_";
 	public static String OR_SEPERATOR = "_\\|\\|_";

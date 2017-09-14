@@ -162,32 +162,7 @@ public class AdditionalFileAnalysis {
 
 							}
 						}
-						fileContentMatch = fs.removeDup(fileContentMatch);
-						if (schemaId.size() == 1) {
-							
-							orderEmailQueue.updateOrderEmailAttachmentContent(
-									orderFileAttachmentId, schemaId.iterator().next(), "8", "", "", "",
-									"AdditionalData", fileContentMatch);
-							
-						}else if(schemaId.size() > 1){
-							String schema_id_comment="";
-							for (Integer s : schemaId) {
-								if (schema_id_comment == "") {
-									schema_id_comment = "" + s;
-								} else {
-									schema_id_comment = schema_id_comment + "," + s;
-								}
-
-							}
-							/*orderEmailQueue.updateOrderEmailAttachmentContent(
-									orderFileAttachmentId, 0, "8", "", schema_id_comment, "",
-									"AdditionalData", fileContentMatch);*/
-							
-							orderEmailQueue.updateOrderEmailAttachmentContent(
-									orderFileAttachmentId, 0, "8", "", "",schema_id_comment,
-									"AdditionalData", fileContentMatch);
 						
-						}
 					} else {
 						log.debug("attachment required or attachment file match required is false for productline id \""
 								+ productlineId + "\".");
@@ -195,6 +170,39 @@ public class AdditionalFileAnalysis {
 				//}
 
 			}
+			
+			
+			// here we have add to show it on drop down for additional file dated 14-09-2017..
+			
+			fileContentMatch = fs.removeDup(fileContentMatch);
+			if (schemaId.size() == 1) {
+				
+				orderEmailQueue.updateOrderEmailAttachmentContent(
+						orderFileAttachmentId, schemaId.iterator().next(), "8", "", "", "",
+						"AdditionalData", fileContentMatch);
+				
+			}else if(schemaId.size() > 1){
+				String schema_id_comment="";
+				for (Integer s : schemaId) {
+					if (schema_id_comment == "") {
+						schema_id_comment = "" + s;
+					} else {
+						schema_id_comment = schema_id_comment + "," + s;
+					}
+
+				}
+				/*orderEmailQueue.updateOrderEmailAttachmentContent(
+						orderFileAttachmentId, 0, "8", "", schema_id_comment, "",
+						"AdditionalData", fileContentMatch);*/
+				
+				orderEmailQueue.updateOrderEmailAttachmentContent(
+						orderFileAttachmentId, 0, "8", "", "",schema_id_comment,
+						"AdditionalData", fileContentMatch);
+			
+			}
+			
+			//end of code
+			
 		} catch (Exception e) {
 			log.error("Exception while additional file analysis.");
 			throw e;

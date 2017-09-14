@@ -16,14 +16,14 @@ import com.avery.services.AcknowledgementService;
 
 public class SendingAcknowledgement {
 
-	public void sendAcknowledgement(int emailqueueid) throws MessagingException {
+	public void sendAcknowledgement(int emailqueueid, EmailManager emailManager) throws MessagingException {
 		String to = "";// get the email address by calling a method
 		AcknowledgementService acknowledgementService = new AcknowledgementService();
 		to = acknowledgementService.getAcknowledgementEmailID(emailqueueid);
-		String host = EmailManager.smtpHost;
-		int port = EmailManager.smtpPort;
-		final String username = EmailManager.username;
-		final String password = EmailManager.password;
+		String host = emailManager.smtpHost;
+		int port = emailManager.smtpPort;
+		final String username = emailManager.username;
+		final String password = emailManager.password;
 
 		String subject = "Order Acknowledgement";
 		String body = "This is a system generated Email, please do not reply.\n\n"

@@ -45,7 +45,7 @@ public class AttachmentHandling {
 	private HashSet<String> zipFiles=new HashSet<String>();
 	public String currentFile;
 	
-	public void extractAttachment(String dir, int emailqueueid, Message message)
+	public void extractAttachment(String dir, int emailqueueid, Message message, EmailManager emailManager)
 			throws IOException, MessagingException, ServiceException {
 
 		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
@@ -124,7 +124,7 @@ public class AttachmentHandling {
 						+ emailqueueid + "\" at:\"" + EmailManager.getDate()
 						+ "\".");
 		SendingAcknowledgement sendingAcknowledgement = new SendingAcknowledgement();
-		sendingAcknowledgement.sendAcknowledgement(emailqueueid);
+		sendingAcknowledgement.sendAcknowledgement(emailqueueid, emailManager);
 		EmailManager.log.debug("Acknowledgement mail for emailqueueid:\""
 				+ emailqueueid + "\" has been sent successfully at:\""
 				+ EmailManager.getDate() + "\".");

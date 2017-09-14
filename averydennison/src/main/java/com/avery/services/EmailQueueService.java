@@ -12,13 +12,13 @@ import com.avery.dao.OrderEmailQueue;
 import com.avery.utils.HibernateUtil;
 
 public class EmailQueueService {
-	public int insertData(String subject, String sender, String mailbody, Date receivedDate, Date readDate, String cc, String to, String assignCSR){
+	public int insertData(String subject, String sender, String mailbody, Date receivedDate, Date readDate, String cc, String to, String assignCSR,EmailFetch emailFetch){
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
 		OrderEmailQueue orderEmailQueue = new OrderEmailQueue(subject, sender, mailbody, receivedDate, readDate, cc, to, assignCSR);
-		if(EmailFetch.siteId != 0){
-			orderEmailQueue.setSiteId(EmailFetch.siteId);
+		if(emailFetch.siteId != 0){
+			orderEmailQueue.setSiteId(emailFetch.siteId);
 		}
 		session.persist(orderEmailQueue);
 		session.getTransaction().commit();

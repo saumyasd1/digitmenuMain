@@ -19,7 +19,7 @@ public class EmailFolderInformation {
 
 	public void receiveFolderInformation(EmailManager emailManager)
 			throws Exception {
-		EmailFetch emailFetch = new EmailFetch();
+		//EmailFetch emailFetch = new EmailFetch();
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -71,7 +71,7 @@ public class EmailFolderInformation {
 				objectContent = message.getContent();
 				emailManager.log.debug("Starting to process mail no:\"" + (i + 1)
 						+ "\" at:\"" + EmailManager.getDate() + "\".");
-				emailFetch.messageFetch(message, inbox, objectContent);
+				new EmailFetch().messageFetch(message, inbox, objectContent, emailManager);
 				message.setFlag(Flags.Flag.SEEN, true);
 			} catch (IOException | MessagingException e) {
 				// TODO Auto-generated catch block

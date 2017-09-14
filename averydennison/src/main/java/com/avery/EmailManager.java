@@ -8,36 +8,37 @@ import com.avery.bao.EmailFolderInformation;
 
 public class EmailManager {
 
-	public static String smtpHost;
-	public static int smtpPort;
-	public static String username;
-	public static String password;
-	public static String directoryLocation;
+	public String smtpHost;
+	public int smtpPort;
+	public String username;
+	public String password;
+	public String directoryLocation;
 	public static Logger log;
 	public static SimpleDateFormat sdfDate = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss.SSS");
+	
 
 	public void connectTOEmail(String Protocol, String Host, int Port,
 			String UserName, String Password, String dir, String SmtpHost,
 			int SmtpPort, Logger _log) throws Exception {
+		EmailManager emailmanager = new EmailManager();
 		String protocol = Protocol;
 		String host = Host;
 		int port = Port;
-		this.username = UserName;
-		this.password = Password;
-		this.smtpHost = SmtpHost;
-		this.smtpPort = SmtpPort;
-		this.directoryLocation = dir;
-		this.log = _log;
-		EmailManager emailmanager = new EmailManager();
-		emailmanager.connectToEmailServer(protocol, host, port);
+		emailmanager.username = UserName;
+		emailmanager.password = Password;
+		emailmanager.smtpHost = SmtpHost;
+		emailmanager.smtpPort = SmtpPort;
+		emailmanager.directoryLocation = dir;
+		log = _log;
+		emailmanager.connectToEmailServer(protocol, host, port, emailmanager);
 	}
 
-	public void connectToEmailServer(String protocol, String host, int port)
+	public void connectToEmailServer(String protocol, String host, int port, EmailManager emailmanager)
 			throws Exception {
 		log.debug("Connecting to Email Server at:\"" + getDate() + "\".");
 		EmailFolderInformation emailFolderInformation = new EmailFolderInformation();
-		emailFolderInformation.receiveFolderInformation(this);
+		emailFolderInformation.receiveFolderInformation(emailmanager);
 
 	}
 

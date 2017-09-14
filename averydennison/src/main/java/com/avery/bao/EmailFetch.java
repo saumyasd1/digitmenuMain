@@ -28,10 +28,11 @@ public class EmailFetch {
 
 	String uniqueID;
 	String messageId;
-	public static int siteId;
+	public int siteId;//Remove Static
 	
 	public void messageFetch(Message message, Folder folder,
-			Object objectContent) throws Exception {
+			Object objectContent,EmailManager emailManager) throws Exception {
+		EmailFetch emailFetch=new EmailFetch();
 		UIDFolder uf = (UIDFolder) folder;
 		String msgId[] = message.getHeader("Message-Id");
 		uniqueID = msgId[0];
@@ -39,10 +40,10 @@ public class EmailFetch {
 		uniqueID = uniqueID.replaceAll("[\\/:*?\"<>|]", "");
 		//For getting siteId to generate directory unique
 		SiteManagement siteManagement=new SiteManagement();
-		EmailManager.log.info("TO Mail Id=\""+EmailManager.username+"\"");
-		siteId=siteManagement.getSiteId(EmailManager.username);
-		EmailManager.log.info("Site Id=\""+siteId+"\"");
-		String dir = createDirectory(uniqueID+"_"+siteId, EmailManager.directoryLocation);
+		EmailManager.log.info("TO Mail Id=\""+emailManager.username+"\"");
+		emailFetch.siteId=siteManagement.getSiteId(emailManager.username);
+		EmailManager.log.info("Site Id=\""+emailFetch.siteId+"\"");
+		String dir = createDirectory(uniqueID+"_"+emailFetch.siteId, emailManager.directoryLocation);
 		try {
 			EmailManager.log.debug("Writing CompleteEmail.eml file at:\""
 					+ EmailManager.getDate() + "\".");
@@ -114,7 +115,7 @@ public class EmailFetch {
 						+ " at:\""
 						+ EmailManager.getDate() + "\".");
 		int emailqueueid = emailQueueService.insertData(subject, sender,
-				mailbodypath, receivedDate, currentDate, cc, to, "1");
+				mailbodypath, receivedDate, currentDate, cc, to, "1",emailFetch);
 		EmailManager.log
 				.debug("Emailqueue details has been inserted in table:\"orderemailqueue\" for emailqueueid:\""
 						+ emailqueueid + "\".");
@@ -132,7 +133,7 @@ public class EmailFetch {
 		session.persist(orderFileAttachment);
 		session.getTransaction().commit();
 		session.close();
-		attachmentHandling.extractAttachment(dir, emailqueueid, message);
+		attachmentHandling.extractAttachment(dir, emailqueueid, message, emailManager);
 	}
 
 	public String createDirectory(String uniqueID, String directoryLocation)

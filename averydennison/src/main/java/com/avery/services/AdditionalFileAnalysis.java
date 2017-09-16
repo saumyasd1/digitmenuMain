@@ -195,9 +195,29 @@ public class AdditionalFileAnalysis {
 						orderFileAttachmentId, 0, "8", "", schema_id_comment, "",
 						"AdditionalData", fileContentMatch);*/
 				
-				orderEmailQueue.updateOrderEmailAttachmentContent(
-						orderFileAttachmentId, 0, "8", "", "",schema_id_comment,
-						"AdditionalData", fileContentMatch);
+				// check if one order file present on 16-09-2017
+				if(OrderEmailQueueServices.orderFileID.length()>0 && !OrderEmailQueueServices.orderFileID.contains(",")){
+					int tmp=Integer.parseInt(OrderEmailQueueServices.orderFileID.trim());
+					if(schemaId.contains(tmp)){
+						orderEmailQueue.updateOrderEmailAttachmentContent(
+								orderFileAttachmentId, tmp, "8", "", "", "",
+								"AdditionalData", fileContentMatch);
+					}
+					else{
+						orderEmailQueue.updateOrderEmailAttachmentContent(
+								orderFileAttachmentId, 0, "8", "", "",schema_id_comment,
+								"AdditionalData", fileContentMatch);
+					}
+					
+				}
+				else{
+					orderEmailQueue.updateOrderEmailAttachmentContent(
+							orderFileAttachmentId, 0, "8", "", "",schema_id_comment,
+							"AdditionalData", fileContentMatch);
+				}
+
+				
+				
 			
 			}
 			

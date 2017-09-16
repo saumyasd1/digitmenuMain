@@ -164,6 +164,17 @@ public class OrderFileContentAnalysis {
 				orderEmailQueue.updateOrderEmailAttachmentContent(
 						orderFileAttachmentId, schema, "8", "", "", "",
 						"Order", fileContentMatch);
+				
+				//added on 16-09-2017
+				if(OrderEmailQueueServices.orderFileID.length()>0){
+					OrderEmailQueueServices.orderFileID=OrderEmailQueueServices.orderFileID+","+schemaId.iterator().next().toString();
+				}
+				else{
+					OrderEmailQueueServices.orderFileID=schemaId.iterator().next().toString();
+				}
+				//end of code
+				
+				
 				sa.subjectSearch(emailQueueId, orderFileAttachmentId, schemaId);
 			} else if (schemaId.size() == 0) {
 				log.debug("match schema list \"" + schemaId + "\".");

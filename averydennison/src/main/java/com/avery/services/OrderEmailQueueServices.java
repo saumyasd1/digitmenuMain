@@ -26,6 +26,8 @@ public class OrderEmailQueueServices {
 	public static String directory;
 	public static String email = "";
 	public static String siteId = "";
+	//added on 16-09-2017 for one order and multiple additional file.
+	public static String orderFileID="";
 	
 	// public static Logger log;
 	//code added by Rajo for logging related issue in cluster environment due to null value.
@@ -133,7 +135,8 @@ public class OrderEmailQueueServices {
 				log.debug("Total elapsed time in seconds--> \"" + duration_2
 						+ "\" for file name \"" + fileName + "\"" + ".");
 			}
-
+			
+			
 		} catch (Exception e) {
 			log.error("Exception while getting mail data");
 			throw e;
@@ -142,6 +145,7 @@ public class OrderEmailQueueServices {
 			double duration_1 = (double) (endTime_1 - startTime_1)
 					/ (1000000 * 1000);
 			ProductLineBean.productLineMap.clear();
+			orderFileID="";
 			log.debug("Total elapsed time in seconds. for overall process--> "
 					+ duration_1 + "s");
 

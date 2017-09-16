@@ -196,6 +196,7 @@ public class AdditionalFileAnalysis {
 						"AdditionalData", fileContentMatch);*/
 				
 				// check if one order file present on 16-09-2017
+				OrderEmailQueueServices.orderFileID=fs.removeDup(OrderEmailQueueServices.orderFileID);
 				if(OrderEmailQueueServices.orderFileID.length()>0 && !OrderEmailQueueServices.orderFileID.contains(",")){
 					int tmp=Integer.parseInt(OrderEmailQueueServices.orderFileID.trim());
 					if(schemaId.contains(tmp)){

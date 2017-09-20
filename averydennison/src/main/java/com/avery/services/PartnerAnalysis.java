@@ -104,9 +104,11 @@ public class PartnerAnalysis {
 								}
 							}
 						}else if(FileExtString.toLowerCase().contains("pdf")){
-							String res = fs.searchStringInFile(filePath, FileName,
-									schemaInfo.getFileOrderPartnerMatch());
-								if(res != null && !res.isEmpty()){
+							String res = schemaInfo.getFileOrderPartnerMatch();
+							if (res!=null && res.contains("Value")) {
+								
+								if (fs.SearchContentInPDFFile(FileName,
+										res, filePath)) {
 									schemaIdListPartner.add(schemaInfo.getId());
 									if (partnerMatchResult == "") {
 										partnerMatchResult = res;
@@ -114,7 +116,8 @@ public class PartnerAnalysis {
 										partnerMatchResult = partnerMatchResult
 												+ "," + res;
 									}
-
+								}
+									
 								}
 						}
 						
@@ -273,16 +276,23 @@ public class PartnerAnalysis {
 								}
 							}
 						}else if(FileExtString.toLowerCase().contains("pdf")){
-							String res = fs.searchStringInFile(filePath, FileName,
-									schemaInfo.getFileRBOMatch());
-								if(res != null && !res.isEmpty()){
-									schemaIdListRbo.add(schemaInfo.getId());
-									if (rboMatchResult == "") {
-										rboMatchResult = res;
-									} else {
-										rboMatchResult = rboMatchResult
-												+ "," + res;
+							//String res = fs.searchStringInFile(filePath, FileName,
+									//schemaInfo.getFileRBOMatch());
+							
+							String res = schemaInfo.getFileRBOMatch();
+								if(res != null && res.contains("Value")){
+									
+									if (fs.SearchContentInPDFFile(FileName,
+											res, filePath)) {
+										schemaIdListRbo.add(schemaInfo.getId());
+										if (rboMatchResult == "") {
+											rboMatchResult = res;
+										} else {
+											rboMatchResult = rboMatchResult
+													+ "," + res;
+										}
 									}
+									
 	
 								}
 						}		
@@ -351,16 +361,19 @@ public class PartnerAnalysis {
 								}
 							}
 						}else if(FileExtString.toLowerCase().contains("pdf")){
-							String res = fs.searchStringInFile(filePath, FileName,
-									schemaInfo.getFileProductlineMatch());
-								if(res != null && !res.isEmpty()){
-									schemaIdListProductLine.add(schemaInfo.getId());
-									if (productlineMatchResult == "") {
-										productlineMatchResult = res;
-									} else {
-										productlineMatchResult = productlineMatchResult
-												+ "," + res;
+							String res = schemaInfo.getFileProductlineMatch();
+								if(res != null && res.contains("Value")){
+									if (fs.SearchContentInPDFFile(FileName,
+											res, filePath)) {
+										schemaIdListProductLine.add(schemaInfo.getId());
+										if (productlineMatchResult == "") {
+											productlineMatchResult = res;
+										} else {
+											productlineMatchResult = productlineMatchResult
+													+ "," + res;
+										}
 									}
+									
 	
 								}
 						}

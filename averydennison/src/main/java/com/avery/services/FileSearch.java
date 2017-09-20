@@ -423,6 +423,64 @@ public class FileSearch {
 
 		return result;
 	}
+	
+	/**
+	 * Rajo 19-09-2017
+	 * @param filename
+	 * @param keyword
+	 * @param filepath
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean searchpdfWithBoolean(String filename, String keyword, String filepath)
+			throws Exception {
+		// OrderEmailQueueInterface orderEmailQueue = new
+		// OrderEmailQueueModel();
+		boolean result=false;
+		try {
+			if(keyword==null||keyword==""|| keyword.isEmpty()){
+				return false;
+			}
+			log.debug("search pdf for filename \"" + filename
+					+ " \"for filepath \"" + filepath + "\".");
+			if (filepath == "") {
+				log.debug("search pdf for filename \"" + filename
+						+ " \"for empty filepath .");
+				return false;
+			}
+
+			PdfReader reader = new PdfReader(filepath + "/" + filename);
+
+			PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+
+			//PrintWriter out = new PrintWriter(new FileOutputStream(keyword));
+
+			TextExtractionStrategy strategy;
+
+			for (int i = 1; i <= reader.getNumberOfPages(); i++) {
+
+				strategy = parser.processContent(i,
+						new SimpleTextExtractionStrategy());
+				String pdf_data = strategy.getResultantText();
+				if (pdf_data.toLowerCase().contains(keyword.toLowerCase())) {
+					result = true;
+					log.debug("keyword found in pdf is \"" + keyword + "\".");
+					break;
+				}
+			}
+			reader.close();
+			//out.flush();
+			//out.close();
+		} catch (FileNotFoundException e) {
+			log.error("File not found exception while searching pdf file");
+			throw e;
+		} catch (Exception e) {
+			log.error("excepti while search pdf");
+			throw e;
+		}
+
+		return result;
+	}
 
 	/**
 	 * method searchContentFromMailBody
@@ -527,6 +585,64 @@ public class FileSearch {
 		}else{
 			return andResult;
 		}
+	}
+		
+		/**
+		 * 
+		 * @param FileName
+		 * @param FilePath
+		 * @param FileExt
+		 * @param CellDetail
+		 * @param log
+		 * @return
+		 * @throws Exception
+		 */
+		
+		public boolean SearchContentInPDFFile(String FileName, String CellDetail,
+				 String FilePath) throws Exception {
+			//log= log;
+			// String keywordLocation = "";
+			boolean andResult = true;
+			Set<Boolean> orResult = new HashSet<Boolean>();
+			try {
+				if(CellDetail==null||CellDetail==""|| CellDetail.isEmpty()){
+					log.info("fileOrderMatch column value is null in table.");
+					return false;
+				}
+				log.info("Starting seacrhing process for file:\"" + FilePath
+						+ File.separatorChar + FileName + "\".");
+				if(CellDetail.contains(AND_SEPERATOR) && CellDetail.contains(OR_SEPERATOR)){
+					log.error("match string contains both and and or condition.");
+					return false;
+				}else if (CellDetail.contains(AND_SEPERATOR)) {
+						String [] keyWords = CellDetail.split(AND_SEPERATOR);
+						for (String keyWord : keyWords) {
+							keyWord=keyWord.replace("Value:", "").replace("value:", "");
+							if(!searchpdfWithBoolean(FileName, keyWord,FilePath)){
+								andResult=false;
+								break;
+							}
+						}
+					}else if(CellDetail.contains(OR_SEPERATOR)){
+						String [] keyWords = CellDetail.split(VALUE_SEPARATOR);
+						for (String keyWord : keyWords) {
+							keyWord=keyWord.replace("Value:", "").replace("value:", "");
+							orResult.add(searchpdfWithBoolean(FileName, keyWord,
+									FilePath));
+						}
+					}else{
+						andResult = searchpdfWithBoolean(FileName, CellDetail.replace("Value:", ""),FilePath);
+					}
+				
+			} catch (Exception e) {
+				log.error("Exception while pdf file content search");
+				throw e;
+			}
+			if(CellDetail.contains(OR_SEPERATOR) && !orResult.contains(true)){
+				return false;
+			}else{
+				return andResult;
+			}
 		
 		
 		/*if(andResult && orResult.size()==0){

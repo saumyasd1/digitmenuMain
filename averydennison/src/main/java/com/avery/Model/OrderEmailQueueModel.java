@@ -1040,7 +1040,10 @@ public class OrderEmailQueueModel implements
 			}
 			if (!fileContentMatch.isEmpty() || fileContentMatch != ""
 					|| fileContentMatch != null) {
-				orderEmail.setFileContentMatch(fileContentMatch.trim());
+				if(!fileContentMatch.contains("@@")){
+					orderEmail.setFileContentMatch(fileContentMatch.trim());
+				}
+				
 			}
 			if (fileType != "") {
 				orderEmail.setFileContentType(fileType);

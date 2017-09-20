@@ -129,14 +129,13 @@ public class OrderFileContentAnalysis {
 												"pdf")) {
 									log.debug("searchin file extension for pdf");
 									String keyword = Sheetinfo.trim();
-									String[] keyword_s;
-									if (keyword.contains("Value")
-											&& !keyword.trim().isEmpty()) {
-										keyword_s = keyword.split(":");
-										keyValue = keyword_s[1];
-										if (!keyValue.trim().isEmpty()) {
-											if (fs.searchpdf(fileName,
-													keyValue, filePath) != "") {
+									//String[] keyword_s;
+									if (keyword!=null && keyword.contains("Value")) {
+										//keyword_s = keyword.split(":");
+										//keyValue = keyword_s[1];
+										//if (!keyValue.trim().isEmpty()) {
+											if (fs.SearchContentInPDFFile(fileName,
+													keyword, filePath)) {
 												schemaId.add(schemaInfo.getId());
 												if (fileContentMatch == "") {
 													fileContentMatch = Sheetinfo;
@@ -145,7 +144,7 @@ public class OrderFileContentAnalysis {
 															+ "," + Sheetinfo;
 												}
 											}
-										}
+										//}
 									}
 
 								}

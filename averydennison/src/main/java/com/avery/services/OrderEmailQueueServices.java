@@ -128,14 +128,15 @@ public class OrderEmailQueueServices {
 						/ (1000000 * 1000);
 				log.debug("Total elapsed time in seconds. for  File analysis--> "
 						+ duration_4 + "s");
-
+				
 				long endTime_2 = System.nanoTime();
 				double duration_2 = (double) (endTime_2 - startTime_2)
 						/ (1000000 * 1000);
 				log.debug("Total elapsed time in seconds--> \"" + duration_2
 						+ "\" for file name \"" + fileName + "\"" + ".");
 			}
-			
+			//added for additional file analysis with order file.
+			getAdditionalFileMatchWithOrderFile(id,log);
 			
 		} catch (Exception e) {
 			log.error("Exception while getting mail data");
@@ -254,6 +255,110 @@ public class OrderEmailQueueServices {
 		return false;
 	}
 
+	/**
+	 * Rajo
+	 * 16-09-2017
+	 * This method will analyze order file's productLineId and replace with additional file id if any
+	 * for single or same type of order file.
+	 * @param orderfileQueueId
+	 * @param _log
+	 * @throws Exception
+	 */
+	public void getAdditionalFileMatchWithOrderFile(int id, Logger _log) throws Exception {
+		OrderEmailQueueInterface orderEmailQueue = new OrderEmailQueueModel();
+		log.debug("get emailattachment id \"" +id);
+		ArrayList<OrderFileAttachment> order_list= new ArrayList<OrderFileAttachment>();
+		ArrayList<OrderFileAttachment> additional_list= new ArrayList<OrderFileAttachment>();
+		Set<Integer> orderProductLine=new HashSet<>();
+		try{
+			ArrayList<Object> email_list = orderEmailQueue
+					.getEmailAttachments(id);
+			if (email_list==null) {
+				log.debug("No attachments found for emailqueue id \"" + id
+						+ "\".");
+				return;
+			}
+			Iterator<Object> iterat = email_list.iterator();
+			OrderFileAttachment email_att = new OrderFileAttachment();
+			
+			while (iterat.hasNext()) {
+				email_att = (OrderFileAttachment) iterat.next();
+				String fileType = email_att.getFileContentType();
+				if(fileType!=null &&fileType.length()>0){
+					if(fileType.equalsIgnoreCase("Order")){
+						order_list.add(email_att);
+					}
+					else if(fileType.equalsIgnoreCase("AdditionalData")){
+						additional_list.add(email_att);
+					}
+				}
+				
+			}	
+			
+			// here will check if only one order file present
+			if(order_list.size()>0){
+				Iterator<OrderFileAttachment> iterat_order = order_list.iterator();
+				while (iterat_order.hasNext()) {
+					Partner_RBOProductLine productLine = iterat_order.next().getVarProductLine();
+					if( productLine!=null)
+					orderProductLine.add(productLine.getId());
+				}
+				
+				if(additional_list.size()>0 &&orderProductLine.size()==1){
+					Iterator<OrderFileAttachment> iterat_additional = additional_list.iterator();
+					int productLine=orderProductLine.iterator().next();
+					while (iterat_additional.hasNext()) {
+						OrderFileAttachment orderFileAttachment=iterat_additional.next();
+						String comment=orderFileAttachment.getComment();
+						if(comment!=null && comment.length()>0){
+							Set<String> commentSet=new LinkedHashSet<String>(Arrays.asList(comment.split(",")));
+							if(commentSet.contains(String.valueOf(productLine))){
+								orderEmailQueue.updateOrderEmailAttachmentContent(
+										orderFileAttachment.getId(), productLine, "8", "", "", " ",
+										"AdditionalData", "@@");
+							}
+							else{
+								log.debug("No common value  found in comment for additional data identification for  id \"" + productLine
+										+ "\".");
+							}
+						}
+						else{
+							log.debug("No comment value  found in  for  id \"" + orderFileAttachment.getId()
+									+ "\".");
+						}
+						
+					}
+					
+				}
+				else{
+					return;
+				}
+			}
+			else{
+				log.debug("No order file found for emailqueue id \"" + id
+						+ "\".");
+				return;
+			}
+			
+			
+			
+			
+			
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		finally{
+			log.debug("Got additional file analysis details for email id \"" 
+					+id + "\"...");
+		}
+		
+		
+		
+	}
+	
 	/**
 	 * method getemailsubject
 	 * 

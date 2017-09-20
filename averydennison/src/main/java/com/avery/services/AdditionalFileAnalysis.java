@@ -199,6 +199,7 @@ public class AdditionalFileAnalysis {
 				OrderEmailQueueServices.orderFileID=fs.removeDup(OrderEmailQueueServices.orderFileID);
 				if(OrderEmailQueueServices.orderFileID.length()>0 && !OrderEmailQueueServices.orderFileID.contains(",")){
 					int tmp=Integer.parseInt(OrderEmailQueueServices.orderFileID.trim());
+					 tmp=0;
 					if(schemaId.contains(tmp)){
 						orderEmailQueue.updateOrderEmailAttachmentContent(
 								orderFileAttachmentId, tmp, "8", "", "", "",
@@ -206,14 +207,14 @@ public class AdditionalFileAnalysis {
 					}
 					else{
 						orderEmailQueue.updateOrderEmailAttachmentContent(
-								orderFileAttachmentId, 0, "8", "", "",schema_id_comment,
+								orderFileAttachmentId, 0, "6", "", "",schema_id_comment,
 								"AdditionalData", fileContentMatch);
 					}
 					
 				}
 				else{
 					orderEmailQueue.updateOrderEmailAttachmentContent(
-							orderFileAttachmentId, 0, "8", "", "",schema_id_comment,
+							orderFileAttachmentId, 0, "6", "", "",schema_id_comment,
 							"AdditionalData", fileContentMatch);
 				}
 

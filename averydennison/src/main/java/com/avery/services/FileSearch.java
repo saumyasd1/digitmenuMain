@@ -205,6 +205,11 @@ public class FileSearch {
 						}
 					}
 				}
+				else{
+					if(searchIdentifier.length()>0){
+						return false;
+					}
+				}
 				if (!result) {
 					log.debug("Search text is not found for searchIdentifier:\""
 							+ searchIdentifier + "\".");

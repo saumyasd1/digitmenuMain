@@ -186,17 +186,22 @@ public class EmailUtils {
 		}
 		emlFilePath = fileLocation + File.separatorChar
 				+ fileNameWithoutExtension + "." + fileextension;
+		//#CSAUGDS-41[Support multiple emailID in CSREmail field of PartnerProfile]
 		if(toUserEmailIDList.contains(",")){
 			String toMail[]=toUserEmailIDList.split(",");
 			for(int i=0;i<toMail.length;i++){
-				forwardEML(fromUserEmailID, fromUserPassword, toMail[i],
+				if(toMail[i] != null && !toMail[i].isEmpty()){
+					forwardEML(fromUserEmailID, fromUserPassword, toMail[i],
+							emlFilePath, additionalBodyContent, additionalSubjectContent,
+							log);
+				}
+			}
+		}else{
+			if(toUserEmailIDList != null && !toUserEmailIDList.isEmpty()){
+				forwardEML(fromUserEmailID, fromUserPassword, toUserEmailIDList,
 						emlFilePath, additionalBodyContent, additionalSubjectContent,
 						log);
 			}
-		}else{
-			forwardEML(fromUserEmailID, fromUserPassword, toUserEmailIDList,
-					emlFilePath, additionalBodyContent, additionalSubjectContent,
-					log);
 		}
 		
 

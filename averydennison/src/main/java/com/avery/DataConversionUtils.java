@@ -40,6 +40,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellReference;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.aspose.cells.HTMLLoadOptions;
 import com.aspose.cells.LoadFormat;
@@ -171,10 +174,56 @@ public class DataConversionUtils {
 			if(msgContent.startsWith("<div")){
 				msgContent = "<html>\n<br>\n"+msgContent+"\n</html>";  
 			}
-			 fos = new FileOutputStream(location
+			 
+			String modifiedMsgContent=msgContent.replaceAll("<p.*?>", "").replaceAll("<P.*?>", "")
+					.replaceAll("</p>", "").replaceAll("</P>", "").replaceAll(" *.<span></span>", "")
+					.replaceAll("<a.*?>", "").replaceAll("<A.*?>", "")
+					.replaceAll("</a>", "").replaceAll("</A>", "");
+			
+			org.jsoup.nodes.Document jsoupDocument = Jsoup.parse(modifiedMsgContent);
+			Elements tables = jsoupDocument.select("tr > td:has(table)");			
+			for(Element childTable:tables){
+				Elements innertable = childTable.select("tr > td:has(table)");	
+				boolean caseToValidate=true;
+				innertable.size();
+				for(Element deepInnerTable:innertable)
+				{
+					Elements trs = deepInnerTable.select("tr");
+					Elements tds = trs.select("td");
+					if(trs.size() != tds.size())
+					{
+						caseToValidate=false;
+					}
+				}
+				
+				if(caseToValidate)
+				{
+				for(Element deepInnerTable:innertable)
+				{					
+					String text =deepInnerTable.text();
+					String newTag="<td>"+text+"</td>";
+					deepInnerTable.html(newTag);					
+				}
+				}
+			}
+			
+			Elements table=jsoupDocument.select("table");
+			Elements tds=table.select("td");
+			for(Element td:tds)
+			{
+				String text=td.html();
+				String updatedTd=text.replaceAll("<div>", "").replaceAll("</div>", "")
+						.replaceAll("<br />", "		").replaceAll("<wbr />", "	");
+				td.html(updatedTd);
+			}
+			
+			String finalMsgContent=jsoupDocument.html();
+			
+			
+			fos = new FileOutputStream(location
 					+ File.separatorChar + fileName + ".html");
 			out = new OutputStreamWriter(fos, "UTF-8");
-			out.write(msgContent);
+			out.write(finalMsgContent);
 			out.close();
 			fos.close(); 
 			if (exportImages) {

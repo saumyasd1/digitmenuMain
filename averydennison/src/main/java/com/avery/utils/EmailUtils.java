@@ -186,9 +186,19 @@ public class EmailUtils {
 		}
 		emlFilePath = fileLocation + File.separatorChar
 				+ fileNameWithoutExtension + "." + fileextension;
-		forwardEML(fromUserEmailID, fromUserPassword, toUserEmailIDList,
-				emlFilePath, additionalBodyContent, additionalSubjectContent,
-				log);
+		if(toUserEmailIDList.contains(",")){
+			String toMail[]=toUserEmailIDList.split(",");
+			for(int i=0;i<toMail.length;i++){
+				forwardEML(fromUserEmailID, fromUserPassword, toMail[i],
+						emlFilePath, additionalBodyContent, additionalSubjectContent,
+						log);
+			}
+		}else{
+			forwardEML(fromUserEmailID, fromUserPassword, toUserEmailIDList,
+					emlFilePath, additionalBodyContent, additionalSubjectContent,
+					log);
+		}
+		
 
 	}
 

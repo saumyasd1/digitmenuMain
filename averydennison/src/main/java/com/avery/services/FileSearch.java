@@ -62,7 +62,7 @@ public class FileSearch {
 			}
 
 		} catch (FileNotFoundException e) {
-			log.debug("CompleteEmail.eml not found.");
+			log.debug("CompleteEmail.html not found.");
 			return "";
 			// e.printStackTrace();
 		} catch (IOException e) {
@@ -165,6 +165,8 @@ public class FileSearch {
 					if (searchDetails[1].contains("Cell")) {
 						cellNos = searchDetails[1].split(":");
 						cellNo = cellNos[1].trim();
+						System.out.println(cellNos[0]);
+						System.out.println(cellNos[1]);
 						log.debug("Starting seacrhing process for cellNo:\""
 								+ cellNo + "\".");
 					}
@@ -204,6 +206,9 @@ public class FileSearch {
 							}
 						}
 					}
+					else{
+						return false;
+					}
 				}
 				else{
 					if(searchIdentifier.length()>0){
@@ -234,6 +239,7 @@ public class FileSearch {
 			String keyvalues) throws Exception {
 		String responseResults = "";
 		try {
+			keyvalues=keyvalues.replace("Value:", "").replace("value:", "");
 			FileSearch fs = new FileSearch();
 			if(keyvalues==null||keyvalues==""|| keyvalues.isEmpty()){
 				return responseResults;

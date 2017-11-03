@@ -1,6 +1,7 @@
 package com.avery.bao;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import com.avery.EmailManager;
 import com.avery.dao.OrderEmailQueue;
 import com.avery.dao.OrderFileAttachment;
 import com.avery.services.EmailQueueService;
+import com.avery.utils.EmailUtils;
 import com.avery.utils.HibernateUtil;
 
 public class EmailFetch {
@@ -39,12 +41,13 @@ public class EmailFetch {
 		// Create the directory for saving the email information
 		uniqueID = uniqueID.replaceAll("[\\/:*?\"<>|]", "");
 		//For getting siteId to generate directory unique
-		SiteManagement siteManagement=new SiteManagement();
-		EmailManager.log.info("TO Mail Id=\""+emailManager.username+"\"");
-		emailFetch.siteId=siteManagement.getSiteId(emailManager.username);
-		EmailManager.log.info("Site Id=\""+emailFetch.siteId+"\"");
-		String dir = createDirectory(uniqueID+"_"+emailFetch.siteId, emailManager.directoryLocation);
+		String dir = null;
 		try {
+			SiteManagement siteManagement=new SiteManagement();
+			EmailManager.log.info("TO Mail Id=\""+emailManager.username+"\"");
+			emailFetch.siteId=siteManagement.getSiteId(emailManager.username);
+			EmailManager.log.info("Site Id=\""+emailFetch.siteId+"\"");
+			dir = createDirectory(uniqueID+"_"+emailFetch.siteId, emailManager);
 			EmailManager.log.debug("Writing CompleteEmail.eml file at:\""
 					+ EmailManager.getDate() + "\".");
 			message.writeTo(new FileOutputStream(new File(dir + "/"
@@ -72,7 +75,7 @@ public class EmailFetch {
 			// dataConversionUtils.generatePDFfromHTML(dir,
 			// "CompleteEmail.html");
 		} catch (Exception e) {
-
+			throw e;
 		}
 		Date currentDate = new Date();
 		String subject = message.getSubject();
@@ -136,23 +139,40 @@ public class EmailFetch {
 		attachmentHandling.extractAttachment(dir, emailqueueid, message, emailManager);
 	}
 
-	public String createDirectory(String uniqueID, String directoryLocation)
-			throws IOException {
+	public String createDirectory(String uniqueID, EmailManager emailManager)
+			throws Exception {
 		// TODO Auto-generated method stub
-		EmailManager.log.debug("Creating directory:\"" + directoryLocation
+		EmailManager.log.debug("Creating directory:\"" + emailManager.directoryLocation
 				+ File.separatorChar + uniqueID + " at:\""
 				+ EmailManager.getDate() + "\".");
-		File file = new File(directoryLocation + File.separatorChar + uniqueID);
+		String dir=emailManager.directoryLocation + File.separatorChar + uniqueID;
+		File file = new File(dir);
 		if (!file.exists()) {
 			if (file.mkdirs()) {
-				EmailManager.log.debug("Directory:\"" + directoryLocation
+				EmailManager.log.debug("Directory:\"" + emailManager.directoryLocation
 						+ File.separatorChar + uniqueID + " has been created at:\""
 						+ EmailManager.getDate() + "\".");
 			} else {
 				throw new IOException("Failed to create directory:\""
-						+ directoryLocation + File.separatorChar + uniqueID
+						+ emailManager.directoryLocation + File.separatorChar + uniqueID
 						+ "\".");
 			}
+		}else{
+			String[] fileList=file.list(); 
+			int length=fileList.length;
+			if(length > 0){
+				for(int i=0;i<length;i++){
+					if(fileList[i].equals("CompleteEmail.eml")){
+						//String fileName=dir+File.separatorChar+fileList[i];
+						//String fileNames[]={fileName};
+						EmailManager.log.debug("Directory:\"" + emailManager.directoryLocation
+						+ File.separatorChar + uniqueID + "has been find as Duplicate Mail.");
+						//EmailUtils.sendEmailWithAttachment(emailManager.username, emailManager.password, "rakesh.kumar@adeptia.com,rajo.singh@adeptia.com,vishal.sinha@adeptia.com", "Duplicate Mail", "PFA EML file", fileNames);
+						throw new Exception("Duplicate Mail in Queue");
+					}
+				}
+			}
+			
 		}
 		
 		return file.getAbsolutePath();

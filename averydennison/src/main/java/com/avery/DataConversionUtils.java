@@ -142,7 +142,7 @@ public class DataConversionUtils {
 	 * @param fileName
 	 */
 	public void generateHTMLFile(String location, String fileName,
-			Message message) {
+			Message message) throws Exception{
 		log.debug("generating html file : \""+fileName+"\".");
 		// write the html file at specified location
 		FileWriter fileWriter = null;
@@ -233,12 +233,15 @@ public class DataConversionUtils {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
 		} finally {
 			if (fileWriter != null) {
 				try {
@@ -279,7 +282,7 @@ public class DataConversionUtils {
 	 */
 	public void generateExcelFile(String htmlFileLocation, String htmlFileName,
 			String excelFileLocation, String excelFileName,
-			String fileExtensionName) {
+			String fileExtensionName) throws Exception{
 		// Load the licence
 		log.debug("generate excel file  with aspose lic.");
 		com.aspose.cells.License license = new com.aspose.cells.License();
@@ -311,6 +314,7 @@ public class DataConversionUtils {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -536,7 +540,7 @@ public class DataConversionUtils {
 	 * @param imageFolderLocation
 	 */
 	public void exportImageFromEmail(Message msg, String htmlFileLocation,
-			String imageFolderLocation) {
+			String imageFolderLocation) throws Exception{
 		try {
 			Multipart mPart = (Multipart) msg.getContent();
 			int count0 = mPart.getCount();
@@ -566,6 +570,7 @@ public class DataConversionUtils {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			try {
 				if (inbox != null && inbox.isOpen())
@@ -589,7 +594,7 @@ public class DataConversionUtils {
 	 * @param imageFolder
 	 */
 	public void exportImageFromEmailRecur(String contentType, Part part0,
-			String htmlFileLocation, File imageFolder) {
+			String htmlFileLocation, File imageFolder) throws Exception{
 		InputStream input = null;
 		FileOutputStream fos = null;
 		try {
@@ -632,6 +637,7 @@ public class DataConversionUtils {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			if (fos != null) {
 				try {
@@ -658,7 +664,7 @@ public class DataConversionUtils {
 	 * @param imageFolderLocation
 	 */
 	public void replaceImageName(String htmlFileLocation, String htmlFileName,
-			String imageFolderLocation) {
+			String imageFolderLocation) throws Exception{
 		FileReader fileReader = null;
 		BufferedReader bufferedReader = null;
 		FileWriter fileWriter = null;
@@ -702,6 +708,7 @@ public class DataConversionUtils {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		} finally {
 			if (bufferWriter != null) {
 				try {

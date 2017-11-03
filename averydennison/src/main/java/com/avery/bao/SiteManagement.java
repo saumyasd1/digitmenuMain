@@ -26,7 +26,7 @@ public class SiteManagement {
  * @param sender
  * @return
  */
-public int getSiteId(String toEmail){
+public int getSiteId(String toEmail)throws Exception {
 	int siteId = 0;
 	Session session=null;
 	try{
@@ -49,9 +49,11 @@ public int getSiteId(String toEmail){
 			}
          session.getTransaction().commit();
          	 	
-	}catch(HibernateException  ex){
-		throw  ex;
+	}catch(HibernateException  e){
+		e.printStackTrace();
+		throw  e;
 	}catch(Exception  e){
+		e.printStackTrace();
 		throw  e;
 	}
 	finally{

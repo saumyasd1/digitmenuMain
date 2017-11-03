@@ -71,8 +71,8 @@ public class EmailFolderInformation {
 				objectContent = message.getContent();
 				emailManager.log.debug("Starting to process mail no:\"" + (i + 1)
 						+ "\" at:\"" + EmailManager.getDate() + "\".");
-				new EmailFetch().messageFetch(message, inbox, objectContent, emailManager);
 				message.setFlag(Flags.Flag.SEEN, true);
+				new EmailFetch().messageFetch(message, inbox, objectContent, emailManager);
 			} catch (IOException | MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -87,7 +87,11 @@ public class EmailFolderInformation {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					message.setFlag(Flags.Flag.SEEN, false);
+					if(e != null && e.getMessage().equals("Duplicate Mail in Queue")){
+						message.setFlag(Flags.Flag.SEEN, true);
+					}else{
+						message.setFlag(Flags.Flag.SEEN, false);
+					}
 				} catch (MessagingException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

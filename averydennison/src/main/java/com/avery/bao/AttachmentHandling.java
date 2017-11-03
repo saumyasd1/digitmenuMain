@@ -46,7 +46,7 @@ public class AttachmentHandling {
 	public String currentFile;
 	
 	public void extractAttachment(String dir, int emailqueueid, Message message, EmailManager emailManager)
-			throws IOException, MessagingException, ServiceException {
+			throws Exception {
 
 		EmailAttachmentService emailAttachmentService = new EmailAttachmentService();
 		EmailQueueService emailQueueService = new EmailQueueService();
@@ -181,7 +181,7 @@ public class AttachmentHandling {
 	 * @author Rakesh
 	 */
 	private void unzip(String zipFileName, String destinationDirectory,
-			MimeBodyPart part, int emailqueueid) {
+			MimeBodyPart part, int emailqueueid) throws Exception{
 		EmailManager.log.info("Start unZip of zipFile");
 		File folder = new File(destinationDirectory);
 		if (!folder.exists()) {
@@ -232,16 +232,20 @@ public class AttachmentHandling {
 			// TODO Auto-generated catch block
 			EmailManager.log
 					.error("ZipFile must be curroupted or should be missing."+e);
+			throw new Exception("ZipFile must be curroupted or should be missing."+e);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			EmailManager.log.error("File is missing from given location."+e);
+			throw new Exception("File is missing from given location."+e);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			EmailManager.log
 					.error("File is missing from given location which you want to do read or write opertion."+e);
+			throw new Exception("File is missing from given location which you want to do read or write opertion."+e);
 		} catch (Exception e) {
 			EmailManager.log
 					.error("Exception occurs while extracting ofzip file."+e);
+			throw new Exception("Exception occurs while extracting ofzip file."+e);
 		} finally {
 			try {
 				if (fileInputStream != null) {

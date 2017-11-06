@@ -392,29 +392,36 @@ public class DataConversionUtils {
 
 		part = mp.getBodyPart(0);
 		
-		String contentFinal = "";	    
-		Multipart mp1 = (Multipart)part.getContent();
-		int count = mp1.getCount(); 
-		
-		for (int i = 0; i < count; i++) {
-			if (!mp1.getBodyPart(i).getContentType().toLowerCase()
-					.contains("image")) {
-				
-				if(mp1.getBodyPart(i).getContent() instanceof Multipart){
-				
-					Multipart mp2 = (Multipart) mp1.getBodyPart(i).getContent();
-					int count2 = mp2.getCount();
-					for (int ii = 0; ii < count2; ii++) {
-						if (mp2.getBodyPart(ii).getContentType().toLowerCase()
-								.contains("text/html")) {
-							exportImages = true;
-							contentFinal = mp2.getBodyPart(ii).getContent()
-									.toString();
+		String contentFinal = "";	
+		if(part.getContentType().toLowerCase()
+				.contains("text/plain") ){
+			contentFinal=part.getContent().toString();
+		}
+		if(part instanceof Multipart){
+			Multipart mp1 = (Multipart)part.getContent();
+			int count = mp1.getCount(); 
+			
+			for (int i = 0; i < count; i++) {
+				if (!mp1.getBodyPart(i).getContentType().toLowerCase()
+						.contains("image")) {
+					
+					if(mp1.getBodyPart(i).getContent() instanceof Multipart){
+					
+						Multipart mp2 = (Multipart) mp1.getBodyPart(i).getContent();
+						int count2 = mp2.getCount();
+						for (int ii = 0; ii < count2; ii++) {
+							if (mp2.getBodyPart(ii).getContentType().toLowerCase()
+									.contains("text/html")) {
+								exportImages = true;
+								contentFinal = mp2.getBodyPart(ii).getContent()
+										.toString();
+							}
 						}
 					}
 				}
-			}
-		} 
+			} 
+		}
+		
 		
 		if (contentType == null) {
 			throw new Exception("Content Type : Invalid Content Type\n");

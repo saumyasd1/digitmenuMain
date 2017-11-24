@@ -222,7 +222,7 @@ public class EmailUtils {
 	 * @author Rakesh
 	 */
 	public static boolean sendEmailWithAttachment(final String fromUserName, final String fromUserPass, String toUserName,
-			String subject, String mailBody, String[] fileNames) {
+			String subject, String msgBodyHeader, String htmlMSgBody, String msgBodyFooter, String[] fileNames) {
 		try {
 
 			Properties properties = new Properties();
@@ -261,10 +261,17 @@ public class EmailUtils {
 			message.setSubject(subject);
 
 			// Now set the actual message
-			MimeBodyPart messageBody = new MimeBodyPart();
-			messageBody.setText(mailBody,"utf-8");
+			
+			MimeBodyPart messageBodyHeaderPart = new MimeBodyPart();
+			messageBodyHeaderPart.setText(msgBodyHeader,"utf-8");
+			MimeBodyPart htmlPart = new MimeBodyPart();
+			htmlPart.setContent(htmlMSgBody, "text/html; charset=utf-8");
+			MimeBodyPart messageBodyFooterPart = new MimeBodyPart();
+			messageBodyFooterPart.setText(msgBodyFooter,"utf-8");
 			Multipart multipart = new MimeMultipart();
-			multipart.addBodyPart(messageBody);
+			multipart.addBodyPart(messageBodyHeaderPart);
+			multipart.addBodyPart(htmlPart);
+			multipart.addBodyPart(messageBodyFooterPart);
 			if (fileNames != null && fileNames.length > 0) {
 				for (int i = 0; i < fileNames.length; i++) {
 					String fileName = fileNames[i];

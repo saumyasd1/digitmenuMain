@@ -160,13 +160,20 @@ public class FileSearch {
 						&& !searchIdentifier.isEmpty()) {
 					String[] searchDetails = searchIdentifier.split(";");
 					// for (String Sheetdetail_search : Sheetdetails) {
+					//System.out.println(CellDetail);
 					String[] cellValues;
 					String[] cellNos;
+					if(searchDetails.length==1){
+						throw new Exception("Error in cell value. Blank cell given in partner profile-->"+CellDetail);
+					}
 					if (searchDetails[1].contains("Cell")) {
 						cellNos = searchDetails[1].split(":");
+						if(cellNos.length==1){
+							throw new Exception("Error in cell value. Blank cell given in partner profile-->"+CellDetail);
+						}
 						cellNo = cellNos[1].trim();
-						System.out.println(cellNos[0]);
-						System.out.println(cellNos[1]);
+						//System.out.println(cellNos[0]);
+						//System.out.println(cellNos[1]);
 						log.debug("Starting seacrhing process for cellNo:\""
 								+ cellNo + "\".");
 					}

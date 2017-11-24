@@ -20,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
 import javax.mail.BodyPart;
@@ -50,6 +51,7 @@ import com.aspose.cells.SaveFormat;
 import com.aspose.cells.Workbook;
 import com.avery.Model.OrderEmailQueueModel;
 import com.avery.Model.SearchCellAddress;
+import com.avery.utils.EmailUtils;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
@@ -282,7 +284,7 @@ public class DataConversionUtils {
 	 */
 	public void generateExcelFile(String htmlFileLocation, String htmlFileName,
 			String excelFileLocation, String excelFileName,
-			String fileExtensionName) throws Exception{
+			String fileExtensionName){
 		// Load the licence
 		log.debug("generate excel file  with aspose lic.");
 		com.aspose.cells.License license = new com.aspose.cells.License();
@@ -314,7 +316,44 @@ public class DataConversionUtils {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw e;
+			FileOutputStream emlOutputStream=null;
+			try {
+				emlOutputStream=new FileOutputStream(new File(htmlFileLocation + File.separatorChar+"CompleteEmail.xls"));
+				emlOutputStream.write(new String().getBytes());
+				String fileName[]=new String[2];
+				InputStream inputStream=DataConversionUtils.class.getClassLoader().getResourceAsStream("ext/aocutils/Email.properties");
+				//InputStream inputStream=DataConversionUtils.class.getClassLoader().getResourceAsStream("Email.properties");
+				Properties props= new Properties();
+				props.load(inputStream);
+				fileName[0]=htmlFileLocation + File.separatorChar+"CompleteEmail.eml";
+				StringBuffer error = new StringBuffer();
+				
+				if(e.getMessage() != null){
+				error.append("\n\n"+e.getMessage()+ "\n");
+				}
+				if(e != null && e.getStackTrace() != null){
+					StackTraceElement[] elements = e.getStackTrace();
+					for (int i = 0; i < elements.length; i++) {
+						error.append(elements[i] + "\n");
+					}
+				}
+				String msgBodyHeader=props.getProperty("msgBodyHeader1")+htmlFileLocation+props.getProperty("msgBodyHeader2");
+				String htmlMsgbody=props.getProperty("htmlMsgbody");
+				String msgBodyFooter=error.toString()+props.getProperty("msgBodyFooter");
+				EmailUtils.sendEmailWithAttachment(props.getProperty("fromEmail"), props.getProperty("fromPassword"), props.getProperty("toEmail"), props.getProperty("subject"), msgBodyHeader, htmlMsgbody, msgBodyFooter ,fileName);
+			} catch (Exception exp) {
+				// TODO Auto-generated catch block
+				exp.printStackTrace();
+			}finally{
+				if(emlOutputStream != null){
+					try {
+						emlOutputStream.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
 		}
 	}
 
@@ -393,11 +432,11 @@ public class DataConversionUtils {
 		part = mp.getBodyPart(0);
 		
 		String contentFinal = "";	
-		if(part.getContentType().toLowerCase()
+		/*if(part.getContentType().toLowerCase()
 				.contains("text/plain") ){
 			contentFinal=part.getContent().toString();
 		}
-		if(part instanceof Multipart){
+		if(part instanceof Multipart){*/
 			Multipart mp1 = (Multipart)part.getContent();
 			int count = mp1.getCount(); 
 			
@@ -420,7 +459,7 @@ public class DataConversionUtils {
 					}
 				}
 			} 
-		}
+		//}
 		
 		
 		if (contentType == null) {

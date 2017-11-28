@@ -329,7 +329,7 @@ public class DataConversionUtils {
 				StringBuffer error = new StringBuffer();
 				
 				if(e.getMessage() != null){
-				error.append("\n\n"+e.getMessage()+ "\n");
+				error.append(e.getMessage()+ "\n");
 				}
 				if(e != null && e.getStackTrace() != null){
 					StackTraceElement[] elements = e.getStackTrace();

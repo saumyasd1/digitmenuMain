@@ -34,6 +34,8 @@ import javax.mail.Store;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -319,7 +321,9 @@ public class DataConversionUtils {
 			FileOutputStream emlOutputStream=null;
 			try {
 				emlOutputStream=new FileOutputStream(new File(htmlFileLocation + File.separatorChar+"CompleteEmail.xls"));
-				emlOutputStream.write(new String().getBytes());
+				emlOutputStream=new FileOutputStream(new File(htmlFileLocation + File.separatorChar+"CompleteEmail.xls"));
+				HSSFWorkbook workbook = new HSSFWorkbook();
+				HSSFSheet worksheet = workbook.createSheet("CompleteEmail");
 				String fileName[]=new String[2];
 				InputStream inputStream=DataConversionUtils.class.getClassLoader().getResourceAsStream("ext/aocutils/Email.properties");
 				//InputStream inputStream=DataConversionUtils.class.getClassLoader().getResourceAsStream("Email.properties");

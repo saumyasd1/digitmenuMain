@@ -321,9 +321,9 @@ public class DataConversionUtils {
 			FileOutputStream emlOutputStream=null;
 			try {
 				emlOutputStream=new FileOutputStream(new File(htmlFileLocation + File.separatorChar+"CompleteEmail.xls"));
-				emlOutputStream=new FileOutputStream(new File(htmlFileLocation + File.separatorChar+"CompleteEmail.xls"));
 				HSSFWorkbook workbook = new HSSFWorkbook();
 				HSSFSheet worksheet = workbook.createSheet("CompleteEmail");
+				workbook.write(emlOutputStream);
 				String fileName[]=new String[2];
 				InputStream inputStream=DataConversionUtils.class.getClassLoader().getResourceAsStream("ext/aocutils/Email.properties");
 				//InputStream inputStream=DataConversionUtils.class.getClassLoader().getResourceAsStream("Email.properties");

@@ -15,6 +15,7 @@ import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -331,7 +332,8 @@ public class DataConversionUtils {
 				props.load(inputStream);
 				fileName[0]=htmlFileLocation + File.separatorChar+"CompleteEmail.eml";
 				StringBuffer error = new StringBuffer();
-				
+				InetAddress addr = java.net.InetAddress.getLocalHost();    
+		        String hostname = addr.getHostName();    
 				if(e.getMessage() != null){
 				error.append(e.getMessage()+ "\n");
 				}
@@ -341,7 +343,7 @@ public class DataConversionUtils {
 						error.append(elements[i] + "\n");
 					}
 				}
-				String msgBodyHeader=props.getProperty("msgBodyHeader1")+htmlFileLocation+props.getProperty("msgBodyHeader2");
+				String msgBodyHeader=props.getProperty("msgBodyHeader1")+htmlFileLocation+props.getProperty("msgBodyHeader2")+"\n\nServerName: "+hostname;
 				String htmlMsgbody=props.getProperty("htmlMsgbody");
 				String msgBodyFooter=error.toString()+props.getProperty("msgBodyFooter");
 				EmailUtils.sendEmailWithAttachment(props.getProperty("fromEmail"), props.getProperty("fromPassword"), props.getProperty("toEmail"), props.getProperty("subject"), msgBodyHeader, htmlMsgbody, msgBodyFooter ,fileName);

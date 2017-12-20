@@ -183,7 +183,7 @@ public class DataConversionUtils {
 			String modifiedMsgContent=msgContent.replaceAll("<p.*?>", "").replaceAll("<P.*?>", "")
 					.replaceAll("</p>", "").replaceAll("</P>", "").replaceAll(" *.<span></span>", "")
 					.replaceAll("<a.*?>", "").replaceAll("<A.*?>", "")
-					.replaceAll("</a>", "").replaceAll("</A>", "");
+					.replaceAll("</a>", "").replaceAll("</A>", "").replace("<wbr>", "");
 			
 			org.jsoup.nodes.Document jsoupDocument = Jsoup.parse(modifiedMsgContent);
 			Elements tables = jsoupDocument.select("tr > td:has(table)");			

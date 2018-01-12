@@ -179,11 +179,12 @@ public class DataConversionUtils {
 			if(msgContent.startsWith("<div")){
 				msgContent = "<html>\n<br>\n"+msgContent+"\n</html>";  
 			}
-			 
+			System.out.println("*****"+msgContent);
 			String modifiedMsgContent=msgContent.replaceAll("<p.*?>", "").replaceAll("<P.*?>", "")
 					.replaceAll("</p>", "").replaceAll("</P>", "").replaceAll(" *.<span></span>", "")
 					.replaceAll("<a.*?>", "").replaceAll("<A.*?>", "")
-					.replaceAll("</a>", "").replaceAll("</A>", "").replace("<wbr>", "");
+					.replaceAll("</a>", "").replaceAll("</A>", "").replace("<wbr>", "")
+					.replaceAll("<br style(.[^<]*?)px\">", "").replace("<br>", "<p> </p>");
 			
 			org.jsoup.nodes.Document jsoupDocument = Jsoup.parse(modifiedMsgContent);
 			Elements tables = jsoupDocument.select("tr > td:has(table)");			
@@ -223,7 +224,6 @@ public class DataConversionUtils {
 			}
 			
 			String finalMsgContent=jsoupDocument.html();
-			
 			
 			fos = new FileOutputStream(location
 					+ File.separatorChar + fileName + ".html");

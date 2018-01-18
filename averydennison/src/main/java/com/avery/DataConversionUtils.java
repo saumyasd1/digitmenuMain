@@ -184,7 +184,8 @@ public class DataConversionUtils {
 					.replaceAll("</p>", "").replaceAll("</P>", "").replaceAll(" *.<span></span>", "")
 					.replaceAll("<a.*?>", "").replaceAll("<A.*?>", "")
 					.replaceAll("</a>", "").replaceAll("</A>", "").replace("<wbr>", "")
-					.replaceAll("<br style(.[^<]*?)px\">", "").replace("<br>", "<p> </p>");
+					.replace("<br></div>", "<div><br></div><div dir=\"ltr\">");
+					//.replaceAll("<br style(.[^<]*?)px\">", "").replace("<br>", "<p> </p>");
 			
 			org.jsoup.nodes.Document jsoupDocument = Jsoup.parse(modifiedMsgContent);
 			Elements tables = jsoupDocument.select("tr > td:has(table)");			

@@ -179,14 +179,14 @@ public class DataConversionUtils {
 			if(msgContent.startsWith("<div")){
 				msgContent = "<html>\n<br>\n"+msgContent+"\n</html>";  
 			}
-			System.out.println("*****"+msgContent);
-			String modifiedMsgContent=msgContent.replaceAll("<p.*?>", "").replaceAll("<P.*?>", "")
+			System.out.println("****"+msgContent);
+			String modifiedMsgContent=msgContent.replace("<p></p>", "<br>").replaceAll("<p.*?>", "").replaceAll("<P.*?>", "")
 					.replaceAll("</p>", "").replaceAll("</P>", "").replaceAll(" *.<span></span>", "")
 					.replaceAll("<a.*?>", "").replaceAll("<A.*?>", "")
 					.replaceAll("</a>", "").replaceAll("</A>", "").replace("<wbr>", "")
-					.replace("<br></div>", "<div><br></div><div dir=\"ltr\">");
+					.replace("<br></div>", "<div><br></div><div dir=\"ltr\">").replace("<div style=\"display:inline\">​ </div>", "")
+					.replace("</font></b></span>", "</font></b></span><br>");
 					//.replaceAll("<br style(.[^<]*?)px\">", "").replace("<br>", "<p> </p>");
-			
 			org.jsoup.nodes.Document jsoupDocument = Jsoup.parse(modifiedMsgContent);
 			Elements tables = jsoupDocument.select("tr > td:has(table)");			
 			for(Element childTable:tables){
